@@ -4,6 +4,7 @@
     {
         public required string Name { get; set; }
         public int Strength { get; set; }
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
+        public Guid CountryId { get; set; }
     }
 }

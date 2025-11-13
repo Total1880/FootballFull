@@ -14,7 +14,7 @@ namespace FootballFull.Repositories
         {
             var countries = new List<Country>
             {
-                new Country { Id = Guid.NewGuid(), Name = "Belgium" },
+                new Country { Id = new Guid("7a7efcb7-f4c5-477c-9210-b897dc7f00f1"), Name = "Belgium" },
             };
 
             return countries;

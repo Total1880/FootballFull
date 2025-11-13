@@ -10,28 +10,30 @@ namespace FootballFull.Services
 {
     public class FixtureService : IFixtureService
     {
-        private IList<Club> _teams;
+        private IList<ClubPerCompetition> _teamsPerCompetition;
         private int _roundCount;
         private int _matchesPerRoundCount;
         private bool _alternate = false;
         private IList<int> _offsetList;
         private readonly Random rng = new Random();
 
-        public FixtureService()
+        private readonly IClubService _clubService;
+
+        public FixtureService(IClubService clubService)
         {
-            _teams = new List<Club>();
             _offsetList = new List<int>();
+            _clubService = clubService;
         }
 
-        public IList<Fixture> Generate(IList<Club> teams)
+        public IList<Fixture> Generate(IList<ClubPerCompetition> clubsPerCompetition)
         {
-            _teams = teams;
-            Shuffle(_teams);
-            _roundCount = _teams.Count - 1;
-            _matchesPerRoundCount = teams.Count / 2;
+            _teamsPerCompetition = clubsPerCompetition;
+            Shuffle(_teamsPerCompetition);
+            _roundCount = _teamsPerCompetition.Count - 1;
+            _matchesPerRoundCount = _teamsPerCompetition.Count / 2;
 
             var firstHalfSeasonFixtures = GenerateFixtures(0);
-            var secondHalfSeasonFixtures = GenerateFixtures(_teams.Count - 1);
+            var secondHalfSeasonFixtures = GenerateFixtures(_teamsPerCompetition.Count - 1);
 
             var list = firstHalfSeasonFixtures;
             list = list.Concat(secondHalfSeasonFixtures).ToList();
@@ -42,7 +44,7 @@ namespace FootballFull.Services
         private IList<Fixture> GenerateFixtures(int roundNoOffset)
         {
             IList<Fixture> fixtures = new List<Fixture>();
-            _offsetList = GenerateOffsetArray(_teams.Count);
+            _offsetList = GenerateOffsetArray(_teamsPerCompetition.Count);
 
             for (int roundNo = 1; roundNo <= _roundCount; roundNo++)
             {
@@ -57,8 +59,10 @@ namespace FootballFull.Services
                     {
                         fixtures.Add(new Fixture
                         {
-                            HomeTeam = _teams[homes[matchIndex]],
-                            AwayTeam = _teams[aways[matchIndex]],
+                            HomeTeamId = _teamsPerCompetition[homes[matchIndex]].ClubId,
+                            HomeTeam = _clubService.GetClubById(_teamsPerCompetition[homes[matchIndex]].ClubId),
+                            AwayTeamId = _teamsPerCompetition[aways[matchIndex]].ClubId,
+                            AwayTeam = _clubService.GetClubById(_teamsPerCompetition[aways[matchIndex]].ClubId),
                             MatchDay = roundNo + roundNoOffset
                         });
                     }
@@ -66,8 +70,10 @@ namespace FootballFull.Services
                     {
                         fixtures.Add(new Fixture
                         {
-                            HomeTeam = _teams[aways[matchIndex]],
-                            AwayTeam = _teams[homes[matchIndex]],
+                            HomeTeamId = _teamsPerCompetition[aways[matchIndex]].ClubId,
+                            HomeTeam = _clubService.GetClubById(_teamsPerCompetition[aways[matchIndex]].ClubId),
+                            AwayTeamId = _teamsPerCompetition[homes[matchIndex]].ClubId,
+                            AwayTeam = _clubService.GetClubById(_teamsPerCompetition[homes[matchIndex]].ClubId),
                             MatchDay = roundNo + roundNoOffset
                         });
                     }
@@ -83,7 +89,7 @@ namespace FootballFull.Services
 
         private IList<int> getHomes(int roundNo)
         {
-            var offset = _teams.Count - roundNo;
+            var offset = _teamsPerCompetition.Count - roundNo;
             var array = _offsetList.ToArray();
             var homes = new ArraySegment<int>(array, offset, _matchesPerRoundCount - 1);
 
@@ -94,7 +100,7 @@ namespace FootballFull.Services
 
         private IList<int> getAways(int roundNo)
         {
-            var offset = _teams.Count - roundNo + _matchesPerRoundCount - 1;
+            var offset = _teamsPerCompetition.Count - roundNo + _matchesPerRoundCount - 1;
             var array = _offsetList.ToArray();
             var aways = new ArraySegment<int>(array, offset, _matchesPerRoundCount);
             var output = aways.ToArray();

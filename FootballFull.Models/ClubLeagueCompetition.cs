@@ -14,6 +14,6 @@ namespace FootballFull.Models
         public int GoalsFor { get; set; }
         public int GoalsAgainst { get; set; }
         public Competition Competition { get; set; }
-        public int CompetitionId { get; set; }
+        public Guid CompetitionId { get; set; }
     }
 }

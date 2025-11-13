@@ -10,17 +10,22 @@ var services = new ServiceCollection();
 services.AddSingleton<IClubService, ClubService>();
 services.AddSingleton<ISeasonService, SeasonService>();
 services.AddSingleton<IFixtureService, FixtureService>();
+services.AddSingleton<IClubPerCompetitionService, ClubPerCompetitionService>();
 
 services.AddSingleton<IClubRepository, ClubRepository>();
+services.AddSingleton<IClubPerCompetitionRepository, ClubPerCompetitionRepository>();
+services.AddSingleton<ICompetitionRepository, CompetitionRepository>();
+services.AddSingleton<ICountryRepository, CountryRepository>();
 
 var provider = services.BuildServiceProvider();
 
 var SeasonService = provider.GetRequiredService<ISeasonService>();
 var FixtureService = provider.GetRequiredService<IFixtureService>();
 var ClubService = provider.GetRequiredService<IClubService>();
+var ClubPerCompetitionService = provider.GetRequiredService<IClubPerCompetitionService>();
 
-SeasonService.InitializeNewSeason(ClubService.GetClubs());
-var fixtures = FixtureService.Generate(ClubService.GetClubs());
+SeasonService.InitializeNewSeason(ClubPerCompetitionService.GetClubsPerCompetition());
+var fixtures = FixtureService.Generate(ClubPerCompetitionService.GetClubsPerCompetition());
 var matchDays = fixtures.Max(_ => _.MatchDay);
 do
 {
@@ -54,8 +59,8 @@ do
     Console.ReadKey();
     Console.Clear();
 
-    SeasonService.InitializeNewSeason(ClubService.GetClubs());
-    fixtures = FixtureService.Generate(ClubService.GetClubs());
+    SeasonService.InitializeNewSeason(ClubPerCompetitionService.GetClubsPerCompetition());
+    fixtures = FixtureService.Generate(ClubPerCompetitionService.GetClubsPerCompetition());
 
 } while (true);
 

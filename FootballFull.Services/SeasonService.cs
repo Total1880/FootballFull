@@ -8,14 +8,15 @@ namespace FootballFull.Services
         private IList<ClubLeagueCompetition> _clubLeagueCompetitions;
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
 
-        public void InitializeNewSeason(IList<Club> clubs)
+        public void InitializeNewSeason(IList<ClubPerCompetition> clubs)
         {
             _clubLeagueCompetitions = clubs.Select(club => new ClubLeagueCompetition
             {
-                ClubId = club.Id,
+                ClubId = club.ClubId,
                 Points = 0,
                 GoalsFor = 0,
-                GoalsAgainst = 0
+                GoalsAgainst = 0,
+                CompetitionId = club.CompetitionId
             }).ToList();
         }
 
