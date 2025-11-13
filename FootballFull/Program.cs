@@ -22,36 +22,42 @@ var ClubService = provider.GetRequiredService<IClubService>();
 SeasonService.InitializeNewSeason(ClubService.GetClubs());
 var fixtures = FixtureService.Generate(ClubService.GetClubs());
 var matchDays = fixtures.Max(_ => _.MatchDay);
-Console.WriteLine("Football Season Fixtures:");
-Console.WriteLine();
-for (int matchDay = 1; matchDay <= matchDays; matchDay++)
+do
 {
-    Console.WriteLine($"Match Day {matchDay}");
-    var fixturesForMatchDay = fixtures.Where(_ => _.MatchDay == matchDay).ToList();
-    foreach (var fixture in fixturesForMatchDay)
-    {
-        Console.WriteLine($"{fixture.HomeTeam.Name} vs {fixture.AwayTeam.Name}");
-    }
+    Console.WriteLine("Football Season Fixtures:");
     Console.WriteLine();
-}
-
-Console.ReadKey();
-Console.Clear();
-
-for (int matchDay = 1; matchDay <= matchDays; matchDay++)
-{
-    SeasonService.PlayMatchDay(fixtures, matchDay);
-    Console.WriteLine($"Match Day {matchDay}");
-    var fixturesForMatchDay = fixtures.Where(_ => _.MatchDay == matchDay).ToList();
-    foreach (var fixture in fixturesForMatchDay)
+    for (int matchDay = 1; matchDay <= matchDays; matchDay++)
     {
-        Console.WriteLine($"{fixture.HomeTeam.Name} {fixture.HomeScore} vs {fixture.AwayTeam.Name} {fixture.AwayScore}");
+        Console.WriteLine($"Match Day {matchDay}");
+        var fixturesForMatchDay = fixtures.Where(_ => _.MatchDay == matchDay).ToList();
+        foreach (var fixture in fixturesForMatchDay)
+        {
+            Console.WriteLine($"{fixture.HomeTeam.Name} vs {fixture.AwayTeam.Name}");
+        }
+        Console.WriteLine();
     }
-    Console.WriteLine();
-    DisplayLeagueTable();
+
     Console.ReadKey();
     Console.Clear();
-}
+
+    for (int matchDay = 1; matchDay <= matchDays; matchDay++)
+    {
+        SeasonService.PlayMatchDay(fixtures, matchDay);
+        DisplayResult(matchDay);
+        Console.WriteLine();
+        DisplayLeagueTable();
+        Console.ReadKey();
+        Console.Clear();
+    }
+
+    Console.WriteLine("Season complete! Press any key to restart a new season.");
+    Console.ReadKey();
+    Console.Clear();
+
+    SeasonService.InitializeNewSeason(ClubService.GetClubs());
+    fixtures = FixtureService.Generate(ClubService.GetClubs());
+
+} while (true);
 
 void DisplayLeagueTable()
 {
@@ -84,4 +90,43 @@ void DisplayLeagueTable()
             $"{c.GoalsAgainst.ToString().PadLeft(gaWidth)}"
         );
     }
+}
+
+void DisplayResult(int matchDay)
+{
+    Console.WriteLine();
+    Console.WriteLine($"=== Match Day {matchDay} ===");
+    Console.WriteLine();
+
+    // Haal alle fixtures
+    var fixturesForMatchDay = fixtures
+        .Where(_ => _.MatchDay == matchDay)
+        .ToList();
+
+    // Dynamische kolombreedtes bepalen
+    int homeWidth = fixturesForMatchDay.Max(f => f.HomeTeam.Name.Length) + 2;
+    int awayWidth = fixturesForMatchDay.Max(f => f.AwayTeam.Name.Length) + 2;
+
+    // Header
+    Console.WriteLine(
+        $"{"Home Team".PadRight(homeWidth)}" +
+        $"{"Score".PadRight(8)}" +
+        $"{"Away Team".PadRight(awayWidth)}"
+    );
+
+    Console.WriteLine(new string('-', homeWidth + 8 + awayWidth));
+
+    foreach (var fixture in fixturesForMatchDay)
+    {
+        var score = $"{fixture.HomeScore} - {fixture.AwayScore}";
+
+        Console.WriteLine(
+            $"{fixture.HomeTeam.Name.PadRight(homeWidth)}" +
+            $"{score.PadRight(8)}" +
+            $"{fixture.AwayTeam.Name.PadRight(awayWidth)}"
+        );
+    }
+
+    Console.WriteLine();
+
 }
