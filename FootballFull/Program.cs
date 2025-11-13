@@ -55,9 +55,33 @@ for (int matchDay = 1; matchDay <= matchDays; matchDay++)
 
 void DisplayLeagueTable()
 {
-    foreach (var clubLeagueCompetition in SeasonService.ClubLeagueCompetitions.OrderByDescending(_ => _.Points).ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst))
+    // Bepaal kolombreedtes (optioneel dynamisch)
+    const int nameWidth = 25;
+    const int pointsWidth = 8;
+    const int gfWidth = 10;
+    const int gaWidth = 12;
+
+    // Header
+    Console.WriteLine(
+        $"{"Club".PadRight(nameWidth)}" +
+        $"{"Points".PadLeft(pointsWidth)}" +
+        $"{"GF".PadLeft(gfWidth)}" +
+        $"{"GA".PadLeft(gaWidth)}"
+    );
+
+    Console.WriteLine(new string('-', nameWidth + pointsWidth + gfWidth + gaWidth));
+
+    foreach (var c in SeasonService.ClubLeagueCompetitions
+        .OrderByDescending(_ => _.Points)
+        .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst))
     {
-        var club = ClubService.GetClubById(clubLeagueCompetition.ClubId);
-        Console.WriteLine($"{club.Name} - Points: {clubLeagueCompetition.Points}, Goals For: {clubLeagueCompetition.GoalsFor}, Goals Against: {clubLeagueCompetition.GoalsAgainst}");
+        var club = ClubService.GetClubById(c.ClubId);
+
+        Console.WriteLine(
+            $"{club.Name.PadRight(nameWidth)}" +
+            $"{c.Points.ToString().PadLeft(pointsWidth)}" +
+            $"{c.GoalsFor.ToString().PadLeft(gfWidth)}" +
+            $"{c.GoalsAgainst.ToString().PadLeft(gaWidth)}"
+        );
     }
 }

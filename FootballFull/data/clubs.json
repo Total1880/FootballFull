@@ -9,7 +9,7 @@
   },
   {
     "name": "Anderlecht",
-    "strength": 2
+    "strength": 3
   },
   {
     "name": "Sint-Truiden",
@@ -17,10 +17,50 @@
   },
   {
     "name": "AA Gent",
+    "strength": 2
+  },
+  {
+    "name": "KV Mechelen",
+    "strength": 2
+  },
+  {
+    "name": "RC Genk",
     "strength": 1
   },
   {
-    "name": "Antwerp",
+    "name": "Zulte Waregem",
+    "strength": 1
+  },
+  {
+    "name": "Charleroi",
+    "strength": 1
+  },
+  {
+    "name": "Standard",
     "strength": 0
+  },
+  {
+    "name": "RAAL La Louvière",
+    "strength": 0
+  },
+  {
+    "name": "Westerlo",
+    "strength": 0
+  },
+  {
+    "name": "OH Leuven",
+    "strength": -1
+  },
+  {
+    "name": "Antwerp",
+    "strength": -1
+  },
+  {
+    "name": "Cercle Brugge",
+    "strength": -1
+  },
+  {
+    "name": "Dender",
+    "strength": -2
   }
 ]
