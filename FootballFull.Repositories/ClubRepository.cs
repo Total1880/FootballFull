@@ -1,9 +1,10 @@
 ﻿using FootballFull.Models;
+using FootballFull.Repositories.Interfaces;
 using System.Text.Json;
 
 namespace FootballFull.Repositories
 {
-    public class ClubRepository
+    public class ClubRepository : IClubRepository
     {
         public List<Club> Load(string path = "data/Clubs.json")
         {

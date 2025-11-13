@@ -1,11 +1,23 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using FootballFull.Repositories;
+using FootballFull.Repositories.Interfaces;
 using FootballFull.Services;
+using FootballFull.Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
+var services = new ServiceCollection();
 
+services.AddSingleton<IClubService, ClubService>();
+services.AddSingleton<ISeasonService, SeasonService>();
+services.AddSingleton<IFixtureService, FixtureService>();
 
-var SeasonService = new SeasonService();
-var FixtureService = new FixtureService();
-var ClubService = new ClubService();
+services.AddSingleton<IClubRepository, ClubRepository>();
+
+var provider = services.BuildServiceProvider();
+
+var SeasonService = provider.GetRequiredService<ISeasonService>();
+var FixtureService = provider.GetRequiredService<IFixtureService>();
+var ClubService = provider.GetRequiredService<IClubService>();
 
 var fixtures = FixtureService.Generate(ClubService.GetClubs());
 var matchDays = fixtures.Max(_ => _.MatchDay);

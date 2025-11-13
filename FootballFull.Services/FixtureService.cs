@@ -1,4 +1,5 @@
 ﻿using FootballFull.Models;
+using FootballFull.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FootballFull.Services
 {
-    public class FixtureService
+    public class FixtureService : IFixtureService
     {
         private IList<Club> _teams;
         private int _roundCount;
