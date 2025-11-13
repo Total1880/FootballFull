@@ -4,6 +4,7 @@ namespace FootballFull.Services.Interfaces
 {
     public interface IClubService
     {
-        List<Club> GetClubs();
+        Club GetClubById(Guid clubId);
+        IList<Club> GetClubs();
     }
 }

@@ -5,10 +5,18 @@
   },
   {
     "name": "Club Brugge",
-    "strength": 2
+    "strength": 3
   },
   {
     "name": "Anderlecht",
+    "strength": 2
+  },
+  {
+    "name": "Sint-Truiden",
+    "strength": 2
+  },
+  {
+    "name": "AA Gent",
     "strength": 1
   },
   {

@@ -19,6 +19,7 @@ var SeasonService = provider.GetRequiredService<ISeasonService>();
 var FixtureService = provider.GetRequiredService<IFixtureService>();
 var ClubService = provider.GetRequiredService<IClubService>();
 
+SeasonService.InitializeNewSeason(ClubService.GetClubs());
 var fixtures = FixtureService.Generate(ClubService.GetClubs());
 var matchDays = fixtures.Max(_ => _.MatchDay);
 Console.WriteLine("Football Season Fixtures:");
@@ -47,6 +48,16 @@ for (int matchDay = 1; matchDay <= matchDays; matchDay++)
         Console.WriteLine($"{fixture.HomeTeam.Name} {fixture.HomeScore} vs {fixture.AwayTeam.Name} {fixture.AwayScore}");
     }
     Console.WriteLine();
+    DisplayLeagueTable();
     Console.ReadKey();
     Console.Clear();
+}
+
+void DisplayLeagueTable()
+{
+    foreach (var clubLeagueCompetition in SeasonService.ClubLeagueCompetitions.OrderByDescending(_ => _.Points).ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst))
+    {
+        var club = ClubService.GetClubById(clubLeagueCompetition.ClubId);
+        Console.WriteLine($"{club.Name} - Points: {clubLeagueCompetition.Points}, Goals For: {clubLeagueCompetition.GoalsFor}, Goals Against: {clubLeagueCompetition.GoalsAgainst}");
+    }
 }

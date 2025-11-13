@@ -14,14 +14,22 @@ namespace FootballFull.Services
     {
         private readonly IClubRepository _clubRepository;
 
+        private IList<Club> _clubs;
+
         public ClubService(IClubRepository clubRepository)
         {
             _clubRepository = clubRepository;
         }
 
-        public List<Club> GetClubs()
+        public Club GetClubById(Guid clubId)
         {
-            return _clubRepository.Load();
+            return GetClubs().First(c => c.Id == clubId);
+        }
+
+        public IList<Club> GetClubs()
+        {
+            _clubs = _clubs ?? _clubRepository.Load();
+            return _clubs;
         }
     }
 }

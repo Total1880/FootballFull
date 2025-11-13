@@ -8,8 +8,9 @@ namespace FootballFull.Models
 {
     public class ClubLeagueCompetition
     {
-        public Guid Id { get; set; }
-        public int points { get; set; }
+        public Club? Club { get; set; }
+        public Guid ClubId { get; set; }
+        public int Points { get; set; }
         public int GoalsFor { get; set; }
         public int GoalsAgainst { get; set; }
     }
