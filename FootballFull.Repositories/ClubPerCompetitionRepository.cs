@@ -31,6 +31,23 @@ namespace FootballFull.Repositories
                 new ClubPerCompetition { ClubId = Guid.Parse("8fbef4a6-1679-4b3f-9f53-b6412e98061a"), CompetitionId = Guid.Parse("fb60894f-07fd-4a59-aa0b-ecc16f193791") },
                 new ClubPerCompetition { ClubId = Guid.Parse("7ecf9621-6956-4f81-870f-20af68b56ad1"), CompetitionId = Guid.Parse("fb60894f-07fd-4a59-aa0b-ecc16f193791") },
 
+                new ClubPerCompetition { ClubId = Guid.Parse("787f846d-2837-4769-b297-8c9f3b25d720"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("20d7448b-d98d-4cb1-8e93-63b3fde32fba"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("e27572f6-7c24-49d1-9040-6524730c7a6d"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("8504c8ea-8613-4ea0-a4f7-32abfd4b0ff6"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("a841a0da-ad4b-4a89-9dda-7ed1ddb94157"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("68639737-23ae-4395-ae8f-dca61c646d89"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("6170ec84-1857-4d99-9c4c-618514325da1"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("c463d2cf-2781-4e5d-aa22-a1122016c5d7"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("db97d357-c901-43d9-8074-95f52be52130"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("614e2734-4a60-4fe4-829b-f34548f32016"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("6605338b-1dd8-4a50-846f-2d10b0feccbb"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("b321235d-2e7f-4c5a-9184-f53635e52b32"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("3183e5e7-1ee9-4d1a-9a22-436353bec721"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("4ba313a7-e199-47df-a2d9-4a11931c220a"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("904d950d-340e-46fd-bafd-afbe4b11240d"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("7f2ae085-52dc-4611-a97e-3983bf939485"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+
             };
 
             return list;

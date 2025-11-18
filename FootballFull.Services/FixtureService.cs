@@ -27,21 +27,28 @@ namespace FootballFull.Services
 
         public IList<Fixture> Generate(IList<ClubPerCompetition> clubsPerCompetition)
         {
-            _teamsPerCompetition = clubsPerCompetition;
-            Shuffle(_teamsPerCompetition);
-            _roundCount = _teamsPerCompetition.Count - 1;
-            _matchesPerRoundCount = _teamsPerCompetition.Count / 2;
+            var competitions = clubsPerCompetition.GroupBy(c => c.CompetitionId)
+                .Select(g => g.Key)
+                .ToList();
+            var list = new List<Fixture>();
+            foreach (var competitionId in competitions)
+            {
+                _teamsPerCompetition = clubsPerCompetition.Where(_ => _.CompetitionId == competitionId).ToList();
+                Shuffle(_teamsPerCompetition);
+                _roundCount = _teamsPerCompetition.Count - 1;
+                _matchesPerRoundCount = _teamsPerCompetition.Count / 2;
 
-            var firstHalfSeasonFixtures = GenerateFixtures(0);
-            var secondHalfSeasonFixtures = GenerateFixtures(_teamsPerCompetition.Count - 1);
+                var firstHalfSeasonFixtures = GenerateFixtures(0, competitionId);
+                var secondHalfSeasonFixtures = GenerateFixtures(_teamsPerCompetition.Count - 1, competitionId);
 
-            var list = firstHalfSeasonFixtures;
-            list = list.Concat(secondHalfSeasonFixtures).ToList();
+                list = list.Concat(firstHalfSeasonFixtures).ToList();
+                list = list.Concat(secondHalfSeasonFixtures).ToList();
+            }
 
             return list;
         }
 
-        private IList<Fixture> GenerateFixtures(int roundNoOffset)
+        private IList<Fixture> GenerateFixtures(int roundNoOffset, Guid competitionId)
         {
             IList<Fixture> fixtures = new List<Fixture>();
             _offsetList = GenerateOffsetArray(_teamsPerCompetition.Count);
@@ -63,7 +70,8 @@ namespace FootballFull.Services
                             HomeTeam = _clubService.GetClubById(_teamsPerCompetition[homes[matchIndex]].ClubId),
                             AwayTeamId = _teamsPerCompetition[aways[matchIndex]].ClubId,
                             AwayTeam = _clubService.GetClubById(_teamsPerCompetition[aways[matchIndex]].ClubId),
-                            MatchDay = roundNo + roundNoOffset
+                            MatchDay = roundNo + roundNoOffset,
+                            CompetitionId = competitionId
                         });
                     }
                     else
@@ -74,7 +82,8 @@ namespace FootballFull.Services
                             HomeTeam = _clubService.GetClubById(_teamsPerCompetition[aways[matchIndex]].ClubId),
                             AwayTeamId = _teamsPerCompetition[homes[matchIndex]].ClubId,
                             AwayTeam = _clubService.GetClubById(_teamsPerCompetition[homes[matchIndex]].ClubId),
-                            MatchDay = roundNo + roundNoOffset
+                            MatchDay = roundNo + roundNoOffset,
+                            CompetitionId = competitionId
                         });
                     }
 
