@@ -5,7 +5,8 @@ namespace FootballFull.Services.Interfaces
     public interface ISeasonService
     {
         IList<ClubLeagueCompetition> ClubLeagueCompetitions { get; }
-        void InitializeNewSeason(IList<ClubPerCompetition> clubs);
+        void Initialize(IList<ClubPerCompetition> clubs);
+        void InitializeNewSeason();
         void PlayMatchDay(IList<Fixture> fixtures, int matchDay);
 
     }

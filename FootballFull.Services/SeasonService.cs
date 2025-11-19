@@ -1,16 +1,64 @@
 ﻿using FootballFull.Models;
+using FootballFull.Repositories.Interfaces;
 using FootballFull.Services.Interfaces;
 
 namespace FootballFull.Services
 {
     public class SeasonService : ISeasonService
     {
+        private ICompetitionRepository _competitionRepository;
         private IList<ClubLeagueCompetition> _clubLeagueCompetitions;
+        private IList<ClubPerCompetition> _clubs;
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
 
-        public void InitializeNewSeason(IList<ClubPerCompetition> clubs)
+        public SeasonService(ICompetitionRepository competitionRepository)
         {
-            _clubLeagueCompetitions = clubs.Select(club => new ClubLeagueCompetition
+            _competitionRepository = competitionRepository;
+        }
+        public void Initialize(IList<ClubPerCompetition> clubs)
+        {
+            _clubs = clubs;
+            InitializeNewSeason();
+        }
+        public void InitializeNewSeason()
+        {
+
+            if (_clubLeagueCompetitions != null)
+            {
+                var promotionsAndRelegationPlaces = 2;
+                var competitions = _competitionRepository.Load();
+                // set promotions and relegations here
+
+                foreach (var competition in competitions)
+                {
+                    var clubsInCompetition = _clubLeagueCompetitions
+                        .Where(_ => _.CompetitionId == competition.Id)
+                        .OrderByDescending(_ => _.Points)
+                        .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst)
+                        .ThenByDescending(_ => _.GoalsFor)
+                        .ToList();
+
+                    var relegatedClubs = clubsInCompetition.Skip(clubsInCompetition.Count - promotionsAndRelegationPlaces).ToList();
+                    var promotedClubs = clubsInCompetition.Take(promotionsAndRelegationPlaces).ToList();
+
+                    if (competition.Tier > 1)
+                    {
+                        foreach (var promotedClub in promotedClubs)
+                        {
+                            _clubs.FirstOrDefault(_ => _.ClubId == promotedClub.ClubId).CompetitionId = competitions.First(_ => _.Tier == competition.Tier - 1 && _.CountryId == competition.CountryId).Id;
+                        }
+                    }
+
+                    if (competition.Tier < competitions.Max(_ => _.Tier))
+                    {
+                        foreach (var relegatedClub in relegatedClubs)
+                        {
+                            _clubs.FirstOrDefault(_ => _.ClubId == relegatedClub.ClubId).CompetitionId = competitions.First(_ => _.Tier == competition.Tier + 1 && _.CountryId == competition.CountryId).Id;
+                        }
+                    }
+                }
+            }
+            _clubLeagueCompetitions = _clubs.Select(club => new ClubLeagueCompetition
             {
                 ClubId = club.ClubId,
                 Points = 0,
@@ -19,6 +67,7 @@ namespace FootballFull.Services
                 CompetitionId = club.CompetitionId
             }).ToList();
         }
+
 
         public void PlayMatchDay(IList<Fixture> fixtures, int matchDay)
         {
