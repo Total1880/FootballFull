@@ -30,6 +30,8 @@ var clubsPerCompetition = ClubPerCompetitionService.GetClubsPerCompetition();
 SeasonService.Initialize(clubsPerCompetition);
 var fixtures = FixtureService.Generate(clubsPerCompetition);
 var matchDays = fixtures.Max(_ => _.MatchDay);
+var competitions = CompetitionService.GetCompetitions();
+Guid userClubId = new Guid("7f2ae085-52dc-4611-a97e-3983bf939485");
 do
 {
     Console.WriteLine("Football Season Fixtures:");
@@ -74,9 +76,8 @@ void DisplayLeagueTable()
     const int pointsWidth = 8;
     const int gfWidth = 10;
     const int gaWidth = 12;
+    var competitionToShow = competitions.First(_ => _.Id == clubsPerCompetition.First(_ => _.ClubId == userClubId).CompetitionId);
 
-    foreach (var competition in CompetitionService.GetCompetitions())
-    {
         // Header
         Console.WriteLine(
         $"{"Club".PadRight(nameWidth)}" +
@@ -88,7 +89,7 @@ void DisplayLeagueTable()
         Console.WriteLine(new string('-', nameWidth + pointsWidth + gfWidth + gaWidth));
 
         foreach (var c in SeasonService.ClubLeagueCompetitions
-            .Where(_ => _.CompetitionId == competition.Id)
+            .Where(_ => _.CompetitionId == competitionToShow.Id)
             .OrderByDescending(_ => _.Points)
             .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst))
         {
@@ -100,27 +101,27 @@ void DisplayLeagueTable()
                 $"{c.GoalsFor.ToString().PadLeft(gfWidth)}" +
                 $"{c.GoalsAgainst.ToString().PadLeft(gaWidth)}"
             );
-        }
+        
     }
 }
 
 void DisplayResult(int matchDay)
 {
+    var competitionToShow = competitions.First(_ => _.Id == clubsPerCompetition.First(_ => _.ClubId == userClubId).CompetitionId);
+
     Console.WriteLine();
     Console.WriteLine($"=== Match Day {matchDay} ===");
     Console.WriteLine();
 
     // Haal alle fixtures
-    foreach (var competition in CompetitionService.GetCompetitions())
-    {
-        Console.WriteLine($"--- {competition.Name} ---");
+        Console.WriteLine($"--- {competitionToShow.Name} ---");
         Console.WriteLine();
 
         var fixturesForMatchDay = fixtures
-            .Where(_ => _.MatchDay == matchDay && _.CompetitionId == competition.Id)
+            .Where(_ => _.MatchDay == matchDay && _.CompetitionId == competitionToShow.Id)
             .ToList();
 
-        if (fixturesForMatchDay.Count == 0) continue;
+        if (fixturesForMatchDay.Count == 0) return;
 
         // Dynamische kolombreedtes bepalen
         int homeWidth = fixturesForMatchDay.Max(f => f.HomeTeam.Name.Length) + 2;
@@ -147,6 +148,6 @@ void DisplayResult(int matchDay)
         }
 
         Console.WriteLine();
-    }
+    
 
 }
