@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using FootballFull.Models;
 using FootballFull.Repositories;
 using FootballFull.Repositories.Interfaces;
 using FootballFull.Services;
@@ -13,10 +14,10 @@ services.AddSingleton<IFixtureService, FixtureService>();
 services.AddSingleton<IClubPerCompetitionService, ClubPerCompetitionService>();
 services.AddSingleton<ICompetitionService, CompetitionService>();
 
-services.AddSingleton<IClubRepository, ClubRepository>();
-services.AddSingleton<IClubPerCompetitionRepository, ClubPerCompetitionRepository>();
-services.AddSingleton<ICompetitionRepository, CompetitionRepository>();
-services.AddSingleton<ICountryRepository, CountryRepository>();
+services.AddSingleton<IRepository<Club>, ClubRepository>();
+services.AddSingleton<IRepository<ClubPerCompetition>, ClubPerCompetitionRepository>();
+services.AddSingleton<IRepository<Competition>, CompetitionRepository>();
+services.AddSingleton<IRepository<Country>, CountryRepository>();
 
 var provider = services.BuildServiceProvider();
 
