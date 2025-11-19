@@ -26,7 +26,7 @@ services.AddSingleton<IRepository<Competition>>(
 services.AddSingleton<IRepository<Country>>(
     _ => new CountryRepositoryV2(Path.Combine(dataRoot, "Countries.json")));
 
-services.AddSingleton<IRepository<ClubPerCompetition>>(
+services.AddSingleton<IClubPerCompetitionRepository>(
     _ => new ClubPerCompetitionRepositoryV2(Path.Combine(dataRoot, "ClubPerCompetition.json")));
 
 // Editors

@@ -9,12 +9,12 @@ namespace FootballFull.Services
 {
     public class ClubCompetitionService : IClubCompetitionService
     {
-        private readonly IRepository<ClubPerCompetition> _linkRepository;
+        private readonly IClubPerCompetitionRepository _linkRepository;
         private readonly IClubService _clubService;
         private readonly ICompetitionService _competitionService;
 
         public ClubCompetitionService(
-            IRepository<ClubPerCompetition> linkRepository,
+            IClubPerCompetitionRepository linkRepository,
             IClubService clubService,
             ICompetitionService competitionService)
         {
@@ -43,23 +43,9 @@ namespace FootballFull.Services
 
         public void RemoveClubFromCompetition(Guid clubId, Guid competitionId)
         {
-            var links = _linkRepository.Load().ToList();
-            var toRemove = links
-                .FirstOrDefault(x => x.ClubId == clubId && x.CompetitionId == competitionId);
 
-            if (toRemove == null)
-                return;
+            _linkRepository.Delete(clubId, competitionId);
 
-            links.Remove(toRemove);
-
-            // kleine hack omdat IRepository.Delete(Guid) niet bruikbaar is:
-            // we overschrijven gewoon het hele bestand
-            // (dus Save via een private helper in een eigen repo zou mooier zijn).
-            // Praktischer: je past IRepository aan of je voegt een Delete(clubId, competitionId) toe aan een specifiek repo.
-            // Voor nu: we simuleren "Save" door de repo een Create te laten doen.
-            // Beter: je maakt in de repo een interne Save(IList<ClubPerCompetition>) public of internal.
-            // Maar om jouw bestaande structuur niet te breken, laten we het hierbij conceptueel.
-            // -> In de praktijk zou je de Save-method van de repo publiek maken en hier aanroepen.
         }
 
         public IList<Club> GetClubsForCompetition(Guid competitionId)

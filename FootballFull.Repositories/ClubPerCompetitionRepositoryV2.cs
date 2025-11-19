@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace FootballFull.Repositories
 {
-    public class ClubPerCompetitionRepositoryV2 : IRepository<ClubPerCompetition>
+    public class ClubPerCompetitionRepositoryV2 : IClubPerCompetitionRepository
     {
         private readonly string _path;
         private readonly JsonSerializerOptions _options;
@@ -91,6 +91,17 @@ namespace FootballFull.Repositories
                 Directory.CreateDirectory(dir);
 
             File.WriteAllText(_path, json);
+        }
+
+        public void Delete(Guid clubId, Guid competitionId)
+        {
+            var list = Load();
+            var toRemove = list.FirstOrDefault(c => c.ClubId == clubId && c.CompetitionId == competitionId);
+            if (toRemove == null)
+                return; // of throw, afhankelijk van wat je wilt
+
+            list.Remove(toRemove);
+            Save(list);
         }
     }
 }

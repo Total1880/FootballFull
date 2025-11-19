@@ -316,7 +316,7 @@ namespace FootballFullEditor.ConsoleUI
             Console.ReadKey();
         }
 
-        private void RemoveClubFromCompetition(Competition competition, System.Collections.Generic.List<Club> clubsInComp)
+        private void RemoveClubFromCompetition(Competition competition, List<Club> clubsInComp)
         {
             if (clubsInComp == null || clubsInComp.Count == 0)
             {
