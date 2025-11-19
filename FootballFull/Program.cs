@@ -81,7 +81,7 @@ do
     // Matchdays spelen
     for (int matchDay = 1; matchDay <= matchDays; matchDay++)
     {
-        seasonService.PlayMatchDay(fixtures, matchDay);
+        seasonService.PlayMatchDay(fixtures, matchDay, userClubId);
 
         DisplayResult(matchDay);
         Console.WriteLine();

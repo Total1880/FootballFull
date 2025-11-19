@@ -179,44 +179,185 @@ namespace FootballFull.Services
             }
         }
 
-        public void PlayMatchDay(IList<Fixture> fixtures, int matchDay)
+        public void PlayMatchDay(IList<Fixture> fixtures, int matchDay, Guid? playerClubId = null)
         {
-            if (_clubLeagueCompetitions == null) throw new InvalidOperationException("Club league competitions not initialized.");
-            foreach (var fixture in fixtures.Where(_ => _.MatchDay == matchDay))
+            if (_clubLeagueCompetitions == null)
+                throw new InvalidOperationException("Club league competitions not initialized.");
+
+            var todaysFixtures = fixtures.Where(_ => _.MatchDay == matchDay).ToList();
+
+            foreach (var fixture in todaysFixtures)
             {
-                fixture.HomeScore = Random.Shared.Next(0, 5) - fixture.AwayTeam.Strength;
-                fixture.AwayScore = Random.Shared.Next(0, 5) - fixture.HomeTeam.Strength;
+                bool isPlayerMatch = playerClubId.HasValue &&
+                                     (fixture.HomeTeam.Id == playerClubId.Value ||
+                                      fixture.AwayTeam.Id == playerClubId.Value);
 
-                while (fixture.HomeScore < 0 || fixture.AwayScore < 0)
+                if (isPlayerMatch)
                 {
-                    fixture.HomeScore++;
-                    fixture.AwayScore++;
-                }
-
-                if (fixture.HomeScore > fixture.AwayScore)
-                {
-                    UpdateClubStats(fixture.HomeTeam.Id, fixture.HomeScore, fixture.AwayScore, 3);
-                    UpdateClubStats(fixture.AwayTeam.Id, fixture.AwayScore, fixture.HomeScore, 0);
-                }
-                else if (fixture.HomeScore < fixture.AwayScore)
-                {
-                    UpdateClubStats(fixture.HomeTeam.Id, fixture.HomeScore, fixture.AwayScore, 0);
-                    UpdateClubStats(fixture.AwayTeam.Id, fixture.AwayScore, fixture.HomeScore, 3);
+                    PlayInteractiveFixture(fixture, playerClubId.Value);
                 }
                 else
                 {
-                    UpdateClubStats(fixture.HomeTeam.Id, fixture.HomeScore, fixture.AwayScore, 1);
-                    UpdateClubStats(fixture.AwayTeam.Id, fixture.AwayScore, fixture.HomeScore, 1);
+                    SimulateFixtureAutomatically(fixture);
                 }
+
+                ApplyResultToTable(fixture);
             }
         }
 
-        private void UpdateClubStats(Guid id, int awayScore, int homeScore, int v)
+        private void SimulateFixtureAutomatically(Fixture fixture)
         {
-            var record = _clubLeagueCompetitions.First(_ => _.ClubId == id);
-            record.GoalsFor += awayScore;
-            record.GoalsAgainst += homeScore;
-            record.Points += v;
+            fixture.HomeScore = Random.Shared.Next(0, 5) - fixture.AwayTeam.Strength;
+            fixture.AwayScore = Random.Shared.Next(0, 5) - fixture.HomeTeam.Strength;
+
+            while (fixture.HomeScore < 0 || fixture.AwayScore < 0)
+            {
+                fixture.HomeScore++;
+                fixture.AwayScore++;
+            }
+        }
+
+        private enum TacticChoice
+        {
+            Attack,
+            Defend,
+            Balanced
+        }
+
+        private void PlayInteractiveFixture(Fixture fixture, Guid playerClubId)
+        {
+            int homeGoals = 0;
+            int awayGoals = 0;
+            const int phases = 6; // 6 fases = ± 15 min per fase
+
+            bool playerIsHome = fixture.HomeTeam.Id == playerClubId;
+            var playerClub = playerIsHome ? fixture.HomeTeam : fixture.AwayTeam;
+            var opponent = playerIsHome ? fixture.AwayTeam : fixture.HomeTeam;
+
+            for (int phase = 1; phase <= phases; phase++)
+            {
+                Console.Clear();
+                Console.WriteLine($"Speeldag {fixture.MatchDay}");
+                Console.WriteLine($"{fixture.HomeTeam.Name} {homeGoals} - {awayGoals} {fixture.AwayTeam.Name}");
+                Console.WriteLine($"Minuut {phase * 15}");
+                Console.WriteLine();
+
+                var choice = AskTacticChoice(playerClub.Name);
+
+                int effectiveHomeStrength = fixture.HomeTeam.Strength;
+                int effectiveAwayStrength = fixture.AwayTeam.Strength;
+
+                // Tactiek van speler toepassen aan juiste kant
+                if (playerIsHome)
+                {
+                    ApplyTactic(choice, ref effectiveHomeStrength, ref effectiveAwayStrength);
+                }
+                else
+                {
+                    ApplyTactic(choice, ref effectiveAwayStrength, ref effectiveHomeStrength);
+                }
+
+                // Elke fase: kans op goal voor beide teams
+                if (RollChanceToScore(effectiveHomeStrength))
+                    homeGoals++;
+
+                if (RollChanceToScore(effectiveAwayStrength))
+                    awayGoals++;
+
+                Console.WriteLine();
+                Console.WriteLine("Druk op een toets voor de volgende fase...");
+                Console.ReadKey(true);
+            }
+
+            fixture.HomeScore = homeGoals;
+            fixture.AwayScore = awayGoals;
+
+            Console.Clear();
+            Console.WriteLine("Einde wedstrijd!");
+            Console.WriteLine($"{fixture.HomeTeam.Name} {fixture.HomeScore} - {fixture.AwayScore} {fixture.AwayTeam.Name}");
+            Console.WriteLine("Druk op een toets om verder te gaan...");
+            Console.ReadKey(true);
+        }
+
+        private TacticChoice AskTacticChoice(string clubName)
+        {
+            while (true)
+            {
+                Console.WriteLine($"{clubName}: kies je tactiek voor deze fase:");
+                Console.WriteLine("1) Aanvallend");
+                Console.WriteLine("2) Defensief");
+                Console.WriteLine("3) Gebalanceerd");
+
+                var key = Console.ReadKey(true).KeyChar;
+                Console.WriteLine();
+
+                switch (key)
+                {
+                    case '1': return TacticChoice.Attack;
+                    case '2': return TacticChoice.Defend;
+                    case '3': return TacticChoice.Balanced;
+                }
+
+                Console.WriteLine("Ongeldige keuze, probeer opnieuw.");
+            }
+        }
+
+        private void ApplyTactic(TacticChoice choice, ref int ownStrength, ref int opponentStrength)
+        {
+            switch (choice)
+            {
+                case TacticChoice.Attack:
+                    ownStrength += 2;      // meer kans op scoren
+                    opponentStrength += 1; // je laat ruimte
+                    break;
+                case TacticChoice.Defend:
+                    ownStrength -= 1;      // minder eigen kansen
+                    opponentStrength -= 2; // maar ook minder tegenkansen
+                    break;
+                case TacticChoice.Balanced:
+                    // geen wijziging
+                    break;
+            }
+
+            if (ownStrength < 0) ownStrength = 0;
+            if (opponentStrength < 0) opponentStrength = 0;
+        }
+
+        private bool RollChanceToScore(int effectiveStrength)
+        {
+            if (effectiveStrength <= 0) return false;
+
+            // Strength 1..5 -> kans tussen ongeveer 10% en 45% per fase
+            int chance = 10 + effectiveStrength * 7; // tweakbaar
+            int roll = Random.Shared.Next(0, 100);
+            return roll < chance;
+        }
+
+        private void ApplyResultToTable(Fixture fixture)
+        {
+            if (fixture.HomeScore > fixture.AwayScore)
+            {
+                UpdateClubStats(fixture.HomeTeam.Id, fixture.HomeScore, fixture.AwayScore, 3);
+                UpdateClubStats(fixture.AwayTeam.Id, fixture.AwayScore, fixture.HomeScore, 0);
+            }
+            else if (fixture.HomeScore < fixture.AwayScore)
+            {
+                UpdateClubStats(fixture.HomeTeam.Id, fixture.HomeScore, fixture.AwayScore, 0);
+                UpdateClubStats(fixture.AwayTeam.Id, fixture.AwayScore, fixture.HomeScore, 3);
+            }
+            else
+            {
+                UpdateClubStats(fixture.HomeTeam.Id, fixture.HomeScore, fixture.AwayScore, 1);
+                UpdateClubStats(fixture.AwayTeam.Id, fixture.AwayScore, fixture.HomeScore, 1);
+            }
+        }
+
+        private void UpdateClubStats(Guid clubId, int goalsFor, int goalsAgainst, int points)
+        {
+            var record = _clubLeagueCompetitions.First(_ => _.ClubId == clubId);
+            record.GoalsFor += goalsFor;
+            record.GoalsAgainst += goalsAgainst;
+            record.Points += points;
         }
     }
 }
