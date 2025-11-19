@@ -6,12 +6,12 @@ namespace FootballFull.Services
 {
     public class SeasonService : ISeasonService
     {
-        private ICompetitionRepository _competitionRepository;
+        private IRepository<Competition> _competitionRepository;
         private IList<ClubLeagueCompetition> _clubLeagueCompetitions;
         private IList<ClubPerCompetition> _clubs;
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
 
-        public SeasonService(ICompetitionRepository competitionRepository)
+        public SeasonService(IRepository<Competition> competitionRepository)
         {
             _competitionRepository = competitionRepository;
         }
@@ -22,7 +22,25 @@ namespace FootballFull.Services
         }
         public void InitializeNewSeason()
         {
+            UpdateClubStrengths();
+            PromotionsAndRelegations();
+            _clubLeagueCompetitions = _clubs.Select(club => new ClubLeagueCompetition
+            {
+                ClubId = club.ClubId,
+                Points = 0,
+                GoalsFor = 0,
+                GoalsAgainst = 0,
+                CompetitionId = club.CompetitionId
+            }).ToList();
+        }
 
+        private void UpdateClubStrengths()
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void PromotionsAndRelegations()
+        {
             if (_clubLeagueCompetitions != null)
             {
                 var promotionsAndRelegationPlaces = 2;
@@ -58,16 +76,7 @@ namespace FootballFull.Services
                     }
                 }
             }
-            _clubLeagueCompetitions = _clubs.Select(club => new ClubLeagueCompetition
-            {
-                ClubId = club.ClubId,
-                Points = 0,
-                GoalsFor = 0,
-                GoalsAgainst = 0,
-                CompetitionId = club.CompetitionId
-            }).ToList();
         }
-
 
         public void PlayMatchDay(IList<Fixture> fixtures, int matchDay)
         {

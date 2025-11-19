@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace FootballFull.Repositories.Interfaces
 {
-    public interface ICountryRepository
+    public interface IRepository<T>
     {
-        List<Country> Load();
+        IList<T> Create(IList<T> itemList);
+        IList<T> Load();
+        void Add(T item);
+        void Update(T updateItem);
+        void Delete(Guid id);
     }
 }

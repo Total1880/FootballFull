@@ -8,9 +8,29 @@ using System.Threading.Tasks;
 
 namespace FootballFull.Repositories
 {
-    public class CountryRepository : ICountryRepository
+    public class CountryRepository : IRepository<Country>
     {
-        public List<Country> Load()
+        public void Add(Country item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Country> Create(IList<Country> itemList)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Country updateItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Country> Load()
         {
             var countries = new List<Country>
             {

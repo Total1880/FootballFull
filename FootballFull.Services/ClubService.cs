@@ -12,13 +12,23 @@ namespace FootballFull.Services
 {
     public class ClubService : IClubService
     {
-        private readonly IClubRepository _clubRepository;
+        private readonly IRepository<Club> _clubRepository;
 
         private IList<Club> _clubs;
 
-        public ClubService(IClubRepository clubRepository)
+        public ClubService(IRepository<Club> clubRepository)
         {
             _clubRepository = clubRepository;
+        }
+
+        public void Add(Club club)
+        {
+            _clubRepository.Add(club);
+        }
+
+        public void Delete(Guid id)
+        {
+            _clubRepository.Delete(id);
         }
 
         public Club GetClubById(Guid clubId)
@@ -30,6 +40,11 @@ namespace FootballFull.Services
         {
             _clubs = _clubs ?? _clubRepository.Load();
             return _clubs;
+        }
+
+        public void Update(Club updatedClub)
+        {
+            _clubRepository.Update(updatedClub);
         }
     }
 }

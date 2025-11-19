@@ -4,9 +4,29 @@ using System.Text.Json;
 
 namespace FootballFull.Repositories
 {
-    public class ClubRepository : IClubRepository
+    public class ClubRepository : IRepository<Club>
     {
-        public List<Club> Load(string path = "data/Clubs.json")
+        public void Add(Club club)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Club> Create(IList<Club> itemList)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Club updatedClub)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Club> Load()
         {
             var clubs = new List<Club>();
             clubs.Add(new Club { Id = new Guid("978741d3-0efc-4a23-8f7a-eb8e64df8131"), Name = "Union SG", Strength = 3, CountryId = new Guid("7a7efcb7-f4c5-477c-9210-b897dc7f00f1") });

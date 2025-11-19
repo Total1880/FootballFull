@@ -8,9 +8,29 @@ using System.Threading.Tasks;
 
 namespace FootballFull.Repositories
 {
-    public class ClubPerCompetitionRepository : IClubPerCompetitionRepository
+    public class ClubPerCompetitionRepository : IRepository<ClubPerCompetition>
     {
-        public List<ClubPerCompetition> Load()
+        public void Add(ClubPerCompetition item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<ClubPerCompetition> Create(IList<ClubPerCompetition> itemList)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(ClubPerCompetition updateItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<ClubPerCompetition> Load()
         {
             var list = new List<ClubPerCompetition>
             {

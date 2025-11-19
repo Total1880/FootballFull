@@ -11,9 +11,9 @@ namespace FootballFull.Services
 {
     public class CompetitionService : ICompetitionService
     {
-        private readonly ICompetitionRepository _competitionRepository;
+        private readonly IRepository<Competition> _competitionRepository;
 
-        public CompetitionService(ICompetitionRepository competitionRepository)
+        public CompetitionService(IRepository<Competition> competitionRepository)
         {
             _competitionRepository = competitionRepository;
         }
