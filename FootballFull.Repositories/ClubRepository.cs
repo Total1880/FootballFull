@@ -42,6 +42,18 @@ namespace FootballFull.Repositories
             clubs.Add(new Club { Id = new Guid("4ba313a7-e199-47df-a2d9-4a11931c220a"), Name = "Sporting Hasselt", Strength = 3, CountryId = new Guid("8cd43bfd-78e6-4272-9164-244a81811b2d") });
             clubs.Add(new Club { Id = new Guid("904d950d-340e-46fd-bafd-afbe4b11240d"), Name = "Tubize-Braine", Strength = 3, CountryId = new Guid("8cd43bfd-78e6-4272-9164-244a81811b2d") });
             clubs.Add(new Club { Id = new Guid("7f2ae085-52dc-4611-a97e-3983bf939485"), Name = "VCO", Strength = 3, CountryId = new Guid("8cd43bfd-78e6-4272-9164-244a81811b2d") });
+            clubs.Add(new Club { Id = new Guid("a91a7dc7-9d0f-4522-a39a-2de5700d420e"), Name = "Belisia Bilzen", Strength = 3, CountryId = new Guid("8cd43bfd-78e6-4272-9164-244a81811b2d") });
+            clubs.Add(new Club { Id = new Guid("01947dcd-5be0-4577-8605-d4ddc556e4f3"), Name = "Mons", Strength = 3, CountryId = new Guid("8cd43bfd-78e6-4272-9164-244a81811b2d") });
+
+            clubs.Add(new Club { Id = new Guid("6d572d64-c3e9-453a-8351-8e855f34972d"), Name = "Lyra-Lierse", Strength = 3, CountryId = new Guid("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") });
+            clubs.Add(new Club { Id = new Guid("a3345e71-89b5-4f56-be62-3bde4ad13155"), Name = "Virton", Strength = 3, CountryId = new Guid("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") });
+            clubs.Add(new Club { Id = new Guid("ed72c1df-d08d-4f69-85e6-9a718ab6dfca"), Name = "Thes", Strength = 3, CountryId = new Guid("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") });
+            clubs.Add(new Club { Id = new Guid("bdc369ce-d1fa-4abc-9483-8f03c1f4d8f4"), Name = "Habay-La-Neuve", Strength = 3, CountryId = new Guid("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") });
+            clubs.Add(new Club { Id = new Guid("f4edde56-18d7-426e-abe9-e2b28ab3b1ea"), Name = "Roeselare", Strength = 3, CountryId = new Guid("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") });
+            clubs.Add(new Club { Id = new Guid("21cf16ce-2ef4-4cdc-84e5-2aff29afd02e"), Name = "Meux", Strength = 3, CountryId = new Guid("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") });
+            clubs.Add(new Club { Id = new Guid("5315a7f4-4bbe-4212-9316-2a29d2d8ba6a"), Name = "Dessel", Strength = 3, CountryId = new Guid("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") });
+            clubs.Add(new Club { Id = new Guid("7725888d-9726-4486-a846-0384b42b8273"), Name = "Stockay-St-Georges", Strength = 3, CountryId = new Guid("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") });
+
             return clubs;
         }
     }

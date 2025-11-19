@@ -120,6 +120,8 @@ void DisplayResult(int matchDay)
             .Where(_ => _.MatchDay == matchDay && _.CompetitionId == competition.Id)
             .ToList();
 
+        if (fixturesForMatchDay.Count == 0) continue;
+
         // Dynamische kolombreedtes bepalen
         int homeWidth = fixturesForMatchDay.Max(f => f.HomeTeam.Name.Length) + 2;
         int awayWidth = fixturesForMatchDay.Max(f => f.AwayTeam.Name.Length) + 2;

@@ -47,6 +47,18 @@ namespace FootballFull.Repositories
                 new ClubPerCompetition { ClubId = Guid.Parse("4ba313a7-e199-47df-a2d9-4a11931c220a"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
                 new ClubPerCompetition { ClubId = Guid.Parse("904d950d-340e-46fd-bafd-afbe4b11240d"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
                 new ClubPerCompetition { ClubId = Guid.Parse("7f2ae085-52dc-4611-a97e-3983bf939485"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("a91a7dc7-9d0f-4522-a39a-2de5700d420e"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("01947dcd-5be0-4577-8605-d4ddc556e4f3"), CompetitionId = Guid.Parse("8cd43bfd-78e6-4272-9164-244a81811b2d") },
+
+                new ClubPerCompetition { ClubId = Guid.Parse("6d572d64-c3e9-453a-8351-8e855f34972d"), CompetitionId = Guid.Parse("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("a3345e71-89b5-4f56-be62-3bde4ad13155"), CompetitionId = Guid.Parse("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("ed72c1df-d08d-4f69-85e6-9a718ab6dfca"), CompetitionId = Guid.Parse("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("bdc369ce-d1fa-4abc-9483-8f03c1f4d8f4"), CompetitionId = Guid.Parse("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("f4edde56-18d7-426e-abe9-e2b28ab3b1ea"), CompetitionId = Guid.Parse("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("21cf16ce-2ef4-4cdc-84e5-2aff29afd02e"), CompetitionId = Guid.Parse("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("5315a7f4-4bbe-4212-9316-2a29d2d8ba6a"), CompetitionId = Guid.Parse("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") },
+                new ClubPerCompetition { ClubId = Guid.Parse("7725888d-9726-4486-a846-0384b42b8273"), CompetitionId = Guid.Parse("ca43fe64-c20d-42ea-b2d3-abc24cddb54d") },
+
 
             };
 
