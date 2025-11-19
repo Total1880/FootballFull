@@ -4,8 +4,6 @@ using FootballFull.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FootballFull.Services
 {
@@ -15,11 +13,49 @@ namespace FootballFull.Services
 
         public CompetitionService(IRepository<Competition> competitionRepository)
         {
-            _competitionRepository = competitionRepository;
+            _competitionRepository = competitionRepository
+                ?? throw new ArgumentNullException(nameof(competitionRepository));
         }
+
+        public void Add(Competition competition)
+        {
+            if (competition == null)
+                throw new ArgumentNullException(nameof(competition));
+
+            _competitionRepository.Add(competition);
+        }
+
+        public void Update(Competition competition)
+        {
+            if (competition == null)
+                throw new ArgumentNullException(nameof(competition));
+            if (competition.Id == Guid.Empty)
+                throw new ArgumentException("Competition must have a valid Id.");
+
+            _competitionRepository.Update(competition);
+        }
+
+        public void Delete(Guid id)
+        {
+            if (id == Guid.Empty)
+                throw new ArgumentException("Id cannot be empty.");
+
+            _competitionRepository.Delete(id);
+        }
+
         public IList<Competition> GetCompetitions()
         {
             return _competitionRepository.Load();
+        }
+
+        public Competition? GetCompetitionById(Guid id)
+        {
+            if (id == Guid.Empty)
+                throw new ArgumentException("Id cannot be empty.");
+
+            return _competitionRepository
+                .Load()
+                .FirstOrDefault(c => c.Id == id);
         }
     }
 }

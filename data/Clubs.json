@@ -1,0 +1,50 @@
+[
+  {
+    "Name": "Antwerp",
+    "Strength": 2,
+    "Id": "5f5232b8-6969-4e41-ab84-ce363f64922e",
+    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
+  },
+  {
+    "Name": "Union SG",
+    "Strength": 1,
+    "Id": "122c1c60-b399-4f3e-8d73-a6c550ca7757",
+    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
+  },
+  {
+    "Name": "Club Brugge",
+    "Strength": 0,
+    "Id": "b1a70112-f093-49a3-b5b3-a104a636d048",
+    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
+  },
+  {
+    "Name": "Anderlecht",
+    "Strength": -1,
+    "Id": "74735147-0a2f-4858-8a79-9d504f335ec9",
+    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
+  },
+  {
+    "Name": "Sint-Truiden",
+    "Strength": 2,
+    "Id": "6f5a6dc9-afe9-47c9-83f1-00ecf674eb34",
+    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
+  },
+  {
+    "Name": "AA Gent",
+    "Strength": 1,
+    "Id": "99a1d30a-fc04-4c59-96b5-1884bf4bbf34",
+    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
+  },
+  {
+    "Name": "KV Mechelen",
+    "Strength": 0,
+    "Id": "f155f6e3-2d9a-41cf-a3a4-3283ded44fac",
+    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
+  },
+  {
+    "Name": "RC Genk",
+    "Strength": -1,
+    "Id": "a3f2af67-d555-4e7a-b246-343183fda6bf",
+    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
+  }
+]

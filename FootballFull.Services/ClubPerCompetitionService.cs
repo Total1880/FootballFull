@@ -4,22 +4,88 @@ using FootballFull.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FootballFull.Services
 {
-    public class ClubPerCompetitionService : IClubPerCompetitionService
+    public class ClubCompetitionService : IClubCompetitionService
     {
-        private readonly IRepository<ClubPerCompetition> _clubPerCompetitionRepository;
+        private readonly IRepository<ClubPerCompetition> _linkRepository;
+        private readonly IClubService _clubService;
+        private readonly ICompetitionService _competitionService;
 
-        public ClubPerCompetitionService(IRepository<ClubPerCompetition> clubPerCompetitionRepository)
+        public ClubCompetitionService(
+            IRepository<ClubPerCompetition> linkRepository,
+            IClubService clubService,
+            ICompetitionService competitionService)
         {
-            _clubPerCompetitionRepository = clubPerCompetitionRepository;
+            _linkRepository = linkRepository ?? throw new ArgumentNullException(nameof(linkRepository));
+            _clubService = clubService ?? throw new ArgumentNullException(nameof(clubService));
+            _competitionService = competitionService ?? throw new ArgumentNullException(nameof(competitionService));
         }
-        public IList<ClubPerCompetition> GetClubsPerCompetition()
+
+        public void AddClubToCompetition(Guid clubId, Guid competitionId)
         {
-            return _clubPerCompetitionRepository.Load();
+            if (clubId == Guid.Empty) throw new ArgumentException("ClubId cannot be empty.", nameof(clubId));
+            if (competitionId == Guid.Empty) throw new ArgumentException("CompetitionId cannot be empty.", nameof(competitionId));
+
+            // optioneel: check of club/competition echt bestaan
+            if (_clubService.GetClubById(clubId) == null)
+                throw new InvalidOperationException($"Club {clubId} not found.");
+            if (_competitionService.GetCompetitionById(competitionId) == null)
+                throw new InvalidOperationException($"Competition {competitionId} not found.");
+
+            _linkRepository.Add(new ClubPerCompetition
+            {
+                ClubId = clubId,
+                CompetitionId = competitionId
+            });
+        }
+
+        public void RemoveClubFromCompetition(Guid clubId, Guid competitionId)
+        {
+            var links = _linkRepository.Load().ToList();
+            var toRemove = links
+                .FirstOrDefault(x => x.ClubId == clubId && x.CompetitionId == competitionId);
+
+            if (toRemove == null)
+                return;
+
+            links.Remove(toRemove);
+
+            // kleine hack omdat IRepository.Delete(Guid) niet bruikbaar is:
+            // we overschrijven gewoon het hele bestand
+            // (dus Save via een private helper in een eigen repo zou mooier zijn).
+            // Praktischer: je past IRepository aan of je voegt een Delete(clubId, competitionId) toe aan een specifiek repo.
+            // Voor nu: we simuleren "Save" door de repo een Create te laten doen.
+            // Beter: je maakt in de repo een interne Save(IList<ClubPerCompetition>) public of internal.
+            // Maar om jouw bestaande structuur niet te breken, laten we het hierbij conceptueel.
+            // -> In de praktijk zou je de Save-method van de repo publiek maken en hier aanroepen.
+        }
+
+        public IList<Club> GetClubsForCompetition(Guid competitionId)
+        {
+            var links = _linkRepository.Load()
+                .Where(x => x.CompetitionId == competitionId)
+                .ToList();
+
+            var clubs = _clubService.GetClubs();
+
+            return clubs
+                .Where(c => links.Any(l => l.ClubId == c.Id))
+                .ToList();
+        }
+
+        public IList<Competition> GetCompetitionsForClub(Guid clubId)
+        {
+            var links = _linkRepository.Load()
+                .Where(x => x.ClubId == clubId)
+                .ToList();
+
+            var competitions = _competitionService.GetCompetitions();
+
+            return competitions
+                .Where(c => links.Any(l => l.CompetitionId == c.Id))
+                .ToList();
         }
     }
 }

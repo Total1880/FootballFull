@@ -9,6 +9,10 @@ namespace FootballFull.Services.Interfaces
 {
     public interface ICompetitionService
     {
-        public IList<Competition> GetCompetitions();
+        void Add(Competition competition);
+        void Update(Competition competition);
+        void Delete(Guid id);
+        IList<Competition> GetCompetitions();
+        Competition? GetCompetitionById(Guid id);
     }
 }

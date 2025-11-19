@@ -12,25 +12,41 @@ var services = new ServiceCollection();
 // Services
 services.AddSingleton<IClubService, ClubService>();
 services.AddSingleton<ICountryService, CountryService>();
+services.AddSingleton<ICompetitionService, CompetitionService>();
+services.AddSingleton<IClubCompetitionService, ClubCompetitionService>();
 
 // Repositories
-services.AddSingleton<IRepository<Club>, ClubRepositoryV2>();
-services.AddSingleton<IRepository<Country>, CountryRepositoryV2>();
+const string dataRoot = @"C:\Users\olavh\source\repos\FootballFull\data";
+services.AddSingleton<IRepository<Club>>(
+    _ => new ClubRepositoryV2(Path.Combine(dataRoot, "Clubs.json")));
+
+services.AddSingleton<IRepository<Competition>>(
+    _ => new CompetitionRepositoryV2(Path.Combine(dataRoot, "Competitions.json")));
+
+services.AddSingleton<IRepository<Country>>(
+    _ => new CountryRepositoryV2(Path.Combine(dataRoot, "Countries.json")));
+
+services.AddSingleton<IRepository<ClubPerCompetition>>(
+    _ => new ClubPerCompetitionRepositoryV2(Path.Combine(dataRoot, "ClubPerCompetition.json")));
 
 // Editors
 services.AddSingleton<CountryEditor>();
 services.AddSingleton<ClubEditor>();
+services.AddSingleton<CompetitionEditor>();
 
 var provider = services.BuildServiceProvider();
 
 var clubEditor = provider.GetRequiredService<ClubEditor>();
 var countryEditor = provider.GetRequiredService<CountryEditor>();
+var competitionEditor = provider.GetRequiredService<CompetitionEditor>();
+
+
 
 while (true)
 {
     Console.Clear();
     Console.WriteLine("What to edit?");
-    Console.WriteLine("\n[C]lubs  |  C[O]untry  |  [Q]uit");
+    Console.WriteLine("\n[C]lubs  |  C[O]untry  |  [P]competitions  |  [Q]uit");
 
     var key = Console.ReadKey(intercept: true).Key;
     switch (key)
@@ -40,6 +56,9 @@ while (true)
             break;
         case ConsoleKey.O:
             countryEditor.Run();
+            break;
+        case ConsoleKey.P:
+            competitionEditor.Run();
             break;
         case ConsoleKey.Q:
             return;

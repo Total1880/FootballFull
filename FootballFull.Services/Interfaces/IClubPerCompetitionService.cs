@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace FootballFull.Services.Interfaces
 {
-    public interface IClubPerCompetitionService
+    public interface IClubCompetitionService
     {
-        IList<ClubPerCompetition> GetClubsPerCompetition();
+        void AddClubToCompetition(Guid clubId, Guid competitionId);
+        void RemoveClubFromCompetition(Guid clubId, Guid competitionId);
+
+        IList<Club> GetClubsForCompetition(Guid competitionId);
+        IList<Competition> GetCompetitionsForClub(Guid clubId);
     }
 }

@@ -1,0 +1,16 @@
+[
+  {
+    "Id": "9632b0a9-979b-4fa1-abf5-9d2fe21030da",
+    "Name": "Jupiler Pro League",
+    "Country": null,
+    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
+    "Tier": 1
+  },
+  {
+    "Id": "adce6f37-e779-4017-94ee-da93d74c31d0",
+    "Name": "Challenger Pro League",
+    "Country": null,
+    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
+    "Tier": 2
+  }
+]
