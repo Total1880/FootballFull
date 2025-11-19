@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballFull.Services", "Fo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballFullEditor", "FootballFullEditor\FootballFullEditor.csproj", "{1F53E2BC-523B-4C85-8B14-B6226B15C97E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballFullEditor.ConsoleUI", "FootballFullEditor.ConsoleUI\FootballFullEditor.ConsoleUI.csproj", "{9C58E38C-C5D8-4541-AAAC-32BCF4F0E884}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{1F53E2BC-523B-4C85-8B14-B6226B15C97E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F53E2BC-523B-4C85-8B14-B6226B15C97E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F53E2BC-523B-4C85-8B14-B6226B15C97E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C58E38C-C5D8-4541-AAAC-32BCF4F0E884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C58E38C-C5D8-4541-AAAC-32BCF4F0E884}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C58E38C-C5D8-4541-AAAC-32BCF4F0E884}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C58E38C-C5D8-4541-AAAC-32BCF4F0E884}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

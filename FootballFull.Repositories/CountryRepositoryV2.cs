@@ -4,15 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace FootballFull.Repositories
 {
     public class CountryRepositoryV2 : IRepository<Country>
     {
-
         private readonly string _path;
         private readonly JsonSerializerOptions _options;
 
@@ -25,6 +22,7 @@ namespace FootballFull.Repositories
                 PropertyNameCaseInsensitive = true
             };
         }
+
         public void Add(Country item)
         {
             var list = Load();
@@ -39,39 +37,70 @@ namespace FootballFull.Repositories
 
         public IList<Country> Create(IList<Country> itemList)
         {
-            throw new NotImplementedException();
+            if (itemList == null)
+                throw new ArgumentNullException(nameof(itemList));
+
+            var list = Load();
+
+            foreach (var item in itemList)
+            {
+                if (item.Id == Guid.Empty)
+                    item.Id = Guid.NewGuid();
+
+                list.Add(item);
+            }
+
+            Save(list);
+            return itemList;
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var list = Load();
+            var toRemove = list.FirstOrDefault(c => c.Id == id);
+            if (toRemove == null)
+                return; // of throw, afhankelijk van wat je wilt
+
+            list.Remove(toRemove);
+            Save(list);
         }
 
         public void Update(Country updateItem)
         {
-            throw new NotImplementedException();
+            if (updateItem == null)
+                throw new ArgumentNullException(nameof(updateItem));
+
+            var list = Load();
+            var existingIndex = list
+                .Select((c, index) => new { c, index })
+                .FirstOrDefault(x => x.c.Id == updateItem.Id)?.index;
+
+            if (existingIndex == null)
+                throw new InvalidOperationException($"Country with Id {updateItem.Id} not found.");
+
+            // Volledig vervangen door de nieuwe versie
+            list[existingIndex.Value] = updateItem;
+            Save(list);
         }
 
         public IList<Country> Load()
         {
-            var countries = new List<Country>
-            {
-                new Country { Id = new Guid("7a7efcb7-f4c5-477c-9210-b897dc7f00f1"), Name = "Belgium" },
-            };
+            if (!File.Exists(_path))
+                return new List<Country>();
 
-            return countries;
+            var json = File.ReadAllText(_path);
+            return JsonSerializer.Deserialize<List<Country>>(json, _options) ?? new List<Country>();
         }
 
-        private void Save(IList<Country> clubs)
+        private void Save(IList<Country> countries)
         {
-            var json = JsonSerializer.Serialize(clubs, _options);
+            var json = JsonSerializer.Serialize(countries, _options);
 
             var dir = Path.GetDirectoryName(_path);
-            if (!Directory.Exists(dir))
+            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
                 Directory.CreateDirectory(dir!);
 
             File.WriteAllText(_path, json);
         }
-
     }
 }

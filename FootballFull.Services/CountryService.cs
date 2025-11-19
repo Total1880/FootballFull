@@ -1,12 +1,9 @@
 ﻿using FootballFull.Models;
-using FootballFull.Repositories;
 using FootballFull.Repositories.Interfaces;
 using FootballFull.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FootballFull.Services
 {
@@ -16,31 +13,49 @@ namespace FootballFull.Services
 
         public CountryService(IRepository<Country> countryRepository)
         {
-            _countryRepository = countryRepository;
+            _countryRepository = countryRepository ?? throw new ArgumentNullException(nameof(countryRepository));
         }
+
         public void Add(Country country)
         {
+            if (country == null)
+                throw new ArgumentNullException(nameof(country));
+
             _countryRepository.Add(country);
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            if (id == Guid.Empty)
+                throw new ArgumentException("Id cannot be empty.", nameof(id));
+
+            _countryRepository.Delete(id);
         }
 
         public IList<Country> GetCountries()
         {
-            throw new NotImplementedException();
+            return _countryRepository.Load();
         }
 
-        public Country GetCountryById(Guid countryId)
+        public Country? GetCountryById(Guid countryId)
         {
-            throw new NotImplementedException();
+            if (countryId == Guid.Empty)
+                throw new ArgumentException("Id cannot be empty.", nameof(countryId));
+
+            return _countryRepository
+                .Load()
+                .FirstOrDefault(c => c.Id == countryId);
         }
 
         public void Update(Country updatedCountry)
         {
-            throw new NotImplementedException();
+            if (updatedCountry == null)
+                throw new ArgumentNullException(nameof(updatedCountry));
+
+            if (updatedCountry.Id == Guid.Empty)
+                throw new ArgumentException("Country must have a valid Id to update.", nameof(updatedCountry));
+
+            _countryRepository.Update(updatedCountry);
         }
     }
 }

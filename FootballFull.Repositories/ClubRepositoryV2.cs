@@ -1,5 +1,9 @@
 ﻿using FootballFull.Models;
 using FootballFull.Repositories.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text.Json;
 
 namespace FootballFull.Repositories
@@ -21,6 +25,9 @@ namespace FootballFull.Repositories
 
         public void Add(Club club)
         {
+            if (club == null)
+                throw new ArgumentNullException(nameof(club));
+
             var clubs = Load();
 
             // Als Id niet gevuld is, automatisch aanmaken
@@ -31,31 +38,74 @@ namespace FootballFull.Repositories
             Save(clubs);
         }
 
-        public void Update(Club updatedClub)
+        public IList<Club> Create(IList<Club> itemList)
         {
+            if (itemList == null)
+                throw new ArgumentNullException(nameof(itemList));
+
             var clubs = Load();
 
-            var existing = clubs.FirstOrDefault(c => c.Id == updatedClub.Id);
-            if (existing == null)
-                throw new Exception($"Club with ID {updatedClub.Id} not found.");
+            foreach (var club in itemList)
+            {
+                if (club.Id == Guid.Empty)
+                    club.Id = Guid.NewGuid();
 
-            existing.Name = updatedClub.Name;
-            existing.Strength = updatedClub.Strength;
-            existing.CountryId = updatedClub.CountryId;
+                clubs.Add(club);
+            }
 
+            Save(clubs);
+            return itemList;
+        }
+
+        public void Update(Club updatedClub)
+        {
+            if (updatedClub == null)
+                throw new ArgumentNullException(nameof(updatedClub));
+
+            var clubs = Load();
+
+            var index = clubs
+                .Select((c, i) => new { c, i })
+                .FirstOrDefault(x => x.c.Id == updatedClub.Id)?.i;
+
+            if (index == null)
+                throw new InvalidOperationException($"Club with ID {updatedClub.Id} not found.");
+
+            // Volledig vervangen door nieuwe versie
+            clubs[index.Value] = updatedClub;
             Save(clubs);
         }
 
         public void Delete(Guid id)
         {
+            if (id == Guid.Empty)
+                throw new ArgumentException("Id cannot be empty.", nameof(id));
+
             var clubs = Load();
 
             var club = clubs.FirstOrDefault(c => c.Id == id);
             if (club == null)
-                throw new Exception($"Club with ID {id} not found.");
+                return; // of throw, afhankelijk van gewenste behavior
 
             clubs.Remove(club);
             Save(clubs);
+        }
+
+        public IList<Club> Load()
+        {
+            if (File.Exists(_path))
+            {
+                var json = File.ReadAllText(_path);
+                if (!string.IsNullOrWhiteSpace(json))
+                {
+                    var clubs = JsonSerializer.Deserialize<List<Club>>(json, _options);
+                    if (clubs != null)
+                        return clubs;
+                }
+            }
+
+            // Geen bestand of leeg: begin met lege lijst (clubs seed je dan via editor)
+            return new List<Club>();
         }
 
         private void Save(IList<Club> clubs)
@@ -63,24 +113,10 @@ namespace FootballFull.Repositories
             var json = JsonSerializer.Serialize(clubs, _options);
 
             var dir = Path.GetDirectoryName(_path);
-            if (!Directory.Exists(dir))
+            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
                 Directory.CreateDirectory(dir!);
 
             File.WriteAllText(_path, json);
-        }
-
-        public IList<Club> Create(IList<Club> itemList)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IList<Club> Load()
-        {
-            if (!File.Exists(_path))
-                return new List<Club>();
-
-            var json = File.ReadAllText(_path);
-            return JsonSerializer.Deserialize<List<Club>>(json, _options) ?? new List<Club>();
         }
     }
 }
