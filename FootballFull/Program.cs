@@ -45,7 +45,7 @@ var clubsPerCompetition = clubPerCompetitionRepo.Load();
 var competitions = competitionService.GetCompetitions();
 
 // TODO: user club Id kiezen via config / input
-Guid userClubId = new Guid("5f5232b8-6969-4e41-ab84-ce363f64922e");
+Guid userClubId = seasonService.ChoosePlayerClub();
 
 // Init eerste seizoen
 seasonService.Initialize(clubsPerCompetition);
@@ -55,13 +55,55 @@ var matchDays = fixtures.Max(_ => _.MatchDay);
 do
 {
     Console.Clear();
-    Console.WriteLine("Football Season Fixtures:");
+    Console.WriteLine("=== Football Season Fixtures ===");
     Console.WriteLine();
 
-    // Alle fixtures tonen
+    // --- FIXTURE OVERVIEW ---
+    ShowAllFixtures(fixtures, matchDays);
+
+    Console.WriteLine("Press any key to start the season simulation...");
+    Console.ReadKey();
+    Console.Clear();
+
+    var competitionId = clubsPerCompetition
+    .First(_ => _.ClubId == userClubId)
+    .CompetitionId;
+
+    var competitionToShow = competitions.First(_ => _.Id == competitionId);
+
+    // --- MATCHDAY SIMULATION ---
+    for (int matchDay = 1; matchDay <= matchDays; matchDay++)
+    {
+        seasonService.PlayMatchDay(fixtures, matchDay, userClubId);
+
+        // Toon resultaten van speeldag
+        DisplayResult(matchDay);
+        Console.WriteLine();
+        DisplayLeagueTable();
+        Console.WriteLine();
+        DisplayNextFixture(userClubId, fixtures, matchDays, competitionToShow, matchDay);
+
+        Console.Clear();
+    }
+
+    // --- END OF SEASON ---
+    Console.WriteLine("Season complete! Press any key to restart a new season.");
+    Console.ReadKey();
+    Console.Clear();
+
+    seasonService.InitializeNewSeason();
+    fixtures = fixtureService.Generate(clubsPerCompetition);
+    matchDays = fixtures.Max(_ => _.MatchDay);
+
+} while (true);
+
+static void ShowAllFixtures(IList<Fixture> fixtures, int matchDays)
+{
     for (int matchDay = 1; matchDay <= matchDays; matchDay++)
     {
         Console.WriteLine($"Match Day {matchDay}");
+        Console.WriteLine(new string('-', 22));
+
         var fixturesForMatchDay = fixtures
             .Where(_ => _.MatchDay == matchDay)
             .ToList();
@@ -73,42 +115,22 @@ do
 
         Console.WriteLine();
     }
+}
 
-    Console.WriteLine("Press any key to start the season simulation...");
-    Console.ReadKey();
-    Console.Clear();
-
-    // Matchdays spelen
-    for (int matchDay = 1; matchDay <= matchDays; matchDay++)
-    {
-        seasonService.PlayMatchDay(fixtures, matchDay, userClubId);
-
-        DisplayResult(matchDay);
-        Console.WriteLine();
-        DisplayLeagueTable();
-
-        Console.WriteLine("Press any key for next matchday...");
-        Console.ReadKey();
-        Console.Clear();
-    }
-
-    Console.WriteLine("Season complete! Press any key to restart a new season.");
-    Console.ReadKey();
-    Console.Clear();
-
-    seasonService.InitializeNewSeason();
-    fixtures = fixtureService.Generate(clubsPerCompetition);
-    matchDays = fixtures.Max(_ => _.MatchDay);
-
-} while (true);
 
 void DisplayLeagueTable()
 {
     // Bepaal kolombreedtes
+    const int positionWidth = 4;
     const int nameWidth = 25;
+    const int gamesWidth = 8;
+    const int wonWidth = 8;
+    const int drawWidth = 8;
+    const int lostWidth = 8;
+    const int gfWidth = 6;
+    const int gaWidth = 6;
+    const int gdWidth = 6;
     const int pointsWidth = 8;
-    const int gfWidth = 10;
-    const int gaWidth = 12;
 
     // Bepaal competitie van user club
     var competitionId = clubsPerCompetition
@@ -122,27 +144,43 @@ void DisplayLeagueTable()
 
     // Header
     Console.WriteLine(
+        $"{"P".PadRight(positionWidth)}" +
         $"{"Club".PadRight(nameWidth)}" +
-        $"{"Points".PadLeft(pointsWidth)}" +
+        $"{"Games".PadLeft(gamesWidth)}" +
+        $"{"Won".PadLeft(wonWidth)}" +
+        $"{"Draw".PadLeft(drawWidth)}" +
+        $"{"Lost".PadLeft(lostWidth)}" +
         $"{"GF".PadLeft(gfWidth)}" +
-        $"{"GA".PadLeft(gaWidth)}"
+        $"{"GA".PadLeft(gaWidth)}" +
+        $"{"GD".PadLeft(gdWidth)}" +
+        $"{"Points".PadLeft(pointsWidth)}"
     );
 
-    Console.WriteLine(new string('-', nameWidth + pointsWidth + gfWidth + gaWidth));
-
+    Console.WriteLine(new string('-', positionWidth + nameWidth + gamesWidth + wonWidth + drawWidth + lostWidth + pointsWidth + gfWidth + gaWidth + gdWidth));
+    var counter = 1;
     foreach (var c in seasonService.ClubLeagueCompetitions
                  .Where(_ => _.CompetitionId == competitionToShow.Id)
                  .OrderByDescending(_ => _.Points)
                  .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst))
     {
         var club = clubService.GetClubById(c.ClubId);
+        if (c.ClubId == userClubId)
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
         Console.WriteLine(
-            $"{club.Name.PadRight(nameWidth)}" +
-            $"{c.Points.ToString().PadLeft(pointsWidth)}" +
-            $"{c.GoalsFor.ToString().PadLeft(gfWidth)}" +
-            $"{c.GoalsAgainst.ToString().PadLeft(gaWidth)}"
-        );
+                $"{counter.ToString().PadRight(positionWidth)}" +
+                $"{club.Name.PadLeft(nameWidth)}" +
+                $"{c.MatchesPlayed.ToString().PadLeft(gamesWidth)}" +
+                $"{c.Won.ToString().PadLeft(wonWidth)}" +
+                $"{c.Draw.ToString().PadLeft(drawWidth)}" +
+                $"{c.Lost.ToString().PadLeft(lostWidth)}" +
+                $"{c.GoalsFor.ToString().PadLeft(gfWidth)}" +
+                $"{c.GoalsAgainst.ToString().PadLeft(gaWidth)}" +
+                $"{c.GoalDifference.ToString().PadLeft(gdWidth)}" +
+                $"{c.Points.ToString().PadLeft(pointsWidth)}"
+            );
+        Console.ResetColor();
+        counter++;
     }
 }
 
@@ -181,13 +219,50 @@ void DisplayResult(int matchDay)
     foreach (var fixture in fixturesForMatchDay)
     {
         var score = $"{fixture.HomeScore} - {fixture.AwayScore}";
+        if (fixture.HomeTeamId == userClubId || fixture.AwayTeamId == userClubId)
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
 
         Console.WriteLine(
             $"{fixture.HomeTeam.Name.PadRight(homeWidth)}" +
             $"{score.PadRight(8)}" +
             $"{fixture.AwayTeam.Name.PadRight(awayWidth)}"
         );
+        Console.ResetColor();
     }
 
     Console.WriteLine();
+}
+
+static void DisplayNextFixture(Guid userClubId, IList<Fixture> fixtures, int matchDays, Competition competitionToShow, int matchDay)
+{
+    if (matchDay < matchDays)
+    {
+        var nextDay = matchDay + 1;
+        Console.WriteLine($"Next Match Day: {nextDay}");
+        Console.WriteLine(new string('-', 25));
+
+        var nextFixtures = fixtures
+            .Where(_ => _.MatchDay == nextDay && _.CompetitionId == competitionToShow.Id)
+            .ToList();
+
+        foreach (var f in nextFixtures)
+        {
+            if (f.HomeTeamId == userClubId || f.AwayTeamId == userClubId)
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.WriteLine($"{f.HomeTeam.Name} vs {f.AwayTeam.Name}");
+            Console.ResetColor();
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Press any key for next matchday...");
+        Console.ReadKey();
+    }
+    else
+    {
+        // Laatste speeldag → geen preview
+        Console.WriteLine("Season complete! Press any key...");
+        Console.ReadKey();
+    }
 }

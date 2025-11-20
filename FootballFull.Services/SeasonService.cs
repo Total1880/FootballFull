@@ -36,7 +36,7 @@ namespace FootballFull.Services
             }).ToList();
         }
 
-        private void RecalculateStrengths(int minStrength = 1, int maxStrength = 5)
+        private void RecalculateStrengths(int minStrength = 1, int maxStrength = 9)
         {
             if (_clubLeagueCompetitions == null || !_clubLeagueCompetitions.Any())
                 return ;
@@ -94,7 +94,7 @@ namespace FootballFull.Services
 
             const int promotionsAndRelegationPlaces = 2;
             const int minStrength = 1;
-            const int maxStrength = 5;
+            const int maxStrength = 9;
 
             var competitions = _competitionRepository.Load();
 
@@ -264,9 +264,9 @@ namespace FootballFull.Services
                 if (RollChanceToScore(effectiveAwayStrength))
                     awayGoals++;
 
-                Console.WriteLine();
-                Console.WriteLine("Druk op een toets voor de volgende fase...");
-                Console.ReadKey(true);
+                //Console.WriteLine();
+                //Console.WriteLine("Druk op een toets voor de volgende fase...");
+                //Console.ReadKey(true);
             }
 
             fixture.HomeScore = homeGoals;
@@ -358,6 +358,43 @@ namespace FootballFull.Services
             record.GoalsFor += goalsFor;
             record.GoalsAgainst += goalsAgainst;
             record.Points += points;
+            if (goalsFor > goalsAgainst)
+                record.Won++;
+            else if (goalsAgainst > goalsFor)
+                record.Lost++;
+            else
+                record.Draw++;
+            record.MatchesPlayed++;
+        }
+
+        public Guid ChoosePlayerClub()
+        {
+            // Haal clubs op
+            var clubs = _clubService.GetClubs();
+
+            Console.WriteLine("Kies je club:");
+            for (int i = 0; i < clubs.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {clubs[i].Name}");
+            }
+
+            Console.Write("\nGeef het nummer van je club: ");
+            var input = Console.ReadLine();
+
+            if (int.TryParse(input, out int chosenIndex) &&
+                chosenIndex > 0 &&
+                chosenIndex <= clubs.Count)
+            {
+                
+                Console.WriteLine($"Je hebt gekozen: {clubs[chosenIndex - 1].Name}");
+                return clubs[chosenIndex - 1].Id;
+            }
+            else
+            {
+                Console.WriteLine("Ongeldige keuze. Standaardclub wordt gebruikt.");
+                // fallback club
+                return clubs[0].Id;
+            }
         }
     }
 }

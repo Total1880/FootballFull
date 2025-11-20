@@ -8,6 +8,7 @@ namespace FootballFull.Services.Interfaces
         void Initialize(IList<ClubPerCompetition> clubs);
         void InitializeNewSeason();
         void PlayMatchDay(IList<Fixture> fixtures, int matchDay, Guid? playerClubId = null);
+        Guid ChoosePlayerClub();
 
     }
 }
