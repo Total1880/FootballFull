@@ -4,27 +4,55 @@
     "Name": "Jupiler Pro League",
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
-    "Tier": 1
+    "Tier": 1,
+    "Type": 0
   },
   {
     "Id": "adce6f37-e779-4017-94ee-da93d74c31d0",
     "Name": "Challenger Pro League",
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
-    "Tier": 2
+    "Tier": 2,
+    "Type": 0
   },
   {
     "Id": "23bed955-f539-4aab-b56c-075896b3a8af",
     "Name": "Eerste Nationale",
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
-    "Tier": 3
+    "Tier": 3,
+    "Type": 0
   },
   {
     "Id": "17d80068-798f-408e-bb31-287dde3600f4",
     "Name": "Premier League",
     "Country": null,
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
-    "Tier": 1
+    "Tier": 1,
+    "Type": 0
+  },
+  {
+    "Id": "a5538376-58b2-443f-9d11-26de802f9937",
+    "Name": "Champions League",
+    "Country": null,
+    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
+    "Tier": 1,
+    "Type": 2
+  },
+  {
+    "Id": "3cc80fbe-e028-4cf6-8b87-be7f4e036fab",
+    "Name": "Primera Division",
+    "Country": null,
+    "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
+    "Tier": 1,
+    "Type": 0
+  },
+  {
+    "Id": "e6749c40-7ab6-40da-a0fe-a8c581af774c",
+    "Name": "1. Bundesliga",
+    "Country": null,
+    "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc",
+    "Tier": 1,
+    "Type": 0
   }
 ]

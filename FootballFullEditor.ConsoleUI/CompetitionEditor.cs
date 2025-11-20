@@ -74,7 +74,7 @@ namespace FootballFullEditor.ConsoleUI
                 var c = comps[i];
                 var countryName = countries.ContainsKey(c.CountryId) ? countries[c.CountryId] : "Unknown";
 
-                Console.WriteLine($"{i + 1}. {c.Name} - {countryName} - Tier {c.Tier} ({c.Id})");
+                Console.WriteLine($"{i + 1}. {c.Name} (Tier {c.Tier}, {c.Type}, CountryId: {c.CountryId})");
             }
         }
 
@@ -128,16 +128,21 @@ namespace FootballFullEditor.ConsoleUI
                 return;
             }
 
+            // Nieuw: type kiezen
+            var type = SelectCompetitionType();
+
             _competitionService.Add(new Competition
             {
                 Name = name,
                 Tier = tier,
-                CountryId = countryId
+                CountryId = countryId,
+                Type = type
             });
 
             Console.WriteLine("Competition added. Press any key...");
             Console.ReadKey();
         }
+
 
         private void DeleteCompetition()
         {
@@ -191,6 +196,8 @@ namespace FootballFullEditor.ConsoleUI
             if (int.TryParse(tierInput, out int newTier))
                 comp.Tier = newTier;
 
+            Console.WriteLine();
+            Console.WriteLine($"Current country: {comp.CountryId}");
             Console.WriteLine("Change country? Y/N");
             if (Console.ReadKey(true).Key == ConsoleKey.Y)
             {
@@ -199,11 +206,16 @@ namespace FootballFullEditor.ConsoleUI
                     comp.CountryId = newCountryId;
             }
 
+            // Nieuw: type aanpassen
+            Console.WriteLine();
+            comp.Type = SelectCompetitionType(comp.Type, allowEmpty: true);
+
             _competitionService.Update(comp);
 
             Console.WriteLine("Updated. Press any key...");
             Console.ReadKey();
         }
+
 
         private void ManageClubsForCompetition()
         {
@@ -353,5 +365,44 @@ namespace FootballFullEditor.ConsoleUI
             Console.WriteLine($"Club '{club.Name}' removed from {competition.Name}. Press any key...");
             Console.ReadKey();
         }
+
+        private Competition.CompetitionType SelectCompetitionType(
+    Competition.CompetitionType? current = null,
+    bool allowEmpty = false)
+        {
+            while (true)
+            {
+                Console.WriteLine();
+                if (current.HasValue)
+                    Console.WriteLine($"Current type: {current.Value}");
+
+                Console.WriteLine("Select competition type:");
+                Console.WriteLine("1) League");
+                Console.WriteLine("2) Cup");
+                Console.WriteLine("3) International");
+
+                if (allowEmpty)
+                    Console.WriteLine("Leave empty to keep current value.");
+
+                Console.Write("Choice: ");
+                var input = Console.ReadLine();
+
+                if (allowEmpty && string.IsNullOrWhiteSpace(input) && current.HasValue)
+                    return current.Value;
+
+                if (int.TryParse(input, out var choice))
+                {
+                    switch (choice)
+                    {
+                        case 1: return Competition.CompetitionType.League;
+                        case 2: return Competition.CompetitionType.Cup;
+                        case 3: return Competition.CompetitionType.International;
+                    }
+                }
+
+                Console.WriteLine("Invalid choice, try again...");
+            }
+        }
+
     }
 }

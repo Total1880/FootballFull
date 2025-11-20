@@ -73,13 +73,10 @@ do
     Console.ReadKey();
     Console.Clear();
 
-
-
-
     // --- MATCHDAY SIMULATION ---
     for (int matchDay = 1; matchDay <= matchDays; matchDay++)
     {
-        seasonService.PlayMatchDay(fixtures, matchDay, userClubId);
+        seasonService.PlayMatchDay(fixtures, matchDay, false, userClubId);
 
         // Toon resultaten van speeldag
         DisplayResult(matchDay);
@@ -92,6 +89,7 @@ do
     }
 
     // --- END OF SEASON ---
+    PlayInternationalGames();
     Console.WriteLine("Season complete! Press any key to restart a new season.");
     Console.ReadKey();
     Console.Clear();
@@ -101,6 +99,72 @@ do
     matchDays = fixtures.Max(_ => _.MatchDay);
 
 } while (true);
+
+void PlayInternationalGames()
+{
+    var internationalFixtures = seasonService.InitializeInternationalGames();
+
+    if (internationalFixtures == null || !internationalFixtures.Any())
+        return;
+
+    var internationalCompetition = competitions
+        .First(_ => _.Type == Competition.CompetitionType.International);
+
+    Console.Clear();
+    Console.WriteLine("=== International Cup Fixtures ===");
+    Console.WriteLine();
+
+    // Overzicht tonen
+    var maxRound = internationalFixtures.Max(_ => _.RoundNo) + 1;
+    for (int round = 0; round <= maxRound; round++)
+    {
+        Console.WriteLine($"Round {round}");
+        var fixturesForRound = internationalFixtures
+            .Where(_ => _.RoundNo == round)
+            .ToList();
+
+        foreach (var fixture in fixturesForRound)
+        {
+            Console.WriteLine($"{fixture.HomeTeam.Name} vs {fixture.AwayTeam.Name}");
+        }
+
+        Console.WriteLine();
+    }
+
+    Console.WriteLine("Press any key to start the international cup...");
+    Console.ReadKey();
+    Console.Clear();
+
+    // Simulatie – hier hergebruik je gewoon PlayMatchDay
+    for (int round = 0; round <= maxRound; round++)
+    {
+        // MatchDay == RoundNo, dus dit werkt
+        seasonService.PlayMatchDay(internationalFixtures, round,true, userClubId);
+
+        Console.WriteLine($"=== International Round {round} Results ===");
+        var fixturesForRound = internationalFixtures
+            .Where(_ => _.RoundNo == round)
+            .ToList();
+
+        foreach (var fixture in fixturesForRound)
+        {
+            Console.WriteLine($"{fixture.HomeTeam.Name} {fixture.HomeScore} - {fixture.AwayScore} {fixture.AwayTeam.Name}");
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Press any key for next round...");
+        Console.ReadKey();
+        Console.Clear();
+    }
+
+    // Eventueel winner tonen
+    var final = internationalFixtures.OrderByDescending(f => f.RoundNo).First();
+    var winner = final.HomeScore > final.AwayScore ? final.HomeTeam : final.AwayTeam;
+    Console.WriteLine($"International Cup winner: {winner.Name}!");
+    Console.WriteLine("Press any key to continue...");
+    Console.ReadKey();
+}
+
 
 static void ShowAllFixtures(IList<Fixture> fixtures, int matchDays)
 {

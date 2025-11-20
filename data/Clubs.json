@@ -73,7 +73,7 @@
   },
   {
     "Name": "Westerlo",
-    "Strength": 4,
+    "Strength": 3,
     "Id": "d9913584-0b40-4f00-80ea-57965b5ad783",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -85,7 +85,7 @@
   },
   {
     "Name": "Cercle Brugge",
-    "Strength": 4,
+    "Strength": 3,
     "Id": "536694b1-ed7a-4e84-a077-9f93caf377f0",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -175,7 +175,7 @@
   },
   {
     "Name": "VCO",
-    "Strength": 8,
+    "Strength": 9,
     "Id": "ef7996b6-2768-4696-924c-eabdb4552dd2",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -217,7 +217,7 @@
   },
   {
     "Name": "Thes Sport",
-    "Strength": 3,
+    "Strength": 4,
     "Id": "6b335896-9219-4de8-ab31-49dee04610ac",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -400,5 +400,53 @@
     "Strength": 1,
     "Id": "4e3826f2-b7c1-430b-bfb7-23a1d4be7c4a",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Real Madrid",
+    "Strength": 9,
+    "Id": "1bbb4e18-0b11-49b1-8554-b195905f3bef",
+    "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
+  },
+  {
+    "Name": "Barcelona",
+    "Strength": 9,
+    "Id": "f8e345aa-f656-41e1-9e09-93ffa98c615d",
+    "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
+  },
+  {
+    "Name": "Villareal",
+    "Strength": 6,
+    "Id": "17a14cf8-d731-4dd0-b151-c1ffeb963609",
+    "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
+  },
+  {
+    "Name": "Atl\u00E9tico Madrid",
+    "Strength": 5,
+    "Id": "8b1e8e3a-f555-46c4-af1e-16c295a9d5c9",
+    "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
+  },
+  {
+    "Name": "Bayern M\u00FCnich",
+    "Strength": 9,
+    "Id": "eb545c00-89e5-4884-a7f2-afdcfe4c490f",
+    "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc"
+  },
+  {
+    "Name": "RB Leipzig",
+    "Strength": 8,
+    "Id": "069d5682-ca9f-4d77-9dea-202dab92e622",
+    "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc"
+  },
+  {
+    "Name": "Borussia Dortmund",
+    "Strength": 6,
+    "Id": "661e5acc-230f-403e-82bf-ada743c27318",
+    "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc"
+  },
+  {
+    "Name": "Stuttgart",
+    "Strength": 5,
+    "Id": "0a2c8972-69fb-4750-b0df-31ebd6e941f5",
+    "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc"
   }
 ]

@@ -8,14 +8,16 @@ namespace FootballFull.Services
     {
         private IRepository<Competition> _competitionRepository;
         private IClubService _clubService;
+        private IFixtureService _fixtureService;
         private IList<ClubLeagueCompetition> _clubLeagueCompetitions;
         private IList<ClubPerCompetition> _clubs;
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
 
-        public SeasonService(IRepository<Competition> competitionRepository, IClubService clubService)
+        public SeasonService(IRepository<Competition> competitionRepository, IClubService clubService, IFixtureService fixtureService)
         {
             _competitionRepository = competitionRepository;
             _clubService = clubService;
+            _fixtureService = fixtureService;
         }
         public void Initialize(IList<ClubPerCompetition> clubs)
         {
@@ -39,7 +41,7 @@ namespace FootballFull.Services
         private void RecalculateStrengths(int minStrength = 1, int maxStrength = 9)
         {
             if (_clubLeagueCompetitions == null || !_clubLeagueCompetitions.Any())
-                return ;
+                return;
 
             // Per competitie de ranking bepalen
             var competitions = _clubLeagueCompetitions
@@ -179,12 +181,12 @@ namespace FootballFull.Services
             }
         }
 
-        public void PlayMatchDay(IList<Fixture> fixtures, int matchDay, Guid? playerClubId = null)
+        public void PlayMatchDay(IList<Fixture> fixtures, int matchDay,bool isSuddenDeath = false, Guid? playerClubId = null)
         {
             if (_clubLeagueCompetitions == null)
                 throw new InvalidOperationException("Club league competitions not initialized.");
 
-            var todaysFixtures = fixtures.Where(_ => _.MatchDay == matchDay).ToList();
+            var todaysFixtures = fixtures.Where(_ => _.MatchDay == matchDay + 1).ToList();
 
             foreach (var fixture in todaysFixtures)
             {
@@ -194,21 +196,36 @@ namespace FootballFull.Services
 
                 if (isPlayerMatch)
                 {
-                    PlayInteractiveFixture(fixture, playerClubId.Value);
+                    PlayInteractiveFixture(fixture, playerClubId.Value, isSuddenDeath);
                 }
                 else
                 {
-                    SimulateFixtureAutomatically(fixture);
+                    SimulateFixtureAutomatically(fixture, isSuddenDeath);
                 }
 
                 ApplyResultToTable(fixture);
             }
         }
 
-        private void SimulateFixtureAutomatically(Fixture fixture)
+        private void SimulateFixtureAutomatically(Fixture fixture, bool isSuddenDeath)
         {
             fixture.HomeScore = Random.Shared.Next(0, 5) - fixture.AwayTeam.Strength;
             fixture.AwayScore = Random.Shared.Next(0, 5) - fixture.HomeTeam.Strength;
+
+            if (isSuddenDeath && fixture.HomeScore == fixture.AwayScore)
+            {
+                // Sudden death: één team moet winnen
+                Random rnd = new Random();
+
+                // 0 = home team scoort, 1 = away team scoort
+                int suddenDeathWinner = rnd.Next(0, 2);
+
+                if (suddenDeathWinner == 0)
+                    fixture.HomeScore++;
+                else
+                    fixture.AwayScore++;
+                    Console.WriteLine("Sudden death! Away team scores and wins!");
+            }
 
             while (fixture.HomeScore < 0 || fixture.AwayScore < 0)
             {
@@ -224,7 +241,7 @@ namespace FootballFull.Services
             Balanced
         }
 
-        private void PlayInteractiveFixture(Fixture fixture, Guid playerClubId)
+        private void PlayInteractiveFixture(Fixture fixture, Guid playerClubId, bool isSuddenDeath)
         {
             int homeGoals = 0;
             int awayGoals = 0;
@@ -267,6 +284,26 @@ namespace FootballFull.Services
                 //Console.WriteLine();
                 //Console.WriteLine("Druk op een toets voor de volgende fase...");
                 //Console.ReadKey(true);
+            }
+
+            if (isSuddenDeath && homeGoals == awayGoals)
+            {
+                // Sudden death: één team moet winnen
+                Random rnd = new Random();
+
+                // 0 = home team scoort, 1 = away team scoort
+                int suddenDeathWinner = rnd.Next(0, 2);
+
+                if (suddenDeathWinner == 0)
+                {
+                    homeGoals++;
+                    Console.WriteLine("Sudden death! Home team scores and wins!");
+                }
+                else
+                {
+                    awayGoals++;
+                    Console.WriteLine("Sudden death! Away team scores and wins!");
+                }
             }
 
             fixture.HomeScore = homeGoals;
@@ -385,7 +422,7 @@ namespace FootballFull.Services
                 chosenIndex > 0 &&
                 chosenIndex <= clubs.Count)
             {
-                
+
                 Console.WriteLine($"Je hebt gekozen: {clubs[chosenIndex - 1].Name}");
                 return clubs[chosenIndex - 1].Id;
             }
@@ -396,5 +433,45 @@ namespace FootballFull.Services
                 return clubs[0].Id;
             }
         }
+
+        public IList<Fixture> InitializeInternationalGames()
+        {
+            var competitions = _competitionRepository.Load()
+                .Where(_ => _.Tier == 1 && _.Type == Competition.CompetitionType.League);
+            var internationalCompetition = _competitionRepository.Load()
+                .First(_ => _.Type == Competition.CompetitionType.International);
+
+            var leagueWinners = new List<ClubPerCompetition>();
+
+            foreach (var competition in competitions)
+            {
+                var leagueWinner = _clubLeagueCompetitions
+                    .Where(_ => _.CompetitionId == competition.Id)
+                    .OrderByDescending(_ => _.Points)
+                    .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst)
+                    .ThenByDescending(_ => _.GoalsFor)
+                    .First();
+
+                leagueWinners.Add(new ClubPerCompetition
+                {
+                    ClubId = leagueWinner.ClubId,
+                    CompetitionId = internationalCompetition.Id
+                });
+            }
+
+            // Cup aanmaken voor de league-winnaars
+            var fixtures = _fixtureService.GenerateCupFixtures(leagueWinners, internationalCompetition);
+
+            // Belangrijk: zorg dat MatchDay gezet is (bv. gelijk aan RoundNo),
+            // zodat je bestaande PlayMatchDay-logica hergebruikt kan worden.
+            foreach (var f in fixtures)
+            {
+                if (f.MatchDay == 0)
+                    f.MatchDay = f.RoundNo;
+            }
+
+            return fixtures;
+        }
+
     }
 }
