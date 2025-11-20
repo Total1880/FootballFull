@@ -54,22 +54,27 @@ var matchDays = fixtures.Max(_ => _.MatchDay);
 
 do
 {
+    var competitionId = clubsPerCompetition
+.First(_ => _.ClubId == userClubId)
+.CompetitionId;
+
+    var competitionToShow = competitions.First(_ => _.Id == competitionId);
+
     Console.Clear();
     Console.WriteLine("=== Football Season Fixtures ===");
     Console.WriteLine();
 
     // --- FIXTURE OVERVIEW ---
-    ShowAllFixtures(fixtures, matchDays);
+    DisplayLeagueTable();
+    Console.WriteLine();
+    DisplayNextFixture(userClubId, fixtures, matchDays, competitionToShow, 0);
 
     Console.WriteLine("Press any key to start the season simulation...");
     Console.ReadKey();
     Console.Clear();
 
-    var competitionId = clubsPerCompetition
-    .First(_ => _.ClubId == userClubId)
-    .CompetitionId;
 
-    var competitionToShow = competitions.First(_ => _.Id == competitionId);
+
 
     // --- MATCHDAY SIMULATION ---
     for (int matchDay = 1; matchDay <= matchDays; matchDay++)

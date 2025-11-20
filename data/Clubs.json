@@ -31,7 +31,7 @@
   },
   {
     "Name": "AA Gent",
-    "Strength": 3,
+    "Strength": 1,
     "Id": "99a1d30a-fc04-4c59-96b5-1884bf4bbf34",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -67,13 +67,13 @@
   },
   {
     "Name": "RAAL La Louvi\u00E8re",
-    "Strength": 3,
+    "Strength": 1,
     "Id": "c9be6233-3661-4eae-9865-cd1d294f2bf9",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Westerlo",
-    "Strength": 5,
+    "Strength": 4,
     "Id": "d9913584-0b40-4f00-80ea-57965b5ad783",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -85,7 +85,7 @@
   },
   {
     "Name": "Cercle Brugge",
-    "Strength": 5,
+    "Strength": 4,
     "Id": "536694b1-ed7a-4e84-a077-9f93caf377f0",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -121,7 +121,7 @@
   },
   {
     "Name": "SK Lommel",
-    "Strength": 8,
+    "Strength": 9,
     "Id": "43616f2e-3f04-440f-b2e3-b92b996da8d5",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -175,7 +175,7 @@
   },
   {
     "Name": "VCO",
-    "Strength": 4,
+    "Strength": 8,
     "Id": "ef7996b6-2768-4696-924c-eabdb4552dd2",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -193,13 +193,13 @@
   },
   {
     "Name": "Belisia Bilzen",
-    "Strength": 6,
+    "Strength": 9,
     "Id": "c93f52dc-8244-4b15-b374-c542bccbf24d",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Mons",
-    "Strength": 3,
+    "Strength": 4,
     "Id": "bb6312d0-a764-4141-b392-c1d33f0a0261",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -235,7 +235,7 @@
   },
   {
     "Name": "Meux",
-    "Strength": 2,
+    "Strength": 1,
     "Id": "5ae0f4ac-ad21-4418-a88b-ba8933c1ad83",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -301,13 +301,13 @@
   },
   {
     "Name": "Sunderland",
-    "Strength": 8,
+    "Strength": 9,
     "Id": "bfe4c1dc-6fa1-4095-bc9e-77e92930b359",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Tottenham",
-    "Strength": 8,
+    "Strength": 9,
     "Id": "01725539-f017-4381-8bf4-8c77b6486311",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
