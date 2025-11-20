@@ -272,7 +272,7 @@ namespace FootballFullEditor.ConsoleUI
             Console.Clear();
             Console.WriteLine($"Add club to {competition.Name}");
 
-            var allClubs = _clubService.GetClubs().ToList();
+            var allClubs = _clubService.GetClubs().Where(_ => _.CountryId == competition.CountryId).ToList();
             var existing = _clubCompetitionService
                 .GetClubsForCompetition(competition.Id)
                 .Select(c => c.Id)

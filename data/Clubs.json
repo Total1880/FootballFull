@@ -31,7 +31,7 @@
   },
   {
     "Name": "AA Gent",
-    "Strength": 4,
+    "Strength": 3,
     "Id": "99a1d30a-fc04-4c59-96b5-1884bf4bbf34",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -43,7 +43,7 @@
   },
   {
     "Name": "RC Genk",
-    "Strength": 3,
+    "Strength": 1,
     "Id": "a3f2af67-d555-4e7a-b246-343183fda6bf",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -67,7 +67,7 @@
   },
   {
     "Name": "RAAL La Louvi\u00E8re",
-    "Strength": 4,
+    "Strength": 3,
     "Id": "c9be6233-3661-4eae-9865-cd1d294f2bf9",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -79,7 +79,7 @@
   },
   {
     "Name": "OH Leuven",
-    "Strength": 2,
+    "Strength": 1,
     "Id": "a6bf4c8f-7eac-4f11-8dee-229815cb17bb",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -103,7 +103,7 @@
   },
   {
     "Name": "KV Kortrijk",
-    "Strength": 8,
+    "Strength": 9,
     "Id": "f8b24697-387a-49be-ab77-9c592379bbc3",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -157,7 +157,7 @@
   },
   {
     "Name": "Francs Borains",
-    "Strength": 2,
+    "Strength": 1,
     "Id": "7db323ad-8be7-49ce-bdc6-eb9b9cfb4519",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -187,13 +187,13 @@
   },
   {
     "Name": "Tubize-Braine",
-    "Strength": 7,
+    "Strength": 9,
     "Id": "2fd598e0-481c-4980-8474-8dbdcfd929fd",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Belisia Bilzen",
-    "Strength": 5,
+    "Strength": 6,
     "Id": "c93f52dc-8244-4b15-b374-c542bccbf24d",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -205,7 +205,7 @@
   },
   {
     "Name": "Lyra-Lierse",
-    "Strength": 8,
+    "Strength": 9,
     "Id": "15d9e250-4195-49c7-8f36-3c70991599a1",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -280,5 +280,125 @@
     "Strength": 1,
     "Id": "0a51f91e-6a08-49ef-af88-a27893c1ad14",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
+  },
+  {
+    "Name": "Arsenal",
+    "Strength": 9,
+    "Id": "1eee35cb-103c-4415-822e-568a0c49f13a",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Manchester City",
+    "Strength": 9,
+    "Id": "1b91bbcf-4593-415c-a348-ad1104c44175",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Chelsea",
+    "Strength": 9,
+    "Id": "552f21be-bb48-45a5-b21a-b5f0fbf3f3a1",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Sunderland",
+    "Strength": 8,
+    "Id": "bfe4c1dc-6fa1-4095-bc9e-77e92930b359",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Tottenham",
+    "Strength": 8,
+    "Id": "01725539-f017-4381-8bf4-8c77b6486311",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Aston Villa",
+    "Strength": 7,
+    "Id": "a228c034-e0b3-4f44-8354-902f4da62d6d",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Manchester United",
+    "Strength": 7,
+    "Id": "c7068266-dc48-49f5-b5b6-dae5d042d27a",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Liverpool",
+    "Strength": 6,
+    "Id": "14619881-d58e-44f1-b247-a691ee549217",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Bournemouth",
+    "Strength": 6,
+    "Id": "ff7ffb0b-4c08-4ad3-94af-f905d0abf72c",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Crystal Palace",
+    "Strength": 5,
+    "Id": "8ba561b2-36ce-4098-8d24-1ab49c703aa2",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Brighton \u0026 Hove Albion",
+    "Strength": 5,
+    "Id": "da1a8c7c-20ca-4ff9-bf44-c896965139a8",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Brentford",
+    "Strength": 4,
+    "Id": "2b2775bd-9008-4e2e-81a8-839a3551067f",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Everton",
+    "Strength": 4,
+    "Id": "aed360be-ff51-4525-a50e-22b4943bd5d5",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Newcastle United",
+    "Strength": 3,
+    "Id": "40f8b424-1c0d-45c5-918a-20403f131e7c",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Fulham",
+    "Strength": 3,
+    "Id": "3b7188f1-21b9-4a69-90c7-7d7dd88748af",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Leeds United",
+    "Strength": 1,
+    "Id": "c5e23337-4855-4f78-ac7d-39ac9f0a04fe",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Burnley",
+    "Strength": 1,
+    "Id": "c01d461e-0b19-4466-9361-6568cec94f67",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "West Ham United",
+    "Strength": 1,
+    "Id": "5f20608f-071e-4b5b-9b66-bd88b5b7708e",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Nottingham Forest",
+    "Strength": 1,
+    "Id": "8f0bdae9-c243-4116-9a8a-e628ec057b40",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Wolverhampton Wanderers",
+    "Strength": 1,
+    "Id": "4e3826f2-b7c1-430b-bfb7-23a1d4be7c4a",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   }
 ]
