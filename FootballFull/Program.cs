@@ -15,7 +15,8 @@ services.AddSingleton<IClubService, ClubService>();
 services.AddSingleton<ISeasonService, SeasonService>();
 services.AddSingleton<IFixtureService, FixtureService>();
 services.AddSingleton<ICompetitionService, CompetitionService>();
-services.AddSingleton<IClubCompetitionService, ClubCompetitionService>();
+services.AddSingleton<IClubPerCompetitionService, ClubPerCompetitionService>();
+services.AddSingleton<ICountryService, CountryService>();
 
 // Repositories (V2-varianten)
 const string dataRoot = @"C:\Users\olavh\source\repos\FootballFull\data";
@@ -28,7 +29,7 @@ services.AddSingleton<IRepository<Competition>>(
 services.AddSingleton<IRepository<Country>>(
     _ => new CountryRepositoryV2(Path.Combine(dataRoot, "Countries.json")));
 
-services.AddSingleton<IRepository<ClubPerCompetition>>(
+services.AddSingleton<IClubPerCompetitionRepository>(
     _ => new ClubPerCompetitionRepositoryV2(Path.Combine(dataRoot, "ClubPerCompetition.json")));
 
 var provider = services.BuildServiceProvider();
@@ -38,11 +39,15 @@ var seasonService = provider.GetRequiredService<ISeasonService>();
 var fixtureService = provider.GetRequiredService<IFixtureService>();
 var clubService = provider.GetRequiredService<IClubService>();
 var competitionService = provider.GetRequiredService<ICompetitionService>();
-var clubPerCompetitionRepo = provider.GetRequiredService<IRepository<ClubPerCompetition>>();
+var clubsPerCompetitionService = provider.GetRequiredService<IClubPerCompetitionService>();
+var countryService = provider.GetRequiredService<ICountryService>();
 
 // Data laden
-var clubsPerCompetition = clubPerCompetitionRepo.Load();
+var clubsPerCompetition = clubsPerCompetitionService.GetAllClubPerCompetitions();
 var competitions = competitionService.GetCompetitions();
+
+// reset strength
+ResetStrenght();
 
 // TODO: user club Id kiezen via config / input
 Guid userClubId = seasonService.ChoosePlayerClub();
@@ -405,5 +410,38 @@ static void DisplayNextFixture(Guid userClubId, IList<Fixture> fixtures, int mat
         // Laatste speeldag → geen preview
         Console.WriteLine("Season complete! Press any key...");
         Console.ReadKey();
+    }
+}
+
+void ResetStrenght()
+{
+    
+    var countries = countryService.GetCountries();
+    var clubs = clubService.GetClubs();
+    var minStrenght = 1;
+    var maxStrenght = 9;
+
+    foreach (var country in countries)
+    {
+        var clubsInCountry = clubs
+            .Where(c => c.CountryId == country.Id)
+            .ToList();
+
+        var counter = clubsInCountry.Count / (maxStrenght - minStrenght);
+        var currentStrength = maxStrenght;
+
+        for (int i = 0; i < clubsInCountry.Count; i++)
+        {
+            var club = clubsInCountry[i];
+            club.Strength = currentStrength > 0 ? currentStrength : 1;
+            clubService.Update(club);
+
+                counter--;
+            if(counter <= 0)
+            {
+                currentStrength--;
+                counter = clubsInCountry.Count / (maxStrenght - minStrenght);
+            }
+        }
     }
 }

@@ -7,13 +7,13 @@ using System.Linq;
 
 namespace FootballFull.Services
 {
-    public class ClubCompetitionService : IClubCompetitionService
+    public class ClubPerCompetitionService : IClubPerCompetitionService
     {
         private readonly IClubPerCompetitionRepository _linkRepository;
         private readonly IClubService _clubService;
         private readonly ICompetitionService _competitionService;
 
-        public ClubCompetitionService(
+        public ClubPerCompetitionService(
             IClubPerCompetitionRepository linkRepository,
             IClubService clubService,
             ICompetitionService competitionService)
@@ -72,6 +72,11 @@ namespace FootballFull.Services
             return competitions
                 .Where(c => links.Any(l => l.CompetitionId == c.Id))
                 .ToList();
+        }
+
+        public IList<ClubPerCompetition> GetAllClubPerCompetitions()
+        {
+            return _linkRepository.Load();
         }
     }
 }
