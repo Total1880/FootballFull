@@ -181,7 +181,7 @@ namespace FootballFull.Services
             }
         }
 
-        public void PlayMatchDay(IList<Fixture> fixtures, int matchDay,bool isSuddenDeath = false, Guid? playerClubId = null)
+        public void PlayMatchDay(IList<Fixture> fixtures, int matchDay, bool isSuddenDeath = false, Guid? playerClubId = null)
         {
             if (_clubLeagueCompetitions == null)
                 throw new InvalidOperationException("Club league competitions not initialized.");
@@ -203,14 +203,30 @@ namespace FootballFull.Services
                     SimulateFixtureAutomatically(fixture, isSuddenDeath);
                 }
 
-                ApplyResultToTable(fixture);
+                if (!isSuddenDeath)
+                    ApplyResultToTable(fixture);
             }
         }
 
         private void SimulateFixtureAutomatically(Fixture fixture, bool isSuddenDeath)
         {
+            if (fixture.HomeTeamId == Guid.Empty)
+            {
+                // Bye voor thuisteam
+                fixture.HomeScore = 0;
+                fixture.AwayScore = 3;
+                return;
+            }
+            else if (fixture.AwayTeamId == Guid.Empty)
+            {
+                // Bye voor uitteam
+                fixture.HomeScore = 3;
+                fixture.AwayScore = 0;
+                return;
+            }
             fixture.HomeScore = Random.Shared.Next(0, 5) - fixture.AwayTeam.Strength;
             fixture.AwayScore = Random.Shared.Next(0, 5) - fixture.HomeTeam.Strength;
+
 
             if (isSuddenDeath && fixture.HomeScore == fixture.AwayScore)
             {
@@ -224,7 +240,7 @@ namespace FootballFull.Services
                     fixture.HomeScore++;
                 else
                     fixture.AwayScore++;
-                    Console.WriteLine("Sudden death! Away team scores and wins!");
+                Console.WriteLine("Sudden death! Away team scores and wins!");
             }
 
             while (fixture.HomeScore < 0 || fixture.AwayScore < 0)

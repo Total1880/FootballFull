@@ -182,106 +182,107 @@ namespace FootballFull.Services
         private IList<Fixture> GenerateCup(IList<Club> teams, Competition competitionCup)
         {
             if (teams == null || teams.Count < 2)
-            {
                 return new List<Fixture>();
-            }
 
-            int totalNumberOfTeams = teams.Count;
             var fixtures = new List<Fixture>();
-            var cupround = 0;
-            int counter = 0;
 
-            if (totalNumberOfTeams % 2 != 0)
+            // Kopie zodat we de originele lijst niet wijzigen
+            var realTeams = teams.ToList();
+            int n = realTeams.Count;
+
+            // 1) Bracket size = eerstvolgende macht van 2 (bv. 5 -> 8)
+            int bracketSize = 1;
+            while (bracketSize < n)
+                bracketSize *= 2;
+
+            int byeCount = bracketSize - n;
+
+            // 2) Byes aanmaken
+            var byeTeams = new List<Club>();
+            for (int i = 0; i < byeCount; i++)
             {
-                teams.Add(new Club { Id = Guid.Empty, Name = "bye" });
-            }
-
-
-            var extrateams = 0;
-            var nextRoundTeams = totalNumberOfTeams;
-
-            while (IsInBinarySequence(nextRoundTeams) == -1)
-            {
-                extrateams++;
-                nextRoundTeams--;
-            }
-
-            var rounds = IsInBinarySequence(nextRoundTeams);
-
-            //Create extra round
-            if (extrateams > 0)
-            {
-                var extraRoundTeams = teams.OrderBy(t => t.Strength).Take(extrateams * 2).ToList();
-                teams = teams.OrderBy(t => t.Strength).Skip(extrateams * 2).ToList();
-                Shuffle(extraRoundTeams);
-                for (int i = 0; i < extrateams * 2; i += 2)
+                byeTeams.Add(new Club
                 {
-                    Fixture fixture = new Fixture();
-                    counter++;
+                    Id = Guid.Empty,
+                    Name = "bye"
+                });
+            }
 
-                    fixture.AwayTeamId = extraRoundTeams[i].Id;
-                    fixture.AwayTeam = extraRoundTeams[i];
-                    fixture.HomeTeamId = extraRoundTeams[i + 1].Id;
-                    fixture.HomeTeam = extraRoundTeams[i + 1];
-                    fixture.RoundNo = cupround;
-                    fixture.CompetitionId = competitionCup.Id;
+            // 3) Real teams schudden (of seeden zoals je wil)
+            Shuffle(realTeams);
+
+            // 4) Eerste ronde (RoundNo = 0)
+            var currentRoundFixtures = new List<Fixture>();
+            int realIndex = 0;
+            int byeIndex = 0;
+
+            // 4a) Eerst alle bye-wedstrijden: real vs bye -> bye is sowieso na ronde 0 weg
+            for (int i = 0; i < byeCount; i++)
+            {
+                var home = realTeams[realIndex++];
+                var away = byeTeams[byeIndex++];
+
+                var fixture = new Fixture
+                {
+                    CompetitionId = competitionCup.Id,
+                    RoundNo = 0,
+                    HomeTeamId = home.Id,
+                    HomeTeam = home,
+                    AwayTeamId = away.Id,
+                    AwayTeam = away
+                };
+
+                fixtures.Add(fixture);
+                currentRoundFixtures.Add(fixture);
+            }
+
+            // 4b) Overgebleven echte teams spelen onder elkaar (geen byes meer)
+            while (realIndex < realTeams.Count)
+            {
+                var home = realTeams[realIndex++];
+                var away = realTeams[realIndex++];
+
+                var fixture = new Fixture
+                {
+                    CompetitionId = competitionCup.Id,
+                    RoundNo = 0,
+                    HomeTeamId = home.Id,
+                    HomeTeam = home,
+                    AwayTeamId = away.Id,
+                    AwayTeam = away
+                };
+
+                fixtures.Add(fixture);
+                currentRoundFixtures.Add(fixture);
+            }
+
+            // 5) Volgende rondes: winners vs winners, geen byes meer
+            int round = 1;
+            while (currentRoundFixtures.Count > 1)
+            {
+                var nextRoundFixtures = new List<Fixture>();
+
+                for (int i = 0; i < currentRoundFixtures.Count; i += 2)
+                {
+                    var fixture = new Fixture
+                    {
+                        CompetitionId = competitionCup.Id,
+                        RoundNo = round,
+                        CupPreviousFixtureHomeTeam = currentRoundFixtures[i],
+                        CupPreviousFixtureAwayTeam = currentRoundFixtures[i + 1]
+                    };
 
                     fixtures.Add(fixture);
+                    nextRoundFixtures.Add(fixture);
                 }
-                cupround++;
-                counter = 0;
-            }
 
-            Shuffle(teams);
-
-            //Create first round
-            for (int i = 0; i < nextRoundTeams /** 2 - extrateams*/; i += 2)
-            {
-                Fixture fixture = new Fixture();
-
-                fixture.RoundNo = cupround;
-                fixture.CompetitionId = competitionCup.Id;
-
-                if (extrateams > i)
-                {
-                    fixture.CupPreviousFixtureHomeTeam = fixtures[i];
-                    fixture.CupPreviousFixtureAwayTeam = fixtures[i + 1];
-                }
-                else
-                {
-                    fixture.AwayTeamId = teams[i - extrateams].Id;
-                    fixture.AwayTeam = teams[i - extrateams];
-                    fixture.HomeTeamId = teams[i - extrateams + 1].Id;
-                    fixture.HomeTeam = teams[i - extrateams + 1];
-                }
-                fixtures.Add(fixture);
-                counter++;
-            }
-            cupround++;
-
-            while (cupround < rounds)
-            {
-                var roundMatches = fixtures.Where(f => f.RoundNo == cupround - 1).Count();
-                var newFixtures = new List<Fixture>();
-                counter = 0;
-
-                for (int i = 0; i < roundMatches; i += 2)
-                {
-                    Fixture fixture = new Fixture();
-
-                    fixture.RoundNo = cupround;
-                    fixture.CompetitionId = competitionCup.Id;
-                    fixture.CupPreviousFixtureHomeTeam = fixtures[fixtures.Count() - i - 1];
-                    fixture.CupPreviousFixtureAwayTeam = fixtures[fixtures.Count() - i - 2];
-                    newFixtures.Add(fixture);
-                    counter++;
-                }
-                fixtures.AddRange(newFixtures);
-
-                cupround++;
+                currentRoundFixtures = nextRoundFixtures;
+                round++;
             }
 
             return fixtures;
         }
+
+
     }
 }

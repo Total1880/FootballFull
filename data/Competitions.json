@@ -54,5 +54,13 @@
     "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc",
     "Tier": 1,
     "Type": 0
+  },
+  {
+    "Id": "75f2ae53-e5a1-404d-b857-1e6e41007a2d",
+    "Name": "Ligue 1",
+    "Country": null,
+    "CountryId": "5198d483-97be-409e-adbe-b86d3591f972",
+    "Tier": 1,
+    "Type": 0
   }
 ]

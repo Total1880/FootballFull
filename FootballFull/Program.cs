@@ -210,8 +210,13 @@ void PlayInternationalGames()
             Console.WriteLine("Press any key for next round...");
             Console.ReadKey();
         }
+        else if(round == maxRound)
+        {
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
 
-        Console.Clear();
+            Console.Clear();
     }
 
     // Winnaar bepalen – laatste ronde
@@ -375,6 +380,12 @@ static void DisplayNextFixture(Guid userClubId, IList<Fixture> fixtures, int mat
         var nextFixtures = fixtures
             .Where(_ => _.MatchDay == nextDay && _.CompetitionId == competitionToShow.Id)
             .ToList();
+
+        if (nextFixtures.Count == 0)
+        {
+            Console.WriteLine("No fixtures available.");
+            return;
+        }
 
         foreach (var f in nextFixtures)
         {
