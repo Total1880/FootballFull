@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FootballFull.Services\FootballFull.Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="data\clubs.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -19,6 +15,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FootballFull.Services\FootballFull.Services.csproj" />
+    <ProjectReference Include="..\OlavFramework\OlavFramework.csproj" />
   </ItemGroup>
   
 </Project>

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballFullEditor", "Footb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballFullEditor.ConsoleUI", "FootballFullEditor.ConsoleUI\FootballFullEditor.ConsoleUI.csproj", "{9C58E38C-C5D8-4541-AAAC-32BCF4F0E884}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OlavFramework", "OlavFramework\OlavFramework.csproj", "{E2CFCF6E-BE83-4ED4-B8EE-61A909879BDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{9C58E38C-C5D8-4541-AAAC-32BCF4F0E884}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C58E38C-C5D8-4541-AAAC-32BCF4F0E884}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C58E38C-C5D8-4541-AAAC-32BCF4F0E884}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2CFCF6E-BE83-4ED4-B8EE-61A909879BDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2CFCF6E-BE83-4ED4-B8EE-61A909879BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2CFCF6E-BE83-4ED4-B8EE-61A909879BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2CFCF6E-BE83-4ED4-B8EE-61A909879BDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

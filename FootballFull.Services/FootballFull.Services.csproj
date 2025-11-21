@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FootballFull.Models\FootballFull.Models.csproj" />
     <ProjectReference Include="..\FootballFull.Repositories\FootballFull.Repositories.csproj" />
+    <ProjectReference Include="..\OlavFramework\OlavFramework.csproj" />
   </ItemGroup>
 
 </Project>

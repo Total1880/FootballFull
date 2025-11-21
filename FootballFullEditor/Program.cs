@@ -13,7 +13,7 @@ var services = new ServiceCollection();
 services.AddSingleton<IClubService, ClubService>();
 services.AddSingleton<ICountryService, CountryService>();
 services.AddSingleton<ICompetitionService, CompetitionService>();
-services.AddSingleton<IClubCompetitionService, ClubCompetitionService>();
+services.AddSingleton<IClubPerCompetitionService, ClubPerCompetitionService>();
 
 // Repositories
 const string dataRoot = @"C:\Users\olavh\source\repos\FootballFull\data";

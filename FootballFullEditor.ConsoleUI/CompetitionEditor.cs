@@ -10,13 +10,13 @@ namespace FootballFullEditor.ConsoleUI
         private readonly ICompetitionService _competitionService;
         private readonly ICountryService _countryService;
         private readonly IClubService _clubService;
-        private readonly IClubCompetitionService _clubCompetitionService;
+        private readonly IClubPerCompetitionService _clubCompetitionService;
 
         public CompetitionEditor(
             ICompetitionService competitionService,
             ICountryService countryService,
             IClubService clubService,
-            IClubCompetitionService clubCompetitionService)
+            IClubPerCompetitionService clubCompetitionService)
         {
             _competitionService = competitionService;
             _countryService = countryService;
@@ -143,7 +143,6 @@ namespace FootballFullEditor.ConsoleUI
             Console.ReadKey();
         }
 
-
         private void DeleteCompetition()
         {
             Console.Clear();
@@ -216,7 +215,6 @@ namespace FootballFullEditor.ConsoleUI
             Console.ReadKey();
         }
 
-
         private void ManageClubsForCompetition()
         {
             Console.Clear();
@@ -286,8 +284,8 @@ namespace FootballFullEditor.ConsoleUI
 
             var allClubs = _clubService.GetClubs().Where(_ => _.CountryId == competition.CountryId).ToList();
             var existing = _clubCompetitionService
-                .GetClubsForCompetition(competition.Id)
-                .Select(c => c.Id)
+                .GetAllClubPerCompetitions()
+                .Select(c => c.ClubId)
                 .ToHashSet();
 
             var availableClubs = allClubs

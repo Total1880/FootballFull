@@ -7,6 +7,7 @@ using FootballFull.Repositories.Interfaces;
 using FootballFull.Services;
 using FootballFull.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using OlavFramework;
 
 var services = new ServiceCollection();
 
@@ -418,8 +419,6 @@ void ResetStrenght()
     
     var countries = countryService.GetCountries();
     var clubs = clubService.GetClubs();
-    var minStrenght = 1;
-    var maxStrenght = 9;
 
     foreach (var country in countries)
     {
@@ -427,8 +426,8 @@ void ResetStrenght()
             .Where(c => c.CountryId == country.Id)
             .ToList();
 
-        var counter = clubsInCountry.Count / (maxStrenght - minStrenght);
-        var currentStrength = maxStrenght;
+        var counter = clubsInCountry.Count / (Configuration.MaxStrength - Configuration.MinStrength);
+        var currentStrength = Configuration.MaxStrength;
 
         for (int i = 0; i < clubsInCountry.Count; i++)
         {
@@ -440,7 +439,7 @@ void ResetStrenght()
             if(counter <= 0)
             {
                 currentStrength--;
-                counter = clubsInCountry.Count / (maxStrenght - minStrenght);
+                counter = clubsInCountry.Count / (Configuration.MaxStrength - Configuration.MinStrength);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using FootballFull.Models;
 using FootballFull.Repositories.Interfaces;
 using FootballFull.Services.Interfaces;
+using OlavFramework;
 
 namespace FootballFull.Services
 {
@@ -26,7 +27,7 @@ namespace FootballFull.Services
         }
         public void InitializeNewSeason()
         {
-            RecalculateStrengths();
+            RecalculateStrengths(Configuration.MinStrength, Configuration.MaxStrength);
             PromotionsAndRelegations();
             _clubLeagueCompetitions = _clubs.Select(club => new ClubLeagueCompetition
             {
@@ -95,8 +96,6 @@ namespace FootballFull.Services
                 return;
 
             const int promotionsAndRelegationPlaces = 2;
-            const int minStrength = 1;
-            const int maxStrength = 9;
 
             var competitions = _competitionRepository.Load();
 
@@ -128,7 +127,7 @@ namespace FootballFull.Services
                     var club = _clubService.GetClubById(promoted.ClubId);
                     if (club == null) continue;
 
-                    club.Strength = Math.Min(club.Strength + 1, maxStrength);
+                    club.Strength = Math.Min(club.Strength + 1, Configuration.MaxStrength);
                     _clubService.Update(club);
                 }
 
@@ -138,7 +137,7 @@ namespace FootballFull.Services
                     var club = _clubService.GetClubById(relegated.ClubId);
                     if (club == null) continue;
 
-                    club.Strength = Math.Max(club.Strength - 1, minStrength);
+                    club.Strength = Math.Max(club.Strength - 1, Configuration.MinStrength);
                     _clubService.Update(club);
                 }
 
@@ -210,6 +209,22 @@ namespace FootballFull.Services
 
         private void SimulateFixtureAutomatically(Fixture fixture, bool isSuddenDeath)
         {
+            var homeStrength = fixture.HomeTeam.Strength;
+            var awayStrength = fixture.AwayTeam.Strength - 1;
+            var difference = homeStrength - awayStrength;
+
+            if (homeStrength > 5)
+            {
+                homeStrength = 5;
+                if (difference < 0)
+                    homeStrength -= difference;
+            }
+            if (awayStrength > 5)
+            {
+                awayStrength = 5;
+                if (difference > 0)
+                    awayStrength -= difference;
+            }
             if (fixture.HomeTeamId == Guid.Empty)
             {
                 // Bye voor thuisteam
@@ -278,7 +293,22 @@ namespace FootballFull.Services
                 var choice = AskTacticChoice(playerClub.Name);
 
                 int effectiveHomeStrength = fixture.HomeTeam.Strength;
-                int effectiveAwayStrength = fixture.AwayTeam.Strength;
+                int effectiveAwayStrength = fixture.AwayTeam.Strength - 1;
+                int difference = effectiveHomeStrength - effectiveAwayStrength;
+
+                if (effectiveHomeStrength > 5)
+                {
+                    effectiveHomeStrength = 5;
+                    if (difference < 0)
+                        effectiveHomeStrength -= difference;
+                }
+
+                if (effectiveAwayStrength > 5) {
+                    effectiveAwayStrength = 5;
+                    if (difference > 0)
+                        effectiveAwayStrength -= difference;
+                }
+                ;
 
                 // Tactiek van speler toepassen aan juiste kant
                 if (playerIsHome)
