@@ -415,13 +415,13 @@
   },
   {
     "Name": "Villareal",
-    "Strength": 6,
+    "Strength": 5,
     "Id": "17a14cf8-d731-4dd0-b151-c1ffeb963609",
     "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
   },
   {
     "Name": "Atl\u00E9tico Madrid",
-    "Strength": 5,
+    "Strength": 3,
     "Id": "8b1e8e3a-f555-46c4-af1e-16c295a9d5c9",
     "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
   },
@@ -433,19 +433,19 @@
   },
   {
     "Name": "RB Leipzig",
-    "Strength": 8,
+    "Strength": 9,
     "Id": "069d5682-ca9f-4d77-9dea-202dab92e622",
     "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc"
   },
   {
     "Name": "Borussia Dortmund",
-    "Strength": 6,
+    "Strength": 4,
     "Id": "661e5acc-230f-403e-82bf-ada743c27318",
     "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc"
   },
   {
     "Name": "Stuttgart",
-    "Strength": 5,
+    "Strength": 4,
     "Id": "0a2c8972-69fb-4750-b0df-31ebd6e941f5",
     "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc"
   }

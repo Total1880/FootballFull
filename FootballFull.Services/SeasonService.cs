@@ -186,7 +186,7 @@ namespace FootballFull.Services
             if (_clubLeagueCompetitions == null)
                 throw new InvalidOperationException("Club league competitions not initialized.");
 
-            var todaysFixtures = fixtures.Where(_ => _.MatchDay == matchDay + 1).ToList();
+            var todaysFixtures = fixtures.Where(_ => _.MatchDay == matchDay).ToList();
 
             foreach (var fixture in todaysFixtures)
             {

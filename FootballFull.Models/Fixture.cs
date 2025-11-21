@@ -17,5 +17,7 @@ namespace FootballFull.Models
         public int MatchDay { get; set; }
         public int RoundNo { get; set; }
         public Guid CompetitionId { get; set; }
+        public Fixture? CupPreviousFixtureHomeTeam { get; set; }
+        public Fixture? CupPreviousFixtureAwayTeam { get; set; }
     }
 }

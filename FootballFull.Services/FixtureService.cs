@@ -138,12 +138,12 @@ namespace FootballFull.Services
             var counter = 0;
             do
             {
-                counter++;
+                
                 if (number == numbertocheck)
                 {
                     return counter;
                 }
-
+                counter++;
                 numbertocheck *= 2;
             } while (numbertocheck <= number);
 
@@ -172,7 +172,7 @@ namespace FootballFull.Services
             // Pak de clubs voor deze competitie
             var teams = clubsPerCompetition
                 .Where(cpc => cpc.CompetitionId == competitionCup.Id)
-                .Select(cpc =>  _clubService.GetClubById(cpc.ClubId))
+                .Select(cpc => _clubService.GetClubById(cpc.ClubId))
                 .Where(c => c != null)
                 .ToList();
 
@@ -182,112 +182,104 @@ namespace FootballFull.Services
         private IList<Fixture> GenerateCup(IList<Club> teams, Competition competitionCup)
         {
             if (teams == null || teams.Count < 2)
-                return new List<Fixture>();
-
-            var fixtures = new List<Fixture>();
-            var cupround = 0;
-            var matchDay = 1;   // kun je later dynamisch maken
-            var counter = 0;
-
-            // Oneven aantal teams? Bye-club toevoegen
-            if (teams.Count % 2 != 0)
             {
-                teams.Add(new Club
-                {
-                    Id = Guid.Empty, // speciale "bye"
-                    Name = "Bye",
-                    Strength = 0
-                });
+                return new List<Fixture>();
             }
 
-            var totalNumberOfTeams = teams.Count;
+            int totalNumberOfTeams = teams.Count;
+            var fixtures = new List<Fixture>();
+            var cupround = 0;
+            int counter = 0;
+
+            if (totalNumberOfTeams % 2 != 0)
+            {
+                teams.Add(new Club { Id = Guid.Empty, Name = "bye" });
+            }
+
 
             var extrateams = 0;
             var nextRoundTeams = totalNumberOfTeams;
 
-            // Bereken hoeveel teams in een extra voorronde moeten spelen
             while (IsInBinarySequence(nextRoundTeams) == -1)
             {
                 extrateams++;
                 nextRoundTeams--;
             }
 
-            // Dit is het aantal rondes dat je nodig hebt ná de eventuele voorronde
             var rounds = IsInBinarySequence(nextRoundTeams);
 
-            // --- Extra ronde (voorronde) met de zwakste teams ---
+            //Create extra round
             if (extrateams > 0)
             {
-                // Zwakste teams spelen de voorronde
-                var extraRoundTeams = teams
-                    .OrderBy(t => t.Strength)
-                    .Take(extrateams * 2)
-                    .ToList();
-
-                // De rest gaat rechtstreeks naar de eerste ronde
-                teams = teams
-                    .OrderBy(t => t.Strength)
-                    .Skip(extrateams * 2)
-                    .ToList();
-
+                var extraRoundTeams = teams.OrderBy(t => t.Strength).Take(extrateams * 2).ToList();
+                teams = teams.OrderBy(t => t.Strength).Skip(extrateams * 2).ToList();
                 Shuffle(extraRoundTeams);
-
                 for (int i = 0; i < extrateams * 2; i += 2)
                 {
-                    var home = extraRoundTeams[i];
-                    var away = extraRoundTeams[i + 1];
+                    Fixture fixture = new Fixture();
+                    counter++;
 
-                    var fixture = new Fixture
-                    {
-                        HomeTeamId = home.Id,
-                        HomeTeam = home,
-                        AwayTeamId = away.Id,
-                        AwayTeam = away,
-                        HomeScore = 0,
-                        AwayScore = 0,
-                        MatchDay = matchDay,
-                        RoundNo = cupround,           // 0 = voorronde
-                        CompetitionId = competitionCup.Id
-                    };
+                    fixture.AwayTeamId = extraRoundTeams[i].Id;
+                    fixture.AwayTeam = extraRoundTeams[i];
+                    fixture.HomeTeamId = extraRoundTeams[i + 1].Id;
+                    fixture.HomeTeam = extraRoundTeams[i + 1];
+                    fixture.RoundNo = cupround;
+                    fixture.CompetitionId = competitionCup.Id;
 
                     fixtures.Add(fixture);
-                    counter++;
                 }
-
-                cupround++;     // volgende ronde
+                cupround++;
                 counter = 0;
             }
 
-            // --- Eerste "echte" ronde ---
             Shuffle(teams);
 
-            // Hier zitten: alle directe geplaatste teams + (virtueel) winnaars van de voorronde
-            // We doen nu gewoon een knock-out loting voor deze ronde.
-            for (int i = 0; i < nextRoundTeams; i += 2)
+            //Create first round
+            for (int i = 0; i < nextRoundTeams /** 2 - extrateams*/; i += 2)
             {
-                var home = teams[i];
-                var away = teams[i + 1];
+                Fixture fixture = new Fixture();
 
-                var fixture = new Fixture
+                fixture.RoundNo = cupround;
+                fixture.CompetitionId = competitionCup.Id;
+
+                if (extrateams > i)
                 {
-                    HomeTeamId = home.Id,
-                    HomeTeam = home,
-                    AwayTeamId = away.Id,
-                    AwayTeam = away,
-                    HomeScore = 0,
-                    AwayScore = 0,
-                    MatchDay = matchDay,  // of een andere logica
-                    RoundNo = cupround,  // 1 = eerste ronde na voorronde
-                    CompetitionId = competitionCup.Id
-                };
-
+                    fixture.CupPreviousFixtureHomeTeam = fixtures[i];
+                    fixture.CupPreviousFixtureAwayTeam = fixtures[i + 1];
+                }
+                else
+                {
+                    fixture.AwayTeamId = teams[i - extrateams].Id;
+                    fixture.AwayTeam = teams[i - extrateams];
+                    fixture.HomeTeamId = teams[i - extrateams + 1].Id;
+                    fixture.HomeTeam = teams[i - extrateams + 1];
+                }
                 fixtures.Add(fixture);
                 counter++;
             }
+            cupround++;
 
-            // Verdere rondes genereer je best dynamisch:
-            // na elke gespeelde ronde neem je de winnaars en
-            // roept je opnieuw GenerateCup(...) aan met de overgebleven teams.
+            while (cupround < rounds)
+            {
+                var roundMatches = fixtures.Where(f => f.RoundNo == cupround - 1).Count();
+                var newFixtures = new List<Fixture>();
+                counter = 0;
+
+                for (int i = 0; i < roundMatches; i += 2)
+                {
+                    Fixture fixture = new Fixture();
+
+                    fixture.RoundNo = cupround;
+                    fixture.CompetitionId = competitionCup.Id;
+                    fixture.CupPreviousFixtureHomeTeam = fixtures[fixtures.Count() - i - 1];
+                    fixture.CupPreviousFixtureAwayTeam = fixtures[fixtures.Count() - i - 2];
+                    newFixtures.Add(fixture);
+                    counter++;
+                }
+                fixtures.AddRange(newFixtures);
+
+                cupround++;
+            }
 
             return fixtures;
         }
