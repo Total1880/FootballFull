@@ -5,6 +5,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 1,
+    "Strength": 19,
     "Type": 0
   },
   {
@@ -13,6 +14,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 2,
+    "Strength": 16,
     "Type": 0
   },
   {
@@ -21,6 +23,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 3,
+    "Strength": 13,
     "Type": 0
   },
   {
@@ -29,6 +32,7 @@
     "Country": null,
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
     "Tier": 1,
+    "Strength": 19,
     "Type": 0
   },
   {
@@ -37,6 +41,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 1,
+    "Strength": 0,
     "Type": 2
   },
   {
@@ -45,6 +50,7 @@
     "Country": null,
     "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
     "Tier": 1,
+    "Strength": 19,
     "Type": 0
   },
   {
@@ -53,6 +59,7 @@
     "Country": null,
     "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc",
     "Tier": 1,
+    "Strength": 19,
     "Type": 0
   },
   {
@@ -61,6 +68,7 @@
     "Country": null,
     "CountryId": "5198d483-97be-409e-adbe-b86d3591f972",
     "Tier": 1,
+    "Strength": 19,
     "Type": 0
   },
   {
@@ -69,6 +77,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 4,
+    "Strength": 10,
     "Type": 0
   },
   {
@@ -77,6 +86,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 5,
+    "Strength": 7,
     "Type": 0
   },
   {
@@ -85,6 +95,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 6,
+    "Strength": 4,
     "Type": 0
   },
   {
@@ -93,6 +104,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 1,
+    "Strength": 0,
     "Type": 1
   }
 ]

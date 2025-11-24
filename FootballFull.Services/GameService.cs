@@ -530,31 +530,63 @@ namespace FootballFull.Services
 
             foreach (var country in countries)
             {
-                var clubsInCountry = clubs
-                    .Where(c => c.CountryId == country.Id)
-                    .ToList();
+                ResetClubStrength(clubs, country);
+                ResetCompetitionStrength(country);
+            }
+        }
 
-                if (!clubsInCountry.Any())
-                    continue;
 
-                var range = Configuration.MaxStrength - Configuration.MinStrength;
-                var counter = clubsInCountry.Count / (range == 0 ? 1 : range);
-                var currentStrength = Configuration.MaxStrength;
+        private bool ResetClubStrength(IList<Club> clubs, Country country)
+        {
+            var clubsInCountry = clubs
+                .Where(c => c.CountryId == country.Id)
+                .ToList();
 
-                for (int i = 0; i < clubsInCountry.Count; i++)
+            if (!clubsInCountry.Any())
+                return false;
+
+            var range = Configuration.MaxStrength - Configuration.MinStrength;
+            var counter = clubsInCountry.Count / (range == 0 ? 1 : range);
+            var currentStrength = Configuration.MaxStrength;
+
+            for (int i = 0; i < clubsInCountry.Count; i++)
+            {
+                var club = clubsInCountry[i];
+                club.Strength = currentStrength > 0 ? currentStrength : 1;
+                _clubService.Update(club);
+
+                counter--;
+                if (counter <= 0)
                 {
-                    var club = clubsInCountry[i];
-                    club.Strength = currentStrength > 0 ? currentStrength : 1;
-                    _clubService.Update(club);
-
-                    counter--;
-                    if (counter <= 0)
-                    {
-                        currentStrength--;
-                        counter = clubsInCountry.Count / (range == 0 ? 1 : range);
-                    }
+                    currentStrength--;
+                    counter = clubsInCountry.Count / (range == 0 ? 1 : range);
                 }
             }
+
+            return true;
+        }
+
+        private bool ResetCompetitionStrength(Country country)
+        {
+            var competitionsInCountry = _competitionService.GetCompetitions()
+                .Where(c => c.CountryId == country.Id && c.Type == Competition.CompetitionType.League)
+                .OrderBy(c => c.Tier)
+                .ToList();
+
+            if (!competitionsInCountry.Any())
+                return false;
+
+            var current = Configuration.MaxStrength - Configuration.MinStrength;
+            var counter = competitionsInCountry.Count / (current == 0 ? 1 : current);
+            var step = current / (competitionsInCountry.Count == 0 ? 1 : competitionsInCountry.Count);
+
+            foreach (var competition in competitionsInCountry)
+            {
+                competition.Strength = current;
+                _competitionService.Update(competition);
+                current -= step;
+            }
+            return true;
         }
 
         private int GetClubTier(Guid clubId)

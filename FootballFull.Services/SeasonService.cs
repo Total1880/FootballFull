@@ -40,6 +40,7 @@ namespace FootballFull.Services
                 GoalsAgainst = 0,
                 CompetitionId = club.CompetitionId
             }).ToList();
+            _clubs = _clubService.GetClubs();
         }
 
         private void RecalculateStrengths(int minStrength = 1, int maxStrength = 9)
@@ -83,12 +84,25 @@ namespace FootballFull.Services
                     if (club == null)
                         continue;
 
+                    var competitionStrength = _competitionRepository.Load()
+                        .First(c => c.Id == entry.CompetitionId).Strength;
+
+                    if (delta < 0 && club.Strength + 3 <= competitionStrength)
+                        if (club.Strength + 5 <= competitionStrength)
+                            delta = 1;
+                        else
+                            continue;
+                    if (delta > 0 && club.Strength - 3 >= competitionStrength)
+                        if(club.Strength - 5 >= competitionStrength)
+                            delta = -1;
+                        else
+                            continue;
+
                     var newStrength = club.Strength + delta;
                     if (newStrength < minStrength) newStrength = minStrength;
                     if (newStrength > maxStrength) newStrength = maxStrength;
 
                     club.Strength = newStrength;
-                    club.Last5Games = "";
                     _clubService.Update(club);
                 }
             }
@@ -122,30 +136,6 @@ namespace FootballFull.Services
                 var promotedClubs = clubsInCompetition
                     .Take(promotionsAndRelegationPlaces)
                     .ToList();
-
-                // 1. Strength aanpassen op basis van promotie/degradatie
-
-                // Promotie: iets sterker
-                foreach (var promoted in promotedClubs)
-                {
-                    var club = _clubService.GetClubById(promoted.ClubId);
-                    if (club == null) continue;
-
-                    club.Strength = Math.Min(club.Strength + 1, Configuration.MaxStrength);
-                    _clubService.Update(club);
-                }
-
-                // Degradatie: iets zwakker
-                foreach (var relegated in relegatedClubs)
-                {
-                    var club = _clubService.GetClubById(relegated.ClubId);
-                    if (club == null) continue;
-
-                    club.Strength = Math.Max(club.Strength - 1, Configuration.MinStrength);
-                    _clubService.Update(club);
-                }
-
-                // 2. Competitie-id updaten (promotie/degradatie zelf)
 
                 // Promotie: naar hogere tier (lager getal)
                 if (competition.Tier > 1)
@@ -359,7 +349,8 @@ namespace FootballFull.Services
                     effectiveAwayStrength = 5;
                     updateDifference = true;
 
-                };
+                }
+                ;
 
                 if (updateDifference)
                 {
@@ -433,7 +424,7 @@ namespace FootballFull.Services
                 {
                     Console.WriteLine(line);
                 }
-                
+
             }
 
             if (isSuddenDeath && homeGoals == awayGoals)
@@ -576,7 +567,7 @@ namespace FootballFull.Services
         private void UpdateClubStats(Guid clubId, int goalsFor, int goalsAgainst, int points)
         {
             var record = _clubLeagueCompetitions.First(_ => _.ClubId == clubId);
-            
+
             record.GoalsFor += goalsFor;
             record.GoalsAgainst += goalsAgainst;
             record.Points += points;
