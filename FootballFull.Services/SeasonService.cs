@@ -88,6 +88,7 @@ namespace FootballFull.Services
                     if (newStrength > maxStrength) newStrength = maxStrength;
 
                     club.Strength = newStrength;
+                    club.Last5Games = "";
                     _clubService.Update(club);
                 }
             }
