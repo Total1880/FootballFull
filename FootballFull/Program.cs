@@ -56,7 +56,9 @@ Guid userClubId = seasonService.ChoosePlayerClub();
 // Init eerste seizoen
 seasonService.Initialize(clubsPerCompetition);
 var fixtures = fixtureService.Generate(clubsPerCompetition);
-var matchDays = fixtures.Max(_ => _.MatchDay);
+var cupFixtures = seasonService.InitializeNationalCups();
+var internationalFixtures = seasonService.InitializeInternationalGames();
+var matchDays = Configuration.Weeks;
 
 do
 {
@@ -90,28 +92,29 @@ do
         DisplayLeagueTable();
         Console.WriteLine();
         DisplayNextFixture(userClubId, fixtures, matchDays, competitionToShow, matchDay);
+        PlayCupGames(matchDay);
+        PlayInternationalGames(matchDay);
 
         Console.Clear();
     }
 
     // --- END OF SEASON ---
-    PlayCupGames();
-    PlayInternationalGames();
+
     Console.WriteLine("Season complete! Press any key to restart a new season.");
     Console.ReadKey();
     Console.Clear();
 
     seasonService.InitializeNewSeason();
     fixtures = fixtureService.Generate(clubsPerCompetition);
-    matchDays = fixtures.Max(_ => _.MatchDay);
-
+    cupFixtures = seasonService.InitializeNationalCups();
+    internationalFixtures = seasonService.InitializeInternationalGames();
 } while (true);
 
-void PlayCupGames()
+void PlayCupGames(int matchDay)
 {
-    var cupFixtures = seasonService.InitializeNationalCups();
-
     if (cupFixtures == null || !cupFixtures.Any())
+        return;
+    if( cupFixtures.Any(_ => _.MatchDay == matchDay) == false)
         return;
 
     var cupCompetitions = competitions
@@ -125,44 +128,11 @@ void PlayCupGames()
     {
         Console.WriteLine($"--- {cupCompetition.Name} ---");
         var fixturesForCompetition = cupFixtures
-            .Where(_ => _.CompetitionId == cupCompetition.Id)
+            .Where(_ => _.CompetitionId == cupCompetition.Id && _.MatchDay == matchDay)
             .ToList();
-        var maxRound = fixturesForCompetition.Max(_ => _.RoundNo);
 
-        // Ronde per ronde spelen
-        for (int round = 0; round <= maxRound; round++)
-        {
-            var fixturesForRound = fixturesForCompetition
-                .Where(_ => _.RoundNo == round)
-                .ToList();
-
-            // Winners uit vorige ronde invullen in deze ronde
-            if (round > 0)
-            {
-                foreach (var fixture in fixturesForRound)
-                {
-                    if (fixture.CupPreviousFixtureHomeTeam != null && fixture.HomeTeamId == Guid.Empty)
-                    {
-                        var prev = fixture.CupPreviousFixtureHomeTeam;
-                        var homeWinner = prev.HomeScore > prev.AwayScore ? prev.HomeTeam : prev.AwayTeam;
-
-                        fixture.HomeTeam = homeWinner;
-                        fixture.HomeTeamId = homeWinner.Id;
-                    }
-
-                    if (fixture.CupPreviousFixtureAwayTeam != null && fixture.AwayTeamId == Guid.Empty)
-                    {
-                        var prev = fixture.CupPreviousFixtureAwayTeam;
-                        var awayWinner = prev.HomeScore > prev.AwayScore ? prev.HomeTeam : prev.AwayTeam;
-
-                        fixture.AwayTeam = awayWinner;
-                        fixture.AwayTeamId = awayWinner.Id;
-                    }
-                }
-            }
-
-            Console.WriteLine($"=== {cupCompetition.Name} Round {round} ===");
-            foreach (var fixture in fixturesForRound)
+            Console.WriteLine($"=== {cupCompetition.Name} Round {fixturesForCompetition.First().RoundNo} ===");
+            foreach (var fixture in fixturesForCompetition)
             {
                 if (fixture.HomeTeamId == userClubId || fixture.AwayTeamId == userClubId)
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -173,37 +143,46 @@ void PlayCupGames()
             Console.WriteLine("Press any key to play this round...");
             Console.ReadKey();
             // Simuleer enkel deze ronde (MatchDay == round)
-            seasonService.PlayMatchDay(cupFixtures, round, true, userClubId);
+            seasonService.PlayMatchDay(fixturesForCompetition, matchDay, true, userClubId);
             Console.Clear();
-            Console.WriteLine($"=== {cupCompetition.Name} Round {round} Results ===");
-            foreach (var fixture in fixturesForRound)
+            Console.WriteLine($"=== {cupCompetition.Name} Round {fixturesForCompetition.First().RoundNo} Results ===");
+            foreach (var fixture in fixturesForCompetition)
             {
                 if (fixture.HomeTeamId == userClubId || fixture.AwayTeamId == userClubId)
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"{fixture.HomeTeam.Name} {fixture.HomeScore} - {fixture.AwayScore} {fixture.AwayTeam.Name}");
                 Console.ResetColor();
+
+            //update winners for next round
+            var winner = fixture.HomeScore > fixture.AwayScore ? fixture.HomeTeam : fixture.AwayTeam;
+            var cupNextFixtures = cupFixtures.FirstOrDefault(_ => _.CupPreviousFixtureHomeTeam == fixture);
+            if (cupNextFixtures != null)
+            {
+                if (cupNextFixtures.HomeTeamId == Guid.Empty)
+                {
+                    cupNextFixtures.HomeTeam = winner;
+                    cupNextFixtures.HomeTeamId = winner.Id;
+                }
+            } else
+            {
+                cupNextFixtures = cupFixtures.FirstOrDefault(_ => _.CupPreviousFixtureAwayTeam == fixture);
+                if (cupNextFixtures != null && cupNextFixtures.AwayTeamId == Guid.Empty)
+                {
+                    cupNextFixtures.AwayTeam = winner;
+                    cupNextFixtures.AwayTeamId = winner.Id;
+                }
             }
             Console.WriteLine();
-            if (round < maxRound)
-            {
-                Console.WriteLine("Press any key for next round...");
-                Console.ReadKey();
-            }
-            else if (round == maxRound)
-            {
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
-            }
             Console.Clear();
         }
     }
 }
 
-void PlayInternationalGames()
+void PlayInternationalGames(int matchDay)
 {
-    var internationalFixtures = seasonService.InitializeInternationalGames();
-
     if (internationalFixtures == null || !internationalFixtures.Any())
+        return;
+    if (internationalFixtures.Any(_ => _.MatchDay == matchDay) == false)
         return;
 
     var internationalCompetition = competitions

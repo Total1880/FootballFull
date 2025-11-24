@@ -225,8 +225,8 @@ namespace FootballFull.Services
                 var fixture = new Fixture
                 {
                     CompetitionId = competitionCup.Id,
-                    RoundNo = 0,
-                    MatchDay = 0,
+                    RoundNo = 1,
+                    MatchDay = 1,
                     HomeTeamId = home.Id,
                     HomeTeam = home,
                     AwayTeamId = away.Id,
@@ -246,8 +246,8 @@ namespace FootballFull.Services
                 var fixture = new Fixture
                 {
                     CompetitionId = competitionCup.Id,
-                    RoundNo = 0,
-                    MatchDay = 0,
+                    RoundNo = 1,
+                    MatchDay = 1,
                     HomeTeamId = home.Id,
                     HomeTeam = home,
                     AwayTeamId = away.Id,
@@ -259,7 +259,7 @@ namespace FootballFull.Services
             }
 
             // 5) Volgende rondes: winners vs winners, geen byes meer
-            int round = 1;
+            int round = 2;
             while (currentRoundFixtures.Count > 1)
             {
                 var nextRoundFixtures = new List<Fixture>();
