@@ -322,7 +322,7 @@ namespace FootballFull.Services
                 {
                     effectiveHomeStrength = 5;
                     if (difference < 0)
-                        effectiveHomeStrength -= difference;
+                        effectiveHomeStrength += difference;
                 }
 
                 if (effectiveAwayStrength > 5)
@@ -330,8 +330,7 @@ namespace FootballFull.Services
                     effectiveAwayStrength = 5;
                     if (difference > 0)
                         effectiveAwayStrength -= difference;
-                }
-                ;
+                };
 
                 // Tactiek van speler toepassen aan juiste kant
                 if (playerIsHome)

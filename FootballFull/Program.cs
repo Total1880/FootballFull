@@ -20,18 +20,17 @@ services.AddSingleton<IClubPerCompetitionService, ClubPerCompetitionService>();
 services.AddSingleton<ICountryService, CountryService>();
 
 // Repositories (V2-varianten)
-const string dataRoot = @"C:\Users\olavh\source\repos\FootballFull\data";
 services.AddSingleton<IRepository<Club>>(
-    _ => new ClubRepositoryV2(Path.Combine(dataRoot, "Clubs.json")));
+    _ => new ClubRepositoryV2(Path.Combine(Configuration.DataRoot, "Clubs.json")));
 
 services.AddSingleton<IRepository<Competition>>(
-    _ => new CompetitionRepositoryV2(Path.Combine(dataRoot, "Competitions.json")));
+    _ => new CompetitionRepositoryV2(Path.Combine(Configuration.DataRoot, "Competitions.json")));
 
 services.AddSingleton<IRepository<Country>>(
-    _ => new CountryRepositoryV2(Path.Combine(dataRoot, "Countries.json")));
+    _ => new CountryRepositoryV2(Path.Combine(Configuration.DataRoot, "Countries.json")));
 
 services.AddSingleton<IClubPerCompetitionRepository>(
-    _ => new ClubPerCompetitionRepositoryV2(Path.Combine(dataRoot, "ClubPerCompetition.json")));
+    _ => new ClubPerCompetitionRepositoryV2(Path.Combine(Configuration.DataRoot, "ClubPerCompetition.json")));
 
 var provider = services.BuildServiceProvider();
 
@@ -48,7 +47,7 @@ var clubsPerCompetition = clubsPerCompetitionService.GetAllClubPerCompetitions()
 var competitions = competitionService.GetCompetitions();
 
 // reset strength
-ResetStrenght();
+ResetStrength();
 
 // TODO: user club Id kiezen via config / input
 Guid userClubId = seasonService.ChoosePlayerClub();
@@ -75,7 +74,7 @@ do
     // --- FIXTURE OVERVIEW ---
     DisplayLeagueTable();
     Console.WriteLine();
-    DisplayNextFixture(userClubId, fixtures, matchDays, competitionToShow, 0);
+    DisplayNextFixture(userClubId, fixtures, matchDays, competitionToShow, 0, false);
 
     Console.WriteLine("Press any key to start the season simulation...");
     Console.ReadKey();
@@ -132,7 +131,11 @@ void PlayCupGames(int matchDay)
             .Where(_ => _.CompetitionId == cupCompetition.Id && _.MatchDay == matchDay)
             .ToList();
 
+        if (fixturesForCompetition.Count == 0)
+            continue;
+
         Console.WriteLine($"=== {cupCompetition.Name} Round {fixturesForCompetition.First().RoundNo} ===");
+
         foreach (var fixture in fixturesForCompetition)
         {
             if (fixture.HomeTeamId == userClubId || fixture.AwayTeamId == userClubId)
@@ -194,7 +197,6 @@ void PlayInternationalGames(int matchDay)
 
     // Initieel overzicht (met TBD/winnaars uit vorige matchen)
 
-    Console.WriteLine($"Round {matchDay}");
     var fixturesForRound = internationalFixtures
         .Where(_ => _.MatchDay == matchDay)
         .ToList();
@@ -203,7 +205,7 @@ void PlayInternationalGames(int matchDay)
         return;
 
     Console.Clear();
-    Console.WriteLine("=== International Cup Fixtures ===");
+    Console.WriteLine($"=== International Round {matchDay} ===");
     Console.WriteLine();
 
     foreach (var fixture in fixturesForRound)
@@ -283,26 +285,6 @@ void PlayInternationalGames(int matchDay)
     Console.WriteLine($"International Cup winner: {finalwinner.Name}!");
     Console.WriteLine("Press any key to continue...");
     Console.ReadKey();
-}
-
-static void ShowAllFixtures(IList<Fixture> fixtures, int matchDays)
-{
-    for (int matchDay = 1; matchDay <= matchDays; matchDay++)
-    {
-        Console.WriteLine($"Match Day {matchDay}");
-        Console.WriteLine(new string('-', 22));
-
-        var fixturesForMatchDay = fixtures
-            .Where(_ => _.MatchDay == matchDay)
-            .ToList();
-
-        foreach (var fixture in fixturesForMatchDay)
-        {
-            Console.WriteLine($"{fixture.HomeTeam.Name} vs {fixture.AwayTeam.Name}");
-        }
-
-        Console.WriteLine();
-    }
 }
 
 void DisplayLeagueTable()
@@ -421,7 +403,7 @@ void DisplayResult(int matchDay)
     Console.WriteLine();
 }
 
-static void DisplayNextFixture(Guid userClubId, IList<Fixture> fixtures, int matchDays, Competition competitionToShow, int matchDay)
+static void DisplayNextFixture(Guid userClubId, IList<Fixture> fixtures, int matchDays, Competition competitionToShow, int matchDay, bool waitForKey = true)
 {
     if (matchDay < matchDays)
     {
@@ -448,9 +430,12 @@ static void DisplayNextFixture(Guid userClubId, IList<Fixture> fixtures, int mat
             Console.ResetColor();
         }
 
-        Console.WriteLine();
-        Console.WriteLine("Press any key for next matchday...");
-        Console.ReadKey();
+        if (waitForKey)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Press any key for next matchday...");
+            Console.ReadKey();
+        }
     }
     else
     {
@@ -460,7 +445,7 @@ static void DisplayNextFixture(Guid userClubId, IList<Fixture> fixtures, int mat
     }
 }
 
-void ResetStrenght()
+void ResetStrength()
 {
 
     var countries = countryService.GetCountries();
