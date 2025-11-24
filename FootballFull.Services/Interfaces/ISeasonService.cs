@@ -10,6 +10,7 @@ namespace FootballFull.Services.Interfaces
         void PlayMatchDay(IList<Fixture> fixtures, int matchDay,bool isSuddenDeath = false, Guid? playerClubId = null);
         Guid ChoosePlayerClub();
         IList<Fixture> InitializeInternationalGames();
+        IList<Fixture> InitializeNationalCups();
 
     }
 }

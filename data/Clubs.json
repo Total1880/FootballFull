@@ -49,73 +49,73 @@
   },
   {
     "Name": "Zulte Waregem",
-    "Strength": 18,
+    "Strength": 19,
     "Id": "43e26ae2-9ea7-4e87-8bfd-eeccfd3004e3",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Charleroi",
-    "Strength": 18,
+    "Strength": 19,
     "Id": "cb121952-3968-43bb-b59e-852d8fe14a94",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Standard",
-    "Strength": 15,
+    "Strength": 18,
     "Id": "2841cf3f-11de-4ded-b073-3cf9a24c5464",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "RAAL La Louvi\u00E8re",
-    "Strength": 16,
+    "Strength": 18,
     "Id": "c9be6233-3661-4eae-9865-cd1d294f2bf9",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Westerlo",
-    "Strength": 13,
+    "Strength": 18,
     "Id": "d9913584-0b40-4f00-80ea-57965b5ad783",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "OH Leuven",
-    "Strength": 14,
+    "Strength": 18,
     "Id": "a6bf4c8f-7eac-4f11-8dee-229815cb17bb",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Cercle Brugge",
-    "Strength": 16,
+    "Strength": 18,
     "Id": "536694b1-ed7a-4e84-a077-9f93caf377f0",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Dender",
-    "Strength": 15,
+    "Strength": 17,
     "Id": "f1519fec-119c-4422-8363-d5afe5922409",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "SK Beveren",
-    "Strength": 19,
+    "Strength": 17,
     "Id": "2db7bc50-faa6-4509-9246-46e720c0e49d",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "KV Kortrijk",
-    "Strength": 19,
+    "Strength": 17,
     "Id": "f8b24697-387a-49be-ab77-9c592379bbc3",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Beerschot",
-    "Strength": 19,
+    "Strength": 17,
     "Id": "588acdd9-886e-4422-b1ac-56cac3edf748",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "FC Li\u00E8ge",
-    "Strength": 19,
+    "Strength": 17,
     "Id": "ff61c20b-d19d-414b-8631-0416209c0846",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -145,73 +145,73 @@
   },
   {
     "Name": "Lierse",
-    "Strength": 18,
+    "Strength": 16,
     "Id": "5f92af7a-6fb4-4ca3-b6fe-18907f30bb12",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Lokeren",
-    "Strength": 13,
+    "Strength": 15,
     "Id": "cff82caa-0fbc-4280-83a5-99cabcb7a4ae",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Francs Borains",
-    "Strength": 12,
+    "Strength": 15,
     "Id": "7db323ad-8be7-49ce-bdc6-eb9b9cfb4519",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Seraing",
-    "Strength": 13,
+    "Strength": 15,
     "Id": "5c61782f-43df-490d-9b16-004a3db193d5",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Olympic Charleroi",
-    "Strength": 11,
+    "Strength": 15,
     "Id": "022ed73c-50b8-486d-9483-2b5eb22b43d5",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Sporting Hasselt",
-    "Strength": 13,
+    "Strength": 15,
     "Id": "79bdd335-980b-4593-8da0-48bb31a683c6",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Tubize-Braine",
-    "Strength": 19,
+    "Strength": 14,
     "Id": "2fd598e0-481c-4980-8474-8dbdcfd929fd",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Belisia Bilzen",
-    "Strength": 15,
+    "Strength": 14,
     "Id": "c93f52dc-8244-4b15-b374-c542bccbf24d",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Mons",
-    "Strength": 16,
+    "Strength": 14,
     "Id": "bb6312d0-a764-4141-b392-c1d33f0a0261",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Lyra-Lierse",
-    "Strength": 17,
+    "Strength": 14,
     "Id": "15d9e250-4195-49c7-8f36-3c70991599a1",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Virton",
-    "Strength": 16,
+    "Strength": 14,
     "Id": "4b0eb0d9-2e34-41af-8ff5-2c7f57a6487e",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Thes Sport",
-    "Strength": 14,
+    "Strength": 13,
     "Id": "6b335896-9219-4de8-ab31-49dee04610ac",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -241,37 +241,37 @@
   },
   {
     "Name": "Dessel Sport",
-    "Strength": 9,
+    "Strength": 12,
     "Id": "975a4b2e-8185-41a8-a398-7d5a3d28fdf3",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Rochefort",
-    "Strength": 10,
+    "Strength": 12,
     "Id": "27b628b0-592e-446d-a93e-288ae1ff2a74",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Hoogstraten",
-    "Strength": 10,
+    "Strength": 12,
     "Id": "dd1e6c03-c202-4bfd-9b35-709bf20b833a",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Crossing Schaerbeek",
-    "Strength": 9,
+    "Strength": 12,
     "Id": "b6bf7b5e-c080-454c-b6f7-87de0b6473f1",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Zelzate",
-    "Strength": 7,
+    "Strength": 12,
     "Id": "68ab9da8-f53e-4ef4-b90a-586cc965a696",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Union Namur",
-    "Strength": 7,
+    "Strength": 11,
     "Id": "0a51f91e-6a08-49ef-af88-a27893c1ad14",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -283,19 +283,19 @@
   },
   {
     "Name": "Manchester City",
-    "Strength": 20,
+    "Strength": 19,
     "Id": "1b91bbcf-4593-415c-a348-ad1104c44175",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Chelsea",
-    "Strength": 20,
+    "Strength": 18,
     "Id": "552f21be-bb48-45a5-b21a-b5f0fbf3f3a1",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Sunderland",
-    "Strength": 20,
+    "Strength": 17,
     "Id": "bfe4c1dc-6fa1-4095-bc9e-77e92930b359",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
@@ -367,25 +367,25 @@
   },
   {
     "Name": "Leeds United",
-    "Strength": 2,
+    "Strength": 5,
     "Id": "c5e23337-4855-4f78-ac7d-39ac9f0a04fe",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Burnley",
-    "Strength": 1,
+    "Strength": 4,
     "Id": "c01d461e-0b19-4466-9361-6568cec94f67",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "West Ham United",
-    "Strength": 1,
+    "Strength": 3,
     "Id": "5f20608f-071e-4b5b-9b66-bd88b5b7708e",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Nottingham Forest",
-    "Strength": 1,
+    "Strength": 2,
     "Id": "8f0bdae9-c243-4116-9a8a-e628ec057b40",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
@@ -403,19 +403,19 @@
   },
   {
     "Name": "Barcelona",
-    "Strength": 16,
+    "Strength": 19,
     "Id": "f8e345aa-f656-41e1-9e09-93ffa98c615d",
     "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
   },
   {
     "Name": "Villareal",
-    "Strength": 20,
+    "Strength": 18,
     "Id": "17a14cf8-d731-4dd0-b151-c1ffeb963609",
     "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
   },
   {
     "Name": "Atl\u00E9tico Madrid",
-    "Strength": 11,
+    "Strength": 17,
     "Id": "8b1e8e3a-f555-46c4-af1e-16c295a9d5c9",
     "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
   },
@@ -427,19 +427,19 @@
   },
   {
     "Name": "RB Leipzig",
-    "Strength": 20,
+    "Strength": 19,
     "Id": "069d5682-ca9f-4d77-9dea-202dab92e622",
     "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc"
   },
   {
     "Name": "Borussia Dortmund",
-    "Strength": 15,
+    "Strength": 18,
     "Id": "661e5acc-230f-403e-82bf-ada743c27318",
     "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc"
   },
   {
     "Name": "Stuttgart",
-    "Strength": 11,
+    "Strength": 17,
     "Id": "0a2c8972-69fb-4750-b0df-31ebd6e941f5",
     "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc"
   },
@@ -451,31 +451,31 @@
   },
   {
     "Name": "Marseille",
-    "Strength": 20,
+    "Strength": 19,
     "Id": "07f87248-41b4-4f83-981a-fd5171f0b270",
     "CountryId": "5198d483-97be-409e-adbe-b86d3591f972"
   },
   {
     "Name": "Lens",
-    "Strength": 15,
+    "Strength": 18,
     "Id": "13358ced-5c19-4884-b668-05839e4e4327",
     "CountryId": "5198d483-97be-409e-adbe-b86d3591f972"
   },
   {
     "Name": "Strasbourg",
-    "Strength": 11,
+    "Strength": 17,
     "Id": "7bd5b43c-3a6d-4c51-8159-3baee572a1f0",
     "CountryId": "5198d483-97be-409e-adbe-b86d3591f972"
   },
   {
     "Name": "Knokke",
-    "Strength": 13,
+    "Strength": 11,
     "Id": "a6a9ee29-efe5-468b-bebf-120cb7524337",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "KVK Tienen",
-    "Strength": 16,
+    "Strength": 11,
     "Id": "7f8e4182-e25e-4354-894a-d60d60f4f17f",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -487,7 +487,7 @@
   },
   {
     "Name": "Merelbeke",
-    "Strength": 13,
+    "Strength": 11,
     "Id": "c109b88e-e07c-4a6c-8c21-8f01e9d0d776",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -511,37 +511,37 @@
   },
   {
     "Name": "Londerzeel",
-    "Strength": 11,
+    "Strength": 10,
     "Id": "8e3d89d2-0ae6-46e5-953c-dfcaade41a7a",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "RCS Braine",
-    "Strength": 11,
+    "Strength": 10,
     "Id": "86ddbf24-f7d8-44bc-be41-c3f7638791c6",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Lebbeke",
-    "Strength": 8,
+    "Strength": 9,
     "Id": "a838266b-742e-4c16-9c0d-0507b70974eb",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Stade Verviers",
-    "Strength": 6,
+    "Strength": 9,
     "Id": "67186a80-9925-4c3e-9411-88f347eed419",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "KVDO",
-    "Strength": 5,
+    "Strength": 9,
     "Id": "5df8c6a3-14a4-4cdc-aa33-5c4c62222d0a",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Bocholt",
-    "Strength": 6,
+    "Strength": 9,
     "Id": "5f1d3686-20ea-4257-9e5f-4b4049dc536e",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -553,31 +553,31 @@
   },
   {
     "Name": "HO Kalken",
-    "Strength": 6,
+    "Strength": 8,
     "Id": "b66c8d01-0cf1-4034-9ad5-e27186df99a6",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Rupel-Boom",
-    "Strength": 6,
+    "Strength": 8,
     "Id": "051a2a7d-bb70-4f3b-a94a-ae9bcf0439ce",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "CS Onhaye",
-    "Strength": 12,
+    "Strength": 8,
     "Id": "c42b4ff3-32bc-41f2-9719-6c12c0e530e5",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "RC Harelbeke",
-    "Strength": 13,
+    "Strength": 8,
     "Id": "cb4b37de-fbb1-4227-a6d8-455201d55e76",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "KSK Heist",
-    "Strength": 10,
+    "Strength": 8,
     "Id": "92bdcab3-5794-4cfb-a63f-002141956406",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -589,31 +589,31 @@
   },
   {
     "Name": "Oostkamp",
-    "Strength": 8,
+    "Strength": 7,
     "Id": "b6ee9441-577f-43ed-8435-30baffdfea50",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Nijlen",
-    "Strength": 9,
+    "Strength": 7,
     "Id": "f361e919-2520-4ebc-8776-0bb1a19f20da",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Entit\u00E9 Manageoise",
-    "Strength": 9,
+    "Strength": 7,
     "Id": "d243f2b1-5ea3-46cb-871c-d1532abc0435",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Oudenaarde",
-    "Strength": 10,
+    "Strength": 7,
     "Id": "4cd88029-c383-467e-8df1-ccc271029665",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Eendracht Termien",
-    "Strength": 5,
+    "Strength": 6,
     "Id": "e839d3ed-9622-4b2e-895d-7afb4ed27092",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -625,61 +625,61 @@
   },
   {
     "Name": "RC Gent",
-    "Strength": 3,
+    "Strength": 6,
     "Id": "f035c0ce-7682-429c-bed6-aca437ea5fe4",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "RC Mechelen",
-    "Strength": 3,
+    "Strength": 6,
     "Id": "1b4c26cf-2d52-412f-ade8-08b3614decf0",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Ostiches-Ath",
-    "Strength": 3,
+    "Strength": 6,
     "Id": "94b09849-f01a-43c3-8594-e434086412a8",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Westhoek",
-    "Strength": 2,
+    "Strength": 5,
     "Id": "0fd1cc9f-c287-4e76-9211-9b3581cdee49",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Wellen",
-    "Strength": 3,
+    "Strength": 5,
     "Id": "58dc7029-7629-43ee-9b1e-762d25e415b8",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Ganshoren",
-    "Strength": 3,
+    "Strength": 5,
     "Id": "78470cf9-3a51-49e8-9a3d-b4d015809dda",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Gullegem",
-    "Strength": 7,
+    "Strength": 5,
     "Id": "7c8f5805-06a9-4059-9203-97394e9bdcc2",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Hades Kiewit",
-    "Strength": 7,
+    "Strength": 5,
     "Id": "4b2f012d-fb91-4e03-b6a2-fc7106d3fcbc",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Union Hutoise",
-    "Strength": 7,
+    "Strength": 4,
     "Id": "572f12e1-aaf8-43b5-8008-cb210a53c289",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Tongeren",
-    "Strength": 7,
+    "Strength": 4,
     "Id": "ad02047e-0a0a-459d-b44d-f903f32ceb36",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -691,19 +691,19 @@
   },
   {
     "Name": "Torhout",
-    "Strength": 7,
+    "Strength": 4,
     "Id": "1e4c9ad9-a528-432c-8179-a9709ecf0dd6",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Cappellen",
-    "Strength": 7,
+    "Strength": 4,
     "Id": "93826217-9f38-481c-9fef-8bf3eab04625",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Union Richelle",
-    "Strength": 4,
+    "Strength": 3,
     "Id": "6d45b8f3-0fa1-4347-91a8-11e8caa810f3",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -727,7 +727,7 @@
   },
   {
     "Name": "Rotselaar",
-    "Strength": 4,
+    "Strength": 3,
     "Id": "e2644d7e-d2ef-47e3-b0b6-7cb3711c5718",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
@@ -739,19 +739,19 @@
   },
   {
     "Name": "Sparta Petegem",
-    "Strength": 1,
+    "Strength": 2,
     "Id": "aadb7364-a707-4915-8d11-e07d9c21cca5",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Berg En Dal",
-    "Strength": 1,
+    "Strength": 2,
     "Id": "c5eb6938-35bd-4849-b9ee-b031f4c42772",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },
   {
     "Name": "Union La Calamine",
-    "Strength": 1,
+    "Strength": 2,
     "Id": "b8c67ca4-49f3-465c-b922-cfe9574aa4e4",
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
   },

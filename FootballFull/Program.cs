@@ -95,6 +95,7 @@ do
     }
 
     // --- END OF SEASON ---
+    PlayCupGames();
     PlayInternationalGames();
     Console.WriteLine("Season complete! Press any key to restart a new season.");
     Console.ReadKey();
@@ -105,6 +106,98 @@ do
     matchDays = fixtures.Max(_ => _.MatchDay);
 
 } while (true);
+
+void PlayCupGames()
+{
+    var cupFixtures = seasonService.InitializeNationalCups();
+
+    if (cupFixtures == null || !cupFixtures.Any())
+        return;
+
+    var cupCompetitions = competitions
+    .Where(_ => _.Type == Competition.CompetitionType.Cup).ToList();
+
+    Console.Clear();
+    Console.WriteLine("=== National Cup Fixtures ===");
+    Console.WriteLine();
+
+    foreach (var cupCompetition in cupCompetitions)
+    {
+        Console.WriteLine($"--- {cupCompetition.Name} ---");
+        var fixturesForCompetition = cupFixtures
+            .Where(_ => _.CompetitionId == cupCompetition.Id)
+            .ToList();
+        var maxRound = fixturesForCompetition.Max(_ => _.RoundNo);
+
+        // Ronde per ronde spelen
+        for (int round = 0; round <= maxRound; round++)
+        {
+            var fixturesForRound = fixturesForCompetition
+                .Where(_ => _.RoundNo == round)
+                .ToList();
+
+            // Winners uit vorige ronde invullen in deze ronde
+            if (round > 0)
+            {
+                foreach (var fixture in fixturesForRound)
+                {
+                    if (fixture.CupPreviousFixtureHomeTeam != null && fixture.HomeTeamId == Guid.Empty)
+                    {
+                        var prev = fixture.CupPreviousFixtureHomeTeam;
+                        var homeWinner = prev.HomeScore > prev.AwayScore ? prev.HomeTeam : prev.AwayTeam;
+
+                        fixture.HomeTeam = homeWinner;
+                        fixture.HomeTeamId = homeWinner.Id;
+                    }
+
+                    if (fixture.CupPreviousFixtureAwayTeam != null && fixture.AwayTeamId == Guid.Empty)
+                    {
+                        var prev = fixture.CupPreviousFixtureAwayTeam;
+                        var awayWinner = prev.HomeScore > prev.AwayScore ? prev.HomeTeam : prev.AwayTeam;
+
+                        fixture.AwayTeam = awayWinner;
+                        fixture.AwayTeamId = awayWinner.Id;
+                    }
+                }
+            }
+
+            Console.WriteLine($"=== {cupCompetition.Name} Round {round} ===");
+            foreach (var fixture in fixturesForRound)
+            {
+                if (fixture.HomeTeamId == userClubId || fixture.AwayTeamId == userClubId)
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"{fixture.HomeTeam.Name} vs {fixture.AwayTeam.Name}");
+                Console.ResetColor();
+            }
+            Console.WriteLine();
+            Console.WriteLine("Press any key to play this round...");
+            Console.ReadKey();
+            // Simuleer enkel deze ronde (MatchDay == round)
+            seasonService.PlayMatchDay(cupFixtures, round, true, userClubId);
+            Console.Clear();
+            Console.WriteLine($"=== {cupCompetition.Name} Round {round} Results ===");
+            foreach (var fixture in fixturesForRound)
+            {
+                if (fixture.HomeTeamId == userClubId || fixture.AwayTeamId == userClubId)
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"{fixture.HomeTeam.Name} {fixture.HomeScore} - {fixture.AwayScore} {fixture.AwayTeam.Name}");
+                Console.ResetColor();
+            }
+            Console.WriteLine();
+            if (round < maxRound)
+            {
+                Console.WriteLine("Press any key for next round...");
+                Console.ReadKey();
+            }
+            else if (round == maxRound)
+            {
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+            }
+            Console.Clear();
+        }
+    }
+}
 
 void PlayInternationalGames()
 {
@@ -216,13 +309,13 @@ void PlayInternationalGames()
             Console.WriteLine("Press any key for next round...");
             Console.ReadKey();
         }
-        else if(round == maxRound)
+        else if (round == maxRound)
         {
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
         }
 
-            Console.Clear();
+        Console.Clear();
     }
 
     // Winnaar bepalen – laatste ronde
@@ -416,7 +509,7 @@ static void DisplayNextFixture(Guid userClubId, IList<Fixture> fixtures, int mat
 
 void ResetStrenght()
 {
-    
+
     var countries = countryService.GetCountries();
     var clubs = clubService.GetClubs();
 
@@ -435,8 +528,8 @@ void ResetStrenght()
             club.Strength = currentStrength > 0 ? currentStrength : 1;
             clubService.Update(club);
 
-                counter--;
-            if(counter <= 0)
+            counter--;
+            if (counter <= 0)
             {
                 currentStrength--;
                 counter = clubsInCountry.Count / (Configuration.MaxStrength - Configuration.MinStrength);

@@ -226,6 +226,7 @@ namespace FootballFull.Services
                 {
                     CompetitionId = competitionCup.Id,
                     RoundNo = 0,
+                    MatchDay = 0,
                     HomeTeamId = home.Id,
                     HomeTeam = home,
                     AwayTeamId = away.Id,
@@ -246,6 +247,7 @@ namespace FootballFull.Services
                 {
                     CompetitionId = competitionCup.Id,
                     RoundNo = 0,
+                    MatchDay = 0,
                     HomeTeamId = home.Id,
                     HomeTeam = home,
                     AwayTeamId = away.Id,
@@ -268,6 +270,7 @@ namespace FootballFull.Services
                     {
                         CompetitionId = competitionCup.Id,
                         RoundNo = round,
+                        MatchDay = round,
                         CupPreviousFixtureHomeTeam = currentRoundFixtures[i],
                         CupPreviousFixtureAwayTeam = currentRoundFixtures[i + 1]
                     };

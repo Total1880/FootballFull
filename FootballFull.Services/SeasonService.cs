@@ -189,6 +189,21 @@ namespace FootballFull.Services
 
             foreach (var fixture in todaysFixtures)
             {
+                if (fixture.HomeTeamId == Guid.Empty)
+                {
+                    // Bye voor thuisteam
+                    fixture.HomeScore = 0;
+                    fixture.AwayScore = 3;
+                    continue;
+                }
+                else if (fixture.AwayTeamId == Guid.Empty)
+                {
+                    // Bye voor uitteam
+                    fixture.HomeScore = 3;
+                    fixture.AwayScore = 0;
+                    continue;
+                }
+
                 bool isPlayerMatch = playerClubId.HasValue &&
                                      (fixture.HomeTeam.Id == playerClubId.Value ||
                                       fixture.AwayTeam.Id == playerClubId.Value);
@@ -209,22 +224,6 @@ namespace FootballFull.Services
 
         private void SimulateFixtureAutomatically(Fixture fixture, bool isSuddenDeath)
         {
-            var homeStrength = fixture.HomeTeam.Strength;
-            var awayStrength = fixture.AwayTeam.Strength - 1;
-            var difference = homeStrength - awayStrength;
-
-            if (homeStrength > 5)
-            {
-                homeStrength = 5;
-                if (difference < 0)
-                    homeStrength -= difference;
-            }
-            if (awayStrength > 5)
-            {
-                awayStrength = 5;
-                if (difference > 0)
-                    awayStrength -= difference;
-            }
             if (fixture.HomeTeamId == Guid.Empty)
             {
                 // Bye voor thuisteam
@@ -239,8 +238,32 @@ namespace FootballFull.Services
                 fixture.AwayScore = 0;
                 return;
             }
-            fixture.HomeScore = Random.Shared.Next(0, 5) - fixture.AwayTeam.Strength;
-            fixture.AwayScore = Random.Shared.Next(0, 5) - fixture.HomeTeam.Strength;
+
+            var homeStrength = fixture.HomeTeam.Strength;
+            var awayStrength = fixture.AwayTeam.Strength - 1;
+            var difference = homeStrength - awayStrength;
+
+            if (homeStrength > 5)
+            {
+                homeStrength = 5;
+                if (difference < 0)
+                    homeStrength += difference;
+            }
+            if (awayStrength > 5)
+            {
+                awayStrength = 5;
+                if (difference > 0)
+                    awayStrength -= difference;
+            }
+
+            while (homeStrength < 1 || awayStrength < 1)
+            {
+                homeStrength++;
+                awayStrength++;
+            }
+
+            fixture.HomeScore = Random.Shared.Next(0, 5) - awayStrength;
+            fixture.AwayScore = Random.Shared.Next(0, 5) - homeStrength;
 
 
             if (isSuddenDeath && fixture.HomeScore == fixture.AwayScore)
@@ -255,7 +278,6 @@ namespace FootballFull.Services
                     fixture.HomeScore++;
                 else
                     fixture.AwayScore++;
-                Console.WriteLine("Sudden death! Away team scores and wins!");
             }
 
             while (fixture.HomeScore < 0 || fixture.AwayScore < 0)
@@ -303,7 +325,8 @@ namespace FootballFull.Services
                         effectiveHomeStrength -= difference;
                 }
 
-                if (effectiveAwayStrength > 5) {
+                if (effectiveAwayStrength > 5)
+                {
                     effectiveAwayStrength = 5;
                     if (difference > 0)
                         effectiveAwayStrength -= difference;
@@ -519,5 +542,43 @@ namespace FootballFull.Services
             return fixtures;
         }
 
+        public IList<Fixture> InitializeNationalCups()
+        {
+            var competitions = _competitionRepository.Load();
+            var fixtures = new List<Fixture>();
+            // All cup competitions grouped by country
+            var cupsPerCountry = competitions
+                .Where(c => c.Type == Competition.CompetitionType.Cup)
+                .GroupBy(c => c.CountryId);
+
+            foreach (var cupGroup in cupsPerCountry)
+            {
+                var countryId = cupGroup.Key;
+                var cup = cupGroup.First(); // assume 1 cup per country for now
+
+                // Find all league clubs in that country
+                var leagueCompetitionsInCountry = competitions
+                    .Where(c => c.CountryId == countryId && c.Type == Competition.CompetitionType.League)
+                    .ToList();
+
+                var cupClubs = _clubLeagueCompetitions
+                    .Where(cl => leagueCompetitionsInCountry.Any(lc => lc.Id == cl.CompetitionId))
+                    .Select(cl => new ClubPerCompetition
+                    {
+                        ClubId = cl.ClubId,
+                        CompetitionId = cup.Id
+                    })
+                    .ToList();
+
+                if (cupClubs.Count < 2)
+                    continue; // nothing to do
+
+                var cupFixtures = _fixtureService.GenerateCupFixtures(cupClubs, cup);
+
+                fixtures.AddRange(cupFixtures);
+            }
+
+            return fixtures;
+        }
     }
 }
