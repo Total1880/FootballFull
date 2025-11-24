@@ -231,27 +231,36 @@ namespace FootballFull.Services
 
         private void SimulateFixtureAutomatically(Fixture fixture, bool isSuddenDeath)
         {
+            // Bye-afhandeling
             if (fixture.HomeTeamId == Guid.Empty)
             {
-                // Bye voor thuisteam
                 fixture.HomeScore = 0;
                 fixture.AwayScore = 3;
                 return;
             }
             else if (fixture.AwayTeamId == Guid.Empty)
             {
-                // Bye voor uitteam
                 fixture.HomeScore = 3;
                 fixture.AwayScore = 0;
                 return;
             }
-            var homeMomentum = _clubs.First(_ => _.Id == fixture.HomeTeamId).Momentum;
-            var awayMomentum = _clubs.First(_ => _.Id == fixture.AwayTeamId).Momentum;
-            homeMomentum = homeMomentum < 5 ? -1 : homeMomentum > 10 ? 1 : 0;
-            awayMomentum = awayMomentum < 5 ? -1 : awayMomentum > 10 ? 1 : 0;
 
-            var homeStrength = fixture.HomeTeam.Strength + homeMomentum;
-            var awayStrength = fixture.AwayTeam.Strength + awayMomentum - 1;
+            const int phases = 9; // 6 fases = 90 min
+            int homeGoals = 0;
+            int awayGoals = 0;
+
+            // Momentum ophalen
+            var homeClub = _clubs.First(_ => _.Id == fixture.HomeTeamId);
+            var awayClub = _clubs.First(_ => _.Id == fixture.AwayTeamId);
+
+            int homeMomentumMod = MapMomentumToModifier(homeClub.Momentum);
+            int awayMomentumMod = MapMomentumToModifier(awayClub.Momentum);
+
+            // Home advantage
+            int homeAdvantage = 1;
+
+            var homeStrength = fixture.HomeTeam.Strength + homeMomentumMod + homeAdvantage;
+            var awayStrength = fixture.AwayTeam.Strength + awayMomentumMod;
             var difference = homeStrength - awayStrength;
 
             if (homeStrength > 5)
@@ -273,29 +282,31 @@ namespace FootballFull.Services
                 awayStrength++;
             }
 
-            fixture.HomeScore = Random.Shared.Next(0, 5) - awayStrength;
-            fixture.AwayScore = Random.Shared.Next(0, 5) - homeStrength;
-
-
-            if (isSuddenDeath && fixture.HomeScore == fixture.AwayScore)
+            // Simuleer fases
+            for (int phase = 1; phase <= phases; phase++)
             {
-                // Sudden death: één team moet winnen
-                Random rnd = new Random();
+                if (RollChanceToScore(homeStrength))
+                    homeGoals++;
 
-                // 0 = home team scoort, 1 = away team scoort
-                int suddenDeathWinner = rnd.Next(0, 2);
+                if (RollChanceToScore(awayStrength))
+                    awayGoals++;
+            }
 
-                if (suddenDeathWinner == 0)
-                    fixture.HomeScore++;
+            // Sudden death als nodig (beker)
+            if (isSuddenDeath && homeGoals == awayGoals)
+            {
+                // Gewoon lichte bias op de sterkere ploeg
+                int totalStrength = homeStrength + awayStrength;
+                int roll = Random.Shared.Next(0, totalStrength);
+
+                if (roll < homeStrength)
+                    homeGoals++;
                 else
-                    fixture.AwayScore++;
+                    awayGoals++;
             }
 
-            while (fixture.HomeScore < 0 || fixture.AwayScore < 0)
-            {
-                fixture.HomeScore++;
-                fixture.AwayScore++;
-            }
+            fixture.HomeScore = homeGoals;
+            fixture.AwayScore = awayGoals;
         }
 
         private enum TacticChoice
@@ -309,44 +320,54 @@ namespace FootballFull.Services
         {
             int homeGoals = 0;
             int awayGoals = 0;
-            const int phases = 6; // 6 fases = ± 15 min per fase
+            const int phases = 9; // 6 fases = ± 15 min per fase
+            var commentary = new List<string>();
 
             bool playerIsHome = fixture.HomeTeam.Id == playerClubId;
             var playerClub = playerIsHome ? fixture.HomeTeam : fixture.AwayTeam;
             var opponent = playerIsHome ? fixture.AwayTeam : fixture.HomeTeam;
-            var homeMomentum = _clubs.First(_ => _.Id == fixture.HomeTeamId).Momentum;
-            var awayMomentum = _clubs.First(_ => _.Id == fixture.AwayTeamId).Momentum;
+            var homeMomentum = MapMomentumToModifier(_clubs.First(_ => _.Id == fixture.HomeTeamId).Momentum);
+            var awayMomentum = MapMomentumToModifier(_clubs.First(_ => _.Id == fixture.AwayTeamId).Momentum);
 
-            homeMomentum = homeMomentum < 5 ? -1 : homeMomentum > 10 ? 1 : 0;
-            awayMomentum = awayMomentum < 5 ? -1 : awayMomentum > 10 ? 1 : 0;
+            int startHomeStrength = fixture.HomeTeam.Strength + homeMomentum;
+            int startAwayStrength = fixture.AwayTeam.Strength + awayMomentum - 1;
+            int difference = startHomeStrength - startAwayStrength;
+            var homeNegativeEffects = 0;
+            var awayNegativeEffects = 0;
+
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine($"Speeldag {fixture.MatchDay}");
+            Console.WriteLine($"{fixture.HomeTeam.Name} {homeGoals} - {awayGoals} {fixture.AwayTeam.Name}");
 
             for (int phase = 1; phase <= phases; phase++)
             {
-                Console.Clear();
-                Console.WriteLine($"Speeldag {fixture.MatchDay}");
-                Console.WriteLine($"{fixture.HomeTeam.Name} {homeGoals} - {awayGoals} {fixture.AwayTeam.Name}");
-                Console.WriteLine($"Minuut {phase * 15}");
-                Console.WriteLine();
 
                 var choice = AskTacticChoice(playerClub.Name);
-
-                int effectiveHomeStrength = fixture.HomeTeam.Strength + homeMomentum;
-                int effectiveAwayStrength = fixture.AwayTeam.Strength + awayMomentum - 1;
-                int difference = effectiveHomeStrength - effectiveAwayStrength;
-
+                var effectiveHomeStrength = startHomeStrength;
+                var effectiveAwayStrength = startAwayStrength;
+                var updateDifference = false;
                 if (effectiveHomeStrength > 5)
                 {
                     effectiveHomeStrength = 5;
-                    if (difference < 0)
-                        effectiveHomeStrength += difference;
+                    updateDifference = true;
+
                 }
 
                 if (effectiveAwayStrength > 5)
                 {
                     effectiveAwayStrength = 5;
+                    updateDifference = true;
+
+                };
+
+                if (updateDifference)
+                {
+                    if (difference < 0)
+                        effectiveHomeStrength += difference;
                     if (difference > 0)
                         effectiveAwayStrength -= difference;
-                };
+                }
 
                 // Tactiek van speler toepassen aan juiste kant
                 if (playerIsHome)
@@ -358,52 +379,113 @@ namespace FootballFull.Services
                     ApplyTactic(choice, ref effectiveAwayStrength, ref effectiveHomeStrength);
                 }
 
+                if (RollCard())
+                {
+                    // 50/50 welke ploeg de kaart krijgt
+                    bool cardForHome = Random.Shared.Next(0, 2) == 0;
+                    if (cardForHome)
+                    {
+                        homeNegativeEffects = Math.Max(0, effectiveHomeStrength - 1);
+                        commentary.Add($"Min {phase * 10}: Rode kaart voor {fixture.HomeTeam.Name}! Ze verliezen grip op de wedstrijd.");
+                    }
+                    else
+                    {
+                        awayNegativeEffects = Math.Max(0, effectiveAwayStrength - 1);
+                        commentary.Add($"Min {phase * 10}: Rode kaart voor {fixture.AwayTeam.Name}!");
+                    }
+                }
+
+                effectiveHomeStrength -= homeNegativeEffects;
+                effectiveAwayStrength -= awayNegativeEffects;
+                while (effectiveHomeStrength < 1 || effectiveAwayStrength < 1)
+                {
+                    effectiveHomeStrength++;
+                    effectiveAwayStrength++;
+                }
                 // Elke fase: kans op goal voor beide teams
-                if (RollChanceToScore(effectiveHomeStrength))
+                bool homeChance = RollChanceToScore(effectiveHomeStrength);
+                bool awayChance = RollChanceToScore(effectiveAwayStrength);
+
+                if (homeChance)
+                {
                     homeGoals++;
-
-                if (RollChanceToScore(effectiveAwayStrength))
+                    commentary.Add($"Min {phase * 10}: Doelpunt voor {fixture.HomeTeam.Name}!");
+                }
+                else if (awayChance)
+                {
                     awayGoals++;
+                    commentary.Add($"Min {phase * 10}: Doelpunt voor {fixture.AwayTeam.Name}!");
+                }
+                else
+                {
+                    commentary.Add($"Min {phase * 10}: Geen grote kansen in deze fase.");
+                }
 
-                //Console.WriteLine();
-                //Console.WriteLine("Druk op een toets voor de volgende fase...");
-                //Console.ReadKey(true);
+                Console.Clear();
+
+                Console.WriteLine();
+                Console.WriteLine($"Speeldag {fixture.MatchDay}");
+                Console.WriteLine($"{fixture.HomeTeam.Name} {homeGoals} - {awayGoals} {fixture.AwayTeam.Name}");
+                Console.WriteLine($"Minuut {phase * 10}");
+                Console.WriteLine();
+                Console.WriteLine("Wedstrijdverslag:");
+                foreach (var line in commentary)
+                {
+                    Console.WriteLine(line);
+                }
+                
             }
 
             if (isSuddenDeath && homeGoals == awayGoals)
             {
-                // Sudden death: één team moet winnen
-                Random rnd = new Random();
-
-                // 0 = home team scoort, 1 = away team scoort
-                int suddenDeathWinner = rnd.Next(0, 2);
-
-                if (suddenDeathWinner == 0)
+                Console.WriteLine();
+                Console.WriteLine("Sudden death! Volgende goal wint...");
+                Console.ReadKey(true);
+                while (homeGoals == awayGoals)
                 {
-                    homeGoals++;
-                    Console.WriteLine("Sudden death! Home team scores and wins!");
-                }
-                else
-                {
-                    awayGoals++;
-                    Console.WriteLine("Sudden death! Away team scores and wins!");
+                    // je kan hier eventueel 'mini-fases' doen met minuut +1 etc.
+                    if (RollChanceToScore(startHomeStrength))
+                    {
+                        homeGoals++;
+                        Console.WriteLine($"{fixture.HomeTeam.Name} scoort in sudden death!");
+                    }
+                    else if (RollChanceToScore(startAwayStrength))
+                    {
+                        awayGoals++;
+                        Console.WriteLine($"{fixture.AwayTeam.Name} scoort in sudden death!");
+                    }
                 }
             }
+            Console.ReadKey(true);
 
             fixture.HomeScore = homeGoals;
             fixture.AwayScore = awayGoals;
 
-            Console.Clear();
             Console.WriteLine("Einde wedstrijd!");
             Console.WriteLine($"{fixture.HomeTeam.Name} {fixture.HomeScore} - {fixture.AwayScore} {fixture.AwayTeam.Name}");
             Console.WriteLine("Druk op een toets om verder te gaan...");
             Console.ReadKey(true);
         }
 
+        private int MapMomentumToModifier(int momentum)
+        {
+            if (momentum <= 4) return -1;
+            if (momentum >= 11) return 1;
+            return 0;
+        }
+
+        private bool RollCard()
+        {
+            int roll = Random.Shared.Next(0, 100);
+            return roll < 5; // 5% kans op kaart in een fase
+        }
+
+
         private TacticChoice AskTacticChoice(string clubName)
         {
             while (true)
             {
+                Console.WriteLine();
                 Console.WriteLine($"{clubName}: kies je tactiek voor deze fase:");
                 Console.WriteLine("1) Aanvallend");
                 Console.WriteLine("2) Defensief");
@@ -446,10 +528,10 @@ namespace FootballFull.Services
 
         private bool RollChanceToScore(int effectiveStrength)
         {
-            if (effectiveStrength <= 0) return false;
+            if (effectiveStrength <= 0)
+                effectiveStrength = 1;
 
-            // Strength 1..5 -> kans tussen ongeveer 10% en 45% per fase
-            int chance = 10 + effectiveStrength * 7; // tweakbaar
+            int chance = 10 + effectiveStrength * 3;
             int roll = Random.Shared.Next(0, 100);
             return roll < chance;
         }
