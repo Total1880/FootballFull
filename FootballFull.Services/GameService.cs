@@ -81,9 +81,15 @@ namespace FootballFull.Services
                 Console.ReadKey();
                 Console.Clear();
 
-                // Matchday simulation
                 for (int matchDay = 1; matchDay <= _matchDays; matchDay++)
                 {
+                    Console.Clear();
+                    Console.WriteLine($"=== Matchday {matchDay} ===");
+
+                    Console.WriteLine();
+                    Console.WriteLine("Druk op een toets om deze speeldag te simuleren...");
+                    Console.ReadKey();
+
                     _seasonService.PlayMatchDay(_fixtures, matchDay, false, _userClubId);
 
                     DisplayResult(matchDay);
@@ -95,6 +101,9 @@ namespace FootballFull.Services
                     PlayInternationalGames(matchDay);
 
                     Console.Clear();
+
+                    // 🔥 Nieuw: menu tussen speeldagen
+                    ShowBetweenMatchdaysMenu();
                 }
 
                 // End of season
@@ -111,6 +120,42 @@ namespace FootballFull.Services
         }
 
         #region Helpers
+
+        private void ShowBetweenMatchdaysMenu()
+        {
+            while (true)
+            {
+                Console.WriteLine();
+                Console.WriteLine("=== Menu ===");
+                Console.WriteLine("1. Volgende speeldag");
+                Console.WriteLine("2. Andere lopende competities bekijken");
+                Console.WriteLine("0. Stoppen");
+                Console.Write("Maak een keuze: ");
+
+                var input = Console.ReadKey();
+
+                switch (input.Key)
+                {
+                    case ConsoleKey.NumPad1:
+                        // Terug naar de for-loop: volgende matchday
+                        return;
+
+                    case ConsoleKey.NumPad2:
+                        ShowOtherCompetitionsMenu(); // hieronder
+                                                     // Na terugkeer tonen we opnieuw dit menu
+                        break;
+
+                    case ConsoleKey.NumPad0:
+                        Environment.Exit(0);
+                        return;
+
+                    default:
+                        Console.WriteLine("Ongeldige keuze, probeer opnieuw.");
+                        break;
+                }
+            }
+        }
+
 
         private void PlayCupGames(int matchDay)
         {
@@ -210,7 +255,6 @@ namespace FootballFull.Services
                 Console.Clear();
             }
         }
-
 
         private void PlayInternationalGames(int matchDay)
         {
@@ -315,6 +359,17 @@ namespace FootballFull.Services
 
         private void DisplayLeagueTable()
         {
+            // Bepaal competitie van de user
+            var competitionId = _clubsPerCompetition
+                .First(_ => _.ClubId == _userClubId)
+                .CompetitionId;
+
+            // User-club highlighten
+            DisplayLeagueTable(competitionId, _userClubId);
+        }
+
+        private void DisplayLeagueTable(Guid competitionId, Guid? highlightClubId = null)
+        {
             const int positionWidth = 4;
             const int nameWidth = 25;
             const int gamesWidth = 8;
@@ -325,10 +380,6 @@ namespace FootballFull.Services
             const int gaWidth = 6;
             const int gdWidth = 6;
             const int pointsWidth = 8;
-
-            var competitionId = _clubsPerCompetition
-                .First(_ => _.ClubId == _userClubId)
-                .CompetitionId;
 
             var competitionToShow = _competitions.First(_ => _.Id == competitionId);
 
@@ -351,13 +402,19 @@ namespace FootballFull.Services
             Console.WriteLine(new string('-', positionWidth + nameWidth + gamesWidth + wonWidth + drawWidth + lostWidth + pointsWidth + gfWidth + gaWidth + gdWidth));
 
             var counter = 1;
-            foreach (var c in _seasonService.ClubLeagueCompetitions
-                         .Where(_ => _.CompetitionId == competitionToShow.Id)
-                         .OrderByDescending(_ => _.Points)
-                         .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst))
+            var table = _seasonService.ClubLeagueCompetitions
+                .Where(_ => _.CompetitionId == competitionToShow.Id)
+                .OrderByDescending(_ => _.Points)
+                .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst)
+                .ThenByDescending(_ => _.GoalsFor)
+                .ToList();
+
+            foreach (var c in table)
             {
                 var club = _clubService.GetClubById(c.ClubId);
-                if (c.ClubId == _userClubId)
+
+                // Alleen highlighten als er een club meegegeven is
+                if (highlightClubId.HasValue && c.ClubId == highlightClubId.Value)
                     Console.ForegroundColor = ConsoleColor.Yellow;
 
                 Console.WriteLine(
@@ -372,6 +429,7 @@ namespace FootballFull.Services
                     $"{c.GoalDifference.ToString().PadLeft(gdWidth)}" +
                     $"{c.Points.ToString().PadLeft(pointsWidth)}"
                 );
+
                 Console.ResetColor();
                 counter++;
             }
@@ -513,6 +571,125 @@ namespace FootballFull.Services
                 return 0;
 
             return leagueCompetition.Tier;
+        }
+
+        private void ShowOtherCompetitionsMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("=== Other Competitions ===");
+            Console.WriteLine();
+
+            var competitions = _competitionService.GetCompetitions()
+                .Where(_ => _.Type == Competition.CompetitionType.League)
+                .OrderBy(_ => _.CountryId)
+                .ThenBy(_ => _.Tier)
+                .ToList();
+
+            for (int i = 0; i < competitions.Count; i++)
+            {
+                var comp = competitions[i];
+                if (comp.Country == null)
+                {
+                    comp.Country = _countryService.GetCountryById(comp.CountryId);
+                }
+                Console.WriteLine($"{i + 1}. {comp.Country.Name} – {comp.Name} (Tier {comp.Tier})");
+            }
+
+            Console.WriteLine("0. Terug");
+            Console.Write("Maak een keuze: ");
+
+            if (!int.TryParse(Console.ReadLine(), out int choice) || choice == 0)
+                return;
+
+            if (choice > 0 && choice <= competitions.Count)
+            {
+                var selected = competitions[choice - 1];
+                ShowCompetitionDetailMenu(selected);
+            }
+        }
+
+        private void ShowCompetitionDetailMenu(Competition competition)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine($"=== {competition.Country.Name} – {competition.Name} ===");
+                Console.WriteLine("1. Stand bekijken");
+                Console.WriteLine("2. Fixtures bekijken");
+                Console.WriteLine("3. Resultaten tot nu toe");
+                Console.WriteLine("0. Terug");
+                Console.Write("Maak een keuze: ");
+
+                var input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case "1":
+                        // Geen highlight: gewoon de tabel tonen
+                        DisplayLeagueTable(competition.Id);
+                        break;
+                    case "2":
+                        DisplayFixturesForCompetition(competition.Id);
+                        break;
+                    case "3":
+                        DisplayResultsForCompetition(competition.Id);
+                        break;
+                    case "0":
+                        return;
+                }
+
+                Console.WriteLine("\nDruk op een toets om terug te gaan...");
+                Console.ReadKey();
+            }
+        }
+
+
+        private void DisplayLeagueTableForCompetition(Guid competitionId)
+        {
+            Console.Clear();
+            Console.WriteLine("=== League Table ===");
+
+            var table = _seasonService.ClubLeagueCompetitions
+                .Where(_ => _.CompetitionId == competitionId)
+                .OrderByDescending(_ => _.Points)
+                .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst)
+                .ThenByDescending(_ => _.GoalsFor)
+                .ToList();
+
+            foreach (var entry in table)
+            {
+                var club = _clubService.GetClubById(entry.ClubId);
+                Console.WriteLine($"{club.Name} - {entry.Points} pts - GF {entry.GoalsFor} - GA {entry.GoalsAgainst}");
+            }
+        }
+
+        private void DisplayFixturesForCompetition(Guid competitionId)
+        {
+            Console.Clear();
+            Console.WriteLine("=== Fixtures ===");
+
+            var fixtures = _fixtures
+                .Where(_ => _.CompetitionId == competitionId)
+                .OrderBy(_ => _.MatchDay)
+                .ToList();
+
+            foreach (var f in fixtures)
+                Console.WriteLine($"MD {f.MatchDay}: {f.HomeTeam.Name} - {f.AwayTeam.Name}");
+        }
+
+        private void DisplayResultsForCompetition(Guid competitionId)
+        {
+            Console.Clear();
+            Console.WriteLine("=== Results Played ===");
+
+            var fixtures = _fixtures
+                .Where(_ => _.CompetitionId == competitionId && _.HomeScore >= 0)
+                .OrderBy(_ => _.MatchDay)
+                .ToList();
+
+            foreach (var f in fixtures)
+                Console.WriteLine(
+                    $"MD {f.MatchDay}: {f.HomeTeam.Name} {f.HomeScore} - {f.AwayScore} {f.AwayTeam.Name}");
         }
 
 
