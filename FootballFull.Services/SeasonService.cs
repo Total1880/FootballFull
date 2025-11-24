@@ -11,7 +11,8 @@ namespace FootballFull.Services
         private IClubService _clubService;
         private IFixtureService _fixtureService;
         private IList<ClubLeagueCompetition> _clubLeagueCompetitions;
-        private IList<ClubPerCompetition> _clubs;
+        private IList<ClubPerCompetition> _clubsPerCompetition;
+        private IList<Club> _clubs;
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
 
         public SeasonService(IRepository<Competition> competitionRepository, IClubService clubService, IFixtureService fixtureService)
@@ -20,16 +21,18 @@ namespace FootballFull.Services
             _clubService = clubService;
             _fixtureService = fixtureService;
         }
-        public void Initialize(IList<ClubPerCompetition> clubs)
+        public void Initialize(IList<ClubPerCompetition> clubsPerCompetition)
         {
-            _clubs = clubs;
+            _clubsPerCompetition = clubsPerCompetition;
+            _clubs = _clubService.GetClubs();
             InitializeNewSeason();
         }
+
         public void InitializeNewSeason()
         {
             RecalculateStrengths(Configuration.MinStrength, Configuration.MaxStrength);
             PromotionsAndRelegations();
-            _clubLeagueCompetitions = _clubs.Select(club => new ClubLeagueCompetition
+            _clubLeagueCompetitions = _clubsPerCompetition.Select(club => new ClubLeagueCompetition
             {
                 ClubId = club.ClubId,
                 Points = 0,
@@ -153,7 +156,7 @@ namespace FootballFull.Services
                     {
                         foreach (var promotedClub in promotedClubs)
                         {
-                            var link = _clubs.FirstOrDefault(_ => _.ClubId == promotedClub.ClubId);
+                            var link = _clubsPerCompetition.FirstOrDefault(_ => _.ClubId == promotedClub.ClubId);
                             if (link != null)
                                 link.CompetitionId = higherCompetition.Id;
                         }
@@ -171,7 +174,7 @@ namespace FootballFull.Services
                     {
                         foreach (var relegatedClub in relegatedClubs)
                         {
-                            var link = _clubs.FirstOrDefault(_ => _.ClubId == relegatedClub.ClubId);
+                            var link = _clubsPerCompetition.FirstOrDefault(_ => _.ClubId == relegatedClub.ClubId);
                             if (link != null)
                                 link.CompetitionId = lowerCompetition.Id;
                         }
@@ -219,6 +222,9 @@ namespace FootballFull.Services
 
                 if (!isSuddenDeath)
                     ApplyResultToTable(fixture);
+
+                UpdateClubMomentum(fixture.HomeTeamId, fixture.HomeScore, fixture.AwayScore);
+                UpdateClubMomentum(fixture.AwayTeamId, fixture.AwayScore, fixture.HomeScore);
             }
         }
 
@@ -238,9 +244,13 @@ namespace FootballFull.Services
                 fixture.AwayScore = 0;
                 return;
             }
+            var homeMomentum = _clubs.First(_ => _.Id == fixture.HomeTeamId).Momentum;
+            var awayMomentum = _clubs.First(_ => _.Id == fixture.AwayTeamId).Momentum;
+            homeMomentum = homeMomentum < 5 ? -1 : homeMomentum > 10 ? 1 : 0;
+            awayMomentum = awayMomentum < 5 ? -1 : awayMomentum > 10 ? 1 : 0;
 
-            var homeStrength = fixture.HomeTeam.Strength;
-            var awayStrength = fixture.AwayTeam.Strength - 1;
+            var homeStrength = fixture.HomeTeam.Strength + homeMomentum;
+            var awayStrength = fixture.AwayTeam.Strength + awayMomentum - 1;
             var difference = homeStrength - awayStrength;
 
             if (homeStrength > 5)
@@ -303,6 +313,11 @@ namespace FootballFull.Services
             bool playerIsHome = fixture.HomeTeam.Id == playerClubId;
             var playerClub = playerIsHome ? fixture.HomeTeam : fixture.AwayTeam;
             var opponent = playerIsHome ? fixture.AwayTeam : fixture.HomeTeam;
+            var homeMomentum = _clubs.First(_ => _.Id == fixture.HomeTeamId).Momentum;
+            var awayMomentum = _clubs.First(_ => _.Id == fixture.AwayTeamId).Momentum;
+
+            homeMomentum = homeMomentum < 5 ? -1 : homeMomentum > 10 ? 1 : 0;
+            awayMomentum = awayMomentum < 5 ? -1 : awayMomentum > 10 ? 1 : 0;
 
             for (int phase = 1; phase <= phases; phase++)
             {
@@ -314,8 +329,8 @@ namespace FootballFull.Services
 
                 var choice = AskTacticChoice(playerClub.Name);
 
-                int effectiveHomeStrength = fixture.HomeTeam.Strength;
-                int effectiveAwayStrength = fixture.AwayTeam.Strength - 1;
+                int effectiveHomeStrength = fixture.HomeTeam.Strength + homeMomentum;
+                int effectiveAwayStrength = fixture.AwayTeam.Strength + awayMomentum - 1;
                 int difference = effectiveHomeStrength - effectiveAwayStrength;
 
                 if (effectiveHomeStrength > 5)
@@ -457,18 +472,43 @@ namespace FootballFull.Services
             }
         }
 
+        private void UpdateClubMomentum(Guid clubId, int goalsFor, int goalsAgainst)
+        {
+            var club = _clubs.FirstOrDefault(_ => _.Id == clubId);
+            if (club == null) return;
+
+            var resultChar = goalsFor > goalsAgainst ? 'W' :
+                             goalsFor < goalsAgainst ? 'L' : 'D';
+
+            var last = club.Last5Games ?? "";
+
+            last = (last + resultChar);
+
+            if (last.Length > 5)
+                last = last[^5..]; // pak laatste 5 chars
+
+            club.Last5Games = last;
+        }
+
         private void UpdateClubStats(Guid clubId, int goalsFor, int goalsAgainst, int points)
         {
             var record = _clubLeagueCompetitions.First(_ => _.ClubId == clubId);
+            
             record.GoalsFor += goalsFor;
             record.GoalsAgainst += goalsAgainst;
             record.Points += points;
             if (goalsFor > goalsAgainst)
+            {
                 record.Won++;
+            }
             else if (goalsAgainst > goalsFor)
+            {
                 record.Lost++;
+            }
             else
+            {
                 record.Draw++;
+            }
             record.MatchesPlayed++;
         }
 
