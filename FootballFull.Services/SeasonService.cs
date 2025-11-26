@@ -15,7 +15,13 @@ namespace FootballFull.Services
         private IList<ClubPerCompetition> _clubsPerCompetition;
         private IList<Club> _clubs;
         private IList<Trainer> _trainers;
+        private IList<NewsMessage> _newsMessages;
+        private int _year;
+
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
+        public IList<NewsMessage> NewsMessages => _newsMessages;
+
+        public int Year { get => _year; set => _year = value; }
 
         public SeasonService(
             IRepository<Competition> competitionRepository,
@@ -27,12 +33,15 @@ namespace FootballFull.Services
             _clubService = clubService;
             _fixtureService = fixtureService;
             _trainerService = trainerService;
+
+            _newsMessages = new List<NewsMessage>();
         }
         public void Initialize(IList<ClubPerCompetition> clubsPerCompetition)
         {
             _clubsPerCompetition = clubsPerCompetition;
             _clubs = _clubService.GetClubs();
             _trainers = _trainerService.Load();
+
             InitializeNewSeason();
         }
 
@@ -227,7 +236,6 @@ namespace FootballFull.Services
                 UpdateClubMomentumAndMorale(fixture.AwayTeamId, fixture.AwayScore, fixture.HomeScore);
             }
         }
-
         private void SimulateFixtureAutomatically(Fixture fixture, bool isSuddenDeath)
         {
             // Bye-afhandeling
@@ -769,11 +777,12 @@ namespace FootballFull.Services
             if (club.Morale < 1) club.Morale = 1;
             if (club.Morale > 10) club.Morale = 10;
         }
-        public void NewTrainer(Guid clubId, int matchDay = 0)
+        public Trainer NewTrainer(Guid clubId, int matchDay = 0)
         {
             var newTrainer = _trainerService.CreateRandomTrainer(clubId);
             AssignTrainer(clubId, newTrainer, matchDay);
             _trainers.Add(newTrainer);
+            return newTrainer;
         }
 
         private void AssignTrainer(Guid clubId, Trainer trainer, int matchDay)
@@ -785,7 +794,7 @@ namespace FootballFull.Services
             {
                 var nextClub = _clubs.First(_ => _.Id == trainer.ClubId);
 
-                FindNewTrainer(trainer.ClubId, matchDay, nextClub.Strength, trainer.Id);
+                FindNewTrainer(nextClub, matchDay, nextClub.Strength, trainer.Id, false);
             }
             trainer.ClubId = clubId;
         }
@@ -796,25 +805,47 @@ namespace FootballFull.Services
             foreach (var club in clubs)
             {
                 var firedTrainer = FireTrainer(club.Id, club.Strength);
-                FindNewTrainer(club.Id, matchDay, club.Strength, firedTrainer);
+                var newTrainer = FindNewTrainer(club, matchDay, club.Strength, firedTrainer, true);
             }
         }
 
-        private void FindNewTrainer(Guid clubId, int matchDay, int strength, Guid firedTrainerId)
+        private Trainer? FindNewTrainer(Club club, int matchDay, int strength, Guid firedTrainerId, bool isFired = true)
         {
+            var message = new NewsMessage { ClubId = club.Id, CountryId = club.CountryId, MatchDay = matchDay, Year = _year, CompetitionId = _clubLeagueCompetitions.First(_ => _.ClubId == club.Id).CompetitionId };
+            if (isFired)
+                message.Message = $"{club.Name} fired its trainer, {firedTrainerId}.";
+            else message.Message = $"{club.Name} lost its trainer, {firedTrainerId}.";
+
             var trainer = FindTrainerAtOtherClub(strength);
 
             if (trainer == null)
+            {
                 trainer = _trainers
                     .Where(_ => _.Id != firedTrainerId && _.ClubId == Guid.Empty && _.LastTeamStrength >= (strength - 5) && _.LastTeamStrength <= (strength + 5))
                     .OrderByDescending(_ => _.LastTeamStrength)
                     .FirstOrDefault();
+                if (trainer != null)
+                    message.Message += $"They found a new unemployed trainer, {trainer.Id}";
+            }
 
             if (trainer == null)
-                NewTrainer(clubId, matchDay);
+            {
+                trainer = NewTrainer(club.Id, matchDay);
+                message.Message += $"They found a new trainer, {trainer.Id}";
+            }
             else
-                AssignTrainer(clubId, trainer, matchDay);
+            {
+                if (trainer.ClubId != Guid.Empty)
+                {
+                    var oldClubName = _clubs.First(_ => _.Id == trainer.ClubId).Name;
+                    message.Message += $"They took over trainer {trainer.Id} from {oldClubName}";
+                }
+                AssignTrainer(club.Id, trainer, matchDay);
 
+            }
+
+            _newsMessages.Add(message);
+            return trainer;
         }
 
         private Trainer? FindTrainerAtOtherClub(int strength)

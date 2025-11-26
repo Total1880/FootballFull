@@ -23,8 +23,10 @@ namespace FootballFull.Services
         private IList<Fixture> _cupFixtures = new List<Fixture>();
         private IList<Trainer> _trainers;
         private IList<Fixture>? _internationalFixtures;
+        private IList<NewsMessage> _news;
         private Guid _userClubId;
         private int _matchDays;
+        private int _year = 0;
 
         public GameService(
             ISeasonService seasonService,
@@ -44,6 +46,7 @@ namespace FootballFull.Services
             _trainerService = trainerService;
 
             _trainers = _trainerService.Load();
+            _news = new List<NewsMessage>();
         }
 
         public void Run()
@@ -110,7 +113,7 @@ namespace FootballFull.Services
 
                     Console.Clear();
 
-                    // 🔥 Nieuw: menu tussen speeldagen
+                    ShowNews(matchDay, _year, competitionId);
                     ShowBetweenMatchdaysMenu();
                 }
 
@@ -123,8 +126,28 @@ namespace FootballFull.Services
                 _seasonService.InitializeNewSeason();
                 _fixtures = _fixtureService.Generate(_clubsPerCompetition);
                 _cupFixtures = _seasonService.InitializeNationalCups();
-
+                _year++;
             } while (true);
+        }
+
+        private void ShowNews(int matchDay, int year, Guid competitionId)
+        {
+            Console.Clear();
+            var autoContinue = true;
+            foreach (var message in _seasonService.NewsMessages
+                .Where(_ => _.CountryId == _clubService.GetClubById(_userClubId).CountryId &&
+                _.CompetitionId == competitionId &&
+                _.MatchDay == matchDay 
+                && _.Year == year))
+            {
+                autoContinue = false;
+                Console.WriteLine(message.Message);
+            }
+            if (!autoContinue)
+            {
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey();
+            }
         }
 
         #region Helpers

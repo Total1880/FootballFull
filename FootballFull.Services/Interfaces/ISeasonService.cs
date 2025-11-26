@@ -11,8 +11,9 @@ namespace FootballFull.Services.Interfaces
         Guid ChoosePlayerClub();
         IList<Fixture> InitializeInternationalGames();
         IList<Fixture> InitializeNationalCups();
-        void NewTrainer(Guid clubId, int matchDay = 0);
+        Trainer NewTrainer(Guid clubId, int matchDay = 0);
         void UpdateWeekStats(Guid userClubId, int matchDay);
-
+        IList<NewsMessage> NewsMessages { get; }
+        int Year { get; set; }
     }
 }
