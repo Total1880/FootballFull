@@ -15,5 +15,6 @@ namespace FootballFull.Services.Interfaces
         void UpdateWeekStats(Guid userClubId, int matchDay);
         IList<NewsMessage> NewsMessages { get; }
         int Year { get; set; }
+        Trainer UserTrainer(Guid userClubId);
     }
 }

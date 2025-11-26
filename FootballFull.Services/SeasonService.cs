@@ -783,6 +783,9 @@ namespace FootballFull.Services
         }
         public Trainer NewTrainer(Guid clubId, int matchDay = 0)
         {
+            var existingTrainer = _trainers.FirstOrDefault(_ => _.ClubId == clubId);
+            if (existingTrainer != null)
+                existingTrainer.ClubId = Guid.Empty;
             var newTrainer = _trainerService.CreateRandomTrainer(clubId);
             AssignTrainer(clubId, newTrainer, matchDay);
             _trainers.Add(newTrainer);
@@ -875,6 +878,11 @@ namespace FootballFull.Services
         public void UpdateWeekStats(Guid userClubId, int matchDay)
         {
             ClubsFireTrainer(userClubId, matchDay);
+        }
+
+        public Trainer UserTrainer(Guid userClubId)
+        {
+            return _trainers.First(_ => _.ClubId == userClubId);
         }
     }
 }

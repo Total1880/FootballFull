@@ -126,7 +126,7 @@ namespace FootballFull.Services
                 _seasonService.InitializeNewSeason(_year++);
                 _fixtures = _fixtureService.Generate(_clubsPerCompetition);
                 _cupFixtures = _seasonService.InitializeNationalCups();
-                
+
             } while (true);
         }
 
@@ -137,7 +137,7 @@ namespace FootballFull.Services
             foreach (var message in _seasonService.NewsMessages
                 .Where(_ => _.CountryId == _clubService.GetClubById(_userClubId).CountryId &&
                 _.CompetitionId == competitionId &&
-                _.MatchDay == matchDay 
+                _.MatchDay == matchDay
                 && _.Year == year))
             {
                 autoContinue = false;
@@ -161,6 +161,7 @@ namespace FootballFull.Services
                 Console.WriteLine("1. Volgende speeldag");
                 Console.WriteLine("2. Andere lopende competities bekijken");
                 Console.WriteLine("3. Club bekijken");
+                Console.WriteLine("4. Trainers bekijken");
                 Console.WriteLine("0. Stoppen");
                 Console.Write("Maak een keuze: ");
 
@@ -179,6 +180,9 @@ namespace FootballFull.Services
                     case ConsoleKey.NumPad3:
                         ClubMenu();
                         break;
+                    case ConsoleKey.NumPad4:
+                        Console.WriteLine("Not implemented yet");
+                        break;
 
                     case ConsoleKey.NumPad0:
                         Environment.Exit(0);
@@ -195,6 +199,12 @@ namespace FootballFull.Services
         {
             Console.Clear();
             Console.WriteLine();
+            var trainer = _seasonService.UserTrainer(_userClubId);
+            Console.WriteLine($"Trainer: {trainer?.Name} {trainer?.LastName}");
+#if DEBUG
+            Console.WriteLine($"Tactical: {trainer?.TacticalSkill}");
+            Console.WriteLine($"Motivational: {trainer?.Motivation}");
+#endif
             Console.WriteLine("Trainer ontslagen? (Y/N)");
             var input = Console.ReadKey();
             switch (input.Key)
