@@ -15,11 +15,13 @@ namespace FootballFull.Services
         private readonly ICompetitionService _competitionService;
         private readonly IClubPerCompetitionService _clubPerCompetitionService;
         private readonly ICountryService _countryService;
+        private readonly ITrainerService _trainerService;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
         private IList<Competition> _competitions = new List<Competition>();
         private IList<Fixture> _fixtures = new List<Fixture>();
         private IList<Fixture> _cupFixtures = new List<Fixture>();
+        private IList<Trainer> _trainers;
         private IList<Fixture>? _internationalFixtures;
         private Guid _userClubId;
         private int _matchDays;
@@ -30,7 +32,8 @@ namespace FootballFull.Services
             IClubService clubService,
             ICompetitionService competitionService,
             IClubPerCompetitionService clubPerCompetitionService,
-            ICountryService countryService)
+            ICountryService countryService,
+            ITrainerService trainerService)
         {
             _seasonService = seasonService;
             _fixtureService = fixtureService;
@@ -38,6 +41,9 @@ namespace FootballFull.Services
             _competitionService = competitionService;
             _clubPerCompetitionService = clubPerCompetitionService;
             _countryService = countryService;
+            _trainerService = trainerService;
+
+            _trainers = _trainerService.Load();
         }
 
         public void Run()
@@ -155,7 +161,6 @@ namespace FootballFull.Services
                 }
             }
         }
-
 
         private void PlayCupGames(int matchDay)
         {
@@ -535,7 +540,6 @@ namespace FootballFull.Services
             }
         }
 
-
         private bool ResetClubStrength(IList<Club> clubs, Country country)
         {
             var clubsInCountry = clubs
@@ -675,26 +679,6 @@ namespace FootballFull.Services
             }
         }
 
-
-        private void DisplayLeagueTableForCompetition(Guid competitionId)
-        {
-            Console.Clear();
-            Console.WriteLine("=== League Table ===");
-
-            var table = _seasonService.ClubLeagueCompetitions
-                .Where(_ => _.CompetitionId == competitionId)
-                .OrderByDescending(_ => _.Points)
-                .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst)
-                .ThenByDescending(_ => _.GoalsFor)
-                .ToList();
-
-            foreach (var entry in table)
-            {
-                var club = _clubService.GetClubById(entry.ClubId);
-                Console.WriteLine($"{club.Name} - {entry.Points} pts - GF {entry.GoalsFor} - GA {entry.GoalsAgainst}");
-            }
-        }
-
         private void DisplayFixturesForCompetition(Guid competitionId)
         {
             Console.Clear();
@@ -723,8 +707,6 @@ namespace FootballFull.Services
                 Console.WriteLine(
                     $"MD {f.MatchDay}: {f.HomeTeam.Name} {f.HomeScore} - {f.AwayScore} {f.AwayTeam.Name}");
         }
-
-
         #endregion
     }
 }

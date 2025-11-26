@@ -8,18 +8,27 @@ namespace FootballFull.Services
     public class SeasonService : ISeasonService
     {
         private IRepository<Competition> _competitionRepository;
+        private readonly ITrainerService _trainerService;
         private IClubService _clubService;
         private IFixtureService _fixtureService;
         private IList<ClubLeagueCompetition> _clubLeagueCompetitions;
         private IList<ClubPerCompetition> _clubsPerCompetition;
         private IList<Club> _clubs;
+        private IList<Trainer> _trainers;
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
 
-        public SeasonService(IRepository<Competition> competitionRepository, IClubService clubService, IFixtureService fixtureService)
+        public SeasonService(
+            IRepository<Competition> competitionRepository, 
+            IClubService clubService, 
+            IFixtureService fixtureService,
+            ITrainerService trainerService)
         {
             _competitionRepository = competitionRepository;
             _clubService = clubService;
             _fixtureService = fixtureService;
+            _trainerService = trainerService;
+
+            _trainers = _trainerService.Load();
         }
         public void Initialize(IList<ClubPerCompetition> clubsPerCompetition)
         {
@@ -41,6 +50,7 @@ namespace FootballFull.Services
                 CompetitionId = club.CompetitionId
             }).ToList();
             _clubs = _clubService.GetClubs();
+            ResetClubRuntimeState();
         }
 
         private void RecalculateStrengths(int minStrength = 1, int maxStrength = 9)
@@ -214,8 +224,8 @@ namespace FootballFull.Services
                 if (!isSuddenDeath)
                     ApplyResultToTable(fixture);
 
-                UpdateClubMomentum(fixture.HomeTeamId, fixture.HomeScore, fixture.AwayScore);
-                UpdateClubMomentum(fixture.AwayTeamId, fixture.AwayScore, fixture.HomeScore);
+                UpdateClubMomentumAndMorale(fixture.HomeTeamId, fixture.HomeScore, fixture.AwayScore);
+                UpdateClubMomentumAndMorale(fixture.AwayTeamId, fixture.AwayScore, fixture.HomeScore);
             }
         }
 
@@ -246,11 +256,32 @@ namespace FootballFull.Services
             int homeMomentumMod = MapMomentumToModifier(homeClub.Momentum);
             int awayMomentumMod = MapMomentumToModifier(awayClub.Momentum);
 
-            // Home advantage
-            int homeAdvantage = 1;
+            // trainers
+            var homeTrainer = _trainers.FirstOrDefault(t => t.ClubId == fixture.HomeTeamId);
+            var awayTrainer = _trainers.FirstOrDefault(t => t.ClubId == fixture.AwayTeamId);
 
-            var homeStrength = fixture.HomeTeam.Strength + homeMomentumMod + homeAdvantage;
-            var awayStrength = fixture.AwayTeam.Strength + awayMomentumMod;
+            int homeTrainerBonus = 0;
+            int awayTrainerBonus = 0;
+
+            if (homeTrainer != null)
+            {
+                // Kleine buff: tactiek heeft iets meer impact dan motivatie
+                homeTrainerBonus += homeTrainer.TacticalSkill / 2;        // max +2
+                homeTrainerBonus += homeTrainer.Motivation >= 4 ? 1 : 0;   // +1 bij hoge motivatie
+            }
+
+            if (awayTrainer != null)
+            {
+                awayTrainerBonus += awayTrainer.TacticalSkill / 2;
+                awayTrainerBonus += awayTrainer.Motivation >= 4 ? 1 : 0;
+            }
+
+            // --- 3. Morale omzetten naar kleine buff ---
+            int homeMoraleBonus = (homeClub.Morale - 5) / 2; // -2 .. +2
+            int awayMoraleBonus = (awayClub.Morale - 5) / 2;
+
+            var homeStrength = fixture.HomeTeam.Strength + homeMomentumMod + homeMoraleBonus + homeTrainerBonus;
+            var awayStrength = fixture.AwayTeam.Strength + awayMomentumMod + awayMoraleBonus + awayTrainerBonus - 1;
             var difference = homeStrength - awayStrength;
 
             if (homeStrength > 5)
@@ -319,8 +350,32 @@ namespace FootballFull.Services
             var homeMomentum = MapMomentumToModifier(_clubs.First(_ => _.Id == fixture.HomeTeamId).Momentum);
             var awayMomentum = MapMomentumToModifier(_clubs.First(_ => _.Id == fixture.AwayTeamId).Momentum);
 
-            int startHomeStrength = fixture.HomeTeam.Strength + homeMomentum;
-            int startAwayStrength = fixture.AwayTeam.Strength + awayMomentum - 1;
+            // --- 2. Trainer ophalen ---
+            var homeTrainer = _trainers.FirstOrDefault(t => t.ClubId == fixture.HomeTeamId);
+            var awayTrainer = _trainers.FirstOrDefault(t => t.ClubId == fixture.AwayTeamId);
+
+            int homeTrainerBonus = 0;
+            int awayTrainerBonus = 0;
+
+            if (homeTrainer != null)
+            {
+                // Kleine buff: tactiek heeft iets meer impact dan motivatie
+                homeTrainerBonus += homeTrainer.TacticalSkill / 2;        // max +2
+                homeTrainerBonus += homeTrainer.Motivation >= 4 ? 1 : 0;   // +1 bij hoge motivatie
+            }
+
+            if (awayTrainer != null)
+            {
+                awayTrainerBonus += awayTrainer.TacticalSkill / 2;
+                awayTrainerBonus += awayTrainer.Motivation >= 4 ? 1 : 0;
+            }
+
+            // --- 3. Morale omzetten naar kleine buff ---
+            int homeMoraleBonus = (_clubs.First(_ => _.Id == fixture.HomeTeamId).Morale - 5) / 2; // -2 .. +2
+            int awayMoraleBonus = (_clubs.First(_ => _.Id == fixture.AwayTeamId).Morale - 5) / 2;
+
+            int startHomeStrength = fixture.HomeTeam.Strength + homeMomentum + homeMoraleBonus + homeTrainerBonus;
+            int startAwayStrength = fixture.AwayTeam.Strength + awayMomentum + awayMoraleBonus + awayTrainerBonus - 1;
             int difference = startHomeStrength - startAwayStrength;
             var homeNegativeEffects = 0;
             var awayNegativeEffects = 0;
@@ -471,7 +526,6 @@ namespace FootballFull.Services
             return roll < 5; // 5% kans op kaart in een fase
         }
 
-
         private TacticChoice AskTacticChoice(string clubName)
         {
             while (true)
@@ -544,24 +598,6 @@ namespace FootballFull.Services
                 UpdateClubStats(fixture.HomeTeam.Id, fixture.HomeScore, fixture.AwayScore, 1);
                 UpdateClubStats(fixture.AwayTeam.Id, fixture.AwayScore, fixture.HomeScore, 1);
             }
-        }
-
-        private void UpdateClubMomentum(Guid clubId, int goalsFor, int goalsAgainst)
-        {
-            var club = _clubs.FirstOrDefault(_ => _.Id == clubId);
-            if (club == null) return;
-
-            var resultChar = goalsFor > goalsAgainst ? 'W' :
-                             goalsFor < goalsAgainst ? 'L' : 'D';
-
-            var last = club.Last5Games ?? "";
-
-            last = (last + resultChar);
-
-            if (last.Length > 5)
-                last = last[^5..]; // pak laatste 5 chars
-
-            club.Last5Games = last;
         }
 
         private void UpdateClubStats(Guid clubId, int goalsFor, int goalsAgainst, int points)
@@ -692,6 +728,61 @@ namespace FootballFull.Services
             }
 
             return fixtures;
+        }
+
+        private void ResetClubRuntimeState()
+        {
+            foreach (var c in _clubs) // of waar je je Club-lijst hebt
+            {
+                c.Last5Games = string.Empty;
+                c.Morale = 5;
+            }
+        }
+
+        private void UpdateClubMomentumAndMorale(Guid clubId, int goalsFor, int goalsAgainst)
+        {
+            var club = _clubs.First(_ => _.Id == clubId); // waar _clubs je lijst Clubs is
+
+            // 1) Last5Games bijwerken (W/D/L)
+            var resultChar = goalsFor > goalsAgainst ? 'W'
+                           : goalsFor < goalsAgainst ? 'L'
+                           : 'D';
+
+            if (string.IsNullOrEmpty(club.Last5Games))
+                club.Last5Games = resultChar.ToString();
+            else
+            {
+                var last = club.Last5Games;
+                if (last.Length >= 5)
+                    last = last.Substring(1); // eerste droppen
+
+                club.Last5Games = last + resultChar;
+            }
+
+            // 2) Morale aanpassen op basis van resultaat & doelpuntverschil
+            int diff = goalsFor - goalsAgainst;
+
+            if (diff > 0)
+            {
+                club.Morale += 1;
+                if (diff >= 3)
+                    club.Morale += 1; // grote winst
+            }
+            else if (diff < 0)
+            {
+                club.Morale -= 1;
+                if (diff <= -3)
+                    club.Morale -= 1; // zware nederlaag
+            }
+            else
+            {
+                // gelijkspel: lichte demping of niets
+                // club.Morale += 0;
+            }
+
+            // 3) Clamp Morale tussen 1 en 10
+            if (club.Morale < 1) club.Morale = 1;
+            if (club.Morale > 10) club.Morale = 10;
         }
     }
 }

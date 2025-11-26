@@ -27,5 +27,10 @@ namespace FootballFull.Models
                 });
             }
         }
+        /// <summary>
+        /// 1-10, 5 is neutraal, hoger is goed gevoel, lager is slecht
+        /// </summary>
+        [JsonIgnore]
+        public int Morale { get; set; } = 5;
     }
 }

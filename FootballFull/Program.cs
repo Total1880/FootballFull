@@ -19,6 +19,7 @@ services.AddSingleton<ICompetitionService, CompetitionService>();
 services.AddSingleton<IClubPerCompetitionService, ClubPerCompetitionService>();
 services.AddSingleton<ICountryService, CountryService>();
 services.AddSingleton<IGameService, GameService>();
+services.AddSingleton<ITrainerService, TrainerService>();
 
 // Repositories (V2-varianten)
 services.AddSingleton<IRepository<Club>>(
@@ -32,6 +33,9 @@ services.AddSingleton<IRepository<Country>>(
 
 services.AddSingleton<IClubPerCompetitionRepository>(
     _ => new ClubPerCompetitionRepositoryV2(Path.Combine(Configuration.DataRoot, "ClubPerCompetition.json")));
+
+services.AddSingleton<IRepository<Trainer>>(
+    _ => new TrainerRepository(Path.Combine(Configuration.DataRoot, "Trainers.json")));
 
 var provider = services.BuildServiceProvider();
 
