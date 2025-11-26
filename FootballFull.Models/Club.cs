@@ -32,5 +32,9 @@ namespace FootballFull.Models
         /// </summary>
         [JsonIgnore]
         public int Morale { get; set; } = 5;
+        [JsonIgnore]
+        public int HasTrainerSinceWeek { get; set; } = 0;
+        [JsonIgnore]
+        public int HasFiredTrainerInWeek { get; set; } = 0;
     }
 }

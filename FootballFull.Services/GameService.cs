@@ -106,6 +106,7 @@ namespace FootballFull.Services
                     DisplayNextFixture(competitionToShow, matchDay);
                     PlayCupGames(matchDay);
                     PlayInternationalGames(matchDay);
+                    _seasonService.UpdateWeekStats(_userClubId, matchDay);
 
                     Console.Clear();
 

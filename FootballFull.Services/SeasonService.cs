@@ -770,10 +770,32 @@ namespace FootballFull.Services
             if (club.Morale < 1) club.Morale = 1;
             if (club.Morale > 10) club.Morale = 10;
         }
-        public void NewTrainer(Guid clubId)
+        public void NewTrainer(Guid clubId, int matchDay = 0)
         {
+            var club = _clubs.First(_ => _.Id == clubId);
+            club.HasTrainerSinceWeek = 0;
+            club.HasFiredTrainerInWeek = matchDay;
             _trainers.Remove(_trainers.First(_ => _.ClubId == clubId));
             _trainers.Add(_trainerService.CreateRandomTrainer(clubId));
+        }
+
+        private void ClubsFireTrainer(Guid userClubId, int matchDay)
+        {
+            var clubs = _clubs.Where(_ => _.Id != userClubId && _.Momentum < 3 && _.Morale <3 && _.HasTrainerSinceWeek > 5).ToList();
+
+            foreach (var club in clubs)
+            {
+                NewTrainer(club.Id, matchDay);
+            }
+        }
+
+        public void UpdateWeekStats(Guid userClubId, int matchDay)
+        {
+            ClubsFireTrainer(userClubId, matchDay);
+            for (int i = 0; i < _clubs.Count; i++)
+            {
+                _clubs[i].HasTrainerSinceWeek++;
+            }
         }
     }
 }
