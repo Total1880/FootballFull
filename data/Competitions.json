@@ -106,5 +106,14 @@
     "Tier": 1,
     "Strength": 0,
     "Type": 1
+  },
+  {
+    "Id": "ba0362ff-4c25-4da9-a4c4-4a07677d032b",
+    "Name": "FA Cup",
+    "Country": null,
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
+    "Tier": 1,
+    "Strength": 0,
+    "Type": 1
   }
 ]

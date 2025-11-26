@@ -174,7 +174,8 @@ namespace FootballFull.Services
             Console.WriteLine();
             Console.WriteLine("Trainer ontslagen? (Y/N)");
             var input = Console.ReadKey();
-            switch (input.Key) {
+            switch (input.Key)
+            {
                 case ConsoleKey.Y:
                     _seasonService.NewTrainer(_userClubId);
                     break;
@@ -191,6 +192,7 @@ namespace FootballFull.Services
             if (!_cupFixtures.Any(_ => _.MatchDay == matchDay))
                 return;
 
+            var userCountry = _clubService.GetClubById(_userClubId).CountryId;
             var cupCompetitions = _competitions
                 .Where(_ => _.Type == Competition.CompetitionType.Cup)
                 .ToList();
@@ -201,7 +203,9 @@ namespace FootballFull.Services
 
             foreach (var cupCompetition in cupCompetitions)
             {
-                Console.WriteLine($"--- {cupCompetition.Name} ---");
+                var display = cupCompetition.CountryId == userCountry;
+                if (display)
+                    Console.WriteLine($"--- {cupCompetition.Name} ---");
                 var fixturesForCompetition = _cupFixtures
                     .Where(_ => _.CompetitionId == cupCompetition.Id && _.MatchDay == matchDay)
                     .ToList();
@@ -209,7 +213,8 @@ namespace FootballFull.Services
                 if (fixturesForCompetition.Count == 0)
                     continue;
 
-                Console.WriteLine($"=== {cupCompetition.Name} Round {fixturesForCompetition.First().RoundNo} ===");
+                if (display)
+                    Console.WriteLine($"=== {cupCompetition.Name} Round {fixturesForCompetition.First().RoundNo} ===");
 
                 foreach (var fixture in fixturesForCompetition)
                 {
@@ -222,22 +227,27 @@ namespace FootballFull.Services
                     var homeTier = GetClubTier(fixture.HomeTeamId);
                     var awayTier = GetClubTier(fixture.AwayTeamId);
 
-                    Console.WriteLine(
+                    if (display)
+                        Console.WriteLine(
                         $"{fixture.HomeTeam.Name} ({homeTier}) vs {fixture.AwayTeam.Name} ({awayTier})"
                     );
 
                     Console.ResetColor();
                 }
 
-                Console.WriteLine();
-                Console.WriteLine("Press any key to play this round...");
-                Console.ReadKey();
-
+                if (display)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Press any key to play this round...");
+                    Console.ReadKey();
+                }
                 // Speel enkel deze ronde
                 _seasonService.PlayMatchDay(fixturesForCompetition, matchDay, true, _userClubId);
-                Console.Clear();
-                Console.WriteLine($"=== {cupCompetition.Name} Round {fixturesForCompetition.First().RoundNo} Results ===");
-
+                if (display)
+                {
+                    Console.Clear();
+                    Console.WriteLine($"=== {cupCompetition.Name} Round {fixturesForCompetition.First().RoundNo} Results ===");
+                }
                 foreach (var fixture in fixturesForCompetition)
                 {
                     if (fixture.HomeTeamId != Guid.Empty && fixture.AwayTeamId != Guid.Empty)
@@ -249,7 +259,8 @@ namespace FootballFull.Services
                         var homeTier = GetClubTier(fixture.HomeTeamId);
                         var awayTier = GetClubTier(fixture.AwayTeamId);
 
-                        Console.WriteLine(
+                        if (display)
+                            Console.WriteLine(
                             $"{fixture.HomeTeam.Name} ({homeTier}) {fixture.HomeScore} - {fixture.AwayScore} {fixture.AwayTeam.Name} ({awayTier})"
                         );
                         Console.ResetColor();
@@ -277,9 +288,12 @@ namespace FootballFull.Services
                     }
                 }
 
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
-                Console.Clear();
+                if (display)
+                {
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
             }
         }
 
@@ -317,17 +331,6 @@ namespace FootballFull.Services
                     "TBD";
 
                 Console.WriteLine($"{homeName} vs {awayName}");
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("Press any key to start the international cup...");
-            Console.ReadKey();
-            Console.Clear();
-
-            Console.WriteLine($"=== International Round {matchDay} ===");
-            foreach (var fixture in fixturesForRound)
-            {
-                Console.WriteLine($"{fixture.HomeTeam.Name} vs {fixture.AwayTeam.Name}");
             }
 
             Console.WriteLine();
@@ -730,7 +733,8 @@ namespace FootballFull.Services
                     $"MD {f.MatchDay}: {f.HomeTeam.Name} {f.HomeScore} - {f.AwayScore} {f.AwayTeam.Name}");
         }
 
-        private void CreateTrainers() {
+        private void CreateTrainers()
+        {
             if (_trainers == null || _trainers.Count() == 0)
             {
                 _trainers = new List<Trainer>();
