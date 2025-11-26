@@ -37,5 +37,16 @@ namespace FootballFull.Services
         {
             return _trainerRepository.Create(trainers).Count == trainers.Count;
         }
+
+        public Trainer CreateRandomTrainer(Guid clubId)
+        {
+            return new Trainer
+            {
+                Id = new Guid(),
+                ClubId = clubId,
+                Motivation = Random.Shared.Next(0, 5),
+                TacticalSkill = Random.Shared.Next(0, 5),
+            };
+        }
     }
 }

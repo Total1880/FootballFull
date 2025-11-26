@@ -12,5 +12,7 @@ namespace FootballFull.Services.Interfaces
         IList<Fixture> InitializeInternationalGames();
         IList<Fixture> InitializeNationalCups();
 
+        void NewTrainer(Guid clubId);
+
     }
 }

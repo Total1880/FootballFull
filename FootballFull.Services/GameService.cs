@@ -136,6 +136,7 @@ namespace FootballFull.Services
                 Console.WriteLine("=== Menu ===");
                 Console.WriteLine("1. Volgende speeldag");
                 Console.WriteLine("2. Andere lopende competities bekijken");
+                Console.WriteLine("3. Club bekijken");
                 Console.WriteLine("0. Stoppen");
                 Console.Write("Maak een keuze: ");
 
@@ -151,6 +152,9 @@ namespace FootballFull.Services
                         ShowOtherCompetitionsMenu(); // hieronder
                                                      // Na terugkeer tonen we opnieuw dit menu
                         break;
+                    case ConsoleKey.NumPad3:
+                        ClubMenu();
+                        break;
 
                     case ConsoleKey.NumPad0:
                         Environment.Exit(0);
@@ -161,6 +165,22 @@ namespace FootballFull.Services
                         break;
                 }
             }
+        }
+
+        private void ClubMenu()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("Trainer ontslagen? (Y/N)");
+            var input = Console.ReadKey();
+            switch (input.Key) {
+                case ConsoleKey.Y:
+                    _seasonService.NewTrainer(_userClubId);
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         private void PlayCupGames(int matchDay)
@@ -714,17 +734,7 @@ namespace FootballFull.Services
             {
                 _trainers = new List<Trainer>();
                 foreach (var club in _clubService.GetClubs())
-                {
-                    var trainer = new Trainer
-                    {
-                        Id = new Guid(),
-                        ClubId = club.Id,
-                        Motivation = Random.Shared.Next(0, 5),
-                        TacticalSkill = Random.Shared.Next(0, 5),
-                    };
-
-                    _trainers.Add(trainer);
-                }
+                    _trainers.Add(_trainerService.CreateRandomTrainer(club.Id));
 
                 _trainerService.CreateTrainers(_trainers);
             }

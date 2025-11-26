@@ -18,8 +18,8 @@ namespace FootballFull.Services
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
 
         public SeasonService(
-            IRepository<Competition> competitionRepository, 
-            IClubService clubService, 
+            IRepository<Competition> competitionRepository,
+            IClubService clubService,
             IFixtureService fixtureService,
             ITrainerService trainerService)
         {
@@ -103,7 +103,7 @@ namespace FootballFull.Services
                         else
                             continue;
                     if (delta > 0 && club.Strength - 3 >= competitionStrength)
-                        if(club.Strength - 5 >= competitionStrength)
+                        if (club.Strength - 5 >= competitionStrength)
                             delta = -1;
                         else
                             continue;
@@ -253,36 +253,8 @@ namespace FootballFull.Services
             var homeClub = _clubs.First(_ => _.Id == fixture.HomeTeamId);
             var awayClub = _clubs.First(_ => _.Id == fixture.AwayTeamId);
 
-            int homeMomentumMod = MapMomentumToModifier(homeClub.Momentum);
-            int awayMomentumMod = MapMomentumToModifier(awayClub.Momentum);
-
-            // trainers
-            var homeTrainer = _trainers.FirstOrDefault(t => t.ClubId == fixture.HomeTeamId);
-            var awayTrainer = _trainers.FirstOrDefault(t => t.ClubId == fixture.AwayTeamId);
-
-            int homeTrainerBonus = 0;
-            int awayTrainerBonus = 0;
-
-            if (homeTrainer != null)
-            {
-                // Kleine buff: tactiek heeft iets meer impact dan motivatie
-                homeTrainerBonus += homeTrainer.TacticalSkill / 2;        // max +2
-                homeTrainerBonus += homeTrainer.Motivation >= 4 ? 1 : 0;   // +1 bij hoge motivatie
-            }
-
-            if (awayTrainer != null)
-            {
-                awayTrainerBonus += awayTrainer.TacticalSkill / 2;
-                awayTrainerBonus += awayTrainer.Motivation >= 4 ? 1 : 0;
-            }
-
-            // --- 3. Morale omzetten naar kleine buff ---
-            int homeMoraleBonus = (homeClub.Morale - 5) / 2; // -2 .. +2
-            int awayMoraleBonus = (awayClub.Morale - 5) / 2;
-
-            var homeStrength = fixture.HomeTeam.Strength + homeMomentumMod + homeMoraleBonus + homeTrainerBonus;
-            var awayStrength = fixture.AwayTeam.Strength + awayMomentumMod + awayMoraleBonus + awayTrainerBonus - 1;
-            var difference = homeStrength - awayStrength;
+            int homeStrength, awayStrength, difference, homeNegativeEffects, awayNegativeEffects;
+            CalculateStrength(fixture, out homeStrength, out awayStrength, out difference, out homeNegativeEffects, out awayNegativeEffects);
 
             if (homeStrength > 5)
             {
@@ -347,38 +319,8 @@ namespace FootballFull.Services
             bool playerIsHome = fixture.HomeTeam.Id == playerClubId;
             var playerClub = playerIsHome ? fixture.HomeTeam : fixture.AwayTeam;
             var opponent = playerIsHome ? fixture.AwayTeam : fixture.HomeTeam;
-            var homeMomentum = MapMomentumToModifier(_clubs.First(_ => _.Id == fixture.HomeTeamId).Momentum);
-            var awayMomentum = MapMomentumToModifier(_clubs.First(_ => _.Id == fixture.AwayTeamId).Momentum);
-
-            // --- 2. Trainer ophalen ---
-            var homeTrainer = _trainers.FirstOrDefault(t => t.ClubId == fixture.HomeTeamId);
-            var awayTrainer = _trainers.FirstOrDefault(t => t.ClubId == fixture.AwayTeamId);
-
-            int homeTrainerBonus = 0;
-            int awayTrainerBonus = 0;
-
-            if (homeTrainer != null)
-            {
-                // Kleine buff: tactiek heeft iets meer impact dan motivatie
-                homeTrainerBonus += homeTrainer.TacticalSkill / 2;        // max +2
-                homeTrainerBonus += homeTrainer.Motivation >= 4 ? 1 : 0;   // +1 bij hoge motivatie
-            }
-
-            if (awayTrainer != null)
-            {
-                awayTrainerBonus += awayTrainer.TacticalSkill / 2;
-                awayTrainerBonus += awayTrainer.Motivation >= 4 ? 1 : 0;
-            }
-
-            // --- 3. Morale omzetten naar kleine buff ---
-            int homeMoraleBonus = (_clubs.First(_ => _.Id == fixture.HomeTeamId).Morale - 5) / 2; // -2 .. +2
-            int awayMoraleBonus = (_clubs.First(_ => _.Id == fixture.AwayTeamId).Morale - 5) / 2;
-
-            int startHomeStrength = fixture.HomeTeam.Strength + homeMomentum + homeMoraleBonus + homeTrainerBonus;
-            int startAwayStrength = fixture.AwayTeam.Strength + awayMomentum + awayMoraleBonus + awayTrainerBonus - 1;
-            int difference = startHomeStrength - startAwayStrength;
-            var homeNegativeEffects = 0;
-            var awayNegativeEffects = 0;
+            int startHomeStrength, startAwayStrength, difference, homeNegativeEffects, awayNegativeEffects;
+            CalculateStrength(fixture, out startHomeStrength, out startAwayStrength, out difference, out homeNegativeEffects, out awayNegativeEffects);
 
             Console.Clear();
             Console.WriteLine();
@@ -511,6 +453,50 @@ namespace FootballFull.Services
             Console.WriteLine($"{fixture.HomeTeam.Name} {fixture.HomeScore} - {fixture.AwayScore} {fixture.AwayTeam.Name}");
             Console.WriteLine("Druk op een toets om verder te gaan...");
             Console.ReadKey(true);
+        }
+
+        private void CalculateStrength(Fixture fixture, out int startHomeStrength, out int startAwayStrength, out int difference, out int homeNegativeEffects, out int awayNegativeEffects)
+        {
+            var homeMomentum = MapMomentumToModifier(_clubs.First(_ => _.Id == fixture.HomeTeamId).Momentum);
+            var awayMomentum = MapMomentumToModifier(_clubs.First(_ => _.Id == fixture.AwayTeamId).Momentum);
+
+            // --- Morale omzetten naar kleine buff ---
+            int homeMoraleBonus = (_clubs.First(_ => _.Id == fixture.HomeTeamId).Morale - 5) / 2;
+            int awayMoraleBonus = (_clubs.First(_ => _.Id == fixture.AwayTeamId).Morale - 5) / 2;
+
+            // --- Trainer ophalen ---
+            var homeTrainer = _trainers.FirstOrDefault(t => t.ClubId == fixture.HomeTeamId);
+            var awayTrainer = _trainers.FirstOrDefault(t => t.ClubId == fixture.AwayTeamId);
+
+            int homeTrainerBonus = 0;
+            int awayTrainerBonus = 0;
+
+            if (homeTrainer != null)
+            {
+                // Kleine buff: tactiek heeft iets meer impact dan motivatie
+                homeTrainerBonus += homeTrainer.TacticalSkill / 2;        // max +2
+                if (homeMoraleBonus < 0)
+                    homeTrainerBonus += homeTrainer.Motivation >= 4 ? 1 : 0;   // +1 bij hoge motivatie
+                else if (homeMoraleBonus == 0 && Random.Shared.Next(0,2) == 0)
+                    homeTrainerBonus += homeTrainer.Motivation >= 4 ? 1 : 0;   // +1 bij hoge motivatie
+            }
+
+            if (awayTrainer != null)
+            {
+                awayTrainerBonus += awayTrainer.TacticalSkill / 2;
+                if (awayMoraleBonus < 0)
+                    awayTrainerBonus += awayTrainer.Motivation >= 4 ? 1 : 0;
+                else if (awayTrainerBonus == 0 && Random.Shared.Next(0, 2) == 0)
+                    awayTrainerBonus += awayTrainer.Motivation >= 4 ? 1 : 0;   // +1 bij hoge motivatie
+            }
+
+
+
+            startHomeStrength = fixture.HomeTeam.Strength + homeMomentum + homeMoraleBonus + homeTrainerBonus;
+            startAwayStrength = fixture.AwayTeam.Strength + awayMomentum + awayMoraleBonus + awayTrainerBonus - 1;
+            difference = startHomeStrength - startAwayStrength;
+            homeNegativeEffects = 0;
+            awayNegativeEffects = 0;
         }
 
         private int MapMomentumToModifier(int momentum)
@@ -783,6 +769,11 @@ namespace FootballFull.Services
             // 3) Clamp Morale tussen 1 en 10
             if (club.Morale < 1) club.Morale = 1;
             if (club.Morale > 10) club.Morale = 10;
+        }
+        public void NewTrainer(Guid clubId)
+        {
+            _trainers.Remove(_trainers.First(_ => _.ClubId == clubId));
+            _trainers.Add(_trainerService.CreateRandomTrainer(clubId));
         }
     }
 }
