@@ -52,8 +52,9 @@ namespace FootballFull.Services
             _clubsPerCompetition = _clubPerCompetitionService.GetAllClubPerCompetitions();
             _competitions = _competitionService.GetCompetitions();
 
-            // Strength resetten
+            // Initialize data
             ResetStrength();
+            CreateTrainers();
 
             // User club kiezen
             _userClubId = _seasonService.ChoosePlayerClub();
@@ -706,6 +707,27 @@ namespace FootballFull.Services
             foreach (var f in fixtures)
                 Console.WriteLine(
                     $"MD {f.MatchDay}: {f.HomeTeam.Name} {f.HomeScore} - {f.AwayScore} {f.AwayTeam.Name}");
+        }
+
+        private void CreateTrainers() {
+            if (_trainers == null || _trainers.Count() == 0)
+            {
+                _trainers = new List<Trainer>();
+                foreach (var club in _clubService.GetClubs())
+                {
+                    var trainer = new Trainer
+                    {
+                        Id = new Guid(),
+                        ClubId = club.Id,
+                        Motivation = Random.Shared.Next(0, 5),
+                        TacticalSkill = Random.Shared.Next(0, 5),
+                    };
+
+                    _trainers.Add(trainer);
+                }
+
+                _trainerService.CreateTrainers(_trainers);
+            }
         }
         #endregion
     }

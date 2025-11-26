@@ -32,5 +32,10 @@ namespace FootballFull.Services
 
             return _trainers.FirstOrDefault(t => t.ClubId == clubId);
         }
+
+        public bool CreateTrainers(IList<Trainer> trainers)
+        {
+            return _trainerRepository.Create(trainers).Count == trainers.Count;
+        }
     }
 }

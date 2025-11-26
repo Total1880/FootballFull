@@ -11,5 +11,6 @@ namespace FootballFull.Services.Interfaces
     {
         IList<Trainer> Load();
         Trainer? GetByClubId(Guid clubId);
+        bool CreateTrainers(IList<Trainer> trainers);
     }
 }
