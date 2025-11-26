@@ -20,5 +20,6 @@ namespace FootballFull.Models
         /// 1-5: hoe goed in motivatie
         /// </summary>
         public int Motivation { get; set; }
+        public int LastTeamStrength { get; set; }
     }
 }

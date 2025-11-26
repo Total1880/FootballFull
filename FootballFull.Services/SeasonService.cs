@@ -27,13 +27,12 @@ namespace FootballFull.Services
             _clubService = clubService;
             _fixtureService = fixtureService;
             _trainerService = trainerService;
-
-            _trainers = _trainerService.Load();
         }
         public void Initialize(IList<ClubPerCompetition> clubsPerCompetition)
         {
             _clubsPerCompetition = clubsPerCompetition;
             _clubs = _clubService.GetClubs();
+            _trainers = _trainerService.Load();
             InitializeNewSeason();
         }
 
@@ -477,7 +476,7 @@ namespace FootballFull.Services
                 homeTrainerBonus += homeTrainer.TacticalSkill / 2;        // max +2
                 if (homeMoraleBonus < 0)
                     homeTrainerBonus += homeTrainer.Motivation >= 4 ? 1 : 0;   // +1 bij hoge motivatie
-                else if (homeMoraleBonus == 0 && Random.Shared.Next(0,2) == 0)
+                else if (homeMoraleBonus == 0 && Random.Shared.Next(0, 2) == 0)
                     homeTrainerBonus += homeTrainer.Motivation >= 4 ? 1 : 0;   // +1 bij hoge motivatie
             }
 
@@ -772,21 +771,69 @@ namespace FootballFull.Services
         }
         public void NewTrainer(Guid clubId, int matchDay = 0)
         {
+            var newTrainer = _trainerService.CreateRandomTrainer(clubId);
+            AssignTrainer(clubId, newTrainer, matchDay);
+            _trainers.Add(newTrainer);
+        }
+
+        private void AssignTrainer(Guid clubId, Trainer trainer, int matchDay)
+        {
             var club = _clubs.First(_ => _.Id == clubId);
             club.HasTrainerSinceWeek = 0;
             club.HasFiredTrainerInWeek = matchDay;
-            _trainers.Remove(_trainers.First(_ => _.ClubId == clubId));
-            _trainers.Add(_trainerService.CreateRandomTrainer(clubId));
-        }
+            if (trainer.ClubId != Guid.Empty && trainer.ClubId != clubId)
+            {
+                var nextClub = _clubs.First(_ => _.Id == trainer.ClubId);
 
+                FindNewTrainer(trainer.ClubId, matchDay, nextClub.Strength, trainer.Id);
+            }
+            trainer.ClubId = clubId;
+        }
         private void ClubsFireTrainer(Guid userClubId, int matchDay)
         {
-            var clubs = _clubs.Where(_ => _.Id != userClubId && _.Momentum < 3 && _.Morale <3 && _.HasTrainerSinceWeek > 5).ToList();
+            var clubs = _clubs.Where(_ => _.Id != userClubId && _.Momentum < 3 && _.Morale < 3 && _.HasTrainerSinceWeek > 5).ToList();
 
             foreach (var club in clubs)
             {
-                NewTrainer(club.Id, matchDay);
+                var firedTrainer = FireTrainer(club.Id, club.Strength);
+                FindNewTrainer(club.Id, matchDay, club.Strength, firedTrainer);
             }
+        }
+
+        private void FindNewTrainer(Guid clubId, int matchDay, int strength, Guid firedTrainerId)
+        {
+            var trainer = FindTrainerAtOtherClub(strength);
+
+            if (trainer == null)
+                trainer = _trainers
+                    .Where(_ => _.Id != firedTrainerId && _.ClubId == Guid.Empty && _.LastTeamStrength >= (strength - 5) && _.LastTeamStrength <= (strength + 5))
+                    .OrderByDescending(_ => _.LastTeamStrength)
+                    .FirstOrDefault();
+
+            if (trainer == null)
+                NewTrainer(clubId, matchDay);
+            else
+                AssignTrainer(clubId, trainer, matchDay);
+
+        }
+
+        private Trainer? FindTrainerAtOtherClub(int strength)
+        {
+            var club = _clubs
+                .Where(_ => _.Strength < strength && _.Momentum > 10 && _.HasTrainerSinceWeek > 5)
+                .OrderByDescending(_ => _.Strength)
+                .ToList()
+                .FirstOrDefault();
+
+            return _trainers.FirstOrDefault(_ => _.ClubId == club?.Id);
+        }
+
+        private Guid FireTrainer(Guid id, int strength)
+        {
+            var trainer = _trainers.First(_ => _.ClubId.Equals(id));
+            trainer.ClubId = Guid.Empty;
+            trainer.LastTeamStrength = strength;
+            return trainer.Id;
         }
 
         public void UpdateWeekStats(Guid userClubId, int matchDay)

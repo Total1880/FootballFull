@@ -1,1046 +1,1220 @@
 [
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "9bc52574-988b-4e3f-bac6-51c495e368e2",
     "ClubId": "5f5232b8-6969-4e41-ab84-ce363f64922e",
-    "TacticalSkill": 0,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "122c1c60-b399-4f3e-8d73-a6c550ca7757",
-    "TacticalSkill": 4,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "b1a70112-f093-49a3-b5b3-a104a636d048",
     "TacticalSkill": 3,
-    "Motivation": 0
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "74735147-0a2f-4858-8a79-9d504f335ec9",
-    "TacticalSkill": 0,
-    "Motivation": 0
+    "Id": "0a5e310c-b4a2-4729-a1e3-b9a5cfeb78ca",
+    "ClubId": "122c1c60-b399-4f3e-8d73-a6c550ca7757",
+    "TacticalSkill": 1,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "6f5a6dc9-afe9-47c9-83f1-00ecf674eb34",
+    "Id": "94a15d5d-3b0d-4eef-9a29-40897002b750",
+    "ClubId": "b1a70112-f093-49a3-b5b3-a104a636d048",
     "TacticalSkill": 4,
-    "Motivation": 0
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "d25ecbe0-92c5-4562-86ff-7c904d98d028",
+    "ClubId": "74735147-0a2f-4858-8a79-9d504f335ec9",
+    "TacticalSkill": 1,
+    "Motivation": 2,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "94669f46-b3e5-4a66-abc4-e3f4c8f0631c",
+    "ClubId": "6f5a6dc9-afe9-47c9-83f1-00ecf674eb34",
+    "TacticalSkill": 3,
+    "Motivation": 2,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "ade51335-5972-41ff-8c73-1fdeaeb7f25e",
     "ClubId": "99a1d30a-fc04-4c59-96b5-1884bf4bbf34",
     "TacticalSkill": 4,
-    "Motivation": 4
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "41ab731b-f6cf-4ad0-8ce4-d0f79c158c46",
     "ClubId": "f155f6e3-2d9a-41cf-a3a4-3283ded44fac",
-    "TacticalSkill": 3,
-    "Motivation": 1
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "a3f2af67-d555-4e7a-b246-343183fda6bf",
     "TacticalSkill": 4,
-    "Motivation": 4
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "43e26ae2-9ea7-4e87-8bfd-eeccfd3004e3",
+    "Id": "e01afa8e-605d-412e-aa3e-d13f88f048f2",
+    "ClubId": "a3f2af67-d555-4e7a-b246-343183fda6bf",
     "TacticalSkill": 1,
-    "Motivation": 4
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "9e644b03-0ed6-4991-97aa-5c114b2adc02",
+    "ClubId": "43e26ae2-9ea7-4e87-8bfd-eeccfd3004e3",
+    "TacticalSkill": 4,
+    "Motivation": 2,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "8bcd7975-3329-4712-b2bf-4e777c0f4897",
     "ClubId": "cb121952-3968-43bb-b59e-852d8fe14a94",
-    "TacticalSkill": 3,
-    "Motivation": 1
+    "TacticalSkill": 4,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "3f0cd9b0-0bc6-4d49-b492-d4ceebace0e3",
     "ClubId": "2841cf3f-11de-4ded-b073-3cf9a24c5464",
-    "TacticalSkill": 2,
-    "Motivation": 4
+    "TacticalSkill": 1,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "25b6c36c-4149-480d-8196-e490d57d6fa9",
     "ClubId": "c9be6233-3661-4eae-9865-cd1d294f2bf9",
     "TacticalSkill": 4,
-    "Motivation": 1
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "ffc60d46-9f4f-41a6-bad0-415a39e65645",
     "ClubId": "d9913584-0b40-4f00-80ea-57965b5ad783",
-    "TacticalSkill": 2,
-    "Motivation": 0
+    "TacticalSkill": 1,
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "e55ee3c1-949e-46ae-babf-cd81b8bc9936",
     "ClubId": "a6bf4c8f-7eac-4f11-8dee-229815cb17bb",
-    "TacticalSkill": 3,
-    "Motivation": 2
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "536694b1-ed7a-4e84-a077-9f93caf377f0",
     "TacticalSkill": 4,
-    "Motivation": 2
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "e685553c-b414-41ca-98ae-09a1ac2ba875",
+    "ClubId": "536694b1-ed7a-4e84-a077-9f93caf377f0",
+    "TacticalSkill": 1,
+    "Motivation": 3,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "d7a4c3ef-e27d-44d6-af7e-da249ee8545a",
     "ClubId": "f1519fec-119c-4422-8363-d5afe5922409",
     "TacticalSkill": 1,
-    "Motivation": 3
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "884ef18d-8b2d-4260-b420-558292a85470",
     "ClubId": "2db7bc50-faa6-4509-9246-46e720c0e49d",
-    "TacticalSkill": 4,
-    "Motivation": 0
+    "TacticalSkill": 2,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "c729f039-ab69-4153-b790-6cf8e14f5e4a",
     "ClubId": "f8b24697-387a-49be-ab77-9c592379bbc3",
     "TacticalSkill": 2,
-    "Motivation": 2
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "3808ad57-afe3-4e8d-a367-f95f5b4d0b50",
     "ClubId": "588acdd9-886e-4422-b1ac-56cac3edf748",
-    "TacticalSkill": 0,
-    "Motivation": 1
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "ff61c20b-d19d-414b-8631-0416209c0846",
     "TacticalSkill": 4,
-    "Motivation": 4
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "64831f92-bd3c-4100-92fa-645f67da779e",
+    "ClubId": "ff61c20b-d19d-414b-8631-0416209c0846",
+    "TacticalSkill": 2,
+    "Motivation": 1,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "964ed70a-4d94-41dc-adb0-36ddf0666bc9",
     "ClubId": "43616f2e-3f04-440f-b2e3-b92b996da8d5",
-    "TacticalSkill": 1,
-    "Motivation": 1
+    "TacticalSkill": 3,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "61682712-b563-46be-97ac-b13f15e2c8b9",
     "ClubId": "02366cf3-7c1a-460a-b2e3-10e5fc77979a",
     "TacticalSkill": 1,
-    "Motivation": 1
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "9e52d6c6-b680-4153-a504-a689239b61e9",
     "ClubId": "d035abf5-2972-4d4e-9000-4d6e0948bdb6",
-    "TacticalSkill": 1,
-    "Motivation": 2
+    "TacticalSkill": 2,
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "a937392e-c72c-450c-b535-27c2516f1a2c",
     "ClubId": "7451cffc-9c05-4d98-8e75-d2d3e8f621e5",
-    "TacticalSkill": 2,
-    "Motivation": 3
+    "TacticalSkill": 3,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "6276a462-3c24-44b6-bdd5-595653ae718e",
     "ClubId": "5f92af7a-6fb4-4ca3-b6fe-18907f30bb12",
-    "TacticalSkill": 1,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "cff82caa-0fbc-4280-83a5-99cabcb7a4ae",
     "TacticalSkill": 2,
-    "Motivation": 0
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "6416424a-1593-4ce0-a985-aec96356e397",
+    "ClubId": "cff82caa-0fbc-4280-83a5-99cabcb7a4ae",
+    "TacticalSkill": 4,
+    "Motivation": 3,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "4de773a7-3e4c-4b4c-a18c-7eeee167d8ce",
     "ClubId": "7db323ad-8be7-49ce-bdc6-eb9b9cfb4519",
     "TacticalSkill": 1,
-    "Motivation": 0
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "8bd38467-718d-4ae0-99ce-5bfcfe8e2b8d",
     "ClubId": "5c61782f-43df-490d-9b16-004a3db193d5",
     "TacticalSkill": 0,
-    "Motivation": 0
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "09f96f91-2d13-4eb5-81cb-84d13f3b5cfd",
     "ClubId": "022ed73c-50b8-486d-9483-2b5eb22b43d5",
-    "TacticalSkill": 1,
-    "Motivation": 1
+    "TacticalSkill": 4,
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "9d3b3365-d179-463f-990a-942c6c9774d8",
     "ClubId": "79bdd335-980b-4593-8da0-48bb31a683c6",
-    "TacticalSkill": 0,
-    "Motivation": 0
+    "TacticalSkill": 4,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "3d6543e0-aff3-4f1a-a31d-1554958842d4",
     "ClubId": "2fd598e0-481c-4980-8474-8dbdcfd929fd",
     "TacticalSkill": 0,
-    "Motivation": 3
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "22c53850-aa32-4c2d-8172-6551e1f340ac",
     "ClubId": "c93f52dc-8244-4b15-b374-c542bccbf24d",
-    "TacticalSkill": 4,
-    "Motivation": 0
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "bb6312d0-a764-4141-b392-c1d33f0a0261",
-    "TacticalSkill": 4,
-    "Motivation": 0
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "15d9e250-4195-49c7-8f36-3c70991599a1",
     "TacticalSkill": 2,
-    "Motivation": 3
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "93890b7b-0b7a-45c0-b3b6-70675780059f",
+    "ClubId": "bb6312d0-a764-4141-b392-c1d33f0a0261",
+    "TacticalSkill": 1,
+    "Motivation": 2,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "a07f5c7e-2a51-46e3-a5ae-60d5cd784572",
+    "ClubId": "15d9e250-4195-49c7-8f36-3c70991599a1",
+    "TacticalSkill": 4,
+    "Motivation": 3,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "1a034040-81cf-4de8-8bbd-cb617d4444ca",
     "ClubId": "4b0eb0d9-2e34-41af-8ff5-2c7f57a6487e",
-    "TacticalSkill": 1,
-    "Motivation": 0
+    "TacticalSkill": 2,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "6a5a5972-c2a6-409f-b3a0-1196c76c5687",
     "ClubId": "6b335896-9219-4de8-ab31-49dee04610ac",
-    "TacticalSkill": 1,
-    "Motivation": 3
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "9d2ee95b-48c3-4dcf-b59a-a8c459ec5ea4",
     "TacticalSkill": 3,
-    "Motivation": 1
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "21e4d94a-e8b5-40d7-b14a-4f09c757a1aa",
+    "Id": "338523ea-5757-44d4-82ff-929440277259",
+    "ClubId": "9d2ee95b-48c3-4dcf-b59a-a8c459ec5ea4",
     "TacticalSkill": 0,
-    "Motivation": 0
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "a3ec4a61-811e-4c61-b78e-26c5f7e78cfe",
+    "ClubId": "21e4d94a-e8b5-40d7-b14a-4f09c757a1aa",
+    "TacticalSkill": 4,
+    "Motivation": 3,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "f06ad6e0-6b5c-4643-9622-3325318f9acb",
     "ClubId": "5ae0f4ac-ad21-4418-a88b-ba8933c1ad83",
     "TacticalSkill": 1,
-    "Motivation": 0
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "15cbc5ab-9e6d-4ae7-9d43-30b51605e6b2",
     "ClubId": "6cd92b5e-6753-452e-922e-6c94902e4550",
-    "TacticalSkill": 1,
-    "Motivation": 1
+    "TacticalSkill": 3,
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "bac9b84d-eb61-4e90-bec6-fd8fc0cb09c3",
     "ClubId": "975a4b2e-8185-41a8-a398-7d5a3d28fdf3",
-    "TacticalSkill": 1,
-    "Motivation": 3
+    "TacticalSkill": 3,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "d97e9107-5052-4662-a750-d764bc846ac1",
     "ClubId": "27b628b0-592e-446d-a93e-288ae1ff2a74",
     "TacticalSkill": 2,
-    "Motivation": 1
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "34c4d1fd-67b4-4e6b-ac55-a15a0321889b",
     "ClubId": "dd1e6c03-c202-4bfd-9b35-709bf20b833a",
-    "TacticalSkill": 2,
-    "Motivation": 1
+    "TacticalSkill": 4,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "72d9cffd-f32d-498e-af56-2171ae57a8d6",
     "ClubId": "b6bf7b5e-c080-454c-b6f7-87de0b6473f1",
-    "TacticalSkill": 4,
-    "Motivation": 0
+    "TacticalSkill": 2,
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "f0db325f-875d-42d8-81cc-f1518e472eec",
     "ClubId": "68ab9da8-f53e-4ef4-b90a-586cc965a696",
-    "TacticalSkill": 2,
-    "Motivation": 2
+    "TacticalSkill": 1,
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "8bd32a62-9143-4169-bc9e-046393ccb7d3",
     "ClubId": "0a51f91e-6a08-49ef-af88-a27893c1ad14",
-    "TacticalSkill": 4,
-    "Motivation": 3
+    "TacticalSkill": 0,
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "d83c7e20-8498-4bb7-ad42-be99c38f4756",
     "ClubId": "1eee35cb-103c-4415-822e-568a0c49f13a",
-    "TacticalSkill": 1,
-    "Motivation": 4
+    "TacticalSkill": 0,
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "fe0271c1-e330-4378-8ae6-9382a7a0e77b",
     "ClubId": "1b91bbcf-4593-415c-a348-ad1104c44175",
-    "TacticalSkill": 1,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "552f21be-bb48-45a5-b21a-b5f0fbf3f3a1",
-    "TacticalSkill": 4,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "bfe4c1dc-6fa1-4095-bc9e-77e92930b359",
-    "TacticalSkill": 0,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "01725539-f017-4381-8bf4-8c77b6486311",
-    "TacticalSkill": 1,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "a228c034-e0b3-4f44-8354-902f4da62d6d",
-    "TacticalSkill": 0,
-    "Motivation": 0
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "c7068266-dc48-49f5-b5b6-dae5d042d27a",
-    "TacticalSkill": 2,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "14619881-d58e-44f1-b247-a691ee549217",
     "TacticalSkill": 3,
-    "Motivation": 1
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "ff7ffb0b-4c08-4ad3-94af-f905d0abf72c",
+    "Id": "67a65547-c286-46b3-b953-e685f3cf32a8",
+    "ClubId": "552f21be-bb48-45a5-b21a-b5f0fbf3f3a1",
     "TacticalSkill": 2,
-    "Motivation": 1
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "8ba561b2-36ce-4098-8d24-1ab49c703aa2",
-    "TacticalSkill": 0,
-    "Motivation": 3
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "da1a8c7c-20ca-4ff9-bf44-c896965139a8",
+    "Id": "86bd1744-a9ca-41a3-89d2-832bfa39e574",
+    "ClubId": "bfe4c1dc-6fa1-4095-bc9e-77e92930b359",
     "TacticalSkill": 1,
-    "Motivation": 1
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "30a5bf67-f393-4ce7-86a1-da82a2fa055a",
+    "ClubId": "01725539-f017-4381-8bf4-8c77b6486311",
+    "TacticalSkill": 0,
+    "Motivation": 3,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "5b26c66b-f922-4fa9-830e-defb5fc3ffab",
+    "ClubId": "a228c034-e0b3-4f44-8354-902f4da62d6d",
+    "TacticalSkill": 1,
+    "Motivation": 1,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "0df1940e-bd63-4ba3-97bd-360b0a3cd726",
+    "ClubId": "c7068266-dc48-49f5-b5b6-dae5d042d27a",
+    "TacticalSkill": 0,
+    "Motivation": 3,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "07bb7c5d-1c2d-47e4-b8c1-0fa2548d5a30",
+    "ClubId": "14619881-d58e-44f1-b247-a691ee549217",
+    "TacticalSkill": 0,
+    "Motivation": 4,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "e8321287-8f0e-4794-976e-bfa1d6da480c",
+    "ClubId": "ff7ffb0b-4c08-4ad3-94af-f905d0abf72c",
+    "TacticalSkill": 1,
+    "Motivation": 2,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "9046fe76-5661-4f97-96de-f4e8aa15ee4b",
+    "ClubId": "8ba561b2-36ce-4098-8d24-1ab49c703aa2",
+    "TacticalSkill": 3,
+    "Motivation": 1,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "39edaeb4-1de5-478d-9dae-95f6533fc9db",
+    "ClubId": "da1a8c7c-20ca-4ff9-bf44-c896965139a8",
+    "TacticalSkill": 3,
+    "Motivation": 1,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "96af8995-2b6b-4bd2-a274-a8f862f131ad",
     "ClubId": "2b2775bd-9008-4e2e-81a8-839a3551067f",
     "TacticalSkill": 0,
-    "Motivation": 3
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "12ab8069-f3c9-40c2-8bf3-ecd91a8783b8",
     "ClubId": "aed360be-ff51-4525-a50e-22b4943bd5d5",
-    "TacticalSkill": 3,
-    "Motivation": 4
+    "TacticalSkill": 2,
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "63119906-5cb1-409d-8f7b-1125a1d34500",
     "ClubId": "40f8b424-1c0d-45c5-918a-20403f131e7c",
-    "TacticalSkill": 0,
-    "Motivation": 2
+    "TacticalSkill": 3,
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "7a4aec46-2206-4020-a7f7-064fd5e31485",
     "ClubId": "3b7188f1-21b9-4a69-90c7-7d7dd88748af",
-    "TacticalSkill": 4,
-    "Motivation": 4
+    "TacticalSkill": 3,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "320c9a58-26ec-435f-a71f-4f0e2c042cda",
     "ClubId": "c5e23337-4855-4f78-ac7d-39ac9f0a04fe",
-    "TacticalSkill": 0,
-    "Motivation": 4
+    "TacticalSkill": 2,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "9b5d056a-0af2-4075-8ffc-21c0deedec6e",
     "ClubId": "c01d461e-0b19-4466-9361-6568cec94f67",
     "TacticalSkill": 2,
-    "Motivation": 4
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "f28198ef-f593-4dae-bcd0-895a93b85e23",
     "ClubId": "5f20608f-071e-4b5b-9b66-bd88b5b7708e",
-    "TacticalSkill": 4,
-    "Motivation": 2
+    "TacticalSkill": 1,
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "09a87237-dfb6-4c80-b868-04e0ce746c79",
     "ClubId": "8f0bdae9-c243-4116-9a8a-e628ec057b40",
     "TacticalSkill": 4,
-    "Motivation": 2
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "8d3018bf-a35e-4e3d-b056-8e41208f2aaf",
     "ClubId": "4e3826f2-b7c1-430b-bfb7-23a1d4be7c4a",
     "TacticalSkill": 4,
-    "Motivation": 0
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "e9e706f5-1996-4a9e-8a85-78a0b6998e7d",
     "ClubId": "1bbb4e18-0b11-49b1-8554-b195905f3bef",
-    "TacticalSkill": 1,
-    "Motivation": 4
+    "TacticalSkill": 4,
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "7e48a4d3-e2ae-4f4b-b584-af8d541820d8",
     "ClubId": "f8e345aa-f656-41e1-9e09-93ffa98c615d",
     "TacticalSkill": 1,
-    "Motivation": 3
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "5ecef346-14b3-4786-adb7-00c004352897",
     "ClubId": "17a14cf8-d731-4dd0-b151-c1ffeb963609",
     "TacticalSkill": 1,
-    "Motivation": 1
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "585d593b-acf5-4000-bed1-701b4f9417c3",
     "ClubId": "8b1e8e3a-f555-46c4-af1e-16c295a9d5c9",
-    "TacticalSkill": 2,
-    "Motivation": 1
+    "TacticalSkill": 1,
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "6ace052e-0f94-44a9-84c8-7934889da60f",
     "ClubId": "eb545c00-89e5-4884-a7f2-afdcfe4c490f",
-    "TacticalSkill": 2,
-    "Motivation": 1
+    "TacticalSkill": 1,
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "30191aa6-78eb-4f8d-9c24-d79ade21a07c",
     "ClubId": "069d5682-ca9f-4d77-9dea-202dab92e622",
     "TacticalSkill": 4,
-    "Motivation": 0
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "c0a7f435-fdb4-49c6-9b52-90eb3cecb126",
     "ClubId": "661e5acc-230f-403e-82bf-ada743c27318",
-    "TacticalSkill": 0,
-    "Motivation": 1
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "0a2c8972-69fb-4750-b0df-31ebd6e941f5",
-    "TacticalSkill": 0,
-    "Motivation": 2
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "76d74f9e-23e1-4750-8ad0-c719c7f34f0d",
-    "TacticalSkill": 4,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "07f87248-41b4-4f83-981a-fd5171f0b270",
-    "TacticalSkill": 2,
-    "Motivation": 1
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "13358ced-5c19-4884-b668-05839e4e4327",
-    "TacticalSkill": 0,
-    "Motivation": 2
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "7bd5b43c-3a6d-4c51-8159-3baee572a1f0",
     "TacticalSkill": 1,
-    "Motivation": 0
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "082765fd-39fe-4b94-ae79-9412c26d1b59",
+    "ClubId": "0a2c8972-69fb-4750-b0df-31ebd6e941f5",
+    "TacticalSkill": 1,
+    "Motivation": 2,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "b119ae6f-d402-4110-8d41-945514c5fbd7",
+    "ClubId": "76d74f9e-23e1-4750-8ad0-c719c7f34f0d",
+    "TacticalSkill": 0,
+    "Motivation": 1,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "f477b05c-c16a-4192-b792-7c5168ffd785",
+    "ClubId": "07f87248-41b4-4f83-981a-fd5171f0b270",
+    "TacticalSkill": 1,
+    "Motivation": 1,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "5221cfc5-24d1-489f-b79e-dcaa7ab5b381",
+    "ClubId": "13358ced-5c19-4884-b668-05839e4e4327",
+    "TacticalSkill": 1,
+    "Motivation": 3,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "afec5d7d-70ce-4780-a6a2-bafcf9856cf1",
+    "ClubId": "7bd5b43c-3a6d-4c51-8159-3baee572a1f0",
+    "TacticalSkill": 4,
+    "Motivation": 4,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "ba50442f-f082-4bbd-b031-7140617e8bee",
     "ClubId": "a6a9ee29-efe5-468b-bebf-120cb7524337",
-    "TacticalSkill": 0,
-    "Motivation": 3
+    "TacticalSkill": 4,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "fbd583c8-36ab-44cc-b0e4-eb3908aaa7ab",
     "ClubId": "7f8e4182-e25e-4354-894a-d60d60f4f17f",
-    "TacticalSkill": 4,
-    "Motivation": 3
+    "TacticalSkill": 2,
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "b3577686-4d99-4162-b9d0-724ee039dec5",
     "ClubId": "e7d08234-4d15-4f2f-b9c6-0f6af8fc2326",
-    "TacticalSkill": 0,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "c109b88e-e07c-4a6c-8c21-8f01e9d0d776",
-    "TacticalSkill": 4,
-    "Motivation": 1
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "5b5ec584-5cd1-447c-8654-90ab480369f0",
     "TacticalSkill": 3,
-    "Motivation": 4
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "b2fadd27-9842-4f42-9057-aba6d05e9ce7",
+    "ClubId": "c109b88e-e07c-4a6c-8c21-8f01e9d0d776",
+    "TacticalSkill": 3,
+    "Motivation": 4,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "8b0cae5c-8bda-4baa-973b-957eef84ce5e",
+    "ClubId": "5b5ec584-5cd1-447c-8654-90ab480369f0",
+    "TacticalSkill": 2,
+    "Motivation": 1,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "e4b4f1de-ed7c-4ed6-aba7-53d903e811d5",
     "ClubId": "5ceb5302-b7c4-4a4d-8cb2-a588c253595c",
-    "TacticalSkill": 0,
-    "Motivation": 1
+    "TacticalSkill": 3,
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "ebe6a504-b826-44cb-819b-3052442885a9",
     "ClubId": "c0715178-69f8-4cda-8018-afbc53caa6d1",
     "TacticalSkill": 4,
-    "Motivation": 1
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "26258af4-265f-463d-9106-155f32bc5b6f",
     "ClubId": "8e3d89d2-0ae6-46e5-953c-dfcaade41a7a",
     "TacticalSkill": 0,
-    "Motivation": 1
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "1b053e12-43e5-4a71-9ea7-5af0eb90abcf",
     "ClubId": "86ddbf24-f7d8-44bc-be41-c3f7638791c6",
-    "TacticalSkill": 2,
-    "Motivation": 0
+    "TacticalSkill": 3,
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "da5dffbe-4add-4385-8ff6-6d60303e4bcc",
     "ClubId": "a838266b-742e-4c16-9c0d-0507b70974eb",
     "TacticalSkill": 1,
-    "Motivation": 2
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "00010d01-fffe-4492-b736-781a858b4b4e",
     "ClubId": "67186a80-9925-4c3e-9411-88f347eed419",
-    "TacticalSkill": 2,
-    "Motivation": 0
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "5df8c6a3-14a4-4cdc-aa33-5c4c62222d0a",
-    "TacticalSkill": 4,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "5f1d3686-20ea-4257-9e5f-4b4049dc536e",
-    "TacticalSkill": 0,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "b99c8457-b211-45ac-8eab-2fdcbca66667",
-    "TacticalSkill": 0,
-    "Motivation": 1
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "b66c8d01-0cf1-4034-9ad5-e27186df99a6",
-    "TacticalSkill": 2,
-    "Motivation": 2
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "051a2a7d-bb70-4f3b-a94a-ae9bcf0439ce",
     "TacticalSkill": 3,
-    "Motivation": 2
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "c42b4ff3-32bc-41f2-9719-6c12c0e530e5",
+    "Id": "6cdd5e2d-fea6-47b2-99e0-702338cca3f2",
+    "ClubId": "5df8c6a3-14a4-4cdc-aa33-5c4c62222d0a",
+    "TacticalSkill": 2,
+    "Motivation": 4,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "81cb5bb3-c3f8-4bb6-ba7f-e90209c44e68",
+    "ClubId": "5f1d3686-20ea-4257-9e5f-4b4049dc536e",
+    "TacticalSkill": 1,
+    "Motivation": 0,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "3aaa00fd-9a82-4af6-a30b-a1ff9aba5b88",
+    "ClubId": "b99c8457-b211-45ac-8eab-2fdcbca66667",
+    "TacticalSkill": 4,
+    "Motivation": 1,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "360bbf59-9cb3-4253-98d9-8bafcdc7a54a",
+    "ClubId": "b66c8d01-0cf1-4034-9ad5-e27186df99a6",
     "TacticalSkill": 0,
-    "Motivation": 0
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "777b142f-4f98-47a7-9531-41052ddd3017",
+    "ClubId": "051a2a7d-bb70-4f3b-a94a-ae9bcf0439ce",
+    "TacticalSkill": 4,
+    "Motivation": 1,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "ebe1c8fc-7159-474d-89fe-f39192b99fba",
+    "ClubId": "c42b4ff3-32bc-41f2-9719-6c12c0e530e5",
+    "TacticalSkill": 1,
+    "Motivation": 4,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "0521c04f-ae7d-4bde-baf1-82e287c34d4c",
     "ClubId": "cb4b37de-fbb1-4227-a6d8-455201d55e76",
     "TacticalSkill": 0,
-    "Motivation": 0
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "1c86a18b-ffc6-4498-be2e-8ed4b69097ba",
     "ClubId": "92bdcab3-5794-4cfb-a63f-002141956406",
     "TacticalSkill": 3,
-    "Motivation": 2
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "58dc2422-efeb-42bb-9830-f93843159599",
     "ClubId": "b8a3bf5e-0719-4a5e-8536-c491ede0364a",
-    "TacticalSkill": 3,
-    "Motivation": 2
+    "TacticalSkill": 4,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "e2d8cf6b-c4fd-444d-94f6-0996f8d2a4c8",
     "ClubId": "b6ee9441-577f-43ed-8435-30baffdfea50",
     "TacticalSkill": 3,
-    "Motivation": 1
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "8cdead31-0f99-4626-b8d2-5c495e78ca72",
     "ClubId": "f361e919-2520-4ebc-8776-0bb1a19f20da",
-    "TacticalSkill": 1,
-    "Motivation": 3
+    "TacticalSkill": 4,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "3be6cb6e-3e61-43f3-8eae-788e4f5323ee",
     "ClubId": "d243f2b1-5ea3-46cb-871c-d1532abc0435",
-    "TacticalSkill": 3,
-    "Motivation": 1
+    "TacticalSkill": 1,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "314f5355-a6fe-4a2e-bdee-5060b4375ba7",
     "ClubId": "4cd88029-c383-467e-8df1-ccc271029665",
-    "TacticalSkill": 3,
-    "Motivation": 4
+    "TacticalSkill": 2,
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "c8a58529-ed72-4023-a4fb-938b121395f1",
     "ClubId": "e839d3ed-9622-4b2e-895d-7afb4ed27092",
     "TacticalSkill": 2,
-    "Motivation": 1
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "a8d9c0d5-af58-4e5c-a0bc-3b73abc9aaad",
     "ClubId": "bec5e5de-1030-4bb1-9081-0b6dcfc4b3af",
-    "TacticalSkill": 2,
-    "Motivation": 2
+    "TacticalSkill": 0,
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "e8f0cdbd-7bee-4999-b9dc-76759d85f174",
     "ClubId": "f035c0ce-7682-429c-bed6-aca437ea5fe4",
     "TacticalSkill": 3,
-    "Motivation": 0
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "d0691fff-4914-48ed-8c01-fd8b0889a892",
     "ClubId": "1b4c26cf-2d52-412f-ade8-08b3614decf0",
-    "TacticalSkill": 3,
-    "Motivation": 1
+    "TacticalSkill": 4,
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "beba053e-a86f-47ab-8e49-d8351858c512",
     "ClubId": "94b09849-f01a-43c3-8594-e434086412a8",
-    "TacticalSkill": 3,
-    "Motivation": 2
+    "TacticalSkill": 4,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "9d1d13db-bfd6-4f28-a6b5-0b69c9cb8b27",
     "ClubId": "0fd1cc9f-c287-4e76-9211-9b3581cdee49",
-    "TacticalSkill": 3,
-    "Motivation": 2
+    "TacticalSkill": 1,
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "9af8e177-48dd-48ec-b1a4-7e4f29be1bb7",
     "ClubId": "58dc7029-7629-43ee-9b1e-762d25e415b8",
-    "TacticalSkill": 0,
-    "Motivation": 3
+    "TacticalSkill": 2,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "c1954494-0a1c-4d58-b57c-78aedb844e08",
     "ClubId": "78470cf9-3a51-49e8-9a3d-b4d015809dda",
-    "TacticalSkill": 0,
-    "Motivation": 2
+    "TacticalSkill": 3,
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "a9294a23-62ce-47be-96a8-fbe4fdb2b662",
     "ClubId": "7c8f5805-06a9-4059-9203-97394e9bdcc2",
     "TacticalSkill": 0,
-    "Motivation": 2
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "20515d15-e70f-4210-a5bd-386eda4bc95c",
     "ClubId": "4b2f012d-fb91-4e03-b6a2-fc7106d3fcbc",
-    "TacticalSkill": 1,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "572f12e1-aaf8-43b5-8008-cb210a53c289",
-    "TacticalSkill": 4,
-    "Motivation": 2
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "ad02047e-0a0a-459d-b44d-f903f32ceb36",
     "TacticalSkill": 0,
-    "Motivation": 1
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "9aee9871-bdb0-406e-83fc-6fee4e0d8413",
+    "Id": "beffc804-2175-413d-8821-080ada953897",
+    "ClubId": "572f12e1-aaf8-43b5-8008-cb210a53c289",
     "TacticalSkill": 3,
-    "Motivation": 4
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "94244fd8-58e8-4574-8743-8cb5146af150",
+    "ClubId": "ad02047e-0a0a-459d-b44d-f903f32ceb36",
+    "TacticalSkill": 2,
+    "Motivation": 1,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "2c794d48-39bc-4aef-ab81-6d4b196ed5de",
+    "ClubId": "9aee9871-bdb0-406e-83fc-6fee4e0d8413",
+    "TacticalSkill": 0,
+    "Motivation": 1,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "9457cd37-02a0-4e2d-a2a3-a9c1388ab3f6",
     "ClubId": "1e4c9ad9-a528-432c-8179-a9709ecf0dd6",
     "TacticalSkill": 4,
-    "Motivation": 1
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "85b9ec2c-78e6-4123-9878-ed956cbc5dee",
     "ClubId": "93826217-9f38-481c-9fef-8bf3eab04625",
-    "TacticalSkill": 1,
-    "Motivation": 2
+    "TacticalSkill": 0,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "b5a36ed4-a475-4db2-ac9a-d7cb04ff3ece",
     "ClubId": "6d45b8f3-0fa1-4347-91a8-11e8caa810f3",
-    "TacticalSkill": 1,
-    "Motivation": 4
+    "TacticalSkill": 0,
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "d4ebf90d-5548-4d56-b2d8-aaf6aadfd53b",
     "ClubId": "0bba4f9a-b7ee-4e91-9237-f541644a8585",
     "TacticalSkill": 2,
-    "Motivation": 1
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "6a4cec6c-e268-487a-8dfd-1f71b83f84ad",
     "ClubId": "02648211-e438-4841-a101-bffa60442d5f",
-    "TacticalSkill": 1,
-    "Motivation": 3
+    "TacticalSkill": 0,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "e4d89033-21c9-44c6-94b1-0d95d052781c",
     "ClubId": "f1800c70-9910-4d62-9df6-489f653b60ca",
-    "TacticalSkill": 3,
-    "Motivation": 2
+    "TacticalSkill": 2,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "c55bf1c0-76df-4bc3-b328-b3c618e121bb",
     "ClubId": "e2644d7e-d2ef-47e3-b0b6-7cb3711c5718",
     "TacticalSkill": 3,
-    "Motivation": 2
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "984d61f7-5986-426d-aef0-282ee3e1ee95",
     "ClubId": "91e4c3da-fddc-4129-bafd-2bb7bc7b953f",
     "TacticalSkill": 0,
-    "Motivation": 0
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "9b7fbab3-bebd-4158-8eb8-bcfcfe6d1710",
     "ClubId": "aadb7364-a707-4915-8d11-e07d9c21cca5",
-    "TacticalSkill": 1,
-    "Motivation": 1
+    "TacticalSkill": 4,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "a4441eb5-2886-419c-b349-9fb5ca0a9cec",
     "ClubId": "c5eb6938-35bd-4849-b9ee-b031f4c42772",
-    "TacticalSkill": 2,
-    "Motivation": 2
+    "TacticalSkill": 0,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "4d006fd6-2600-441e-9c10-e68c9631a70d",
     "ClubId": "b8c67ca4-49f3-465c-b922-cfe9574aa4e4",
-    "TacticalSkill": 1,
-    "Motivation": 2
+    "TacticalSkill": 0,
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "a3b6f8e2-00a8-4add-83fb-cf2a2a655d57",
     "ClubId": "76017957-daad-4241-908f-c62f3c49bd61",
-    "TacticalSkill": 3,
-    "Motivation": 4
+    "TacticalSkill": 2,
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "051f9ebe-8bdd-45d1-ad7b-fc88a87451ff",
     "ClubId": "814487f7-63ca-4bd7-8e68-db873a091939",
     "TacticalSkill": 1,
-    "Motivation": 3
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "e7d54473-86fa-4cf2-b406-1e451ccd4f68",
     "ClubId": "44cf896d-4c8d-47e9-aebe-6cb775a48538",
     "TacticalSkill": 0,
-    "Motivation": 4
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "30b778c4-de57-4f7a-af4b-1be9d5484441",
     "ClubId": "888acd63-2c72-41bf-b5af-0eb4b64cb7c2",
-    "TacticalSkill": 2,
-    "Motivation": 2
+    "TacticalSkill": 4,
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "0e344e94-84b2-462a-9d83-5ce0292a09d2",
     "ClubId": "6b7e7c93-5bc5-4613-b0c4-47f09c69ae4f",
     "TacticalSkill": 3,
-    "Motivation": 1
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "ba71eab5-bd3e-4d11-b53e-2ef7460d86a1",
     "ClubId": "ba75abb9-3968-484b-b4b0-392be940d978",
-    "TacticalSkill": 1,
-    "Motivation": 0
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "7453cafe-7b06-4629-b97a-f50ee45564fe",
     "TacticalSkill": 4,
-    "Motivation": 3
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "24fa1364-eb9d-49fd-a3f1-4659c1abc6a5",
+    "ClubId": "7453cafe-7b06-4629-b97a-f50ee45564fe",
+    "TacticalSkill": 3,
+    "Motivation": 2,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "31846412-7d6e-4a03-81aa-954dc88a7ec3",
     "ClubId": "a1fc7511-abca-462b-bf1a-53e40c10913b",
-    "TacticalSkill": 0,
-    "Motivation": 0
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "647fc76f-de5d-4f25-a7c8-13f15587b454",
     "TacticalSkill": 1,
-    "Motivation": 1
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "5e1e98ed-4452-476d-bb6f-91a02599ff97",
+    "ClubId": "647fc76f-de5d-4f25-a7c8-13f15587b454",
+    "TacticalSkill": 4,
+    "Motivation": 0,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "6436dad3-e68d-4226-ad9f-98b70ac5227c",
     "ClubId": "961f4c47-c5ea-468a-ac05-494a6ac97077",
     "TacticalSkill": 2,
-    "Motivation": 2
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "cacaed4c-29e3-49cb-a201-7ade29940316",
     "ClubId": "b4d71cf8-d483-4df9-8088-04b7b45034d2",
-    "TacticalSkill": 1,
-    "Motivation": 3
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "094a45ea-9bc0-4eed-91e4-7f08cd6869da",
     "TacticalSkill": 2,
-    "Motivation": 2
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "abc22004-fe73-4753-a65e-40b6dc4f1674",
+    "Id": "1b34c0c8-9ba4-4d4a-af89-975211f1ecf9",
+    "ClubId": "094a45ea-9bc0-4eed-91e4-7f08cd6869da",
     "TacticalSkill": 3,
-    "Motivation": 3
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "00686fcc-5585-4cdb-be6a-15fae3e812e2",
+    "ClubId": "abc22004-fe73-4753-a65e-40b6dc4f1674",
+    "TacticalSkill": 2,
+    "Motivation": 0,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "dcaaaecd-0006-47d9-be90-1af5936990e3",
     "ClubId": "83ce25b2-fecd-45ce-b350-345b615fabc3",
-    "TacticalSkill": 1,
-    "Motivation": 2
+    "TacticalSkill": 0,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "58ea75a1-8f0c-4d0d-92c7-83127c880bdb",
     "ClubId": "12897cf9-aeb5-40b5-a370-1ceee7837811",
     "TacticalSkill": 2,
-    "Motivation": 2
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "dcf279df-3177-45c1-8334-53981b5ec043",
     "ClubId": "eb1c826a-75f0-4c15-9ff1-1cfefcd699b2",
-    "TacticalSkill": 0,
-    "Motivation": 2
+    "TacticalSkill": 4,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "317c3198-3e7e-40f4-ac58-e60f4f775158",
     "ClubId": "c34194fa-010a-4aa7-88ca-5ba34c122a92",
     "TacticalSkill": 4,
-    "Motivation": 4
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "e85c08b4-e754-499a-8b65-e52b16c47d31",
     "ClubId": "5af9185c-6ccf-4a72-b8a8-fa744c46a5bb",
-    "TacticalSkill": 2,
-    "Motivation": 1
+    "TacticalSkill": 0,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "a5ce8c4a-f4b5-4268-aea4-8df334528f6e",
     "ClubId": "5d1b5982-a2f1-4867-acf9-aa57b7cbe35f",
-    "TacticalSkill": 4,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "33d40ff4-04ea-42ca-aae1-214373242a40",
-    "TacticalSkill": 2,
-    "Motivation": 1
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "575d6815-fdf1-4317-b695-01e3d40ba1f2",
     "TacticalSkill": 1,
-    "Motivation": 1
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "54b6f26e-beb9-4858-b15b-7756b39ae8bc",
+    "ClubId": "33d40ff4-04ea-42ca-aae1-214373242a40",
+    "TacticalSkill": 1,
+    "Motivation": 1,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "7838f86b-9e29-4681-91ad-21fb30b96599",
+    "ClubId": "575d6815-fdf1-4317-b695-01e3d40ba1f2",
+    "TacticalSkill": 0,
+    "Motivation": 4,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "4c3ef8d0-24f8-4cb5-914e-d7336c622f67",
     "ClubId": "875b71e5-061b-477e-96ea-dd6d17c62c9e",
     "TacticalSkill": 4,
-    "Motivation": 0
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "1a133938-c2c4-4498-b676-bf7a3ba3076c",
     "ClubId": "55517482-c26b-45ea-b452-adba805ebafa",
-    "TacticalSkill": 3,
-    "Motivation": 0
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "81ac8c18-87f0-4674-ac8c-9ad7aa445771",
-    "TacticalSkill": 0,
-    "Motivation": 0
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "aaecf195-d8f3-47b7-9744-1ab7b34319d0",
-    "TacticalSkill": 4,
-    "Motivation": 0
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "1d56713f-ffc2-46c8-a2be-9e63ac02c8c6",
-    "TacticalSkill": 2,
-    "Motivation": 1
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "91551463-4d58-4105-8ad6-b9058c0f0446",
-    "TacticalSkill": 0,
-    "Motivation": 1
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "7cd8f8b8-b260-4832-991d-698fbc8b9bf2",
     "TacticalSkill": 1,
-    "Motivation": 0
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "c2933076-30c2-4fff-a4e0-65340d152c1a",
+    "ClubId": "81ac8c18-87f0-4674-ac8c-9ad7aa445771",
+    "TacticalSkill": 1,
+    "Motivation": 2,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "a382a2e9-031b-4f9c-9179-605607213f6c",
+    "ClubId": "aaecf195-d8f3-47b7-9744-1ab7b34319d0",
+    "TacticalSkill": 1,
+    "Motivation": 0,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "16dfea9f-eecb-40fc-b1e5-c6d9ff644f34",
+    "ClubId": "1d56713f-ffc2-46c8-a2be-9e63ac02c8c6",
+    "TacticalSkill": 4,
+    "Motivation": 0,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "21a7d7e7-5558-4eb3-a7c5-e91a6bd1d2de",
+    "ClubId": "91551463-4d58-4105-8ad6-b9058c0f0446",
+    "TacticalSkill": 1,
+    "Motivation": 0,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "85549345-7dba-47cc-8bca-7ab8a039a562",
+    "ClubId": "7cd8f8b8-b260-4832-991d-698fbc8b9bf2",
+    "TacticalSkill": 0,
+    "Motivation": 4,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "dff2ef18-d557-451e-bf1a-b81f51406701",
     "ClubId": "bd54d03d-4330-4cdf-91af-01a7305ccc27",
     "TacticalSkill": 3,
-    "Motivation": 0
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "a0652629-547f-4dfd-9f7a-c3d0b123811a",
     "ClubId": "f12090d6-bc82-4786-ba7c-e2667baf5a63",
-    "TacticalSkill": 0,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "8f939207-002b-44a7-8abe-6562643c93dd",
     "TacticalSkill": 2,
-    "Motivation": 0
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "12c3d6d6-c4d3-4397-a8e1-6a292fdeafb3",
+    "ClubId": "8f939207-002b-44a7-8abe-6562643c93dd",
+    "TacticalSkill": 1,
+    "Motivation": 4,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "09b12c56-f557-40c3-b8dc-56f69a02327e",
     "ClubId": "1455bf45-bead-4576-9fb6-13240cdbb2d9",
-    "TacticalSkill": 4,
-    "Motivation": 4
+    "TacticalSkill": 0,
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "2f9c52ff-c20d-47bc-ba04-9ebebf74c816",
     "ClubId": "2ad7db56-7f7f-4c16-ba39-cfee1f89e7a7",
     "TacticalSkill": 2,
-    "Motivation": 2
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "5eabc1f0-aafd-4724-9f74-6456f0c28d85",
     "ClubId": "fe5dd7a5-1ba9-481f-b49f-550106523464",
     "TacticalSkill": 0,
-    "Motivation": 0
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "fa9bab1b-16ca-4b8e-bcc6-9d7c6268aa32",
     "ClubId": "1b816fbb-0d23-456f-9653-fac647ac59da",
-    "TacticalSkill": 4,
-    "Motivation": 1
+    "TacticalSkill": 0,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "e47210d0-3ab2-4500-94fc-657fa7a837f2",
     "ClubId": "3eccda58-4af3-478e-9025-b79ffdbf6443",
-    "TacticalSkill": 2,
-    "Motivation": 0
+    "TacticalSkill": 3,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "97cd66b5-d7d0-43cf-8ad9-24b548e69c21",
     "ClubId": "81a265d0-47ea-40f3-a4d4-461184b74c86",
-    "TacticalSkill": 4,
-    "Motivation": 0
+    "TacticalSkill": 0,
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "b97c695d-3f8a-4e42-9db8-74d2d57d331b",
     "ClubId": "bc240af6-964b-423f-a3b7-4eeb40b98d29",
-    "TacticalSkill": 2,
-    "Motivation": 3
+    "TacticalSkill": 0,
+    "Motivation": 0,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "eb055c31-4144-499c-8960-3cfe4e4c4eab",
     "ClubId": "ff8f3243-a817-41c4-85bf-a2283761001b",
     "TacticalSkill": 2,
-    "Motivation": 3
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "9f2e6ef6-4448-4be3-b425-e946034c5840",
     "ClubId": "f0a2fc45-6a70-489c-9b9d-ecce2cf3c75d",
-    "TacticalSkill": 1,
-    "Motivation": 1
+    "TacticalSkill": 4,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "f97918d3-9c8b-403d-9c9a-96d57741057d",
     "ClubId": "d88a553f-6a25-4574-a24d-89b324102950",
-    "TacticalSkill": 3,
-    "Motivation": 2
+    "TacticalSkill": 2,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "1fa8b31f-759b-42f7-823f-53854e376407",
     "ClubId": "3e3b0e58-3b3a-44a6-a598-b1fb25787124",
-    "TacticalSkill": 3,
-    "Motivation": 1
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "3e3207fc-af81-4c8e-bda3-f2d5b0d608af",
-    "TacticalSkill": 3,
-    "Motivation": 4
-  },
-  {
-    "Id": "00000000-0000-0000-0000-000000000000",
-    "ClubId": "4078d5bd-ff5b-4921-bccb-fd80eefd7b4e",
     "TacticalSkill": 0,
-    "Motivation": 3
+    "Motivation": 1,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "8b74318b-5772-49f3-b52d-9e6b59f98cd7",
+    "ClubId": "3e3207fc-af81-4c8e-bda3-f2d5b0d608af",
+    "TacticalSkill": 0,
+    "Motivation": 1,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "8cffacef-3649-4f95-90aa-6bd202a377e2",
+    "ClubId": "4078d5bd-ff5b-4921-bccb-fd80eefd7b4e",
+    "TacticalSkill": 4,
+    "Motivation": 3,
+    "LastTeamStrength": 0
+  },
+  {
+    "Id": "448ba008-b36d-4603-8bcb-be1e3453cc50",
     "ClubId": "d1003542-f33a-466c-ac9f-031ca39dc540",
     "TacticalSkill": 2,
-    "Motivation": 0
+    "Motivation": 4,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "c3c4c92f-da7e-4882-9da4-a8f2d0b9282d",
     "ClubId": "07ae9de8-2b35-41a5-8d5d-cd4decd8446f",
-    "TacticalSkill": 1,
-    "Motivation": 1
+    "TacticalSkill": 4,
+    "Motivation": 3,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "7364a507-a35a-407e-8185-1571edb3fac6",
     "ClubId": "c977131c-518c-498d-b8a9-3fc8aac50faf",
-    "TacticalSkill": 3,
-    "Motivation": 1
+    "TacticalSkill": 1,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   },
   {
-    "Id": "00000000-0000-0000-0000-000000000000",
+    "Id": "207641e6-92d3-4def-97da-bd3f6dccd540",
     "ClubId": "a5a32440-cf28-44c7-9808-ef882b65c533",
-    "TacticalSkill": 0,
-    "Motivation": 4
+    "TacticalSkill": 3,
+    "Motivation": 2,
+    "LastTeamStrength": 0
   }
 ]

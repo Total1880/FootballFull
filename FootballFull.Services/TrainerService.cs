@@ -42,7 +42,7 @@ namespace FootballFull.Services
         {
             return new Trainer
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 ClubId = clubId,
                 Motivation = Random.Shared.Next(0, 5),
                 TacticalSkill = Random.Shared.Next(0, 5),
