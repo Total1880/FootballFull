@@ -123,10 +123,10 @@ namespace FootballFull.Services
                 Console.Clear();
 
                 _internationalFixtures = _seasonService.InitializeInternationalGames();
-                _seasonService.InitializeNewSeason();
+                _seasonService.InitializeNewSeason(_year++);
                 _fixtures = _fixtureService.Generate(_clubsPerCompetition);
                 _cupFixtures = _seasonService.InitializeNationalCups();
-                _year++;
+                
             } while (true);
         }
 

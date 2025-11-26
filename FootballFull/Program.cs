@@ -37,6 +37,9 @@ services.AddSingleton<IClubPerCompetitionRepository>(
 services.AddSingleton<IRepository<Trainer>>(
     _ => new TrainerRepository(Path.Combine(Configuration.DataRoot, "Trainers.json")));
 
+services.AddSingleton<INameRepository>(
+    _ => new NameRepository());
+
 var provider = services.BuildServiceProvider();
 
 // Alleen nog de game starten

@@ -12,11 +12,13 @@ namespace FootballFull.Services
     public class TrainerService : ITrainerService
     {
         private readonly IRepository<Trainer> _trainerRepository;
+        private readonly INameRepository _nameRepository;
         private IList<Trainer>? _trainers;
 
-        public TrainerService(IRepository<Trainer> trainerRepository)
+        public TrainerService(IRepository<Trainer> trainerRepository, INameRepository nameRepository)
         {
             _trainerRepository = trainerRepository;
+            _nameRepository = nameRepository;
         }
 
         public IList<Trainer> Load()
@@ -43,9 +45,12 @@ namespace FootballFull.Services
             return new Trainer
             {
                 Id = Guid.NewGuid(),
+                PersonId = Guid.NewGuid(),
                 ClubId = clubId,
                 Motivation = Random.Shared.Next(0, 5),
                 TacticalSkill = Random.Shared.Next(0, 5),
+                Name = _nameRepository.GetRandomFirstName(new Guid()),
+                LastName = _nameRepository.GetRandomLastName(new Guid())
             };
         }
     }

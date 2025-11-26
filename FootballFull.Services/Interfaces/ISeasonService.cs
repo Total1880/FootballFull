@@ -6,7 +6,7 @@ namespace FootballFull.Services.Interfaces
     {
         IList<ClubLeagueCompetition> ClubLeagueCompetitions { get; }
         void Initialize(IList<ClubPerCompetition> clubs);
-        void InitializeNewSeason();
+        void InitializeNewSeason(int year);
         void PlayMatchDay(IList<Fixture> fixtures, int matchDay,bool isSuddenDeath = false, Guid? playerClubId = null);
         Guid ChoosePlayerClub();
         IList<Fixture> InitializeInternationalGames();

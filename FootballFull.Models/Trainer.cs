@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FootballFull.Models
 {
-    public class Trainer
+    public class Trainer : Person
     {
         public Guid Id { get; set; }
         public Guid ClubId { get; set; }

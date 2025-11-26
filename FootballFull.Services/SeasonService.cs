@@ -42,11 +42,12 @@ namespace FootballFull.Services
             _clubs = _clubService.GetClubs();
             _trainers = _trainerService.Load();
 
-            InitializeNewSeason();
+            InitializeNewSeason(0);
         }
 
-        public void InitializeNewSeason()
+        public void InitializeNewSeason(int year)
         {
+            _year = year;
             RecalculateStrengths(Configuration.MinStrength, Configuration.MaxStrength);
             PromotionsAndRelegations();
             _clubLeagueCompetitions = _clubsPerCompetition.Select(club => new ClubLeagueCompetition
@@ -234,6 +235,9 @@ namespace FootballFull.Services
 
                 UpdateClubMomentumAndMorale(fixture.HomeTeamId, fixture.HomeScore, fixture.AwayScore);
                 UpdateClubMomentumAndMorale(fixture.AwayTeamId, fixture.AwayScore, fixture.HomeScore);
+
+                _clubs.First(_ => _.Id == fixture.HomeTeamId).HasTrainerSinceWeek++;
+                _clubs.First(_ => _.Id == fixture.AwayTeamId).HasTrainerSinceWeek++;
             }
         }
         private void SimulateFixtureAutomatically(Fixture fixture, bool isSuddenDeath)
@@ -811,10 +815,11 @@ namespace FootballFull.Services
 
         private Trainer? FindNewTrainer(Club club, int matchDay, int strength, Guid firedTrainerId, bool isFired = true)
         {
+            var firedTrainer = _trainers.First(_ => _.Id == firedTrainerId);
             var message = new NewsMessage { ClubId = club.Id, CountryId = club.CountryId, MatchDay = matchDay, Year = _year, CompetitionId = _clubLeagueCompetitions.First(_ => _.ClubId == club.Id).CompetitionId };
             if (isFired)
-                message.Message = $"{club.Name} fired its trainer, {firedTrainerId}.";
-            else message.Message = $"{club.Name} lost its trainer, {firedTrainerId}.";
+                message.Message = $"{club.Name} fired its trainer, {firedTrainer.Name} {firedTrainer.LastName}.";
+            else message.Message = $"{club.Name} lost its trainer, {firedTrainer.Name} {firedTrainer.LastName}.";
 
             var trainer = FindTrainerAtOtherClub(strength);
 
@@ -825,20 +830,20 @@ namespace FootballFull.Services
                     .OrderByDescending(_ => _.LastTeamStrength)
                     .FirstOrDefault();
                 if (trainer != null)
-                    message.Message += $"They found a new unemployed trainer, {trainer.Id}";
+                    message.Message += $"They found a new unemployed trainer, {trainer.Name} {trainer.LastName}";
             }
 
             if (trainer == null)
             {
                 trainer = NewTrainer(club.Id, matchDay);
-                message.Message += $"They found a new trainer, {trainer.Id}";
+                message.Message += $"They found a new trainer, {trainer.Name} {trainer.LastName}";
             }
             else
             {
                 if (trainer.ClubId != Guid.Empty)
                 {
                     var oldClubName = _clubs.First(_ => _.Id == trainer.ClubId).Name;
-                    message.Message += $"They took over trainer {trainer.Id} from {oldClubName}";
+                    message.Message += $"They took over trainer {trainer.Name} {trainer.LastName} from {oldClubName}";
                 }
                 AssignTrainer(club.Id, trainer, matchDay);
 
@@ -870,10 +875,6 @@ namespace FootballFull.Services
         public void UpdateWeekStats(Guid userClubId, int matchDay)
         {
             ClubsFireTrainer(userClubId, matchDay);
-            for (int i = 0; i < _clubs.Count; i++)
-            {
-                _clubs[i].HasTrainerSinceWeek++;
-            }
         }
     }
 }
