@@ -164,6 +164,7 @@ namespace FootballFull.Services
                 Console.WriteLine("2. Andere lopende competities bekijken");
                 Console.WriteLine("3. Club bekijken");
                 Console.WriteLine("4. Trainers bekijken");
+                Console.WriteLine("5. Internationale ranking bekijken");
                 Console.WriteLine("0. Stoppen");
                 Console.Write("Maak een keuze: ");
 
@@ -184,6 +185,9 @@ namespace FootballFull.Services
                         break;
                     case ConsoleKey.NumPad4:
                         Console.WriteLine("Not implemented yet");
+                        break;
+                    case ConsoleKey.NumPad5:
+                        DisplayInternationalRankingOverall();
                         break;
 
                     case ConsoleKey.NumPad0:
@@ -545,6 +549,133 @@ namespace FootballFull.Services
             }
 
             Console.WriteLine();
+        }
+
+        private void DisplayInternationalRankingOverall()
+        {
+            var fromYear = _year - 5;
+
+            var rankingPerCountry = _seasonService.ClubInternationalRankings
+                .GroupBy(r => r.CountryId)
+                .Select(g =>
+                {
+                    var country = g.First().Country;
+                    var totalPoints = g.Sum(r => r.TotalPoints(_year));
+                    var clubCount = g.Count(); // alle clubs uit dat land in de ranking
+                    var avgPoints = clubCount == 0 ? 0 : (double)totalPoints / clubCount;
+
+                    return new
+                    {
+                        Country = country,
+                        TotalPoints = totalPoints,
+                        ClubCount = clubCount,
+                        AveragePoints = avgPoints,
+                        Clubs = g.OrderByDescending(r => r.TotalPoints(_year)).ToList()
+                    };
+                })
+                .OrderByDescending(x => x.AveragePoints)
+                .ToList();
+
+            Console.Clear();
+            Console.WriteLine("=== International Ranking Per Country (Last 5 Seasons) ===");
+            Console.WriteLine();
+
+            int position = 1;
+
+            foreach (var countryRank in rankingPerCountry)
+            {
+                Console.WriteLine(
+                    $"{position}. {countryRank.Country.Name}  " +
+                    $"- Avg: {countryRank.AveragePoints:F2} pts " +
+                    $"(Total: {countryRank.TotalPoints}, Clubs: {countryRank.ClubCount})"
+                );
+
+                foreach (var clubRank in countryRank.Clubs)
+                {
+                    Console.WriteLine($"    - {clubRank.Club.Name}: {clubRank.TotalPoints(_year)} pts");
+                }
+
+                Console.WriteLine();
+                position++;
+            }
+
+            Console.ReadKey();
+
+        }
+        private void DisplayInternationalRankingPerYear()
+        {
+            for (int year = _year; year > _year - 5; year--)
+            {
+                var yearlyRankingPerCountry = _seasonService.ClubInternationalRankings
+                    .GroupBy(r => r.CountryId)
+                    .Select(g =>
+                    {
+                        var country = g.First().Country;
+
+                        var clubsWithPoints = g
+                            .Select(r =>
+                            {
+                                r.PointsPerYear.TryGetValue(year, out var pts);
+                                return new
+                                {
+                                    Ranking = r,
+                                    Points = pts
+                                };
+                            })
+                            .Where(x => x.Points > 0)
+                            .OrderByDescending(x => x.Points)
+                            .ToList();
+
+                        if (!clubsWithPoints.Any())
+                        {
+                            return null; // geen clubs met punten dat jaar
+                        }
+
+                        var totalPoints = clubsWithPoints.Sum(x => x.Points);
+                        var clubCount = clubsWithPoints.Count;
+                        var avgPoints = (double)totalPoints / clubCount;
+
+                        return new
+                        {
+                            Country = country,
+                            TotalPoints = totalPoints,
+                            ClubCount = clubCount,
+                            AveragePoints = avgPoints,
+                            Clubs = clubsWithPoints
+                        };
+                    })
+                    .Where(x => x != null)
+                    .OrderByDescending(x => x.AveragePoints)
+                    .ToList();
+
+                if (!yearlyRankingPerCountry.Any())
+                    continue;
+
+                Console.WriteLine($"=== International Ranking Per Country - Season {year} ===");
+                Console.WriteLine();
+
+                int pos = 1;
+                foreach (var countryRank in yearlyRankingPerCountry)
+                {
+                    Console.WriteLine(
+                        $"{pos}. {countryRank.Country.Name}  " +
+                        $"- Avg: {countryRank.AveragePoints:F2} pts " +
+                        $"(Total: {countryRank.TotalPoints}, Clubs: {countryRank.ClubCount})"
+                    );
+
+                    foreach (var club in countryRank.Clubs)
+                    {
+                        Console.WriteLine($"    - {club.Ranking.Club.Name}: {club.Points} pts");
+                    }
+
+                    Console.WriteLine();
+                    pos++;
+                }
+
+                Console.WriteLine("----------------------------------------------------");
+                Console.WriteLine();
+            }
+
         }
 
         private void DisplayNextFixture(Competition competitionToShow, int matchDay, bool waitForKey = true)

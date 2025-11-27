@@ -24,6 +24,7 @@ namespace FootballFull.Services
 
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
         public IList<NewsMessage> NewsMessages => _newsMessages;
+        public IList<ClubInternationalRanking> ClubInternationalRankings => _clubInternationalRankings;
 
         public int Year { get => _year; set => _year = value; }
 
@@ -57,7 +58,8 @@ namespace FootballFull.Services
         public void InitializeNewSeason(int year)
         {
             _year = year;
-            RecalculateStrengths(Configuration.MinStrength, Configuration.MaxStrength);
+            RecalculateCompetitionStrenghts(Configuration.MinStrength, Configuration.MaxStrength);
+            RecalculateClubStrengths(Configuration.MinStrength, Configuration.MaxStrength);
             PromotionsAndRelegations();
             _clubLeagueCompetitions = _clubsPerCompetition.Select(club => new ClubLeagueCompetition
             {
@@ -71,7 +73,38 @@ namespace FootballFull.Services
             ResetClubRuntimeState();
         }
 
-        private void RecalculateStrengths(int minStrength = 1, int maxStrength = 9)
+        private void RecalculateCompetitionStrenghts(int minStrength, int maxStrength)
+        {
+            var initial = Configuration.MaxStrength - Configuration.MinStrength;
+            var countryRankings = _clubInternationalRankings
+.GroupBy(c => c.CountryId)
+.Select(g => new
+{
+    CountryId = g.Key,
+    PointsPerClub = g.Average(c => c.TotalPoints(_year)) // = totaal / aantal clubs
+})
+.OrderByDescending(x => x.PointsPerClub)
+.ToList();
+
+            var competitions = _competitionRepository.Load().Where(_ => _.Type == Competition.CompetitionType.League);
+            foreach (var country in countryRankings)
+            {
+                var current = initial;
+                var competitionsCountry = competitions.Where(_ => _.CountryId == country.CountryId).OrderBy(_ => _.Tier).ToList();
+                var step = current / (competitionsCountry.Count == 0 ? 1 : competitionsCountry.Count);
+
+                foreach (var competition in competitionsCountry)
+                {
+                    competition.Strength = current;
+                    _competitionRepository.Update(competition);
+                    current -= step;
+
+                }
+                initial--;
+            }
+        }
+
+        private void RecalculateClubStrengths(int minStrength = 1, int maxStrength = 9)
         {
             if (_clubLeagueCompetitions == null || !_clubLeagueCompetitions.Any())
                 return;
@@ -723,7 +756,9 @@ namespace FootballFull.Services
                     _clubInternationalRankings.Add(new ClubInternationalRanking
                     {
                         ClubId = leagueWinner.ClubId,
-                        CountryId = competition.CountryId
+                        Club = _clubs.First(_ => _.Id == leagueWinner.ClubId),
+                        CountryId = competition.CountryId,
+                        Country = _countries.First(_ => _.Id == competition.CountryId)
                     });
             }
 
@@ -750,7 +785,9 @@ namespace FootballFull.Services
                     _clubInternationalRankings.Add(new ClubInternationalRanking
                     {
                         ClubId = extra.ClubId,
-                        CountryId = country
+                        Club = _clubs.First(_ => _.Id == extra.ClubId),
+                        CountryId = country,
+                        Country = _countries.First(_ => _.Id == country)
                     });
 
                 counterCountry++;
