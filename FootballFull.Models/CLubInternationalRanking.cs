@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FootballFull.Models
 {
-    public class CLubInternationalRanking
+    public class ClubInternationalRanking
     {
         public Guid ClubId { get; set; }
         public Club Club { get; set; }
@@ -14,7 +14,7 @@ namespace FootballFull.Models
         public Country Country { get; set; }
 
         public IDictionary<int, int> PointsPerYear { get => _pointsPerYear; }
-        private IDictionary<int, int> _pointsPerYear;
+        private IDictionary<int, int> _pointsPerYear = new Dictionary<int, int>();
         public int TotalPoints(int year)
         {
             var totalPoints = 0;

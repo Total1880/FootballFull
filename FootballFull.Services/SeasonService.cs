@@ -16,6 +16,8 @@ namespace FootballFull.Services
         private IList<Club> _clubs;
         private IList<Trainer> _trainers;
         private IList<NewsMessage> _newsMessages;
+        private IList<ClubInternationalRanking> _clubInternationalRankings;
+        private IList<Competition> _competitions;
         private int _year;
 
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
@@ -35,6 +37,8 @@ namespace FootballFull.Services
             _trainerService = trainerService;
 
             _newsMessages = new List<NewsMessage>();
+            _clubInternationalRankings = new List<ClubInternationalRanking>();
+            _competitions = _competitionRepository.Load();
         }
         public void Initialize(IList<ClubPerCompetition> clubsPerCompetition)
         {
@@ -232,6 +236,8 @@ namespace FootballFull.Services
 
                 if (!isSuddenDeath)
                     ApplyResultToTable(fixture);
+                if(_competitions.Where(_ => _.Type == Competition.CompetitionType.International && _.Id == fixture.CompetitionId).Count() > 0)
+                    ApplyResultToInternationalRanking(fixture);
 
                 UpdateClubMomentumAndMorale(fixture.HomeTeamId, fixture.HomeScore, fixture.AwayScore);
                 UpdateClubMomentumAndMorale(fixture.AwayTeamId, fixture.AwayScore, fixture.HomeScore);
@@ -240,6 +246,24 @@ namespace FootballFull.Services
                 _clubs.First(_ => _.Id == fixture.AwayTeamId).HasTrainerSinceWeek++;
             }
         }
+
+        private void ApplyResultToInternationalRanking(Fixture fixture)
+        {
+            if (fixture.HomeScore > fixture.AwayScore)
+            {
+                _clubInternationalRankings.First(_ => _.ClubId == fixture.HomeTeamId).UpdatePoints(_year, 2);
+            }
+            else if (fixture.HomeScore < fixture.AwayScore)
+            {
+                _clubInternationalRankings.First(_ => _.ClubId == fixture.AwayTeamId).UpdatePoints(_year, 2);
+            }
+            else
+            {
+                _clubInternationalRankings.First(_ => _.ClubId == fixture.HomeTeamId).UpdatePoints(_year, 1);
+                _clubInternationalRankings.First(_ => _.ClubId == fixture.AwayTeamId).UpdatePoints(_year, 1);
+            }
+        }
+
         private void SimulateFixtureAutomatically(Fixture fixture, bool isSuddenDeath)
         {
             // Bye-afhandeling
@@ -672,6 +696,13 @@ namespace FootballFull.Services
                     ClubId = leagueWinner.ClubId,
                     CompetitionId = internationalCompetition.Id
                 });
+
+                if (!_clubInternationalRankings.Any(_ => _.ClubId == leagueWinner.ClubId))
+                    _clubInternationalRankings.Add(new ClubInternationalRanking
+                    {
+                        ClubId = leagueWinner.ClubId,
+                        CountryId = competition.CountryId
+                    });
             }
 
             // Cup aanmaken voor de league-winnaars
