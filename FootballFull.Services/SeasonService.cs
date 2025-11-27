@@ -11,6 +11,7 @@ namespace FootballFull.Services
         private readonly ITrainerService _trainerService;
         private IClubService _clubService;
         private IFixtureService _fixtureService;
+        private ICountryService _countryService;
         private IList<ClubLeagueCompetition> _clubLeagueCompetitions;
         private IList<ClubPerCompetition> _clubsPerCompetition;
         private IList<Club> _clubs;
@@ -18,6 +19,7 @@ namespace FootballFull.Services
         private IList<NewsMessage> _newsMessages;
         private IList<ClubInternationalRanking> _clubInternationalRankings;
         private IList<Competition> _competitions;
+        private IList<Country> _countries;
         private int _year;
 
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
@@ -29,16 +31,19 @@ namespace FootballFull.Services
             IRepository<Competition> competitionRepository,
             IClubService clubService,
             IFixtureService fixtureService,
-            ITrainerService trainerService)
+            ITrainerService trainerService,
+            ICountryService countryService)
         {
             _competitionRepository = competitionRepository;
             _clubService = clubService;
             _fixtureService = fixtureService;
             _trainerService = trainerService;
+            _countryService = countryService;
 
             _newsMessages = new List<NewsMessage>();
             _clubInternationalRankings = new List<ClubInternationalRanking>();
             _competitions = _competitionRepository.Load();
+            _countries = _countryService.GetCountries();
         }
         public void Initialize(IList<ClubPerCompetition> clubsPerCompetition)
         {
@@ -236,7 +241,7 @@ namespace FootballFull.Services
 
                 if (!isSuddenDeath)
                     ApplyResultToTable(fixture);
-                if(_competitions.Where(_ => _.Type == Competition.CompetitionType.International && _.Id == fixture.CompetitionId).Count() > 0)
+                if (_competitions.Where(_ => _.Type == Competition.CompetitionType.International && _.Id == fixture.CompetitionId).Count() > 0)
                     ApplyResultToInternationalRanking(fixture);
 
                 UpdateClubMomentumAndMorale(fixture.HomeTeamId, fixture.HomeScore, fixture.AwayScore);
@@ -673,6 +678,12 @@ namespace FootballFull.Services
             }
         }
 
+        private bool IsCupWorthy(int count)
+        {
+            // Count moet > 1 zijn en een macht van 2
+            return count > 1 && (count & (count - 1)) == 0;
+        }
+
         public IList<Fixture> InitializeInternationalGames()
         {
             var competitions = _competitionRepository.Load()
@@ -681,7 +692,18 @@ namespace FootballFull.Services
                 .First(_ => _.Type == Competition.CompetitionType.International);
 
             var leagueWinners = new List<ClubPerCompetition>();
-
+            var countryRankings = _clubInternationalRankings
+    .GroupBy(c => c.CountryId)
+    .Select(g => new
+    {
+        CountryId = g.Key,
+        PointsPerClub = g.Average(c => c.TotalPoints(_year)) // = totaal / aantal clubs
+    })
+    .OrderByDescending(x => x.PointsPerClub)
+    .ToList();
+            var orderCountries = countryRankings.Select(_ => _.CountryId).ToList();
+            if (orderCountries.Count == 0)
+                orderCountries = _countries.Select(_ => _.Id).ToList();
             foreach (var competition in competitions)
             {
                 var leagueWinner = _clubLeagueCompetitions
@@ -703,6 +725,40 @@ namespace FootballFull.Services
                         ClubId = leagueWinner.ClubId,
                         CountryId = competition.CountryId
                     });
+            }
+
+            var counterCountry = 0;
+            var counterPosition = 1;
+            while (!IsCupWorthy(leagueWinners.Count))
+            {
+                var country = orderCountries[counterCountry];
+                var competitionId = competitions.First(_ => _.CountryId == country);
+                var extra = _clubLeagueCompetitions
+    .Where(_ => _.CompetitionId == competitionId.Id)
+    .OrderByDescending(_ => _.Points)
+    .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst)
+    .ThenByDescending(_ => _.GoalsFor)
+    .Skip(counterPosition)
+    .First();
+                leagueWinners.Add(new ClubPerCompetition
+                {
+                    ClubId = extra.ClubId,
+                    CompetitionId = internationalCompetition.Id
+                });
+
+                if (!_clubInternationalRankings.Any(_ => _.ClubId == extra.ClubId))
+                    _clubInternationalRankings.Add(new ClubInternationalRanking
+                    {
+                        ClubId = extra.ClubId,
+                        CountryId = country
+                    });
+
+                counterCountry++;
+                if (counterCountry > orderCountries.Count())
+                {
+                    counterCountry = 0;
+                    counterPosition++;
+                }
             }
 
             // Cup aanmaken voor de league-winnaars
