@@ -283,115 +283,115 @@
   },
   {
     "Name": "Manchester City",
-    "Strength": 19,
+    "Strength": 20,
     "Id": "1b91bbcf-4593-415c-a348-ad1104c44175",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Chelsea",
-    "Strength": 18,
+    "Strength": 19,
     "Id": "552f21be-bb48-45a5-b21a-b5f0fbf3f3a1",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Sunderland",
-    "Strength": 17,
+    "Strength": 19,
     "Id": "bfe4c1dc-6fa1-4095-bc9e-77e92930b359",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Tottenham",
-    "Strength": 16,
+    "Strength": 18,
     "Id": "01725539-f017-4381-8bf4-8c77b6486311",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Aston Villa",
-    "Strength": 15,
+    "Strength": 18,
     "Id": "a228c034-e0b3-4f44-8354-902f4da62d6d",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Manchester United",
-    "Strength": 14,
+    "Strength": 17,
     "Id": "c7068266-dc48-49f5-b5b6-dae5d042d27a",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Liverpool",
-    "Strength": 13,
+    "Strength": 17,
     "Id": "14619881-d58e-44f1-b247-a691ee549217",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Bournemouth",
-    "Strength": 12,
+    "Strength": 16,
     "Id": "ff7ffb0b-4c08-4ad3-94af-f905d0abf72c",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Crystal Palace",
-    "Strength": 11,
+    "Strength": 16,
     "Id": "8ba561b2-36ce-4098-8d24-1ab49c703aa2",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Brighton \u0026 Hove Albion",
-    "Strength": 10,
+    "Strength": 15,
     "Id": "da1a8c7c-20ca-4ff9-bf44-c896965139a8",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Brentford",
-    "Strength": 9,
+    "Strength": 15,
     "Id": "2b2775bd-9008-4e2e-81a8-839a3551067f",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Everton",
-    "Strength": 8,
+    "Strength": 14,
     "Id": "aed360be-ff51-4525-a50e-22b4943bd5d5",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Newcastle United",
-    "Strength": 7,
+    "Strength": 14,
     "Id": "40f8b424-1c0d-45c5-918a-20403f131e7c",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Fulham",
-    "Strength": 6,
+    "Strength": 13,
     "Id": "3b7188f1-21b9-4a69-90c7-7d7dd88748af",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Leeds United",
-    "Strength": 5,
+    "Strength": 13,
     "Id": "c5e23337-4855-4f78-ac7d-39ac9f0a04fe",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Burnley",
-    "Strength": 4,
+    "Strength": 12,
     "Id": "c01d461e-0b19-4466-9361-6568cec94f67",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "West Ham United",
-    "Strength": 3,
+    "Strength": 12,
     "Id": "5f20608f-071e-4b5b-9b66-bd88b5b7708e",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Nottingham Forest",
-    "Strength": 2,
+    "Strength": 11,
     "Id": "8f0bdae9-c243-4116-9a8a-e628ec057b40",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
   {
     "Name": "Wolverhampton Wanderers",
-    "Strength": 1,
+    "Strength": 11,
     "Id": "4e3826f2-b7c1-430b-bfb7-23a1d4be7c4a",
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
   },
@@ -1042,5 +1042,269 @@
     "Strength": 3,
     "Id": "a5a32440-cf28-44c7-9808-ef882b65c533",
     "CountryId": "5198d483-97be-409e-adbe-b86d3591f972"
+  },
+  {
+    "Name": "Coventry",
+    "Strength": 10,
+    "Id": "ad6bc0c4-6c8b-4933-a8e7-5335709294ea",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Stoke City",
+    "Strength": 10,
+    "Id": "31d68b14-1522-4194-850d-009d48b31dc0",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Middlesbrough",
+    "Strength": 9,
+    "Id": "5761725e-319b-4697-8d59-56c57b455ee4",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "MillWall",
+    "Strength": 9,
+    "Id": "079f90f3-5063-4705-b875-c2ac8224a1c2",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Ipswich Town",
+    "Strength": 8,
+    "Id": "a0524227-4760-4c81-80d9-854b00c6854e",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Preston North End",
+    "Strength": 8,
+    "Id": "1ce1bb26-5ed9-4d84-bfc7-610e53a4f220",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Bristol City",
+    "Strength": 7,
+    "Id": "4c1336c7-4574-4f98-aea5-5daec042e246",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Derby County",
+    "Strength": 7,
+    "Id": "3e6db112-d883-406e-9484-b7e570c4ba85",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Birmingham City",
+    "Strength": 6,
+    "Id": "65b10b87-1876-4775-81a0-c49d7e887291",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Wrexham",
+    "Strength": 6,
+    "Id": "08f0ecea-4364-4d39-91e8-8f3ad793c003",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Hull City",
+    "Strength": 5,
+    "Id": "6af4193b-6d24-48ba-8548-51ffd99c96bf",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "QPR",
+    "Strength": 5,
+    "Id": "32bcd69f-f91b-40fd-bbc5-7b06eb2812c5",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Southampton",
+    "Strength": 4,
+    "Id": "c0296e5e-3bfa-43e8-877f-71ab6cd0e85a",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Watford",
+    "Strength": 4,
+    "Id": "5b2c9285-7810-412f-994b-0e44452ff062",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Leicester City",
+    "Strength": 3,
+    "Id": "e034c664-60a0-4999-8709-272dcfc22336",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Charlton",
+    "Strength": 3,
+    "Id": "5490446c-d55d-4148-8abb-bbde76bf5703",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "West Brom",
+    "Strength": 2,
+    "Id": "ac0ca570-3461-4ce6-8f06-498e936690e3",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Blackburn Rovers",
+    "Strength": 2,
+    "Id": "fb230d0a-f794-41dd-92fd-3b86d7d67573",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Swansea City",
+    "Strength": 1,
+    "Id": "6c260156-bd18-44e7-9886-2d1e2c78d9a5",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Portsmouth",
+    "Strength": 1,
+    "Id": "816fc509-e5a7-4eb2-8778-a59b3d5e8e2e",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Sheffield United",
+    "Strength": 1,
+    "Id": "043d4cce-7f38-49d6-8a36-69b2ebe39190",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Oxford United",
+    "Strength": 1,
+    "Id": "a7965142-a03e-43d8-84e8-a0c055cc8ca8",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Norwich City",
+    "Strength": 1,
+    "Id": "3a1ec5b3-00b6-4b58-bee9-1052a31f8944",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "Sheffield Wednesday",
+    "Strength": 1,
+    "Id": "009fc0a4-47b2-4e32-b667-18e37826be08",
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+  },
+  {
+    "Name": "AS Roma",
+    "Strength": 20,
+    "Id": "8fa3ee37-6815-45d3-a356-55b220959f87",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "AC Milan",
+    "Strength": 19,
+    "Id": "bfa8fe94-2b40-473d-b850-38d588683440",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Napoli",
+    "Strength": 18,
+    "Id": "6decadab-9f52-48c2-9591-198d35cef868",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Inter",
+    "Strength": 17,
+    "Id": "65a597dd-b8a7-443c-b4db-8d607ccac2fd",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Bologna",
+    "Strength": 16,
+    "Id": "88694b9c-2554-4323-98b9-0c6b2d69b1c0",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Como",
+    "Strength": 15,
+    "Id": "9e338ddc-eb4d-4749-98b6-453b9c5c3a2b",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Juventus",
+    "Strength": 14,
+    "Id": "578a4c6c-31d3-4137-b7d5-4fdb47c9129e",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Lazio",
+    "Strength": 13,
+    "Id": "039a3b83-6932-4e74-abcb-d3d159f4a817",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Sassuolo",
+    "Strength": 12,
+    "Id": "6d3a8ddf-fe5c-42dd-8b0c-14ee5c074d0f",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Udinese",
+    "Strength": 11,
+    "Id": "f2b1e3d2-2fe7-46b5-8d3e-61dfc5b5c389",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Cremonese",
+    "Strength": 10,
+    "Id": "a8b0d2e3-24f3-42ed-b145-db773dcc6976",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Torino",
+    "Strength": 9,
+    "Id": "3eea2ef1-6b69-4cdd-987d-b15cf5046bb9",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Atalanta",
+    "Strength": 8,
+    "Id": "70d34a28-9016-4f50-b592-51218a958005",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Cagliari",
+    "Strength": 7,
+    "Id": "8f028b8d-a568-43bf-a496-90ee641536e1",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Parma",
+    "Strength": 6,
+    "Id": "138dc717-c861-4afd-a07c-8dccfdda8dc8",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Pisa",
+    "Strength": 5,
+    "Id": "e01b9baa-e845-4a48-a3dc-51ce4b4c85cc",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Lecce",
+    "Strength": 4,
+    "Id": "5ba7f352-872d-4e95-b02d-899dc5583dff",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Genoa",
+    "Strength": 3,
+    "Id": "baf92608-7d20-4bba-9b4f-7b5ffe308135",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Fiorentina",
+    "Strength": 2,
+    "Id": "cbaf8451-2f2f-456e-a3d9-f76087f92f5d",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+  },
+  {
+    "Name": "Hellas Verona",
+    "Strength": 1,
+    "Id": "27aed362-fbc3-42af-9b1d-e124eda2032a",
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
   }
 ]

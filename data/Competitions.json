@@ -115,5 +115,23 @@
     "Tier": 1,
     "Strength": 0,
     "Type": 1
+  },
+  {
+    "Id": "84a0879b-04c5-4f65-964f-0aa219a27053",
+    "Name": "The Championship",
+    "Country": null,
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
+    "Tier": 2,
+    "Strength": 10,
+    "Type": 0
+  },
+  {
+    "Id": "b9979e4c-9076-4a02-8c0a-66e4ed426bb5",
+    "Name": "Serie A",
+    "Country": null,
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a",
+    "Tier": 1,
+    "Strength": 19,
+    "Type": 0
   }
 ]

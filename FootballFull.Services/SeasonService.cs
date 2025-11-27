@@ -811,8 +811,12 @@ namespace FootballFull.Services
 
             foreach (var club in clubs)
             {
-                var firedTrainer = FireTrainer(club.Id, club.Strength);
-                var newTrainer = FindNewTrainer(club, matchDay, club.Strength, firedTrainer, true);
+                var maxValue = 20 - club.HasTrainerSinceWeek;
+                if (Random.Shared.Next(0, maxValue > 0 ? maxValue : 0) == 0)
+                {
+                    var firedTrainer = FireTrainer(club.Id, club.Strength);
+                    var newTrainer = FindNewTrainer(club, matchDay, club.Strength, firedTrainer, true);
+                }
             }
         }
 

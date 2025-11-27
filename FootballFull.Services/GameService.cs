@@ -121,9 +121,10 @@ namespace FootballFull.Services
                 Console.WriteLine("Season complete! Press any key to restart a new season.");
                 Console.ReadKey();
                 Console.Clear();
+                _year++;
 
                 _internationalFixtures = _seasonService.InitializeInternationalGames();
-                _seasonService.InitializeNewSeason(_year++);
+                _seasonService.InitializeNewSeason(_year);
                 _fixtures = _fixtureService.Generate(_clubsPerCompetition);
                 _cupFixtures = _seasonService.InitializeNationalCups();
 
@@ -156,6 +157,7 @@ namespace FootballFull.Services
         {
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine();
                 Console.WriteLine("=== Menu ===");
                 Console.WriteLine("1. Volgende speeldag");
