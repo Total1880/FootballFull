@@ -18,7 +18,7 @@ var saveName = Console.ReadLine();
 if (string.IsNullOrWhiteSpace(saveName))
     saveName = "Default";
 
-Configuration.Initialize(saveName: saveName);
+var isNew = Configuration.Initialize(saveName: saveName);
 
 Console.WriteLine($"DataRoot: {Configuration.DataRoot}");
 
@@ -55,4 +55,4 @@ var provider = services.BuildServiceProvider();
 
 // Alleen nog de game starten
 var gameService = provider.GetRequiredService<IGameService>();
-gameService.Run();
+gameService.Run(isNew);

@@ -49,16 +49,18 @@ namespace FootballFull.Services
             _news = new List<NewsMessage>();
         }
 
-        public void Run()
+        public void Run(bool isNew)
         {
             // Data laden
             _clubsPerCompetition = _clubPerCompetitionService.GetAllClubPerCompetitions();
             _competitions = _competitionService.GetCompetitions();
 
             // Initialize data
-            //ResetStrength();
-            //CreateTrainers();
-
+            if (isNew)
+            {
+                ResetStrength();
+                CreateTrainers();
+            }
             // User club kiezen
             _userClubId = _seasonService.ChoosePlayerClub();
 

@@ -32,7 +32,7 @@
     "Country": null,
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
     "Tier": 1,
-    "Strength": 18,
+    "Strength": 19,
     "Type": 0
   },
   {
@@ -50,7 +50,7 @@
     "Country": null,
     "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
     "Tier": 1,
-    "Strength": 17,
+    "Strength": 19,
     "Type": 0
   },
   {
@@ -59,7 +59,7 @@
     "Country": null,
     "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc",
     "Tier": 1,
-    "Strength": 16,
+    "Strength": 19,
     "Type": 0
   },
   {
@@ -68,7 +68,7 @@
     "Country": null,
     "CountryId": "5198d483-97be-409e-adbe-b86d3591f972",
     "Tier": 1,
-    "Strength": 15,
+    "Strength": 19,
     "Type": 0
   },
   {
@@ -122,7 +122,7 @@
     "Country": null,
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
     "Tier": 2,
-    "Strength": 9,
+    "Strength": 10,
     "Type": 0
   },
   {
@@ -131,7 +131,7 @@
     "Country": null,
     "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a",
     "Tier": 1,
-    "Strength": 14,
+    "Strength": 19,
     "Type": 0
   },
   {
@@ -140,7 +140,7 @@
     "Country": null,
     "CountryId": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb",
     "Tier": 1,
-    "Strength": 0,
+    "Strength": 19,
     "Type": 0
   }
 ]

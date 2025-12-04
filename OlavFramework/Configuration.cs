@@ -12,7 +12,7 @@
         private static readonly string BaseDataPath =
             @"C:\Users\olavh\source\repos\FootballFull\data";
 
-        public static void Initialize(string? saveName = null)
+        public static bool Initialize(string? saveName = null)
         {
             // Bepaal save-path
             if (!string.IsNullOrEmpty(saveName))
@@ -24,6 +24,7 @@
                 {
                     Directory.CreateDirectory(DataRoot);
                     CopyBaseDataToSave(DataRoot);
+                    return true;
                 }
             }
             else
@@ -31,6 +32,7 @@
                 // Geen save → werk rechtstreeks op de basisdata
                 DataRoot = BaseDataPath;
             }
+            return false;
         }
 
         private static void CopyBaseDataToSave(string destRoot)
