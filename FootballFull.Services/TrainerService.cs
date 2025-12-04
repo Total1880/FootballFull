@@ -56,7 +56,7 @@ namespace FootballFull.Services
 
         public void SaveAll(IList<Trainer> trainers)
         {
-            _trainerRepository.Create(trainers);
+            _trainerRepository.Create(trainers, true);
         }
     }
 }

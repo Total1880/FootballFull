@@ -296,10 +296,12 @@ namespace FootballFull.Services
             if (fixture.HomeScore > fixture.AwayScore)
             {
                 _clubInternationalRankings.First(_ => _.ClubId == fixture.HomeTeamId).UpdatePoints(_year, 2);
+                _clubInternationalRankings.First(_ => _.ClubId == fixture.AwayTeamId).UpdatePoints(_year, 0);
             }
             else if (fixture.HomeScore < fixture.AwayScore)
             {
                 _clubInternationalRankings.First(_ => _.ClubId == fixture.AwayTeamId).UpdatePoints(_year, 2);
+                _clubInternationalRankings.First(_ => _.ClubId == fixture.HomeTeamId).UpdatePoints(_year, 0);
             }
             else
             {
@@ -725,24 +727,26 @@ namespace FootballFull.Services
 
         public IList<Fixture> InitializeInternationalGames()
         {
-            var competitions = _competitionRepository.Load()
-                .Where(_ => _.Tier == 1 && _.Type == Competition.CompetitionType.League);
-            var internationalCompetition = _competitionRepository.Load()
+            // Competities inladen (1x)
+            var allCompetitions = _competitionRepository.Load().ToList();
+
+            var competitions = allCompetitions
+                .Where(_ => _.Tier == 1 && _.Type == Competition.CompetitionType.League)
+                .ToList();
+
+            var internationalCompetition = allCompetitions
                 .First(_ => _.Type == Competition.CompetitionType.International);
 
             var leagueWinners = new List<ClubPerCompetition>();
-            var countryRankings = _clubInternationalRankings
-    .GroupBy(c => c.CountryId)
-    .Select(g => new
-    {
-        CountryId = g.Key,
-        PointsPerClub = g.Average(c => c.TotalPoints(_year)) // = totaal / aantal clubs
-    })
-    .OrderByDescending(x => x.PointsPerClub)
-    .ToList();
-            var orderCountries = countryRankings.Select(_ => _.CountryId).ToList();
-            if (orderCountries.Count == 0)
-                orderCountries = _countries.Select(_ => _.Id).ToList();
+
+            // 🔥 Nieuwe country-ranking op basis van coëfficiënten
+            var countryRankings = CalculateCountryRankings(_year);
+
+            var orderCountries = countryRankings.Any()
+                ? countryRankings.Select(_ => _.CountryId).ToList()
+                : _countries.Select(_ => _.Id).ToList(); // fallback als er nog geen ranking is
+
+            // 1. Eerst alle kampioenen toevoegen
             foreach (var competition in competitions)
             {
                 var leagueWinner = _clubLeagueCompetitions
@@ -759,6 +763,7 @@ namespace FootballFull.Services
                 });
 
                 if (!_clubInternationalRankings.Any(_ => _.ClubId == leagueWinner.ClubId))
+                {
                     _clubInternationalRankings.Add(new ClubInternationalRanking
                     {
                         ClubId = leagueWinner.ClubId,
@@ -766,21 +771,27 @@ namespace FootballFull.Services
                         CountryId = competition.CountryId,
                         Country = _countries.First(_ => _.Id == competition.CountryId)
                     });
+                }
             }
 
+            // 2. Extra clubs toevoegen tot het aantal "cup worthy" is
             var counterCountry = 0;
             var counterPosition = 1;
+
             while (!IsCupWorthy(leagueWinners.Count))
             {
-                var country = orderCountries[counterCountry];
-                var competitionId = competitions.First(_ => _.CountryId == country);
+                var countryId = orderCountries[counterCountry];
+
+                var competition = competitions.First(_ => _.CountryId == countryId);
+
                 var extra = _clubLeagueCompetitions
-    .Where(_ => _.CompetitionId == competitionId.Id)
-    .OrderByDescending(_ => _.Points)
-    .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst)
-    .ThenByDescending(_ => _.GoalsFor)
-    .Skip(counterPosition)
-    .First();
+                    .Where(_ => _.CompetitionId == competition.Id)
+                    .OrderByDescending(_ => _.Points)
+                    .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst)
+                    .ThenByDescending(_ => _.GoalsFor)
+                    .Skip(counterPosition)
+                    .First();
+
                 leagueWinners.Add(new ClubPerCompetition
                 {
                     ClubId = extra.ClubId,
@@ -788,27 +799,29 @@ namespace FootballFull.Services
                 });
 
                 if (!_clubInternationalRankings.Any(_ => _.ClubId == extra.ClubId))
+                {
                     _clubInternationalRankings.Add(new ClubInternationalRanking
                     {
                         ClubId = extra.ClubId,
                         Club = _clubs.First(_ => _.Id == extra.ClubId),
-                        CountryId = country,
-                        Country = _countries.First(_ => _.Id == country)
+                        CountryId = countryId,
+                        Country = _countries.First(_ => _.Id == countryId)
                     });
+                }
 
+                // ✅ Fix off-by-one: >= in plaats van >
                 counterCountry++;
-                if (counterCountry > orderCountries.Count())
+                if (counterCountry >= orderCountries.Count)
                 {
                     counterCountry = 0;
                     counterPosition++;
                 }
             }
 
-            // Cup aanmaken voor de league-winnaars
+            // 3. Cup aanmaken voor alle deelnemende clubs
             var fixtures = _fixtureService.GenerateCupFixtures(leagueWinners, internationalCompetition);
 
-            // Belangrijk: zorg dat MatchDay gezet is (bv. gelijk aan RoundNo),
-            // zodat je bestaande PlayMatchDay-logica hergebruikt kan worden.
+            // Zorg dat MatchDay gezet is (bv. gelijk aan RoundNo)
             foreach (var f in fixtures)
             {
                 if (f.MatchDay == 0)
@@ -817,6 +830,51 @@ namespace FootballFull.Services
 
             return fixtures;
         }
+
+        private IList<CountryCoefficientRanking> CalculateCountryRankings(int currentYear)
+        {
+            var years = Enumerable.Range(currentYear - 4, 5); // laatste 5 seizoenen
+
+            var rankings = _clubInternationalRankings
+                .GroupBy(c => c.CountryId)
+                .Select(g =>
+                {
+                    var ranking = new CountryCoefficientRanking
+                    {
+                        CountryId = g.Key,
+                        Country = g.First().Country
+                    };
+
+                    foreach (var y in years)
+                    {
+                        // Ruwe punten van clubs uit dit land in jaar y
+                        var totalPointsThisYear = g.Sum(c =>
+                            c.PointsPerYear.TryGetValue(y, out var pts) ? pts : 0);
+
+                        ranking.RawPointsPerYear[y] = totalPointsThisYear;
+
+                        // Aantal clubs met punten in dat jaar
+                        var clubsThisYear = g.Count(c => c.PointsPerYear.ContainsKey(y));
+                        ranking.ClubsParticipatingPerYear[y] = clubsThisYear;
+
+                        // Coëfficiënt voor dit jaar
+                        var yearlyCoefficient = clubsThisYear == 0
+                            ? 0.0
+                            : (double)totalPointsThisYear / clubsThisYear;
+
+                        ranking.CoefficientPerYear[y] = yearlyCoefficient;
+                    }
+
+                    ranking.FiveYearCoefficient = ranking.CoefficientPerYear.Values.Sum();
+
+                    return ranking;
+                })
+                .OrderByDescending(r => r.FiveYearCoefficient)
+                .ToList();
+
+            return rankings;
+        }
+
 
         public IList<Fixture> InitializeNationalCups()
         {
@@ -911,6 +969,7 @@ namespace FootballFull.Services
             if (club.Morale < 1) club.Morale = 1;
             if (club.Morale > 10) club.Morale = 10;
         }
+
         public Trainer NewTrainer(Guid clubId, int matchDay = 0)
         {
             var existingTrainer = _trainers.FirstOrDefault(_ => _.ClubId == clubId);
@@ -935,6 +994,7 @@ namespace FootballFull.Services
             }
             trainer.ClubId = clubId;
         }
+
         private void ClubsFireTrainer(Guid userClubId, int matchDay)
         {
             var clubs = _clubs.Where(_ => _.Id != userClubId && _.Momentum < 3 && _.Morale < 3 && _.HasTrainerSinceWeek > 5).ToList();

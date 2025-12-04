@@ -60,7 +60,7 @@ namespace FootballFull.Services
 
         public void SaveAll(IList<Club> clubs)
         {
-            _clubRepository.Create(clubs);
+            _clubRepository.Create(clubs, true);
         }
     }
 }
