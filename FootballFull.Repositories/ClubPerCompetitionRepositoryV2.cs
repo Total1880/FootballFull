@@ -38,20 +38,12 @@ namespace FootballFull.Repositories
             }
         }
 
-        public IList<ClubPerCompetition> Create(IList<ClubPerCompetition> itemList)
+        public IList<ClubPerCompetition> Create(IList<ClubPerCompetition> itemList, bool full = false)
         {
             if (itemList == null)
                 throw new ArgumentNullException(nameof(itemList));
 
-            var list = Load();
-
-            foreach (var item in itemList)
-            {
-                if (!list.Any(x => x.ClubId == item.ClubId && x.CompetitionId == item.CompetitionId))
-                    list.Add(item);
-            }
-
-            Save(list);
+            Save(itemList);
             return itemList;
         }
 

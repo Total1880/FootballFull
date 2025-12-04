@@ -57,5 +57,10 @@ namespace FootballFull.Services
                 .Load()
                 .FirstOrDefault(c => c.Id == id);
         }
+
+        public void SaveAll(IList<Competition> competitions)
+        {
+            _competitionRepository.Create(competitions);
+        }
     }
 }

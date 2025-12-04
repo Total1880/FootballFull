@@ -17,5 +17,6 @@ namespace FootballFull.Services.Interfaces
         IList<NewsMessage> NewsMessages { get; }
         int Year { get; set; }
         Trainer UserTrainer(Guid userClubId);
+        void SaveGame();
     }
 }

@@ -13,5 +13,6 @@ namespace FootballFull.Services.Interfaces
         Trainer? GetByClubId(Guid clubId);
         bool CreateTrainers(IList<Trainer> trainers);
         Trainer CreateRandomTrainer(Guid clubId);
+        void SaveAll(IList<Trainer> trainers);
     }
 }

@@ -56,8 +56,8 @@ namespace FootballFull.Services
             _competitions = _competitionService.GetCompetitions();
 
             // Initialize data
-            ResetStrength();
-            CreateTrainers();
+            //ResetStrength();
+            //CreateTrainers();
 
             // User club kiezen
             _userClubId = _seasonService.ChoosePlayerClub();
@@ -127,6 +127,8 @@ namespace FootballFull.Services
                 _seasonService.InitializeNewSeason(_year);
                 _fixtures = _fixtureService.Generate(_clubsPerCompetition);
                 _cupFixtures = _seasonService.InitializeNationalCups();
+
+                _seasonService.SaveGame();
 
             } while (true);
         }

@@ -15,7 +15,7 @@ namespace FootballFull.Repositories
             throw new NotImplementedException();
         }
 
-        public IList<ClubPerCompetition> Create(IList<ClubPerCompetition> itemList)
+        public IList<ClubPerCompetition> Create(IList<ClubPerCompetition> itemList, bool full)
         {
             throw new NotImplementedException();
         }

@@ -10,5 +10,6 @@ namespace FootballFull.Services.Interfaces
         IList<Club> GetClubsForCompetition(Guid competitionId);
         IList<Competition> GetCompetitionsForClub(Guid clubId);
         IList<ClubPerCompetition> GetAllClubPerCompetitions();
+        void SaveAll(IList<ClubPerCompetition> clubPerCompetition);
     }
 }

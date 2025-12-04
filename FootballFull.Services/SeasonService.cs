@@ -12,6 +12,8 @@ namespace FootballFull.Services
         private IClubService _clubService;
         private IFixtureService _fixtureService;
         private ICountryService _countryService;
+        private ICompetitionService _competitionService;
+        private IClubPerCompetitionService _clubPerCompetitionService;
         private IList<ClubLeagueCompetition> _clubLeagueCompetitions;
         private IList<ClubPerCompetition> _clubsPerCompetition;
         private IList<Club> _clubs;
@@ -33,13 +35,17 @@ namespace FootballFull.Services
             IClubService clubService,
             IFixtureService fixtureService,
             ITrainerService trainerService,
-            ICountryService countryService)
+            ICountryService countryService,
+            ICompetitionService competitionService,
+            IClubPerCompetitionService clubPerCompetitionService)
         {
             _competitionRepository = competitionRepository;
             _clubService = clubService;
             _fixtureService = fixtureService;
             _trainerService = trainerService;
             _countryService = countryService;
+            _competitionService = competitionService;
+            _clubPerCompetitionService = clubPerCompetitionService;
 
             _newsMessages = new List<NewsMessage>();
             _clubInternationalRankings = new List<ClubInternationalRanking>();
@@ -1011,6 +1017,14 @@ namespace FootballFull.Services
         public Trainer UserTrainer(Guid userClubId)
         {
             return _trainers.First(_ => _.ClubId == userClubId);
+        }
+
+        public void SaveGame()
+        {
+            _clubService.SaveAll(_clubs);
+            _competitionService.SaveAll(_competitions);
+            _clubPerCompetitionService.SaveAll(_clubsPerCompetition);
+            _trainerService.SaveAll(_trainers);
         }
     }
 }

@@ -35,23 +35,36 @@ namespace FootballFull.Repositories
             Save(list);
         }
 
-        public IList<Country> Create(IList<Country> itemList)
+        public IList<Country> Create(IList<Country> itemList, bool full)
         {
             if (itemList == null)
                 throw new ArgumentNullException(nameof(itemList));
 
-            var list = Load();
-
-            foreach (var item in itemList)
+            if (!full)
             {
-                if (item.Id == Guid.Empty)
-                    item.Id = Guid.NewGuid();
+                var list = Load();
 
-                list.Add(item);
+                foreach (var item in itemList)
+                {
+                    if (item.Id == Guid.Empty)
+                        item.Id = Guid.NewGuid();
+
+                    list.Add(item);
+                }
+
+                Save(list);
+                return itemList;
             }
-
-            Save(list);
-            return itemList;
+            else
+            {
+                foreach (var item in itemList)
+                {
+                    if (item.Id == Guid.Empty)
+                        item.Id = Guid.NewGuid();
+                }
+                Save(itemList);
+                return itemList;
+            }
         }
 
         public void Delete(Guid id)

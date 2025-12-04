@@ -57,5 +57,10 @@ namespace FootballFull.Services
 
             _clubRepository.Update(updatedClub);
         }
+
+        public void SaveAll(IList<Club> clubs)
+        {
+            _clubRepository.Create(clubs);
+        }
     }
 }

@@ -11,6 +11,17 @@ using OlavFramework;
 
 var services = new ServiceCollection();
 
+// 1. Kies savegame / DataRoot
+Console.WriteLine("Welke save wil je laden? (bv. Default, Save1, Save2)");
+var saveName = Console.ReadLine();
+
+if (string.IsNullOrWhiteSpace(saveName))
+    saveName = "Default";
+
+Configuration.Initialize(saveName: saveName);
+
+Console.WriteLine($"DataRoot: {Configuration.DataRoot}");
+
 // Services
 services.AddSingleton<IClubService, ClubService>();
 services.AddSingleton<ISeasonService, SeasonService>();

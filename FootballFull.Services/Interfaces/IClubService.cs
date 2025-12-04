@@ -9,5 +9,6 @@ namespace FootballFull.Services.Interfaces
         void Add(Club club);
         void Update(Club updatedClub);
         void Delete(Guid id);
+        void SaveAll(IList<Club> clubs);
     }
 }

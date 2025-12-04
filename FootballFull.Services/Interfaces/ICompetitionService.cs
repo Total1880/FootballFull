@@ -9,5 +9,6 @@ namespace FootballFull.Services.Interfaces
         void Delete(Guid id);
         IList<Competition> GetCompetitions();
         Competition? GetCompetitionById(Guid id);
+        void SaveAll(IList<Competition> competitions);
     }
 }

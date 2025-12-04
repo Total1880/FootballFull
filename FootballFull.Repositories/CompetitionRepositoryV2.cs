@@ -34,8 +34,20 @@ namespace FootballFull.Repositories
             Save(comps);
         }
 
-        public IList<Competition> Create(IList<Competition> itemList)
+        public IList<Competition> Create(IList<Competition> itemList, bool full)
         {
+            if (full)
+            {
+                foreach (var comp in itemList)
+                {
+                    if (comp.Id == Guid.Empty)
+                        comp.Id = Guid.NewGuid();
+                }
+
+                Save(itemList);
+                return itemList;
+            }
+
             var list = Load();
 
             foreach (var comp in itemList)

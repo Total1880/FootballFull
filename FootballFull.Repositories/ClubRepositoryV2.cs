@@ -38,22 +38,34 @@ namespace FootballFull.Repositories
             Save(clubs);
         }
 
-        public IList<Club> Create(IList<Club> itemList)
+        public IList<Club> Create(IList<Club> itemList, bool full = false)
         {
             if (itemList == null)
                 throw new ArgumentNullException(nameof(itemList));
 
-            var clubs = Load();
-
-            foreach (var club in itemList)
+            if (!full)
             {
-                if (club.Id == Guid.Empty)
-                    club.Id = Guid.NewGuid();
+                var clubs = Load();
 
-                clubs.Add(club);
+                foreach (var club in itemList)
+                {
+                    if (club.Id == Guid.Empty)
+                        club.Id = Guid.NewGuid();
+
+                    clubs.Add(club);
+                }
+
+                Save(clubs);
+            } else
+                            {
+                // Volledig overschrijven
+                foreach (var club in itemList)
+                {
+                    if (club.Id == Guid.Empty)
+                        club.Id = Guid.NewGuid();
+                }
+                Save(itemList);
             }
-
-            Save(clubs);
             return itemList;
         }
 

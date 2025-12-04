@@ -23,7 +23,7 @@ namespace FootballFull.Repositories
             throw new NotImplementedException();
         }
 
-        public IList<Trainer> Create(IList<Trainer> items)
+        public IList<Trainer> Create(IList<Trainer> items, bool full)
         {
             var json = JsonSerializer.Serialize(items, new JsonSerializerOptions
             {

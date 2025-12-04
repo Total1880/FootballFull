@@ -53,5 +53,10 @@ namespace FootballFull.Services
                 LastName = _nameRepository.GetRandomLastName(new Guid())
             };
         }
+
+        public void SaveAll(IList<Trainer> trainers)
+        {
+            _trainerRepository.Create(trainers);
+        }
     }
 }

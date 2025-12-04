@@ -78,5 +78,10 @@ namespace FootballFull.Services
         {
             return _linkRepository.Load();
         }
+
+        public void SaveAll(IList<ClubPerCompetition> clubPerCompetition)
+        {
+            _linkRepository.Create(clubPerCompetition);
+        }
     }
 }
