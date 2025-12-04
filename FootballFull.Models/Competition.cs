@@ -14,7 +14,7 @@ namespace FootballFull.Models
         public Guid CountryId { get; set; }
         public int Tier { get; set; }
         public int Strength { get; set; }
-        public CompetitionType Type { get; set; } 
+        public CompetitionType Type { get; set; }
 
         public enum CompetitionType
         {
@@ -22,5 +22,6 @@ namespace FootballFull.Models
             Cup,
             International
         }
+        public IDictionary<int, int> MatchDayPerWeek {get; set;}
     }
 }

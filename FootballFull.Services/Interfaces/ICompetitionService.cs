@@ -10,5 +10,6 @@ namespace FootballFull.Services.Interfaces
         IList<Competition> GetCompetitions();
         Competition? GetCompetitionById(Guid id);
         void SaveAll(IList<Competition> competitions);
+        IDictionary<int, int> UpdateMatchDaysPerWeek(Guid competitionId, IDictionary<int, int> matchDaysPerWeek);
     }
 }

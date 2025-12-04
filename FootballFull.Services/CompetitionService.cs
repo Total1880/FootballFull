@@ -21,6 +21,8 @@ namespace FootballFull.Services
         {
             if (competition == null)
                 throw new ArgumentNullException(nameof(competition));
+            if (competition.MatchDayPerWeek == null)
+                competition.MatchDayPerWeek = new Dictionary<int, int>();
 
             _competitionRepository.Add(competition);
         }
@@ -31,6 +33,8 @@ namespace FootballFull.Services
                 throw new ArgumentNullException(nameof(competition));
             if (competition.Id == Guid.Empty)
                 throw new ArgumentException("Competition must have a valid Id.");
+            if (competition.MatchDayPerWeek == null)
+                competition.MatchDayPerWeek = new Dictionary<int, int>();
 
             _competitionRepository.Update(competition);
         }
@@ -61,6 +65,31 @@ namespace FootballFull.Services
         public void SaveAll(IList<Competition> competitions)
         {
             _competitionRepository.Create(competitions, true);
+        }
+
+        private void GenerateMatchDays(Competition competition)
+        {
+            if (competition.MatchDayPerWeek == null)
+                competition.MatchDayPerWeek = new Dictionary<int, int>();
+        }
+
+        public IDictionary<int, int> UpdateMatchDaysPerWeek(Guid competitionId, IDictionary<int, int> matchDaysPerWeek)
+        {
+            var competition = GetCompetitionById(competitionId);
+            if (competition == null)
+                throw new ArgumentException("Competition not found.");
+            if (competition.MatchDayPerWeek == null)
+                competition.MatchDayPerWeek = new Dictionary<int, int>();
+            foreach (var kvp in matchDaysPerWeek)
+            {
+                if (competition.MatchDayPerWeek.ContainsKey(kvp.Key))
+                    competition.MatchDayPerWeek[kvp.Key] = kvp.Value;
+                else
+                    competition.MatchDayPerWeek.Add(kvp.Key, kvp.Value);
+            }
+            Update(competition);
+
+            return competition.MatchDayPerWeek;
         }
     }
 }

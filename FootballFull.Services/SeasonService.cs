@@ -241,12 +241,12 @@ namespace FootballFull.Services
             }
         }
 
-        public void PlayMatchDay(IList<Fixture> fixtures, int matchDay, bool isSuddenDeath = false, Guid? playerClubId = null)
+        public void PlayMatchDay(IList<Fixture> fixtures, int week, bool isSuddenDeath = false, Guid? playerClubId = null)
         {
             if (_clubLeagueCompetitions == null)
                 throw new InvalidOperationException("Club league competitions not initialized.");
 
-            var todaysFixtures = fixtures.Where(_ => _.MatchDay == matchDay).ToList();
+            var todaysFixtures = fixtures.Where(_ => _.MatchDay == week).ToList();
 
             foreach (var fixture in todaysFixtures)
             {
@@ -405,7 +405,7 @@ namespace FootballFull.Services
 
             Console.Clear();
             Console.WriteLine();
-            Console.WriteLine($"Speeldag {fixture.MatchDay}");
+            Console.WriteLine($"Speeldag {fixture.RoundNo}");
             Console.WriteLine($"{fixture.HomeTeam.Name} {homeGoals} - {awayGoals} {fixture.AwayTeam.Name}");
 
             for (int phase = 1; phase <= phases; phase++)
@@ -493,7 +493,7 @@ namespace FootballFull.Services
                 Console.Clear();
 
                 Console.WriteLine();
-                Console.WriteLine($"Speeldag {fixture.MatchDay}");
+                Console.WriteLine($"Speeldag {fixture.RoundNo}");
                 Console.WriteLine($"{fixture.HomeTeam.Name} {homeGoals} - {awayGoals} {fixture.AwayTeam.Name}");
                 Console.WriteLine($"Minuut {phase * 10}");
                 Console.WriteLine();
@@ -970,32 +970,32 @@ namespace FootballFull.Services
             if (club.Morale > 10) club.Morale = 10;
         }
 
-        public Trainer NewTrainer(Guid clubId, int matchDay = 0)
+        public Trainer NewTrainer(Guid clubId, int week = 0)
         {
             var existingTrainer = _trainers.FirstOrDefault(_ => _.ClubId == clubId);
             if (existingTrainer != null)
                 existingTrainer.ClubId = Guid.Empty;
             var newTrainer = _trainerService.CreateRandomTrainer(clubId);
-            AssignTrainer(clubId, newTrainer, matchDay);
+            AssignTrainer(clubId, newTrainer, week);
             _trainers.Add(newTrainer);
             return newTrainer;
         }
 
-        private void AssignTrainer(Guid clubId, Trainer trainer, int matchDay)
+        private void AssignTrainer(Guid clubId, Trainer trainer, int week)
         {
             var club = _clubs.First(_ => _.Id == clubId);
             club.HasTrainerSinceWeek = 0;
-            club.HasFiredTrainerInWeek = matchDay;
+            club.HasFiredTrainerInWeek = week;
             if (trainer.ClubId != Guid.Empty && trainer.ClubId != clubId)
             {
                 var nextClub = _clubs.First(_ => _.Id == trainer.ClubId);
 
-                FindNewTrainer(nextClub, matchDay, nextClub.Strength, trainer.Id, false);
+                FindNewTrainer(nextClub, week, nextClub.Strength, trainer.Id, false);
             }
             trainer.ClubId = clubId;
         }
 
-        private void ClubsFireTrainer(Guid userClubId, int matchDay)
+        private void ClubsFireTrainer(Guid userClubId, int week)
         {
             var clubs = _clubs.Where(_ => _.Id != userClubId && _.Momentum < 3 && _.Morale < 3 && _.HasTrainerSinceWeek > 5).ToList();
 
@@ -1005,15 +1005,15 @@ namespace FootballFull.Services
                 if (Random.Shared.Next(0, maxValue > 0 ? maxValue : 0) == 0)
                 {
                     var firedTrainer = FireTrainer(club.Id, club.Strength);
-                    var newTrainer = FindNewTrainer(club, matchDay, club.Strength, firedTrainer, true);
+                    var newTrainer = FindNewTrainer(club, week, club.Strength, firedTrainer, true);
                 }
             }
         }
 
-        private Trainer? FindNewTrainer(Club club, int matchDay, int strength, Guid firedTrainerId, bool isFired = true)
+        private Trainer? FindNewTrainer(Club club, int week, int strength, Guid firedTrainerId, bool isFired = true)
         {
             var firedTrainer = _trainers.First(_ => _.Id == firedTrainerId);
-            var message = new NewsMessage { ClubId = club.Id, CountryId = club.CountryId, MatchDay = matchDay, Year = _year, CompetitionId = _clubLeagueCompetitions.First(_ => _.ClubId == club.Id).CompetitionId };
+            var message = new NewsMessage { ClubId = club.Id, CountryId = club.CountryId, MatchDay = week, Year = _year, CompetitionId = _clubLeagueCompetitions.First(_ => _.ClubId == club.Id).CompetitionId };
             if (isFired)
                 message.Message = $"{club.Name} fired its trainer, {firedTrainer.Name} {firedTrainer.LastName}.";
             else message.Message = $"{club.Name} lost its trainer, {firedTrainer.Name} {firedTrainer.LastName}.";
@@ -1032,7 +1032,7 @@ namespace FootballFull.Services
 
             if (trainer == null)
             {
-                trainer = NewTrainer(club.Id, matchDay);
+                trainer = NewTrainer(club.Id, week);
                 message.Message += $"They found a new trainer, {trainer.Name} {trainer.LastName}";
             }
             else
@@ -1042,7 +1042,7 @@ namespace FootballFull.Services
                     var oldClubName = _clubs.First(_ => _.Id == trainer.ClubId).Name;
                     message.Message += $"They took over trainer {trainer.Name} {trainer.LastName} from {oldClubName}";
                 }
-                AssignTrainer(club.Id, trainer, matchDay);
+                AssignTrainer(club.Id, trainer, week);
 
             }
 
@@ -1069,9 +1069,9 @@ namespace FootballFull.Services
             return trainer.Id;
         }
 
-        public void UpdateWeekStats(Guid userClubId, int matchDay)
+        public void UpdateWeekStats(Guid userClubId, int week)
         {
-            ClubsFireTrainer(userClubId, matchDay);
+            ClubsFireTrainer(userClubId, week);
         }
 
         public Trainer UserTrainer(Guid userClubId)

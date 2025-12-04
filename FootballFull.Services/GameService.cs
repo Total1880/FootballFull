@@ -25,7 +25,7 @@ namespace FootballFull.Services
         private IList<Fixture>? _internationalFixtures;
         private IList<NewsMessage> _news;
         private Guid _userClubId;
-        private int _matchDays;
+        private int _weeks;
         private int _year = 0;
 
         public GameService(
@@ -69,7 +69,7 @@ namespace FootballFull.Services
             _fixtures = _fixtureService.Generate(_clubsPerCompetition);
             _cupFixtures = _seasonService.InitializeNationalCups();
             _internationalFixtures = null;
-            _matchDays = Configuration.Weeks;
+            _weeks = Configuration.Weeks;
 
             // Hoofdloop
             do
@@ -93,29 +93,29 @@ namespace FootballFull.Services
                 Console.ReadKey();
                 Console.Clear();
 
-                for (int matchDay = 1; matchDay <= _matchDays; matchDay++)
+                for (int week = 1; week <= _weeks; week++)
                 {
                     Console.Clear();
-                    Console.WriteLine($"=== Matchday {matchDay} ===");
+                    Console.WriteLine($"=== Week {week} ===");
 
                     Console.WriteLine();
-                    Console.WriteLine("Druk op een toets om deze speeldag te simuleren...");
+                    Console.WriteLine("Druk op een toets om deze week te simuleren...");
                     Console.ReadKey();
 
-                    _seasonService.PlayMatchDay(_fixtures, matchDay, false, _userClubId);
+                    _seasonService.PlayMatchDay(_fixtures, week, false, _userClubId);
 
-                    DisplayResult(matchDay);
+                    DisplayResult(week);
                     Console.WriteLine();
                     DisplayLeagueTable();
                     Console.WriteLine();
-                    DisplayNextFixture(competitionToShow, matchDay);
-                    PlayCupGames(matchDay);
-                    PlayInternationalGames(matchDay);
-                    _seasonService.UpdateWeekStats(_userClubId, matchDay);
+                    DisplayNextFixture(competitionToShow, week);
+                    PlayCupGames(week);
+                    PlayInternationalGames(week);
+                    _seasonService.UpdateWeekStats(_userClubId, week);
 
                     Console.Clear();
 
-                    ShowNews(matchDay, _year, competitionId);
+                    ShowNews(week, _year, competitionId);
                     ShowBetweenMatchdaysMenu();
                 }
 
@@ -135,14 +135,14 @@ namespace FootballFull.Services
             } while (true);
         }
 
-        private void ShowNews(int matchDay, int year, Guid competitionId)
+        private void ShowNews(int week, int year, Guid competitionId)
         {
             Console.Clear();
             var autoContinue = true;
             foreach (var message in _seasonService.NewsMessages
                 .Where(_ => _.CountryId == _clubService.GetClubById(_userClubId).CountryId &&
                 _.CompetitionId == competitionId &&
-                _.MatchDay == matchDay
+                _.MatchDay == week
                 && _.Year == year))
             {
                 autoContinue = false;
@@ -228,11 +228,11 @@ namespace FootballFull.Services
 
         }
 
-        private void PlayCupGames(int matchDay)
+        private void PlayCupGames(int week)
         {
             if (_cupFixtures == null || !_cupFixtures.Any())
                 return;
-            if (!_cupFixtures.Any(_ => _.MatchDay == matchDay))
+            if (!_cupFixtures.Any(_ => _.MatchDay == week))
                 return;
 
             var userCountry = _clubService.GetClubById(_userClubId).CountryId;
@@ -250,7 +250,7 @@ namespace FootballFull.Services
                 if (display)
                     Console.WriteLine($"--- {cupCompetition.Name} ---");
                 var fixturesForCompetition = _cupFixtures
-                    .Where(_ => _.CompetitionId == cupCompetition.Id && _.MatchDay == matchDay)
+                    .Where(_ => _.CompetitionId == cupCompetition.Id && _.MatchDay == week)
                     .ToList();
 
                 if (fixturesForCompetition.Count == 0)
@@ -285,7 +285,7 @@ namespace FootballFull.Services
                     Console.ReadKey();
                 }
                 // Speel enkel deze ronde
-                _seasonService.PlayMatchDay(fixturesForCompetition, matchDay, true, _userClubId);
+                _seasonService.PlayMatchDay(fixturesForCompetition, week, true, _userClubId);
                 if (display)
                 {
                     Console.Clear();
@@ -340,22 +340,22 @@ namespace FootballFull.Services
             }
         }
 
-        private void PlayInternationalGames(int matchDay)
+        private void PlayInternationalGames(int week)
         {
             if (_internationalFixtures == null || !_internationalFixtures.Any())
                 return;
-            if (!_internationalFixtures.Any(_ => _.MatchDay == matchDay))
+            if (!_internationalFixtures.Any(_ => _.MatchDay == week))
                 return;
 
             var fixturesForRound = _internationalFixtures
-                .Where(_ => _.MatchDay == matchDay)
+                .Where(_ => _.MatchDay == week)
                 .ToList();
 
             if (fixturesForRound.Count == 0)
                 return;
 
             Console.Clear();
-            Console.WriteLine($"=== International Round {matchDay} ===");
+            Console.WriteLine($"=== International Round {week} ===");
             Console.WriteLine();
 
             foreach (var fixture in fixturesForRound)
@@ -380,10 +380,10 @@ namespace FootballFull.Services
             Console.WriteLine("Press any key to play this round...");
             Console.ReadKey();
 
-            _seasonService.PlayMatchDay(fixturesForRound, matchDay, true, _userClubId);
+            _seasonService.PlayMatchDay(fixturesForRound, week, true, _userClubId);
 
             Console.Clear();
-            Console.WriteLine($"=== International Round {matchDay} Results ===");
+            Console.WriteLine($"=== International Round {week} Results ===");
             foreach (var fixture in fixturesForRound)
             {
                 if (fixture.HomeTeamId != Guid.Empty && fixture.AwayTeamId != Guid.Empty)
@@ -421,7 +421,7 @@ namespace FootballFull.Services
                 .OrderByDescending(f => f.RoundNo)
                 .First();
 
-            if (final.MatchDay != matchDay)
+            if (final.MatchDay != week)
                 return;
 
             var finalWinner = final.HomeScore > final.AwayScore ? final.HomeTeam : final.AwayTeam;
@@ -508,7 +508,7 @@ namespace FootballFull.Services
             }
         }
 
-        private void DisplayResult(int matchDay)
+        private void DisplayResult(int week)
         {
             var competitionId = _clubsPerCompetition
                 .First(_ => _.ClubId == _userClubId)
@@ -517,11 +517,11 @@ namespace FootballFull.Services
             var competitionToShow = _competitions.First(_ => _.Id == competitionId);
 
             Console.WriteLine();
-            Console.WriteLine($"=== Match Day {matchDay} - {competitionToShow.Name} ===");
+            Console.WriteLine($"=== Week {week} - {competitionToShow.Name} ===");
             Console.WriteLine();
 
             var fixturesForMatchDay = _fixtures
-                .Where(_ => _.MatchDay == matchDay && _.CompetitionId == competitionToShow.Id)
+                .Where(_ => _.MatchDay == week && _.CompetitionId == competitionToShow.Id)
                 .ToList();
 
             if (fixturesForMatchDay.Count == 0)
@@ -651,21 +651,27 @@ namespace FootballFull.Services
             Console.ReadKey();
         }
 
-        private void DisplayNextFixture(Competition competitionToShow, int matchDay, bool waitForKey = true)
+        private void DisplayNextFixture(Competition competitionToShow, int week, bool waitForKey = true)
         {
-            if (matchDay < _matchDays)
+            if (week < _weeks)
             {
-                var nextDay = matchDay + 1;
-                Console.WriteLine($"Next Match Day: {nextDay}");
+                var nextWeek = week + 1;
+                Console.WriteLine($"Next Week: {week + 1}");
                 Console.WriteLine(new string('-', 25));
 
                 var nextFixtures = _fixtures
-                    .Where(_ => _.MatchDay == nextDay && _.CompetitionId == competitionToShow.Id)
+                    .Where(_ => _.MatchDay == nextWeek && _.CompetitionId == competitionToShow.Id)
                     .ToList();
 
                 if (nextFixtures.Count == 0)
                 {
                     Console.WriteLine("No fixtures available.");
+                    if (waitForKey)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Press any key for next week...");
+                        Console.ReadKey();
+                    }
                     return;
                 }
 
@@ -681,7 +687,7 @@ namespace FootballFull.Services
                 if (waitForKey)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Press any key for next matchday...");
+                    Console.WriteLine("Press any key for next week...");
                     Console.ReadKey();
                 }
             }
