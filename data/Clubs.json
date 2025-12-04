@@ -1414,5 +1414,221 @@
     "Strength": 0,
     "Id": "823b5c36-466e-4d83-b377-f6a386279aab",
     "CountryId": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb"
+  },
+  {
+    "Name": "FC Porto",
+    "Strength": 0,
+    "Id": "5d985a07-e590-4623-8cdc-120f6d230a79",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Sporting CP",
+    "Strength": 0,
+    "Id": "090bcc8d-a8a0-4ffb-9bed-fb6d7834b139",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Benfica",
+    "Strength": 0,
+    "Id": "cab893d1-392d-4948-b8be-6af8c328859e",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Gil Vicente",
+    "Strength": 0,
+    "Id": "b08adc09-e03f-4bb3-9a70-124f10d2fcd8",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Famalicao",
+    "Strength": 0,
+    "Id": "e7ac5ffd-f6cf-4bc8-81db-0cefa995c48f",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Braga",
+    "Strength": 0,
+    "Id": "c6c4b99d-8693-4ad6-bf84-2e9e84d3fdfb",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Moreirense",
+    "Strength": 0,
+    "Id": "1cd18e0d-2e08-4804-8b2b-c222ab6a951c",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Vitoria SC",
+    "Strength": 0,
+    "Id": "d39155a5-99bd-4ac8-82aa-2225429ff8f1",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "FC Alverca",
+    "Strength": 0,
+    "Id": "8cdba9b7-73a1-4d88-8065-c610d5907c5c",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Estoril",
+    "Strength": 0,
+    "Id": "9748b460-2a5e-45e1-90ce-a808cea780b0",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Rio Ave",
+    "Strength": 0,
+    "Id": "fc21edd9-a084-4547-b902-b025b17fe00a",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Santa Clara",
+    "Strength": 0,
+    "Id": "b47a7d56-f74e-47ee-aa94-7e532706f1ac",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Nacional",
+    "Strength": 0,
+    "Id": "97834797-e7bb-495f-90d5-f7852ffcacf2",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Estrela Amadora",
+    "Strength": 0,
+    "Id": "2e47175f-7fd2-4a29-9ec8-8719b49979a8",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Casa Pia",
+    "Strength": 0,
+    "Id": "b0d6393d-1241-4ae8-991f-1b1ea23334c5",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Tondela",
+    "Strength": 0,
+    "Id": "85f49c7f-84cf-476a-8a9f-369e4a7ce975",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Arouca",
+    "Strength": 0,
+    "Id": "9e6a7b6e-ef81-4699-b347-bcfef4cc7627",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "AVS",
+    "Strength": 0,
+    "Id": "91e6c2e4-4132-4fa6-ac2f-cccd18834b43",
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+  },
+  {
+    "Name": "Galatasaray",
+    "Strength": 0,
+    "Id": "aabb8e18-66dc-46b4-bc41-774fb6f02720",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Fenerbah\u00E7e SK",
+    "Strength": 0,
+    "Id": "5cd4b460-e4c2-4650-b369-a79e6b4464b3",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Trabzonspor",
+    "Strength": 0,
+    "Id": "48b1f5af-87aa-4d61-88ca-01f96c98178b",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "G\u00F6ztepe SK",
+    "Strength": 0,
+    "Id": "f88d1407-f1e9-4956-a2b4-38ac40879cc3",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Samsunspor",
+    "Strength": 0,
+    "Id": "3619e4d2-b5b7-42ff-97a0-aaaeaf4f610b",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Besiktas JK",
+    "Strength": 0,
+    "Id": "c68ae01d-5dc1-4a35-9bde-f1f11ccfed0b",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Gaziantep FK",
+    "Strength": 0,
+    "Id": "f7e5dc8a-9212-4f27-8615-5f2ff5588d41",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Kocaelispor",
+    "Strength": 0,
+    "Id": "aaa758b2-cc64-48af-bbc6-1a7b67d8467a",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Istanbul Basaksehir",
+    "Strength": 0,
+    "Id": "dd1535f1-43a1-424a-8a5f-70270547a007",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Alanyaspor",
+    "Strength": 0,
+    "Id": "dfff89d0-975f-4220-abb9-a28ad4ca8406",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Konyaspor",
+    "Strength": 0,
+    "Id": "3b454631-f8db-413d-9e82-19473f5578af",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "\u00C7aykur Rizespor",
+    "Strength": 0,
+    "Id": "8c77d062-7a51-4c02-9ea7-e6bd273551d4",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Antalyaspor",
+    "Strength": 0,
+    "Id": "acfa8649-cf41-4fa8-8f09-8f78409b6971",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Kasimpasa SK",
+    "Strength": 0,
+    "Id": "2bbd1ff5-cae2-4e29-9f3a-3f68b7e91031",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Ey\u00FCpspor",
+    "Strength": 0,
+    "Id": "c1208016-0651-4b5f-8fd5-4a228f808cc9",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Kayserispor",
+    "Strength": 0,
+    "Id": "1b18c247-3cef-427f-8bfd-f3cb4fec8884",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Gen\u00E7lerbirligi SK",
+    "Strength": 0,
+    "Id": "1190bb19-2a4e-415e-99db-4b57d784ea7f",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+  },
+  {
+    "Name": "Fatih Karag\u00FCmr\u00FCk",
+    "Strength": 0,
+    "Id": "31ac64d3-4870-441e-ab9e-92bca40e6d91",
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
   }
 ]

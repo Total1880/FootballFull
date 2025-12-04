@@ -108,6 +108,8 @@ namespace FootballFull.Services
                 }
                 initial--;
             }
+
+            _competitions = _competitionRepository.Load();
         }
 
         private void RecalculateClubStrengths(int minStrength = 1, int maxStrength = 9)
@@ -691,32 +693,103 @@ namespace FootballFull.Services
 
         public Guid ChoosePlayerClub()
         {
-            // Haal clubs op
-            var clubs = _clubService.GetClubs();
+            var countries = _countryService.GetCountries();
 
-            Console.WriteLine("Kies je club:");
-            for (int i = 0; i < clubs.Count; i++)
+            do
             {
-                Console.WriteLine($"{i + 1}. {clubs[i].Name}");
-            }
+                Console.Clear();
+                Console.WriteLine("Kies het land:");
+                for (int i = 0; i < countries.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {countries[i].Name}");
+                }
 
-            Console.Write("\nGeef het nummer van je club: ");
-            var input = Console.ReadLine();
+                Console.Write("\nGeef het nummer van het land: ");
+                var input = Console.ReadLine();
 
-            if (int.TryParse(input, out int chosenIndex) &&
-                chosenIndex > 0 &&
-                chosenIndex <= clubs.Count)
-            {
+                if (int.TryParse(input, out int chosenCountryIndex) &&
+        chosenCountryIndex > 0 &&
+        chosenCountryIndex <= countries.Count)
+                {
 
-                Console.WriteLine($"Je hebt gekozen: {clubs[chosenIndex - 1].Name}");
-                return clubs[chosenIndex - 1].Id;
-            }
-            else
-            {
-                Console.WriteLine("Ongeldige keuze. Standaardclub wordt gebruikt.");
-                // fallback club
-                return clubs[0].Id;
-            }
+                    var chosenCountry = countries[chosenCountryIndex - 1].Id;
+                    var competitions = _competitionService.GetCompetitions().Where(_ => _.CountryId == chosenCountry && _.Type == Competition.CompetitionType.League).ToList();
+                    do
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"Je hebt gekozen: {countries[chosenCountryIndex - 1].Name}");
+
+                        Console.WriteLine("Kies de competitie:");
+                        for (int i = 0; i < competitions.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {competitions[i].Name}");
+                        }
+
+                        Console.Write("\nGeef het nummer van je competitie: ");
+                        input = Console.ReadLine();
+
+                        if (int.TryParse(input, out int chosenCompetitionIndex) &&
+chosenCompetitionIndex > 0 &&
+chosenCompetitionIndex <= competitions.Count)
+                        { 
+                            var chosenCompetition = competitions[chosenCompetitionIndex - 1].Id;
+                            var clubs = _clubPerCompetitionService.GetClubsForCompetition(chosenCompetition)
+                                .ToList();
+
+                            do
+                            {
+                                Console.Clear();
+                                Console.WriteLine($"Je hebt gekozen: {competitions[chosenCompetitionIndex - 1].Name}");
+
+                                Console.WriteLine("Kies de club:");
+                                for (int i = 0; i < clubs.Count; i++)
+                                {
+                                    Console.WriteLine($"{i + 1}. {clubs[i].Name}");
+                                }
+
+                                Console.Write("\nGeef het nummer van je clubs: ");
+                                input = Console.ReadLine();
+
+                                if (int.TryParse(input, out int chosenIndex) &&
+                                    chosenIndex > 0 &&
+                                    chosenIndex <= clubs.Count)
+                                {
+
+                                    Console.WriteLine($"Je hebt gekozen: {clubs[chosenIndex - 1].Name}");
+                                    return clubs[chosenIndex - 1].Id;
+                                }
+                            } while (true);
+                        }
+                    } while (true);
+                }
+            } while (true);
+
+
+            //var clubs = _clubService.GetClubs();
+
+            //Console.WriteLine("Kies je club:");
+            //for (int i = 0; i < clubs.Count; i++)
+            //{
+            //    Console.WriteLine($"{i + 1}. {clubs[i].Name}");
+            //}
+
+            //Console.Write("\nGeef het nummer van je club: ");
+            //var input = Console.ReadLine();
+
+            //if (int.TryParse(input, out int chosenIndex) &&
+            //    chosenIndex > 0 &&
+            //    chosenIndex <= clubs.Count)
+            //{
+
+            //    Console.WriteLine($"Je hebt gekozen: {clubs[chosenIndex - 1].Name}");
+            //    return clubs[chosenIndex - 1].Id;
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Ongeldige keuze. Standaardclub wordt gebruikt.");
+            //    // fallback club
+            //    return clubs[0].Id;
+            //}
         }
 
         private bool IsCupWorthy(int count)

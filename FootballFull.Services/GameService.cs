@@ -81,8 +81,6 @@ namespace FootballFull.Services
                 var competitionToShow = _competitions.First(_ => _.Id == competitionId);
 
                 Console.Clear();
-                Console.WriteLine("=== Football Season Fixtures ===");
-                Console.WriteLine();
 
                 // Fixture overview
                 DisplayLeagueTable();
@@ -880,14 +878,20 @@ namespace FootballFull.Services
 
         private void CreateTrainers()
         {
-            if (_trainers == null || _trainers.Count() == 0)
-            {
-                _trainers = new List<Trainer>();
-                foreach (var club in _clubService.GetClubs())
-                    _trainers.Add(_trainerService.CreateRandomTrainer(club.Id));
+            var clubIds = _clubService.GetClubs().Select(c => c.Id).ToList();
 
-                _trainerService.CreateTrainers(_trainers);
+            foreach (var clubId in clubIds)
+            {
+                var existingTrainer = _trainerService.GetByClubId(clubId);
+                if (existingTrainer == null)
+                {
+                    var newTrainer = _trainerService.CreateRandomTrainer(clubId);
+                    _trainers.Add(newTrainer);
+
+                }
             }
+
+            _trainerService.SaveAll(_trainers);
         }
         #endregion
     }

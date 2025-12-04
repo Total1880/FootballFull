@@ -26,5 +26,13 @@
   {
     "Id": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb",
     "Name": "Netherlands"
+  },
+  {
+    "Id": "92f8909c-982e-486b-a5c9-fb40102975b5",
+    "Name": "Portugal"
+  },
+  {
+    "Id": "c78ea73f-759c-4827-8469-03fdeb8340b7",
+    "Name": "Turkey"
   }
 ]
