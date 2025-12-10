@@ -284,7 +284,7 @@ namespace FootballFull.Services
                     Console.ReadKey();
                 }
                 // Speel enkel deze ronde
-                _seasonService.PlayMatchDay(fixturesForCompetition, week, true, _userClubId);
+                _seasonService.PlayMatchDay(fixturesForCompetition, week, true, _userClubId, true);
                 if (display)
                 {
                     Console.Clear();
@@ -379,7 +379,7 @@ namespace FootballFull.Services
             Console.WriteLine("Press any key to play this round...");
             Console.ReadKey();
 
-            _seasonService.PlayMatchDay(fixturesForRound, week, true, _userClubId);
+            _seasonService.PlayMatchDay(fixturesForRound, week, true, _userClubId, true);
 
             Console.Clear();
             Console.WriteLine($"=== International Round {week} Results ===");

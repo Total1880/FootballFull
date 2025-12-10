@@ -252,7 +252,7 @@ namespace FootballFull.Services
             }
         }
 
-        public void PlayMatchDay(IList<Fixture> fixtures, int week, bool isSuddenDeath = false, Guid? playerClubId = null)
+        public void PlayMatchDay(IList<Fixture> fixtures, int week, bool isSuddenDeath = false, Guid? playerClubId = null, bool neutralField = false)
         {
             if (_clubLeagueCompetitions == null)
                 throw new InvalidOperationException("Club league competitions not initialized.");
@@ -282,11 +282,11 @@ namespace FootballFull.Services
 
                 if (isPlayerMatch)
                 {
-                    PlayInteractiveFixture(fixture, playerClubId.Value, isSuddenDeath);
+                    PlayInteractiveFixture(fixture, playerClubId.Value, isSuddenDeath, neutralField);
                 }
                 else
                 {
-                    SimulateFixtureAutomatically(fixture, isSuddenDeath);
+                    SimulateFixtureAutomatically(fixture, isSuddenDeath, neutralField);
                 }
 
                 if (!isSuddenDeath)
@@ -321,7 +321,7 @@ namespace FootballFull.Services
             }
         }
 
-        private void SimulateFixtureAutomatically(Fixture fixture, bool isSuddenDeath)
+        private void SimulateFixtureAutomatically(Fixture fixture, bool isSuddenDeath, bool neutralField)
         {
             // Bye-afhandeling
             if (fixture.HomeTeamId == Guid.Empty)
@@ -346,7 +346,7 @@ namespace FootballFull.Services
             var awayClub = _clubs.First(_ => _.Id == fixture.AwayTeamId);
 
             int homeStrength, awayStrength, difference, homeNegativeEffects, awayNegativeEffects;
-            CalculateStrength(fixture, out homeStrength, out awayStrength, out difference, out homeNegativeEffects, out awayNegativeEffects);
+            CalculateStrength(fixture, out homeStrength, out awayStrength, out difference, out homeNegativeEffects, out awayNegativeEffects, neutralField);
 
             if (homeStrength > 5)
             {
@@ -401,7 +401,7 @@ namespace FootballFull.Services
             Balanced
         }
 
-        private void PlayInteractiveFixture(Fixture fixture, Guid playerClubId, bool isSuddenDeath)
+        private void PlayInteractiveFixture(Fixture fixture, Guid playerClubId, bool isSuddenDeath, bool neutralField)
         {
             int homeGoals = 0;
             int awayGoals = 0;
@@ -412,7 +412,7 @@ namespace FootballFull.Services
             var playerClub = playerIsHome ? fixture.HomeTeam : fixture.AwayTeam;
             var opponent = playerIsHome ? fixture.AwayTeam : fixture.HomeTeam;
             int startHomeStrength, startAwayStrength, difference, homeNegativeEffects, awayNegativeEffects;
-            CalculateStrength(fixture, out startHomeStrength, out startAwayStrength, out difference, out homeNegativeEffects, out awayNegativeEffects);
+            CalculateStrength(fixture, out startHomeStrength, out startAwayStrength, out difference, out homeNegativeEffects, out awayNegativeEffects, neutralField);
 
             Console.Clear();
             Console.WriteLine();
@@ -547,7 +547,7 @@ namespace FootballFull.Services
             Console.ReadKey(true);
         }
 
-        private void CalculateStrength(Fixture fixture, out int startHomeStrength, out int startAwayStrength, out int difference, out int homeNegativeEffects, out int awayNegativeEffects)
+        private void CalculateStrength(Fixture fixture, out int startHomeStrength, out int startAwayStrength, out int difference, out int homeNegativeEffects, out int awayNegativeEffects, bool neutralField)
         {
             var homeMomentum = MapMomentumToModifier(_clubs.First(_ => _.Id == fixture.HomeTeamId).Momentum);
             var awayMomentum = MapMomentumToModifier(_clubs.First(_ => _.Id == fixture.AwayTeamId).Momentum);
@@ -585,7 +585,10 @@ namespace FootballFull.Services
 
 
             startHomeStrength = fixture.HomeTeam.Strength + homeMomentum + homeMoraleBonus + homeTrainerBonus;
-            startAwayStrength = fixture.AwayTeam.Strength + awayMomentum + awayMoraleBonus + awayTrainerBonus - 1;
+            startAwayStrength = fixture.AwayTeam.Strength + awayMomentum + awayMoraleBonus + awayTrainerBonus;
+            if (!neutralField)
+                startAwayStrength -= 1;
+
             difference = startHomeStrength - startAwayStrength;
             homeNegativeEffects = 0;
             awayNegativeEffects = 0;
