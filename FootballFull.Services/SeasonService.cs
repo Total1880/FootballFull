@@ -14,6 +14,8 @@ namespace FootballFull.Services
         private ICountryService _countryService;
         private ICompetitionService _competitionService;
         private IClubPerCompetitionService _clubPerCompetitionService;
+        private IClubInternationalRankingService _clubInternationalRankingService;
+        private ISaveDataService _saveDataService;
         private IList<ClubLeagueCompetition> _clubLeagueCompetitions;
         private IList<ClubPerCompetition> _clubsPerCompetition;
         private IList<Club> _clubs;
@@ -23,6 +25,7 @@ namespace FootballFull.Services
         private IList<Competition> _competitions;
         private IList<Country> _countries;
         private int _year;
+        private SaveData _saveData;
 
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
         public IList<NewsMessage> NewsMessages => _newsMessages;
@@ -37,7 +40,9 @@ namespace FootballFull.Services
             ITrainerService trainerService,
             ICountryService countryService,
             ICompetitionService competitionService,
-            IClubPerCompetitionService clubPerCompetitionService)
+            IClubPerCompetitionService clubPerCompetitionService,
+            IClubInternationalRankingService clubInternationalRankingService,
+            ISaveDataService saveDataService)
         {
             _competitionRepository = competitionRepository;
             _clubService = clubService;
@@ -46,11 +51,15 @@ namespace FootballFull.Services
             _countryService = countryService;
             _competitionService = competitionService;
             _clubPerCompetitionService = clubPerCompetitionService;
+            _clubInternationalRankingService = clubInternationalRankingService;
+            _saveDataService = saveDataService;
 
             _newsMessages = new List<NewsMessage>();
-            _clubInternationalRankings = new List<ClubInternationalRanking>();
+            _clubInternationalRankings = _clubInternationalRankingService.GetAll();
             _competitions = _competitionRepository.Load();
             _countries = _countryService.GetCountries();
+            _saveData = _saveDataService.Load();
+            Year = _saveData.Year;
         }
         public void Initialize(IList<ClubPerCompetition> clubsPerCompetition)
         {
@@ -58,7 +67,7 @@ namespace FootballFull.Services
             _clubs = _clubService.GetClubs();
             _trainers = _trainerService.Load();
 
-            InitializeNewSeason(0);
+            InitializeNewSeason(Year);
         }
 
         public void InitializeNewSeason(int year)
@@ -1158,6 +1167,10 @@ chosenCompetitionIndex <= competitions.Count)
             _competitionService.SaveAll(_competitions);
             _clubPerCompetitionService.SaveAll(_clubsPerCompetition);
             _trainerService.SaveAll(_trainers);
+            _clubInternationalRankingService.SaveAll(_clubInternationalRankings);
+
+            _saveData.Year = _year;
+            _saveDataService.Save(_saveData);
         }
     }
 }

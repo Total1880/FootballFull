@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace FootballFull.Models
@@ -13,8 +14,9 @@ namespace FootballFull.Models
         public Guid CountryId { get; set; }
         public Country Country { get; set; }
 
-        public IDictionary<int, int> PointsPerYear { get => _pointsPerYear; }
-        private IDictionary<int, int> _pointsPerYear = new Dictionary<int, int>();
+        [JsonInclude]
+        public IDictionary<int, int> PointsPerYear { get; private set; }
+        = new Dictionary<int, int>();
         public int TotalPoints(int year)
         {
             var totalPoints = 0;
@@ -23,12 +25,11 @@ namespace FootballFull.Models
             }
             return totalPoints;
         }
-
         public void UpdatePoints(int year, int point) {
-            if (_pointsPerYear.ContainsKey(year))
-                _pointsPerYear[year] += point;
+            if (PointsPerYear.ContainsKey(year))
+                PointsPerYear[year] += point;
             else
-                _pointsPerYear.Add(year, point);
+                PointsPerYear.Add(year, point);
         }
     }
 }

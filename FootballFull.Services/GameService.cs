@@ -66,6 +66,7 @@ namespace FootballFull.Services
 
             // Eerste seizoen initialiseren
             _seasonService.Initialize(_clubsPerCompetition);
+            _year = _seasonService.Year;
             _fixtures = _fixtureService.Generate(_clubsPerCompetition);
             _cupFixtures = _seasonService.InitializeNationalCups();
             _internationalFixtures = null;
