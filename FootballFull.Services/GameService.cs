@@ -60,7 +60,9 @@ namespace FootballFull.Services
             {
                 ResetStrength();
                 CreateTrainers();
+                _internationalFixtures = null;
             }
+
             // User club kiezen
             _userClubId = _seasonService.ChoosePlayerClub();
 
@@ -69,7 +71,12 @@ namespace FootballFull.Services
             _year = _seasonService.Year;
             _fixtures = _fixtureService.Generate(_clubsPerCompetition);
             _cupFixtures = _seasonService.InitializeNationalCups();
-            _internationalFixtures = null;
+
+            if (!isNew)
+            {
+                _internationalFixtures = _seasonService.InitializeInternationalGames(true);
+            }
+
             _weeks = Configuration.Weeks;
 
             // Hoofdloop

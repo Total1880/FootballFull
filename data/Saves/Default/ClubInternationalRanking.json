@@ -1,333 +1,16 @@
 [
   {
-    "ClubId": "122c1c60-b399-4f3e-8d73-a6c550ca7757",
+    "ClubId": "a3f2af67-d555-4e7a-b246-343183fda6bf",
     "Club": {
-      "Name": "Union SG",
-      "Strength": 20,
-      "Id": "122c1c60-b399-4f3e-8d73-a6c550ca7757",
+      "Name": "RC Genk",
+      "Strength": 19,
+      "Id": "a3f2af67-d555-4e7a-b246-343183fda6bf",
       "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
     },
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Country": {
       "Id": "8329761c-7791-4e76-b656-5030cbaf875f",
       "Name": "Belgium"
-    },
-    "PointsPerYear": {
-      "1": 2
-    }
-  },
-  {
-    "ClubId": "bfe4c1dc-6fa1-4095-bc9e-77e92930b359",
-    "Club": {
-      "Name": "Sunderland",
-      "Strength": 19,
-      "Id": "bfe4c1dc-6fa1-4095-bc9e-77e92930b359",
-      "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
-    },
-    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
-    "Country": {
-      "Id": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
-      "Name": "England"
-    },
-    "PointsPerYear": {
-      "1": 0
-    }
-  },
-  {
-    "ClubId": "f8e345aa-f656-41e1-9e09-93ffa98c615d",
-    "Club": {
-      "Name": "Barcelona",
-      "Strength": 19,
-      "Id": "f8e345aa-f656-41e1-9e09-93ffa98c615d",
-      "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
-    },
-    "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
-    "Country": {
-      "Id": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
-      "Name": "Spain"
-    },
-    "PointsPerYear": {
-      "1": 4
-    }
-  },
-  {
-    "ClubId": "eb545c00-89e5-4884-a7f2-afdcfe4c490f",
-    "Club": {
-      "Name": "Bayern M\u00FCnich",
-      "Strength": 20,
-      "Id": "eb545c00-89e5-4884-a7f2-afdcfe4c490f",
-      "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc"
-    },
-    "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc",
-    "Country": {
-      "Id": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc",
-      "Name": "Germany"
-    },
-    "PointsPerYear": {
-      "1": 2
-    }
-  },
-  {
-    "ClubId": "76d74f9e-23e1-4750-8ad0-c719c7f34f0d",
-    "Club": {
-      "Name": "PSG",
-      "Strength": 20,
-      "Id": "76d74f9e-23e1-4750-8ad0-c719c7f34f0d",
-      "CountryId": "5198d483-97be-409e-adbe-b86d3591f972"
-    },
-    "CountryId": "5198d483-97be-409e-adbe-b86d3591f972",
-    "Country": {
-      "Id": "5198d483-97be-409e-adbe-b86d3591f972",
-      "Name": "France"
-    },
-    "PointsPerYear": {
-      "1": 0
-    }
-  },
-  {
-    "ClubId": "bfa8fe94-2b40-473d-b850-38d588683440",
-    "Club": {
-      "Name": "AC Milan",
-      "Strength": 19,
-      "Id": "bfa8fe94-2b40-473d-b850-38d588683440",
-      "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
-    },
-    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a",
-    "Country": {
-      "Id": "cb8c6eca-b19d-451e-80d9-941c742d869a",
-      "Name": "Italy"
-    },
-    "PointsPerYear": {
-      "1": 0
-    }
-  },
-  {
-    "ClubId": "98b29cd6-defd-4b3a-a59f-5edd3d29a003",
-    "Club": {
-      "Name": "Feyenoord",
-      "Strength": 19,
-      "Id": "98b29cd6-defd-4b3a-a59f-5edd3d29a003",
-      "CountryId": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb"
-    },
-    "CountryId": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb",
-    "Country": {
-      "Id": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb",
-      "Name": "Netherlands"
-    },
-    "PointsPerYear": {
-      "1": 0
-    }
-  },
-  {
-    "ClubId": "5d985a07-e590-4623-8cdc-120f6d230a79",
-    "Club": {
-      "Name": "FC Porto",
-      "Strength": 20,
-      "Id": "5d985a07-e590-4623-8cdc-120f6d230a79",
-      "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
-    },
-    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5",
-    "Country": {
-      "Id": "92f8909c-982e-486b-a5c9-fb40102975b5",
-      "Name": "Portugal"
-    },
-    "PointsPerYear": {
-      "1": 0
-    }
-  },
-  {
-    "ClubId": "5cd4b460-e4c2-4650-b369-a79e6b4464b3",
-    "Club": {
-      "Name": "Fenerbah\u00E7e SK",
-      "Strength": 19,
-      "Id": "5cd4b460-e4c2-4650-b369-a79e6b4464b3",
-      "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
-    },
-    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7",
-    "Country": {
-      "Id": "c78ea73f-759c-4827-8469-03fdeb8340b7",
-      "Name": "Turkey"
-    },
-    "PointsPerYear": {
-      "1": 6
-    }
-  },
-  {
-    "ClubId": "f155f6e3-2d9a-41cf-a3a4-3283ded44fac",
-    "Club": {
-      "Name": "KV Mechelen",
-      "Strength": 19,
-      "Id": "f155f6e3-2d9a-41cf-a3a4-3283ded44fac",
-      "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
-    },
-    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
-    "Country": {
-      "Id": "8329761c-7791-4e76-b656-5030cbaf875f",
-      "Name": "Belgium"
-    },
-    "PointsPerYear": {
-      "1": 0
-    }
-  },
-  {
-    "ClubId": "552f21be-bb48-45a5-b21a-b5f0fbf3f3a1",
-    "Club": {
-      "Name": "Chelsea",
-      "Strength": 19,
-      "Id": "552f21be-bb48-45a5-b21a-b5f0fbf3f3a1",
-      "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
-    },
-    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
-    "Country": {
-      "Id": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
-      "Name": "England"
-    },
-    "PointsPerYear": {
-      "1": 8
-    }
-  },
-  {
-    "ClubId": "1bbb4e18-0b11-49b1-8554-b195905f3bef",
-    "Club": {
-      "Name": "Real Madrid",
-      "Strength": 20,
-      "Id": "1bbb4e18-0b11-49b1-8554-b195905f3bef",
-      "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
-    },
-    "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
-    "Country": {
-      "Id": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
-      "Name": "Spain"
-    },
-    "PointsPerYear": {
-      "1": 0
-    }
-  },
-  {
-    "ClubId": "661e5acc-230f-403e-82bf-ada743c27318",
-    "Club": {
-      "Name": "Borussia Dortmund",
-      "Strength": 18,
-      "Id": "661e5acc-230f-403e-82bf-ada743c27318",
-      "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc"
-    },
-    "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc",
-    "Country": {
-      "Id": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc",
-      "Name": "Germany"
-    },
-    "PointsPerYear": {
-      "1": 2
-    }
-  },
-  {
-    "ClubId": "07f87248-41b4-4f83-981a-fd5171f0b270",
-    "Club": {
-      "Name": "Marseille",
-      "Strength": 19,
-      "Id": "07f87248-41b4-4f83-981a-fd5171f0b270",
-      "CountryId": "5198d483-97be-409e-adbe-b86d3591f972"
-    },
-    "CountryId": "5198d483-97be-409e-adbe-b86d3591f972",
-    "Country": {
-      "Id": "5198d483-97be-409e-adbe-b86d3591f972",
-      "Name": "France"
-    },
-    "PointsPerYear": {
-      "1": 0
-    }
-  },
-  {
-    "ClubId": "8fa3ee37-6815-45d3-a356-55b220959f87",
-    "Club": {
-      "Name": "AS Roma",
-      "Strength": 20,
-      "Id": "8fa3ee37-6815-45d3-a356-55b220959f87",
-      "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
-    },
-    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a",
-    "Country": {
-      "Id": "cb8c6eca-b19d-451e-80d9-941c742d869a",
-      "Name": "Italy"
-    },
-    "PointsPerYear": {
-      "1": 2
-    }
-  },
-  {
-    "ClubId": "d5468579-498e-45fe-b352-42f5f8b47f63",
-    "Club": {
-      "Name": "PSV",
-      "Strength": 20,
-      "Id": "d5468579-498e-45fe-b352-42f5f8b47f63",
-      "CountryId": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb"
-    },
-    "CountryId": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb",
-    "Country": {
-      "Id": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb",
-      "Name": "Netherlands"
-    },
-    "PointsPerYear": {
-      "1": 4
-    }
-  },
-  {
-    "ClubId": "74735147-0a2f-4858-8a79-9d504f335ec9",
-    "Club": {
-      "Name": "Anderlecht",
-      "Strength": 20,
-      "Id": "74735147-0a2f-4858-8a79-9d504f335ec9",
-      "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
-    },
-    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
-    "Country": {
-      "Id": "8329761c-7791-4e76-b656-5030cbaf875f",
-      "Name": "Belgium"
-    },
-    "PointsPerYear": {}
-  },
-  {
-    "ClubId": "33d40ff4-04ea-42ca-aae1-214373242a40",
-    "Club": {
-      "Name": "Espanyol",
-      "Strength": 15,
-      "Id": "33d40ff4-04ea-42ca-aae1-214373242a40",
-      "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
-    },
-    "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
-    "Country": {
-      "Id": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
-      "Name": "Spain"
-    },
-    "PointsPerYear": {}
-  },
-  {
-    "ClubId": "3619e4d2-b5b7-42ff-97a0-aaaeaf4f610b",
-    "Club": {
-      "Name": "Samsunspor",
-      "Strength": 16,
-      "Id": "3619e4d2-b5b7-42ff-97a0-aaaeaf4f610b",
-      "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
-    },
-    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7",
-    "Country": {
-      "Id": "c78ea73f-759c-4827-8469-03fdeb8340b7",
-      "Name": "Turkey"
-    },
-    "PointsPerYear": {}
-  },
-  {
-    "ClubId": "48b1f5af-87aa-4d61-88ca-01f96c98178b",
-    "Club": {
-      "Name": "Trabzonspor",
-      "Strength": 17,
-      "Id": "48b1f5af-87aa-4d61-88ca-01f96c98178b",
-      "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
-    },
-    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7",
-    "Country": {
-      "Id": "c78ea73f-759c-4827-8469-03fdeb8340b7",
-      "Name": "Turkey"
     },
     "PointsPerYear": {}
   },
@@ -347,6 +30,156 @@
     "PointsPerYear": {}
   },
   {
+    "ClubId": "f8e345aa-f656-41e1-9e09-93ffa98c615d",
+    "Club": {
+      "Name": "Barcelona",
+      "Strength": 19,
+      "Id": "f8e345aa-f656-41e1-9e09-93ffa98c615d",
+      "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
+    },
+    "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
+    "Country": {
+      "Id": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
+      "Name": "Spain"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "0a2c8972-69fb-4750-b0df-31ebd6e941f5",
+    "Club": {
+      "Name": "Stuttgart",
+      "Strength": 17,
+      "Id": "0a2c8972-69fb-4750-b0df-31ebd6e941f5",
+      "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc"
+    },
+    "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc",
+    "Country": {
+      "Id": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc",
+      "Name": "Germany"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "13358ced-5c19-4884-b668-05839e4e4327",
+    "Club": {
+      "Name": "Lens",
+      "Strength": 18,
+      "Id": "13358ced-5c19-4884-b668-05839e4e4327",
+      "CountryId": "5198d483-97be-409e-adbe-b86d3591f972"
+    },
+    "CountryId": "5198d483-97be-409e-adbe-b86d3591f972",
+    "Country": {
+      "Id": "5198d483-97be-409e-adbe-b86d3591f972",
+      "Name": "France"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "8fa3ee37-6815-45d3-a356-55b220959f87",
+    "Club": {
+      "Name": "AS Roma",
+      "Strength": 20,
+      "Id": "8fa3ee37-6815-45d3-a356-55b220959f87",
+      "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+    },
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a",
+    "Country": {
+      "Id": "cb8c6eca-b19d-451e-80d9-941c742d869a",
+      "Name": "Italy"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "98b29cd6-defd-4b3a-a59f-5edd3d29a003",
+    "Club": {
+      "Name": "Feyenoord",
+      "Strength": 19,
+      "Id": "98b29cd6-defd-4b3a-a59f-5edd3d29a003",
+      "CountryId": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb"
+    },
+    "CountryId": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb",
+    "Country": {
+      "Id": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb",
+      "Name": "Netherlands"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "5d985a07-e590-4623-8cdc-120f6d230a79",
+    "Club": {
+      "Name": "FC Porto",
+      "Strength": 20,
+      "Id": "5d985a07-e590-4623-8cdc-120f6d230a79",
+      "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5"
+    },
+    "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5",
+    "Country": {
+      "Id": "92f8909c-982e-486b-a5c9-fb40102975b5",
+      "Name": "Portugal"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "aabb8e18-66dc-46b4-bc41-774fb6f02720",
+    "Club": {
+      "Name": "Galatasaray",
+      "Strength": 20,
+      "Id": "aabb8e18-66dc-46b4-bc41-774fb6f02720",
+      "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7"
+    },
+    "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7",
+    "Country": {
+      "Id": "c78ea73f-759c-4827-8469-03fdeb8340b7",
+      "Name": "Turkey"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "b1a70112-f093-49a3-b5b3-a104a636d048",
+    "Club": {
+      "Name": "Club Brugge",
+      "Strength": 20,
+      "Id": "b1a70112-f093-49a3-b5b3-a104a636d048",
+      "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
+    },
+    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
+    "Country": {
+      "Id": "8329761c-7791-4e76-b656-5030cbaf875f",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "552f21be-bb48-45a5-b21a-b5f0fbf3f3a1",
+    "Club": {
+      "Name": "Chelsea",
+      "Strength": 19,
+      "Id": "552f21be-bb48-45a5-b21a-b5f0fbf3f3a1",
+      "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7"
+    },
+    "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
+    "Country": {
+      "Id": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
+      "Name": "England"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "17a14cf8-d731-4dd0-b151-c1ffeb963609",
+    "Club": {
+      "Name": "Villareal",
+      "Strength": 18,
+      "Id": "17a14cf8-d731-4dd0-b151-c1ffeb963609",
+      "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7"
+    },
+    "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
+    "Country": {
+      "Id": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
+      "Name": "Spain"
+    },
+    "PointsPerYear": {}
+  },
+  {
     "ClubId": "069d5682-ca9f-4d77-9dea-202dab92e622",
     "Club": {
       "Name": "RB Leipzig",
@@ -362,17 +195,47 @@
     "PointsPerYear": {}
   },
   {
-    "ClubId": "7451cffc-9c05-4d98-8e75-d2d3e8f621e5",
+    "ClubId": "3eccda58-4af3-478e-9025-b79ffdbf6443",
     "Club": {
-      "Name": "RWDM",
-      "Strength": 17,
-      "Id": "7451cffc-9c05-4d98-8e75-d2d3e8f621e5",
-      "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f"
+      "Name": "Rennes",
+      "Strength": 15,
+      "Id": "3eccda58-4af3-478e-9025-b79ffdbf6443",
+      "CountryId": "5198d483-97be-409e-adbe-b86d3591f972"
     },
-    "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
+    "CountryId": "5198d483-97be-409e-adbe-b86d3591f972",
     "Country": {
-      "Id": "8329761c-7791-4e76-b656-5030cbaf875f",
-      "Name": "Belgium"
+      "Id": "5198d483-97be-409e-adbe-b86d3591f972",
+      "Name": "France"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "bfa8fe94-2b40-473d-b850-38d588683440",
+    "Club": {
+      "Name": "AC Milan",
+      "Strength": 19,
+      "Id": "bfa8fe94-2b40-473d-b850-38d588683440",
+      "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a"
+    },
+    "CountryId": "cb8c6eca-b19d-451e-80d9-941c742d869a",
+    "Country": {
+      "Id": "cb8c6eca-b19d-451e-80d9-941c742d869a",
+      "Name": "Italy"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "d404570d-34da-41a0-a1aa-72ad9cab6575",
+    "Club": {
+      "Name": "NEC",
+      "Strength": 18,
+      "Id": "d404570d-34da-41a0-a1aa-72ad9cab6575",
+      "CountryId": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb"
+    },
+    "CountryId": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb",
+    "Country": {
+      "Id": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb",
+      "Name": "Netherlands"
     },
     "PointsPerYear": {}
   }

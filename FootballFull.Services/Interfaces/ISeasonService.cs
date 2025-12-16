@@ -10,7 +10,7 @@ namespace FootballFull.Services.Interfaces
         void InitializeNewSeason(int year);
         void PlayMatchDay(IList<Fixture> fixtures, int matchDay,bool isSuddenDeath = false, Guid? playerClubId = null, bool neutralField = false);
         Guid ChoosePlayerClub();
-        IList<Fixture> InitializeInternationalGames();
+        IList<Fixture> InitializeInternationalGames(bool loadFromSavedGames = false);
         IList<Fixture> InitializeNationalCups();
         Trainer NewTrainer(Guid clubId, int matchDay = 0);
         void UpdateWeekStats(Guid userClubId, int matchDay);

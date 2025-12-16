@@ -83,5 +83,22 @@ namespace FootballFull.Services
         {
             _linkRepository.Create(clubPerCompetition, true);
         }
+
+        public void UpdateInternationalCompetition(IList<ClubPerCompetition> clubPerCompetitions)
+        {
+            var competitions = clubPerCompetitions.Select(cpc => cpc.CompetitionId).Distinct().ToList();
+
+            foreach (var competition in competitions)
+                foreach (var club in GetAllClubPerSpecificCompetitions(competition))
+                    RemoveClubFromCompetition(club.ClubId, club.CompetitionId);
+
+            foreach (var clubPerCompetition in clubPerCompetitions)
+                AddClubToCompetition(clubPerCompetition.ClubId, clubPerCompetition.CompetitionId);
+        }
+
+        public IList<ClubPerCompetition> GetAllClubPerSpecificCompetitions(Guid competitionId)
+        {
+            return GetAllClubPerCompetitions().Where(_ => _.CompetitionId == competitionId).ToList();
+        }
     }
 }

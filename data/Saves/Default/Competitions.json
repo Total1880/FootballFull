@@ -5,7 +5,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 1,
-    "Strength": 13,
+    "Strength": 19,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
@@ -46,7 +46,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 2,
-    "Strength": 11,
+    "Strength": 16,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
@@ -83,7 +83,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 3,
-    "Strength": 9,
+    "Strength": 13,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
@@ -124,7 +124,7 @@
     "Country": null,
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
     "Tier": 1,
-    "Strength": 19,
+    "Strength": 18,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
@@ -179,7 +179,33 @@
       "1": 1,
       "2": 2,
       "3": 3,
-      "4": 4
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10,
+      "11": 11,
+      "12": 12,
+      "13": 13,
+      "14": 14,
+      "15": 15,
+      "16": 16,
+      "17": 17,
+      "18": 18,
+      "19": 19,
+      "20": 20,
+      "21": 21,
+      "22": 22,
+      "23": 23,
+      "24": 24,
+      "25": 25,
+      "26": 26,
+      "27": 27,
+      "28": 28,
+      "29": 29,
+      "30": 30
     }
   },
   {
@@ -188,7 +214,7 @@
     "Country": null,
     "CountryId": "19df0097-df2a-4006-9a21-41e2e6c13ba7",
     "Tier": 1,
-    "Strength": 16,
+    "Strength": 17,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
@@ -237,7 +263,7 @@
     "Country": null,
     "CountryId": "97b0eac6-eb44-4b8b-aef2-93a8b8e833fc",
     "Tier": 1,
-    "Strength": 15,
+    "Strength": 16,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
@@ -282,7 +308,7 @@
     "Country": null,
     "CountryId": "5198d483-97be-409e-adbe-b86d3591f972",
     "Tier": 1,
-    "Strength": 12,
+    "Strength": 15,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
@@ -327,7 +353,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 4,
-    "Strength": 7,
+    "Strength": 10,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
@@ -368,7 +394,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 5,
-    "Strength": 5,
+    "Strength": 7,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
@@ -409,7 +435,7 @@
     "Country": null,
     "CountryId": "8329761c-7791-4e76-b656-5030cbaf875f",
     "Tier": 6,
-    "Strength": 3,
+    "Strength": 4,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
@@ -493,7 +519,7 @@
     "Country": null,
     "CountryId": "de102f18-1135-4d0d-a0f8-aa7d36065bc7",
     "Tier": 2,
-    "Strength": 10,
+    "Strength": 9,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
@@ -599,7 +625,7 @@
     "Country": null,
     "CountryId": "81c78cd7-431e-46b1-a6d9-0ca4316b37bb",
     "Tier": 1,
-    "Strength": 18,
+    "Strength": 13,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
@@ -644,7 +670,7 @@
     "Country": null,
     "CountryId": "92f8909c-982e-486b-a5c9-fb40102975b5",
     "Tier": 1,
-    "Strength": 11,
+    "Strength": 12,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
@@ -689,7 +715,7 @@
     "Country": null,
     "CountryId": "c78ea73f-759c-4827-8469-03fdeb8340b7",
     "Tier": 1,
-    "Strength": 17,
+    "Strength": 11,
     "Type": 0,
     "MatchDayPerWeek": {
       "1": 1,
