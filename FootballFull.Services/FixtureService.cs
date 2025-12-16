@@ -35,15 +35,16 @@ namespace FootballFull.Services
             var list = new List<Fixture>();
             foreach (var competitionId in competitions)
             {
+                var competition = _competitionService.GetCompetitionById(competitionId);
+                if (competition.Type != Competition.CompetitionType.League)
+                    continue;
                 _teamsPerCompetition = clubsPerCompetition.Where(_ => _.CompetitionId == competitionId).ToList();
                 Shuffle(_teamsPerCompetition);
                 _roundCount = _teamsPerCompetition.Count - 1;
                 _matchesPerRoundCount = _teamsPerCompetition.Count / 2;
 
-                var competitionWeekdays = _competitionService.GetCompetitionById(competitionId).MatchDayPerWeek;
-
-                var firstHalfSeasonFixtures = GenerateFixtures(0, competitionId, competitionWeekdays);
-                var secondHalfSeasonFixtures = GenerateFixtures(_teamsPerCompetition.Count - 1, competitionId, competitionWeekdays);
+                var firstHalfSeasonFixtures = GenerateFixtures(0, competitionId, competition.MatchDayPerWeek);
+                var secondHalfSeasonFixtures = GenerateFixtures(_teamsPerCompetition.Count - 1, competitionId, competition.MatchDayPerWeek);
 
                 list = list.Concat(firstHalfSeasonFixtures).ToList();
                 list = list.Concat(secondHalfSeasonFixtures).ToList();
