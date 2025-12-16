@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace FootballFull.Models
 {
@@ -20,12 +15,14 @@ namespace FootballFull.Models
         public int TotalPoints(int year)
         {
             var totalPoints = 0;
-            foreach (var point in PointsPerYear.Where(_ => _.Key >= year - 5)) {
+            foreach (var point in PointsPerYear.Where(_ => _.Key >= year - 5))
+            {
                 totalPoints += point.Value;
             }
             return totalPoints;
         }
-        public void UpdatePoints(int year, int point) {
+        public void UpdatePoints(int year, int point)
+        {
             if (PointsPerYear.ContainsKey(year))
                 PointsPerYear[year] += point;
             else

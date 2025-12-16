@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FootballFull.Models
+﻿namespace FootballFull.Models
 {
     public class Competition
     {
@@ -22,6 +16,6 @@ namespace FootballFull.Models
             Cup,
             International
         }
-        public IDictionary<int, int> MatchDayPerWeek {get; set;}
+        public IDictionary<int, int> MatchDayPerWeek { get; set; }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using FootballFull.Models;
 using FootballFull.Services.Interfaces;
-using System;
-using System.Diagnostics.Metrics;
-using System.Linq;
 
 namespace FootballFullEditor.ConsoleUI
 {

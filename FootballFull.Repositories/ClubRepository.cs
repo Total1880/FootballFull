@@ -1,6 +1,5 @@
 ﻿using FootballFull.Models;
 using FootballFull.Repositories.Interfaces;
-using System.Text.Json;
 
 namespace FootballFull.Repositories
 {

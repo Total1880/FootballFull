@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using FootballFull.Models;
+﻿using FootballFull.Models;
 using FootballFull.Services.Interfaces;
 
 namespace FootballFullEditor.ConsoleUI

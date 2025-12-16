@@ -1,9 +1,5 @@
 ﻿using FootballFull.Models;
 using FootballFull.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text.Json;
 
 namespace FootballFull.Repositories
@@ -56,8 +52,9 @@ namespace FootballFull.Repositories
                 }
 
                 Save(clubs);
-            } else
-                            {
+            }
+            else
+            {
                 // Volledig overschrijven
                 foreach (var club in itemList)
                 {

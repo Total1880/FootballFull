@@ -743,7 +743,7 @@ namespace FootballFull.Services
                         if (int.TryParse(input, out int chosenCompetitionIndex) &&
 chosenCompetitionIndex > 0 &&
 chosenCompetitionIndex <= competitions.Count)
-                        { 
+                        {
                             var chosenCompetition = competitions[chosenCompetitionIndex - 1].Id;
                             var clubs = _clubPerCompetitionService.GetClubsForCompetition(chosenCompetition)
                                 .ToList();

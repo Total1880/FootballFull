@@ -1,10 +1,5 @@
 ﻿using FootballFull.Models;
 using FootballFull.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FootballFull.Services
 {
@@ -77,7 +72,7 @@ namespace FootballFull.Services
                             {
                                 { roundNo + roundNoOffset, roundNo + roundNoOffset }
                             });
-                            
+
                         }
                         fixtures.Add(new Fixture
                         {
@@ -162,7 +157,7 @@ namespace FootballFull.Services
             var counter = 0;
             do
             {
-                
+
                 if (number == numbertocheck)
                 {
                     return counter;
