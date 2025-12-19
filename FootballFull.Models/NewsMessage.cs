@@ -1,7 +1,10 @@
-﻿namespace FootballFull.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FootballFull.Models
 {
     public class NewsMessage
     {
+        [Required]
         public Guid Id { get; set; }
         public string Message { get; set; }
         public Guid? ClubId { get; set; }

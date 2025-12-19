@@ -141,22 +141,32 @@ namespace FootballFull.Services
         private void ShowNews(int week, int year, Guid competitionId)
         {
             Console.Clear();
-            var autoContinue = true;
-            foreach (var message in _seasonService.NewsMessages
-                .Where(_ => _.CountryId == _clubService.GetClubById(_userClubId).CountryId &&
-                _.CompetitionId == competitionId &&
-                _.MatchDay == week
-                && _.Year == year))
+
+            var club = _clubService.GetClubById(_userClubId);
+            var countryId = club.CountryId;
+
+            // Eén query, maar we vermijden dubbele enumeratie door te materializen als nodig
+            var matches = _seasonService.NewsMessages.Where(nm =>
+                nm.CountryId == countryId &&
+                nm.CompetitionId == competitionId &&
+                nm.MatchDay == week &&
+                nm.Year == year);
+
+            using var enumerator = matches.GetEnumerator();
+            if (!enumerator.MoveNext())
+                return; // geen nieuws -> meteen klaar (scheelt ook een ReadKey)
+
+            // eerste item is er al
+            do
             {
-                autoContinue = false;
-                Console.WriteLine(message.Message);
+                Console.WriteLine(enumerator.Current.Message);
             }
-            if (!autoContinue)
-            {
-                Console.WriteLine("Press any key to continue.");
-                Console.ReadKey();
-            }
+            while (enumerator.MoveNext());
+
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey(true);
         }
+
 
         #region Helpers
 

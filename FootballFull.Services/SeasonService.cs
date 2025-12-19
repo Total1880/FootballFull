@@ -28,7 +28,7 @@ namespace FootballFull.Services
         private SaveData _saveData;
 
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
-        public IList<NewsMessage> NewsMessages => _newsMessages;
+        public IList<NewsMessage> NewsMessages{ get { UpdateNewsMessages(); return _newsMessages; } }
         public IList<ClubInternationalRanking> ClubInternationalRankings => _clubInternationalRankings;
 
         public int Year { get => _year; set => _year = value; }
@@ -966,7 +966,6 @@ chosenCompetitionIndex <= competitions.Count)
             return rankings;
         }
 
-
         public IList<Fixture> InitializeNationalCups()
         {
             var competitions = _competitionRepository.Load();
@@ -1061,108 +1060,11 @@ chosenCompetitionIndex <= competitions.Count)
             if (club.Morale > 10) club.Morale = 10;
         }
 
-        public Trainer NewTrainer(Guid clubId, int week = 0)
-        {
-            var existingTrainer = _trainers.FirstOrDefault(_ => _.ClubId == clubId);
-            if (existingTrainer != null)
-                existingTrainer.ClubId = Guid.Empty;
-            var newTrainer = _trainerService.CreateRandomTrainer(clubId);
-            AssignTrainer(clubId, newTrainer, week);
-            _trainers.Add(newTrainer);
-            return newTrainer;
-        }
 
-        private void AssignTrainer(Guid clubId, Trainer trainer, int week)
-        {
-            var club = _clubs.First(_ => _.Id == clubId);
-            club.HasTrainerSinceWeek = 0;
-            club.HasFiredTrainerInWeek = week;
-            if (trainer.ClubId != Guid.Empty && trainer.ClubId != clubId)
-            {
-                var nextClub = _clubs.First(_ => _.Id == trainer.ClubId);
-
-                FindNewTrainer(nextClub, week, nextClub.Strength, trainer.Id, false);
-            }
-            trainer.ClubId = clubId;
-        }
-
-        private void ClubsFireTrainer(Guid userClubId, int week)
-        {
-            var clubs = _clubs.Where(_ => _.Id != userClubId && _.Momentum < 3 && _.Morale < 3 && _.HasTrainerSinceWeek > 5).ToList();
-
-            foreach (var club in clubs)
-            {
-                var maxValue = 20 - club.HasTrainerSinceWeek;
-                if (Random.Shared.Next(0, maxValue > 0 ? maxValue : 0) == 0)
-                {
-                    var firedTrainer = FireTrainer(club.Id, club.Strength);
-                    var newTrainer = FindNewTrainer(club, week, club.Strength, firedTrainer, true);
-                }
-            }
-        }
-
-        private Trainer? FindNewTrainer(Club club, int week, int strength, Guid firedTrainerId, bool isFired = true)
-        {
-            var firedTrainer = _trainers.First(_ => _.Id == firedTrainerId);
-            var message = new NewsMessage { ClubId = club.Id, CountryId = club.CountryId, MatchDay = week, Year = _year, CompetitionId = _clubLeagueCompetitions.First(_ => _.ClubId == club.Id).CompetitionId };
-            if (isFired)
-                message.Message = $"{club.Name} fired its trainer, {firedTrainer.Name} {firedTrainer.LastName}.";
-            else message.Message = $"{club.Name} lost its trainer, {firedTrainer.Name} {firedTrainer.LastName}.";
-
-            var trainer = FindTrainerAtOtherClub(strength);
-
-            if (trainer == null)
-            {
-                trainer = _trainers
-                    .Where(_ => _.Id != firedTrainerId && _.ClubId == Guid.Empty && _.LastTeamStrength >= (strength - 5) && _.LastTeamStrength <= (strength + 5))
-                    .OrderByDescending(_ => _.LastTeamStrength)
-                    .FirstOrDefault();
-                if (trainer != null)
-                    message.Message += $"They found a new unemployed trainer, {trainer.Name} {trainer.LastName}";
-            }
-
-            if (trainer == null)
-            {
-                trainer = NewTrainer(club.Id, week);
-                message.Message += $"They found a new trainer, {trainer.Name} {trainer.LastName}";
-            }
-            else
-            {
-                if (trainer.ClubId != Guid.Empty)
-                {
-                    var oldClubName = _clubs.First(_ => _.Id == trainer.ClubId).Name;
-                    message.Message += $"They took over trainer {trainer.Name} {trainer.LastName} from {oldClubName}";
-                }
-                AssignTrainer(club.Id, trainer, week);
-
-            }
-
-            _newsMessages.Add(message);
-            return trainer;
-        }
-
-        private Trainer? FindTrainerAtOtherClub(int strength)
-        {
-            var club = _clubs
-                .Where(_ => _.Strength < strength && _.Momentum > 10 && _.HasTrainerSinceWeek > 5)
-                .OrderByDescending(_ => _.Strength)
-                .ToList()
-                .FirstOrDefault();
-
-            return _trainers.FirstOrDefault(_ => _.ClubId == club?.Id);
-        }
-
-        private Guid FireTrainer(Guid id, int strength)
-        {
-            var trainer = _trainers.First(_ => _.ClubId.Equals(id));
-            trainer.ClubId = Guid.Empty;
-            trainer.LastTeamStrength = strength;
-            return trainer.Id;
-        }
 
         public void UpdateWeekStats(Guid userClubId, int week)
         {
-            ClubsFireTrainer(userClubId, week);
+            _trainerService.ClubsFireTrainer(userClubId, week, _clubs, _year, _clubLeagueCompetitions);
         }
 
         public Trainer UserTrainer(Guid userClubId)
@@ -1180,6 +1082,24 @@ chosenCompetitionIndex <= competitions.Count)
 
             _saveData.Year = _year;
             _saveDataService.Save(_saveData);
+        }
+
+        public Trainer NewTrainer(Guid clubId, int matchDay = 0)
+        {
+            return _trainerService.NewTrainer(clubId, _clubs, _clubLeagueCompetitions, _year, matchDay);
+        }
+
+        private void UpdateNewsMessages()
+        {
+            var existingIds = new HashSet<Guid>(_newsMessages.Select(x => x.Id));
+
+            foreach (var nm in _trainerService.NewsMessages)
+            {
+                if (existingIds.Add(nm.Id)) // Add geeft false terug als id al bestaat
+                {
+                    _newsMessages.Add(nm);
+                }
+            }
         }
     }
 }
