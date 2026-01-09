@@ -36,5 +36,6 @@ namespace FootballFull.Models
         public int HasTrainerSinceWeek { get; set; } = 0;
         [JsonIgnore]
         public int HasFiredTrainerInWeek { get; set; } = 0;
+
     }
 }

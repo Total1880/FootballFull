@@ -61,6 +61,7 @@ namespace FootballFull.Services
             _saveData = _saveDataService.Load();
             Year = _saveData.Year;
         }
+
         public void Initialize(IList<ClubPerCompetition> clubsPerCompetition)
         {
             _clubsPerCompetition = clubsPerCompetition;
@@ -1059,8 +1060,6 @@ chosenCompetitionIndex <= competitions.Count)
             if (club.Morale < 1) club.Morale = 1;
             if (club.Morale > 10) club.Morale = 10;
         }
-
-
 
         public void UpdateWeekStats(Guid userClubId, int week)
         {

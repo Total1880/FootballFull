@@ -1,23 +1,29 @@
 ﻿using FootballFull.Models;
 using FootballFull.Repositories.Interfaces;
 using FootballFull.Services.Interfaces;
+using System.Collections.Generic;
 
 namespace FootballFull.Services
 {
     public class TrainerService : ITrainerService
     {
         private readonly IRepository<Trainer> _trainerRepository;
+        private readonly IRepository<Competition> _competitionRepository;
         private readonly INameRepository _nameRepository;
         private IList<Trainer>? _trainers;
         private IList<NewsMessage> _newsMessages;
+        private IList<Competition> _topLeagues;
 
         public IList<NewsMessage> NewsMessages => _newsMessages;
 
-        public TrainerService(IRepository<Trainer> trainerRepository, INameRepository nameRepository)
+        public TrainerService(IRepository<Trainer> trainerRepository, INameRepository nameRepository, IRepository<Competition> competitionRepository)
         {
             _trainerRepository = trainerRepository;
+            _competitionRepository = competitionRepository;
             _nameRepository = nameRepository;
+
             _newsMessages = new List<NewsMessage>();
+            _topLeagues = _competitionRepository.Load().Where(c => c.Tier == 1 && c.Type == Competition.CompetitionType.League).ToList();
         }
 
         public IList<Trainer> Load()
@@ -106,7 +112,7 @@ namespace FootballFull.Services
                 message.Message = $"{club.Name} fired its trainer, {firedTrainer.Name} {firedTrainer.LastName}.";
             else message.Message = $"{club.Name} lost its trainer, {firedTrainer.Name} {firedTrainer.LastName}.";
 
-            var trainer = FindTrainerAtOtherClub(strength, clubs);
+            var trainer = FindTrainerAtOtherClub(strength, clubs, club.CountryId, clubLeagueCompetitions);
 
             if (trainer == null)
             {
@@ -138,10 +144,14 @@ namespace FootballFull.Services
             return trainer;
         }
 
-        private Trainer? FindTrainerAtOtherClub(int strength, IList<Club> clubs)
+        private Trainer? FindTrainerAtOtherClub(int strength, IList<Club> clubs, Guid countryId, IList<ClubLeagueCompetition> clubLeagueCompetitions)
         {
+            var filteredclubLeagueCompetitions = clubLeagueCompetitions
+                .Where(_ => _topLeagues.Any(tl => tl.Id == _.CompetitionId))
+                .ToList();
+
             var club = clubs
-                .Where(_ => _.Strength < strength && _.Momentum > 10 && _.HasTrainerSinceWeek > 5)
+                .Where(_ => _.Strength < strength && _.Momentum > 10 && _.HasTrainerSinceWeek > 5 && (_.CountryId == countryId || filteredclubLeagueCompetitions.Any(f => f.ClubId == _.Id)))
                 .OrderByDescending(_ => _.Strength)
                 .ToList()
                 .FirstOrDefault();
