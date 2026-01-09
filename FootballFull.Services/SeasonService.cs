@@ -189,69 +189,65 @@ namespace FootballFull.Services
 
         private void PromotionsAndRelegations()
         {
-            if (_clubLeagueCompetitions == null)
-                return;
+            if (_clubLeagueCompetitions == null) return;
 
-            const int promotionsAndRelegationPlaces = 2;
+            const int places = 2;
 
-            var competitions = _competitionRepository.Load();
+            var competitions = _competitionRepository.Load()
+                .Where(c => c.Type == Competition.CompetitionType.League)   // <— enkel leagues
+                .ToList();
+
+            // maxTier PER LAND, niet globaal
+            var maxTierPerCountry = competitions
+                .GroupBy(c => c.CountryId)
+                .ToDictionary(g => g.Key, g => g.Max(x => x.Tier));
 
             foreach (var competition in competitions)
             {
                 var clubsInCompetition = _clubLeagueCompetitions
-                    .Where(_ => _.CompetitionId == competition.Id)
-                    .OrderByDescending(_ => _.Points)
-                    .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst)
-                    .ThenByDescending(_ => _.GoalsFor)
+                    .Where(x => x.CompetitionId == competition.Id)
+                    .OrderByDescending(x => x.Points)
+                    .ThenByDescending(x => x.GoalsFor - x.GoalsAgainst)
+                    .ThenByDescending(x => x.GoalsFor)
                     .ToList();
 
-                if (clubsInCompetition.Count == 0)
-                    continue;
+                if (clubsInCompetition.Count == 0) continue;
 
-                var relegatedClubs = clubsInCompetition
-                    .Skip(clubsInCompetition.Count - promotionsAndRelegationPlaces)
-                    .ToList();
+                var relegated = clubsInCompetition.Skip(Math.Max(0, clubsInCompetition.Count - places)).ToList();
+                var promoted = clubsInCompetition.Take(Math.Min(places, clubsInCompetition.Count)).ToList();
 
-                var promotedClubs = clubsInCompetition
-                    .Take(promotionsAndRelegationPlaces)
-                    .ToList();
-
-                // Promotie: naar hogere tier (lager getal)
+                // promotie
                 if (competition.Tier > 1)
                 {
-                    var higherCompetition = competitions
-                        .FirstOrDefault(_ => _.Tier == competition.Tier - 1 && _.CountryId == competition.CountryId);
-
-                    if (higherCompetition != null)
+                    var higher = competitions.FirstOrDefault(c => c.CountryId == competition.CountryId && c.Tier == competition.Tier - 1);
+                    if (higher != null)
                     {
-                        foreach (var promotedClub in promotedClubs)
+                        foreach (var club in promoted)
                         {
-                            var link = _clubsPerCompetition.FirstOrDefault(_ => _.ClubId == promotedClub.ClubId);
-                            if (link != null)
-                                link.CompetitionId = higherCompetition.Id;
+                            // <— update exact dezelfde link (club + huidige competitie)
+                            var link = _clubsPerCompetition.FirstOrDefault(l => l.ClubId == club.ClubId && l.CompetitionId == competition.Id);
+                            if (link != null) link.CompetitionId = higher.Id;
                         }
                     }
                 }
 
-                // Degradatie: naar lagere tier (hoger getal)
-                var maxTier = competitions.Max(_ => _.Tier);
+                // degradatie
+                var maxTier = maxTierPerCountry[competition.CountryId];
                 if (competition.Tier < maxTier)
                 {
-                    var lowerCompetition = competitions
-                        .FirstOrDefault(_ => _.Tier == competition.Tier + 1 && _.CountryId == competition.CountryId);
-
-                    if (lowerCompetition != null)
+                    var lower = competitions.FirstOrDefault(c => c.CountryId == competition.CountryId && c.Tier == competition.Tier + 1);
+                    if (lower != null)
                     {
-                        foreach (var relegatedClub in relegatedClubs)
+                        foreach (var club in relegated)
                         {
-                            var link = _clubsPerCompetition.FirstOrDefault(_ => _.ClubId == relegatedClub.ClubId);
-                            if (link != null)
-                                link.CompetitionId = lowerCompetition.Id;
+                            var link = _clubsPerCompetition.FirstOrDefault(l => l.ClubId == club.ClubId && l.CompetitionId == competition.Id);
+                            if (link != null) link.CompetitionId = lower.Id;
                         }
                     }
                 }
             }
         }
+
 
         public void PlayMatchDay(IList<Fixture> fixtures, int week, bool isSuddenDeath = false, Guid? playerClubId = null, bool neutralField = false)
         {
