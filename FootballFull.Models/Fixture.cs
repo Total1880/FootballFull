@@ -8,7 +8,7 @@
         public Club AwayTeam { get; set; }
         public int HomeScore { get; set; }
         public int AwayScore { get; set; }
-        public int MatchDay { get; set; }
+        public DateTime MatchDay { get; set; }
         public int RoundNo { get; set; }
         public Guid CompetitionId { get; set; }
         public Fixture? CupPreviousFixtureHomeTeam { get; set; }

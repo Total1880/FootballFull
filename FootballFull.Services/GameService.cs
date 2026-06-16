@@ -22,8 +22,9 @@ namespace FootballFull.Services
         private IList<Fixture>? _internationalFixtures;
         private IList<NewsMessage> _news;
         private Guid _userClubId;
-        private int _weeks;
-        private int _year = 0;
+        private DateTime _currentDate;
+        private DateTime _newSeasonDate;
+        private int _year = DateTime.Now.Year;
 
         public GameService(
             ISeasonService seasonService,
@@ -68,13 +69,13 @@ namespace FootballFull.Services
             _year = _seasonService.Year;
             _fixtures = _fixtureService.Generate(_clubsPerCompetition);
             _cupFixtures = _seasonService.InitializeNationalCups();
+            _currentDate = new DateTime(_year,7,1);
+            _lastSeasonDate = _currentDate.AddYears(1);
 
             if (!isNew)
             {
                 _internationalFixtures = _seasonService.InitializeInternationalGames(true);
             }
-
-            _weeks = Configuration.Weeks;
 
             // Hoofdloop
             do
@@ -96,10 +97,10 @@ namespace FootballFull.Services
                 Console.ReadKey();
                 Console.Clear();
 
-                for (int week = 1; week <= _weeks; week++)
+                do
                 {
                     Console.Clear();
-                    Console.WriteLine($"=== Week {week} ===");
+                    Console.WriteLine($"=== Date {_currentDate:dddd dd/MM/yyyy} ===");
 
                     Console.WriteLine();
                     Console.WriteLine("Druk op een toets om deze week te simuleren...");
@@ -119,8 +120,8 @@ namespace FootballFull.Services
                     Console.Clear();
 
                     ShowNews(week, _year, competitionId);
-                    ShowBetweenMatchdaysMenu();
-                }
+                    _currentDate.AddDays(1);
+                } while (_currentDate < _newSeasonDate);
 
                 // End of season
                 Console.WriteLine("Season complete! Press any key to restart a new season.");

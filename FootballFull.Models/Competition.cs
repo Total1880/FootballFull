@@ -16,6 +16,6 @@
             Cup,
             International
         }
-        public IDictionary<int, int> MatchDayPerWeek { get; set; }
+        public IDictionary<int, DateTime> MatchDay { get; set; }
     }
 }

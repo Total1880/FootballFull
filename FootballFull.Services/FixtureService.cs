@@ -1,5 +1,6 @@
 ﻿using FootballFull.Models;
 using FootballFull.Services.Interfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FootballFull.Services
 {
@@ -22,12 +23,14 @@ namespace FootballFull.Services
             _competitionService = competitionService;
         }
 
-        public IList<Fixture> Generate(IList<ClubPerCompetition> clubsPerCompetition)
+        public IList<Fixture> Generate(IList<ClubPerCompetition> clubsPerCompetition, DateTime seasonStartDate)
         {
             var competitions = clubsPerCompetition.GroupBy(c => c.CompetitionId)
                 .Select(g => g.Key)
                 .ToList();
             var list = new List<Fixture>();
+            var date = SearchFirstWeekend(seasonStartDate);
+
             foreach (var competitionId in competitions)
             {
                 var competition = _competitionService.GetCompetitionById(competitionId);
@@ -38,8 +41,8 @@ namespace FootballFull.Services
                 _roundCount = _teamsPerCompetition.Count - 1;
                 _matchesPerRoundCount = _teamsPerCompetition.Count / 2;
 
-                var firstHalfSeasonFixtures = GenerateFixtures(0, competitionId, competition.MatchDayPerWeek);
-                var secondHalfSeasonFixtures = GenerateFixtures(_teamsPerCompetition.Count - 1, competitionId, competition.MatchDayPerWeek);
+                var firstHalfSeasonFixtures = GenerateFixtures(0, competitionId, seasonStartDate, competition.MatchDay);
+                var secondHalfSeasonFixtures = GenerateFixtures(_teamsPerCompetition.Count - 1, competitionId, seasonStartDate, competition.MatchDay);
 
                 list = list.Concat(firstHalfSeasonFixtures).ToList();
                 list = list.Concat(secondHalfSeasonFixtures).ToList();
@@ -48,10 +51,27 @@ namespace FootballFull.Services
             return list;
         }
 
-        private IList<Fixture> GenerateFixtures(int roundNoOffset, Guid competitionId, IDictionary<int, int> competitionWeekdays = null)
+        private DateTime SearchFirstWeekend(DateTime seasonStartDate)
+        {
+            if (seasonStartDate.DayOfWeek == DayOfWeek.Saturday)
+            {
+                return seasonStartDate;
+            }
+            else if (seasonStartDate.DayOfWeek == DayOfWeek.Sunday)
+            {
+                return seasonStartDate.AddDays(1);
+            }
+            else
+            {
+                var daysUntilSaturday = ((int)DayOfWeek.Saturday - (int)seasonStartDate.DayOfWeek + 7) % 7;
+                return seasonStartDate.AddDays(daysUntilSaturday);
+            }
+        }
+
+        private IList<Fixture> GenerateFixtures(int roundNoOffset, Guid competitionId, DateTime date, IDictionary<int, DateTime> competitionWeekdays = null)
         {
             IList<Fixture> fixtures = new List<Fixture>();
-            competitionWeekdays ??= new Dictionary<int, int>();
+            competitionWeekdays ??= new Dictionary<int, DateTime>();
 
             _offsetList = GenerateOffsetArray(_teamsPerCompetition.Count);
 
@@ -68,9 +88,9 @@ namespace FootballFull.Services
                     {
                         if (!competitionWeekdays.ContainsKey(roundNo + roundNoOffset))
                         {
-                            competitionWeekdays = _competitionService.UpdateMatchDaysPerWeek(competitionId, new Dictionary<int, int>
+                            competitionWeekdays = _competitionService.UpdateMatchDays(competitionId, new Dictionary<int, DateTime>
                             {
-                                { roundNo + roundNoOffset, roundNo + roundNoOffset }
+                                { roundNo + roundNoOffset, date.AddDays((roundNo + roundNoOffset - 1) * 7) }
                             });
 
                         }
@@ -81,7 +101,7 @@ namespace FootballFull.Services
                             AwayTeamId = _teamsPerCompetition[aways[matchIndex]].ClubId,
                             AwayTeam = _clubService.GetClubById(_teamsPerCompetition[aways[matchIndex]].ClubId),
                             RoundNo = roundNo + roundNoOffset,
-                            MatchDay = competitionWeekdays != null && competitionWeekdays.ContainsKey(roundNo + roundNoOffset) ? competitionWeekdays[roundNo + roundNoOffset] : roundNo + roundNoOffset,
+                            MatchDay = competitionWeekdays != null && competitionWeekdays.ContainsKey(roundNo + roundNoOffset) ? competitionWeekdays[roundNo + roundNoOffset] : date.AddDays((roundNo + roundNoOffset - 1) * 7),
                             CompetitionId = competitionId
                         });
                     }
@@ -89,9 +109,9 @@ namespace FootballFull.Services
                     {
                         if (!competitionWeekdays.ContainsKey(roundNo + roundNoOffset))
                         {
-                            competitionWeekdays = _competitionService.UpdateMatchDaysPerWeek(competitionId, new Dictionary<int, int>
+                            competitionWeekdays = _competitionService.UpdateMatchDays(competitionId, new Dictionary<int, DateTime>
                             {
-                                { roundNo + roundNoOffset, roundNo + roundNoOffset }
+                                { roundNo + roundNoOffset, date.AddDays((roundNo + roundNoOffset - 1) * 7) }
                             });
                         }
                         fixtures.Add(new Fixture
@@ -101,7 +121,7 @@ namespace FootballFull.Services
                             AwayTeamId = _teamsPerCompetition[homes[matchIndex]].ClubId,
                             AwayTeam = _clubService.GetClubById(_teamsPerCompetition[homes[matchIndex]].ClubId),
                             RoundNo = roundNo + roundNoOffset,
-                            MatchDay = competitionWeekdays != null && competitionWeekdays.ContainsKey(roundNo + roundNoOffset) ? competitionWeekdays[roundNo + roundNoOffset] : roundNo + roundNoOffset,
+                            MatchDay = competitionWeekdays != null && competitionWeekdays.ContainsKey(roundNo + roundNoOffset) ? competitionWeekdays[roundNo + roundNoOffset] : date.AddDays((roundNo + roundNoOffset - 1) * 7),
                             CompetitionId = competitionId
                         });
                     }
@@ -183,7 +203,8 @@ namespace FootballFull.Services
 
         public IList<Fixture> GenerateCupFixtures(
             IList<ClubPerCompetition> clubsPerCompetition,
-            Competition competitionCup)
+            Competition competitionCup,
+            DateTime seasonStartDate)
         {
             if (clubsPerCompetition == null || clubsPerCompetition.Count < 2)
                 return new List<Fixture>();
@@ -195,15 +216,16 @@ namespace FootballFull.Services
                 .Where(c => c != null)
                 .ToList();
 
-            return GenerateCup(teams, competitionCup);
+            return GenerateCup(teams, competitionCup, seasonStartDate);
         }
 
-        private IList<Fixture> GenerateCup(IList<Club> teams, Competition competitionCup)
+        private IList<Fixture> GenerateCup(IList<Club> teams, Competition competitionCup, DateTime startdate)
         {
             if (teams == null || teams.Count < 2)
                 return new List<Fixture>();
 
             var fixtures = new List<Fixture>();
+            var date = SearchFirstWeekend(startdate);
 
             // Kopie zodat we de originele lijst niet wijzigen
             var realTeams = teams.ToList();
@@ -241,11 +263,11 @@ namespace FootballFull.Services
                 var home = realTeams[realIndex++];
                 var away = byeTeams[byeIndex++];
 
-                if (competitionCup.MatchDayPerWeek == null || !competitionCup.MatchDayPerWeek.ContainsKey(1))
+                if (competitionCup.MatchDay == null || !competitionCup.MatchDay.ContainsKey(1))
                 {
-                    competitionCup.MatchDayPerWeek = _competitionService.UpdateMatchDaysPerWeek(competitionCup.Id, new Dictionary<int, int>
+                    competitionCup.MatchDay = _competitionService.UpdateMatchDays(competitionCup.Id, new Dictionary<int, DateTime>
                             {
-                                { 1, 1 }
+                                { 1, date }
                             });
                 }
 
@@ -253,7 +275,7 @@ namespace FootballFull.Services
                 {
                     CompetitionId = competitionCup.Id,
                     RoundNo = 1,
-                    MatchDay = competitionCup.MatchDayPerWeek == null ? 1 : competitionCup.MatchDayPerWeek[1],
+                    MatchDay = competitionCup.MatchDay == null ? 1 : competitionCup.MatchDay[1],
                     HomeTeamId = home.Id,
                     HomeTeam = home,
                     AwayTeamId = away.Id,
@@ -270,11 +292,11 @@ namespace FootballFull.Services
                 var home = realTeams[realIndex++];
                 var away = realTeams[realIndex++];
 
-                if (competitionCup.MatchDayPerWeek == null || !competitionCup.MatchDayPerWeek.ContainsKey(1))
+                if (competitionCup.MatchDay == null || !competitionCup.MatchDay.ContainsKey(1))
                 {
-                    competitionCup.MatchDayPerWeek = _competitionService.UpdateMatchDaysPerWeek(competitionCup.Id, new Dictionary<int, int>
+                    competitionCup.MatchDay = _competitionService.UpdateMatchDays(competitionCup.Id, new Dictionary<int, DateTime>
                             {
-                                { 1, 1 }
+                                { 1, date }
                             });
                 }
 
@@ -282,7 +304,7 @@ namespace FootballFull.Services
                 {
                     CompetitionId = competitionCup.Id,
                     RoundNo = 1,
-                    MatchDay = competitionCup.MatchDayPerWeek == null ? 1 : competitionCup.MatchDayPerWeek[1],
+                    MatchDay = competitionCup.MatchDay == null ? date : competitionCup.MatchDay[1],
                     HomeTeamId = home.Id,
                     HomeTeam = home,
                     AwayTeamId = away.Id,
@@ -301,9 +323,9 @@ namespace FootballFull.Services
 
                 for (int i = 0; i < currentRoundFixtures.Count; i += 2)
                 {
-                    if (competitionCup.MatchDayPerWeek == null || !competitionCup.MatchDayPerWeek.ContainsKey(round))
+                    if (competitionCup.MatchDay == null || !competitionCup.MatchDay.ContainsKey(round))
                     {
-                        competitionCup.MatchDayPerWeek = _competitionService.UpdateMatchDaysPerWeek(competitionCup.Id, new Dictionary<int, int>
+                        competitionCup.MatchDay = _competitionService.MatchDay(competitionCup.Id, new Dictionary<int, int>
                             {
                                 { round, round }
                             });
