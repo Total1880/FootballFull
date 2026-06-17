@@ -275,7 +275,7 @@ namespace FootballFull.Services
                 {
                     CompetitionId = competitionCup.Id,
                     RoundNo = 1,
-                    MatchDay = competitionCup.MatchDay == null ? 1 : competitionCup.MatchDay[1],
+                    MatchDay = competitionCup.MatchDay == null ? date : competitionCup.MatchDay[1],
                     HomeTeamId = home.Id,
                     HomeTeam = home,
                     AwayTeamId = away.Id,
@@ -325,9 +325,9 @@ namespace FootballFull.Services
                 {
                     if (competitionCup.MatchDay == null || !competitionCup.MatchDay.ContainsKey(round))
                     {
-                        competitionCup.MatchDay = _competitionService.MatchDay(competitionCup.Id, new Dictionary<int, int>
+                        competitionCup.MatchDay = _competitionService.UpdateMatchDays(competitionCup.Id, new Dictionary<int, DateTime>
                             {
-                                { round, round }
+                                { round, date.AddDays((round - 1) * 7) }
                             });
                     }
 
@@ -335,7 +335,7 @@ namespace FootballFull.Services
                     {
                         CompetitionId = competitionCup.Id,
                         RoundNo = round,
-                        MatchDay = competitionCup.MatchDayPerWeek == null ? round : competitionCup.MatchDayPerWeek[round],
+                        MatchDay = competitionCup.MatchDay == null ? date.AddDays((round - 1) * 7) : competitionCup.MatchDay[round],
                         CupPreviousFixtureHomeTeam = currentRoundFixtures[i],
                         CupPreviousFixtureAwayTeam = currentRoundFixtures[i + 1]
                     };
