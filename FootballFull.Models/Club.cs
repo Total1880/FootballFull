@@ -33,9 +33,9 @@ namespace FootballFull.Models
         [JsonIgnore]
         public int Morale { get; set; } = 5;
         [JsonIgnore]
-        public int HasTrainerSinceWeek { get; set; } = 0;
+        public DateTime HasTrainerSinceWeek { get; set; }
         [JsonIgnore]
-        public int HasFiredTrainerInWeek { get; set; } = 0;
+        public DateTime HasFiredTrainerInWeek { get; set; }
 
     }
 }

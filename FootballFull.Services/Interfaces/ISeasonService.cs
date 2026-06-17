@@ -8,12 +8,12 @@ namespace FootballFull.Services.Interfaces
         IList<ClubInternationalRanking> ClubInternationalRankings { get; }
         void Initialize(IList<ClubPerCompetition> clubs);
         void InitializeNewSeason(int year);
-        void PlayMatchDay(IList<Fixture> fixtures, int matchDay, bool isSuddenDeath = false, Guid? playerClubId = null, bool neutralField = false);
+        void PlayMatchDay(IList<Fixture> fixtures, DateTime matchDay, bool isSuddenDeath = false, Guid? playerClubId = null, bool neutralField = false);
         Guid ChoosePlayerClub();
-        IList<Fixture> InitializeInternationalGames(bool loadFromSavedGames = false);
-        IList<Fixture> InitializeNationalCups();
-        Trainer NewTrainer(Guid clubId, int matchDay = 0);
-        void UpdateWeekStats(Guid userClubId, int matchDay);
+        IList<Fixture> InitializeInternationalGames(DateTime date, bool loadFromSavedGames = false);
+        IList<Fixture> InitializeNationalCups(DateTime date);
+        Trainer NewTrainer(Guid clubId, DateTime date);
+        void UpdateWeekStats(Guid userClubId, DateTime date);
         IList<NewsMessage> NewsMessages { get; }
         int Year { get; set; }
         Trainer UserTrainer(Guid userClubId);

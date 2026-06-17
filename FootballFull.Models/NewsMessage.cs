@@ -10,7 +10,7 @@ namespace FootballFull.Models
         public Guid? ClubId { get; set; }
         public Guid? CompetitionId { get; set; }
         public Guid? CountryId { get; set; }
-        public int MatchDay { get; set; }
+        public DateTime Date { get; set; }
         public int Year { get; set; }
     }
 }

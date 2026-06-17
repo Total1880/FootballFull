@@ -249,12 +249,12 @@ namespace FootballFull.Services
         }
 
 
-        public void PlayMatchDay(IList<Fixture> fixtures, int week, bool isSuddenDeath = false, Guid? playerClubId = null, bool neutralField = false)
+        public void PlayMatchDay(IList<Fixture> fixtures, DateTime day, bool isSuddenDeath = false, Guid? playerClubId = null, bool neutralField = false)
         {
             if (_clubLeagueCompetitions == null)
                 throw new InvalidOperationException("Club league competitions not initialized.");
 
-            var todaysFixtures = fixtures.Where(_ => _.MatchDay == week).ToList();
+            var todaysFixtures = fixtures.Where(_ => _.MatchDay == day).ToList();
 
             foreach (var fixture in todaysFixtures)
             {
@@ -293,9 +293,6 @@ namespace FootballFull.Services
 
                 UpdateClubMomentumAndMorale(fixture.HomeTeamId, fixture.HomeScore, fixture.AwayScore);
                 UpdateClubMomentumAndMorale(fixture.AwayTeamId, fixture.AwayScore, fixture.HomeScore);
-
-                _clubs.First(_ => _.Id == fixture.HomeTeamId).HasTrainerSinceWeek++;
-                _clubs.First(_ => _.Id == fixture.AwayTeamId).HasTrainerSinceWeek++;
             }
         }
 
@@ -807,7 +804,7 @@ chosenCompetitionIndex <= competitions.Count)
             return count > 1 && (count & (count - 1)) == 0;
         }
 
-        public IList<Fixture> InitializeInternationalGames(bool loadFromSavedGames = false)
+        public IList<Fixture> InitializeInternationalGames(DateTime date, bool loadFromSavedGames = false)
         {
             // Competities inladen (1x)
             var allCompetitions = _competitionRepository.Load().ToList();
@@ -907,14 +904,14 @@ chosenCompetitionIndex <= competitions.Count)
             }
 
             // 3. Cup aanmaken voor alle deelnemende clubs
-            var fixtures = _fixtureService.GenerateCupFixtures(_clubsPerCompetition.Where(_ => _.CompetitionId == internationalCompetition.Id).ToList(), internationalCompetition);
+            var fixtures = _fixtureService.GenerateCupFixtures(_clubsPerCompetition.Where(_ => _.CompetitionId == internationalCompetition.Id).ToList(), internationalCompetition, date);
 
-            // Zorg dat MatchDay gezet is (bv. gelijk aan RoundNo)
-            foreach (var f in fixtures)
-            {
-                if (f.MatchDay == 0)
-                    f.MatchDay = f.RoundNo;
-            }
+            //// Zorg dat MatchDay gezet is (bv. gelijk aan RoundNo)
+            //foreach (var f in fixtures)
+            //{
+            //    if (f.MatchDay == 0)
+            //        f.MatchDay = f.RoundNo;
+            //}
 
             return fixtures;
         }
@@ -963,7 +960,7 @@ chosenCompetitionIndex <= competitions.Count)
             return rankings;
         }
 
-        public IList<Fixture> InitializeNationalCups()
+        public IList<Fixture> InitializeNationalCups(DateTime date)
         {
             var competitions = _competitionRepository.Load();
             var fixtures = new List<Fixture>();
@@ -994,7 +991,7 @@ chosenCompetitionIndex <= competitions.Count)
                 if (cupClubs.Count < 2)
                     continue; // nothing to do
 
-                var cupFixtures = _fixtureService.GenerateCupFixtures(cupClubs, cup);
+                var cupFixtures = _fixtureService.GenerateCupFixtures(cupClubs, cup, date);
 
                 fixtures.AddRange(cupFixtures);
             }
@@ -1057,9 +1054,9 @@ chosenCompetitionIndex <= competitions.Count)
             if (club.Morale > 10) club.Morale = 10;
         }
 
-        public void UpdateWeekStats(Guid userClubId, int week)
+        public void UpdateWeekStats(Guid userClubId, DateTime date)
         {
-            _trainerService.ClubsFireTrainer(userClubId, week, _clubs, _year, _clubLeagueCompetitions);
+            _trainerService.ClubsFireTrainer(userClubId, date, _clubs, _clubLeagueCompetitions);
         }
 
         public Trainer UserTrainer(Guid userClubId)
@@ -1079,9 +1076,9 @@ chosenCompetitionIndex <= competitions.Count)
             _saveDataService.Save(_saveData);
         }
 
-        public Trainer NewTrainer(Guid clubId, int matchDay = 0)
+        public Trainer NewTrainer(Guid clubId, DateTime date)
         {
-            return _trainerService.NewTrainer(clubId, _clubs, _clubLeagueCompetitions, _year, matchDay);
+            return _trainerService.NewTrainer(clubId, _clubs, _clubLeagueCompetitions, date);
         }
 
         private void UpdateNewsMessages()

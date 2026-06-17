@@ -64,55 +64,55 @@ namespace FootballFull.Services
             _trainerRepository.Create(trainers, true);
         }
 
-        public Trainer NewTrainer(Guid clubId, IList<Club> clubs, IList<ClubLeagueCompetition> clubLeagueCompetitions, int year, int week = 0)
+        public Trainer NewTrainer(Guid clubId, IList<Club> clubs, IList<ClubLeagueCompetition> clubLeagueCompetitions, DateTime date)
         {
             var existingTrainer = _trainers.FirstOrDefault(_ => _.ClubId == clubId);
             if (existingTrainer != null)
                 existingTrainer.ClubId = Guid.Empty;
             var newTrainer = CreateRandomTrainer(clubId);
-            AssignTrainer(clubId, newTrainer, week, clubs, year, clubLeagueCompetitions);
+            AssignTrainer(clubId, newTrainer, date, clubs, clubLeagueCompetitions);
             _trainers.Add(newTrainer);
             return newTrainer;
         }
 
-        private void AssignTrainer(Guid clubId, Trainer trainer, int week, IList<Club> clubs, int year, IList<ClubLeagueCompetition> clubLeagueCompetitions)
+        private void AssignTrainer(Guid clubId, Trainer trainer, DateTime date, IList<Club> clubs, IList<ClubLeagueCompetition> clubLeagueCompetitions)
         {
             var club = clubs.First(_ => _.Id == clubId);
-            club.HasTrainerSinceWeek = 0;
-            club.HasFiredTrainerInWeek = week;
+            club.HasTrainerSinceWeek = date;
+            club.HasFiredTrainerInWeek = date;
             if (trainer.ClubId != Guid.Empty && trainer.ClubId != clubId)
             {
                 var nextClub = clubs.First(_ => _.Id == trainer.ClubId);
 
-                FindNewTrainer(nextClub, week, nextClub.Strength, trainer.Id, clubs, year, clubLeagueCompetitions, false);
+                FindNewTrainer(nextClub, date, nextClub.Strength, trainer.Id, clubs, clubLeagueCompetitions, false);
             }
             trainer.ClubId = clubId;
         }
 
-        public void ClubsFireTrainer(Guid userClubId, int week, IList<Club> clubs, int year, IList<ClubLeagueCompetition> clubLeagueCompetitions)
+        public void ClubsFireTrainer(Guid userClubId, DateTime date, IList<Club> clubs, IList<ClubLeagueCompetition> clubLeagueCompetitions)
         {
-            var clubsFiltered = clubs.Where(_ => _.Id != userClubId && _.Momentum < 3 && _.Morale < 3 && _.HasTrainerSinceWeek > 5).ToList();
+            var clubsFiltered = clubs.Where(_ => _.Id != userClubId && _.Momentum < 3 && _.Morale < 3 && _.HasTrainerSinceWeek.AddDays(28) < date).ToList();
 
             foreach (var club in clubsFiltered)
             {
-                var maxValue = 20 - club.HasTrainerSinceWeek;
+                var maxValue = 20 - ((date - club.HasTrainerSinceWeek).Days / 7);
                 if (Random.Shared.Next(0, maxValue > 0 ? maxValue : 0) == 0)
                 {
                     var firedTrainer = FireTrainer(club.Id, club.Strength);
-                    var newTrainer = FindNewTrainer(club, week, club.Strength, firedTrainer, clubs, year, clubLeagueCompetitions, true);
+                    var newTrainer = FindNewTrainer(club, date, club.Strength, firedTrainer, clubs, clubLeagueCompetitions, true);
                 }
             }
         }
 
-        private Trainer? FindNewTrainer(Club club, int week, int strength, Guid firedTrainerId, IList<Club> clubs, int year, IList<ClubLeagueCompetition> clubLeagueCompetitions, bool isFired = true)
+        private Trainer? FindNewTrainer(Club club, DateTime date, int strength, Guid firedTrainerId, IList<Club> clubs, IList<ClubLeagueCompetition> clubLeagueCompetitions, bool isFired = true)
         {
             var firedTrainer = _trainers.First(_ => _.Id == firedTrainerId);
-            var message = new NewsMessage { Id = Guid.NewGuid(), ClubId = club.Id, CountryId = club.CountryId, MatchDay = week, Year = year, CompetitionId = clubLeagueCompetitions.First(_ => _.ClubId == club.Id).CompetitionId };
+            var message = new NewsMessage { Id = Guid.NewGuid(), ClubId = club.Id, CountryId = club.CountryId, Date = date, CompetitionId = clubLeagueCompetitions.First(_ => _.ClubId == club.Id).CompetitionId };
             if (isFired)
                 message.Message = $"{club.Name} fired its trainer, {firedTrainer.Name} {firedTrainer.LastName}.";
             else message.Message = $"{club.Name} lost its trainer, {firedTrainer.Name} {firedTrainer.LastName}.";
 
-            var trainer = FindTrainerAtOtherClub(strength, clubs, club.CountryId, clubLeagueCompetitions);
+            var trainer = FindTrainerAtOtherClub(strength, clubs, club.CountryId, clubLeagueCompetitions, date);
 
             if (trainer == null)
             {
@@ -126,7 +126,7 @@ namespace FootballFull.Services
 
             if (trainer == null)
             {
-                trainer = NewTrainer(club.Id, clubs, clubLeagueCompetitions, year, week);
+                trainer = NewTrainer(club.Id, clubs, clubLeagueCompetitions, date);
                 message.Message += $"They found a new trainer, {trainer.Name} {trainer.LastName}";
             }
             else
@@ -136,7 +136,7 @@ namespace FootballFull.Services
                     var oldClubName = clubs.First(_ => _.Id == trainer.ClubId).Name;
                     message.Message += $"They took over trainer {trainer.Name} {trainer.LastName} from {oldClubName}";
                 }
-                AssignTrainer(club.Id, trainer, week, clubs, year, clubLeagueCompetitions);
+                AssignTrainer(club.Id, trainer, date, clubs, clubLeagueCompetitions);
 
             }
 
@@ -144,14 +144,14 @@ namespace FootballFull.Services
             return trainer;
         }
 
-        private Trainer? FindTrainerAtOtherClub(int strength, IList<Club> clubs, Guid countryId, IList<ClubLeagueCompetition> clubLeagueCompetitions)
+        private Trainer? FindTrainerAtOtherClub(int strength, IList<Club> clubs, Guid countryId, IList<ClubLeagueCompetition> clubLeagueCompetitions, DateTime date)
         {
             var filteredclubLeagueCompetitions = clubLeagueCompetitions
                 .Where(_ => _topLeagues.Any(tl => tl.Id == _.CompetitionId))
                 .ToList();
 
             var club = clubs
-                .Where(_ => _.Strength < strength && _.Momentum > 10 && _.HasTrainerSinceWeek > 5 && (_.CountryId == countryId || filteredclubLeagueCompetitions.Any(f => f.ClubId == _.Id)))
+                .Where(_ => _.Strength < strength && _.Momentum > 10 && (date - _.HasTrainerSinceWeek).Days > 28 && (_.CountryId == countryId || filteredclubLeagueCompetitions.Any(f => f.ClubId == _.Id)))
                 .OrderByDescending(_ => _.Strength)
                 .ToList()
                 .FirstOrDefault();
