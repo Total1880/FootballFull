@@ -1,4 +1,6 @@
-﻿namespace FootballFull.Models
+﻿using System.Text.Json.Serialization;
+
+namespace FootballFull.Models
 {
     public class Competition
     {
@@ -9,6 +11,8 @@
         public int Tier { get; set; }
         public int Strength { get; set; }
         public CompetitionType Type { get; set; }
+        [JsonIgnore]
+        public List<Competition> SubCompetitions { get; set; } = new List<Competition>();
 
         public enum CompetitionType
         {
