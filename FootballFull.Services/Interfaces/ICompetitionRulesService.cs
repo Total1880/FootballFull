@@ -9,7 +9,7 @@ namespace FootballFull.Services.Interfaces
 {
     public interface ICompetitionRulesService
     {
-        public void ApplyPromotionAndRelegations();
+        public void ApplyPromotionAndRelegations(IList<ClubLeagueCompetition> clubLeagueCompetitions);
         public CompetitionRules GetCompetitionRules(Guid id);
     }
 }
