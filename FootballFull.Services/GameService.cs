@@ -100,6 +100,7 @@ namespace FootballFull.Services
 
                 do
                 {
+                    ShowBetweenMatchdaysMenu();
                     Console.Clear();
                     Console.WriteLine($"=== Date {_currentDate:dddd dd/MM/yyyy} ===");
 

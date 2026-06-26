@@ -41,8 +41,8 @@ namespace FootballFull.Services
                 _roundCount = _teamsPerCompetition.Count - 1;
                 _matchesPerRoundCount = _teamsPerCompetition.Count / 2;
 
-                var firstHalfSeasonFixtures = GenerateFixtures(0, competitionId, seasonStartDate, competition.MatchDay);
-                var secondHalfSeasonFixtures = GenerateFixtures(_teamsPerCompetition.Count - 1, competitionId, seasonStartDate, competition.MatchDay);
+                var firstHalfSeasonFixtures = GenerateFixtures(0, competitionId, date, competition.MatchDay);
+                var secondHalfSeasonFixtures = GenerateFixtures(_teamsPerCompetition.Count - 1, competitionId, date, competition.MatchDay);
 
                 list = list.Concat(firstHalfSeasonFixtures).ToList();
                 list = list.Concat(secondHalfSeasonFixtures).ToList();

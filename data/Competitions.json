@@ -7,7 +7,7 @@
     "Tier": 1,
     "Strength": 19,
     "Type": 0,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "adce6f37-e779-4017-94ee-da93d74c31d0",
@@ -17,7 +17,7 @@
     "Tier": 2,
     "Strength": 16,
     "Type": 0,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "23bed955-f539-4aab-b56c-075896b3a8af",
@@ -27,7 +27,7 @@
     "Tier": 3,
     "Strength": 13,
     "Type": 0,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "17d80068-798f-408e-bb31-287dde3600f4",
@@ -37,7 +37,7 @@
     "Tier": 1,
     "Strength": 18,
     "Type": 0,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "a5538376-58b2-443f-9d11-26de802f9937",
@@ -47,7 +47,7 @@
     "Tier": 1,
     "Strength": 0,
     "Type": 2,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "3cc80fbe-e028-4cf6-8b87-be7f4e036fab",
@@ -57,7 +57,7 @@
     "Tier": 1,
     "Strength": 17,
     "Type": 0,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "e6749c40-7ab6-40da-a0fe-a8c581af774c",
@@ -67,7 +67,7 @@
     "Tier": 1,
     "Strength": 16,
     "Type": 0,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "75f2ae53-e5a1-404d-b857-1e6e41007a2d",
@@ -77,7 +77,7 @@
     "Tier": 1,
     "Strength": 15,
     "Type": 0,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "8cb4a5f5-00c1-4ebb-abb8-efe499702e94",
@@ -87,7 +87,7 @@
     "Tier": 4,
     "Strength": 10,
     "Type": 0,
-    "MatchDayPerWeek": null
+    "MatchDay": {}
   },
   {
     "Id": "c9626575-ff9f-45cb-b902-483d45852476",
@@ -97,7 +97,7 @@
     "Tier": 5,
     "Strength": 7,
     "Type": 0,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "af0e558e-a9eb-4524-8ba5-364bc18ec41d",
@@ -107,7 +107,7 @@
     "Tier": 6,
     "Strength": 4,
     "Type": 0,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "d9c07f8d-0ff8-4be4-9f92-190bb78283a9",
@@ -117,7 +117,7 @@
     "Tier": 1,
     "Strength": 0,
     "Type": 1,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "ba0362ff-4c25-4da9-a4c4-4a07677d032b",
@@ -127,7 +127,7 @@
     "Tier": 1,
     "Strength": 0,
     "Type": 1,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "84a0879b-04c5-4f65-964f-0aa219a27053",
@@ -137,7 +137,7 @@
     "Tier": 2,
     "Strength": 9,
     "Type": 0,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "b9979e4c-9076-4a02-8c0a-66e4ed426bb5",
@@ -147,7 +147,7 @@
     "Tier": 1,
     "Strength": 14,
     "Type": 0,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "2282c61e-49f9-418b-ab37-d5704d8f640d",
@@ -157,7 +157,7 @@
     "Tier": 1,
     "Strength": 0,
     "Type": 0,
-    "MatchDayPerWeek": null
+    "MatchDay": null
   },
   {
     "Id": "f15a665b-ec84-479b-ae8b-e48671a21217",
@@ -167,7 +167,7 @@
     "Tier": 1,
     "Strength": 0,
     "Type": 0,
-    "MatchDayPerWeek": {}
+    "MatchDay": null
   },
   {
     "Id": "4e2ad521-7b79-4286-8b1e-7ef3dc8f997b",
@@ -177,6 +177,6 @@
     "Tier": 1,
     "Strength": 0,
     "Type": 0,
-    "MatchDayPerWeek": {}
+    "MatchDay": null
   }
 ]

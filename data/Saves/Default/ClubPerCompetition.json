@@ -1086,5 +1086,13 @@
   {
     "ClubId": "31ac64d3-4870-441e-ab9e-92bca40e6d91",
     "CompetitionId": "4e2ad521-7b79-4286-8b1e-7ef3dc8f997b"
+  },
+  {
+    "ClubId": "7df8c0fe-1b94-4212-aa44-ab9985d9efcd",
+    "CompetitionId": "8cb4a5f5-00c1-4ebb-abb8-efe499702e94"
+  },
+  {
+    "ClubId": "97f7958b-0856-46ac-961f-9aa16b4f615c",
+    "CompetitionId": "af0e558e-a9eb-4524-8ba5-364bc18ec41d"
   }
 ]
