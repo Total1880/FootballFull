@@ -8,6 +8,7 @@ namespace FootballFull.Models
 {
     public class CompetitionRules
     {
+        public Guid Id { get; set; } = Guid.NewGuid();
         public required Competition Competition { get; set; }
         public int PromotionPlaces { get; set; }
         public int RelegationPlaces { get; set; }

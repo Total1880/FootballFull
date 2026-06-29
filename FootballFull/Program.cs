@@ -31,6 +31,7 @@ services.AddSingleton<IGameService, GameService>();
 services.AddSingleton<ITrainerService, TrainerService>();
 services.AddSingleton<IClubInternationalRankingService, ClubInternationalRankingService>();
 services.AddSingleton<ISaveDataService, SaveDataService>();
+services.AddSingleton<ICompetitionRulesService, CompetitionRulesService>();
 
 // Repositories (V2-varianten)
 services.AddSingleton<IRepository<Club>>(
@@ -53,6 +54,9 @@ services.AddSingleton<IRepository<ClubInternationalRanking>>(
 
 services.AddSingleton<ISaveDataRepository>(
     _ => new SaveDataRepository(Path.Combine(Configuration.DataRoot, "SaveData.json")));
+
+services.AddSingleton<IRepository<CompetitionRules>>(
+    _ => new CompetitionRulesRepository(Path.Combine(Configuration.DataRoot, "CompetitionRules.json")));
 
 services.AddSingleton<INameRepository>(
     _ => new NameRepository());
