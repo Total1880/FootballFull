@@ -52,7 +52,7 @@ namespace FootballFull.Services
         public Competition? GetCompetitionById(Guid id)
         {
             if (id == Guid.Empty)
-                throw new ArgumentException("Id cannot be empty.");
+                return null;
 
             return _competitionRepository
                 .Load()

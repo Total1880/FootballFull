@@ -1,4 +1,6 @@
 ﻿using FootballFull.Models;
+using FootballFull.Repositories;
+using FootballFull.Repositories.Interfaces;
 using FootballFull.Services.Interfaces;
 using static FootballFull.Models.Competition;
 
@@ -10,22 +12,32 @@ namespace FootballFull.Services
         private IClubPerCompetitionService _clubPerCompetitionService;
         private IClubLeagueCompetitionService _clubLeagueCompetitionService;
         private IClubService _clubService;
+        private IRepository<CompetitionRules> _repository;
 
         public CompetitionRulesService(
             ICompetitionService competitionService,
             IClubPerCompetitionService clubPerCompetitionService,
             IClubLeagueCompetitionService clubLeagueCompetitionService,
-            IClubService clubService)
+            IClubService clubService,
+            IRepository<CompetitionRules> repository)
         {
             _competitionService = competitionService;
             _clubPerCompetitionService = clubPerCompetitionService;
             _clubLeagueCompetitionService = clubLeagueCompetitionService;
             _clubService = clubService;
+            _repository = repository;
         }
 
-        public CompetitionRules GetCompetitionRules(Guid id)
+        public CompetitionRules GetCompetitionRules(Guid competitionId)
         {
-            throw new NotImplementedException();
+            var rules = _repository.Load().FirstOrDefault(_ => _.Competition?.Id == competitionId);
+            if (rules != null)
+            {
+                rules.Competition = _competitionService.GetCompetitionById(rules.CompetitionId);
+                rules.PromotionTo = _competitionService.GetCompetitionById(rules.CompetitionPromotionToId);
+                rules.Competition = _competitionService.GetCompetitionById(rules.CompetitionRelegationToId);
+            }
+            return rules == null ? new CompetitionRules { CompetitionId = competitionId } : rules;
         }
 
         public void ApplyPromotionAndRelegations(IList<ClubLeagueCompetition> clubLeagueCompetitions)
@@ -267,6 +279,19 @@ namespace FootballFull.Services
             {
                 AddCompetitionRecursive(result, subCompetition);
             }
+        }
+
+        public bool Save(CompetitionRules competitionRules)
+        {
+            if (competitionRules.Id == Guid.Empty)
+            {
+                competitionRules.Id = new Guid(); 
+                _repository.Add(competitionRules);
+            }
+            else
+                _repository.Update(competitionRules);
+
+            return true;
         }
 
         private class ClubMove

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "50181175-4879-4683-bfb3-7e90ede13136",
+    "CompetitionId": "9632b0a9-979b-4fa1-abf5-9d2fe21030da",
+    "CompetitionPromotionToId": "00000000-0000-0000-0000-000000000000",
+    "CompetitionRelegationToId": "adce6f37-e779-4017-94ee-da93d74c31d0",
+    "PromotionPlaces": 0,
+    "RelegationPlaces": 2
+  },
+  {
+    "Id": "e611d550-6949-4f88-9108-0363e1d9e0a3",
+    "CompetitionId": "adce6f37-e779-4017-94ee-da93d74c31d0",
+    "CompetitionPromotionToId": "9632b0a9-979b-4fa1-abf5-9d2fe21030da",
+    "CompetitionRelegationToId": "23bed955-f539-4aab-b56c-075896b3a8af",
+    "PromotionPlaces": 2,
+    "RelegationPlaces": 2
+  }
+]

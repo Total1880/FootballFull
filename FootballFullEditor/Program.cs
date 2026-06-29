@@ -14,6 +14,8 @@ services.AddSingleton<IClubService, ClubService>();
 services.AddSingleton<ICountryService, CountryService>();
 services.AddSingleton<ICompetitionService, CompetitionService>();
 services.AddSingleton<IClubPerCompetitionService, ClubPerCompetitionService>();
+services.AddSingleton<ICompetitionRulesService, CompetitionRulesService>();
+services.AddSingleton<IClubLeagueCompetitionService, ClubLeagueCompetitionService>();
 
 // Repositories
 const string dataRoot = @"C:\Users\olavh\source\repos\FootballFull\data";
@@ -28,6 +30,9 @@ services.AddSingleton<IRepository<Country>>(
 
 services.AddSingleton<IClubPerCompetitionRepository>(
     _ => new ClubPerCompetitionRepositoryV2(Path.Combine(dataRoot, "ClubPerCompetition.json")));
+
+services.AddSingleton<IRepository<CompetitionRules>>(
+    _ => new CompetitionRulesRepository(Path.Combine(dataRoot, "CompetitionRules.json")));
 
 // Editors
 services.AddSingleton<CountryEditor>();
