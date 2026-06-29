@@ -21,5 +21,7 @@ namespace FootballFull.Models
             International
         }
         public IDictionary<int, DateTime> MatchDay { get; set; }
+        [JsonIgnore]
+        public List<CompetitionSplitParameters> SplitParameters { get; set; } = new List<CompetitionSplitParameters>();
     }
 }

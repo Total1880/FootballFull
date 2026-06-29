@@ -11,6 +11,8 @@ namespace FootballFull.Models
         public Guid CountryId { get; set; }
         public Guid? FeederClubId { get; set; }
         [JsonIgnore]
+        public List<CompetitionSplitParameters> CompetitionSplitParameters { get; set; }
+        [JsonIgnore]
         public string Last5Games { get; set; }
         [JsonIgnore]
         public int Momentum

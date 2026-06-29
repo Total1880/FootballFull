@@ -73,9 +73,170 @@ namespace FootballFull.Services
             }
         }
 
-        private void ApplyRelegations(Competition competition, CompetitionRules rules, List<ClubMove> regularMoves, IEnumerable<ClubLeagueCompetition> clubLeagueCompetition, IList<Club> allClubs)
+        private void ApplyRelegations(Competition competition, CompetitionRules rules, List<ClubMove> regularMoves, List<ClubLeagueCompetition> clubLeagueCompetition, IList<Club> allClubs)
         {
-            throw new NotImplementedException();
+            if (rules.RelegationTo == null || rules.RelegationPlaces <= 0)
+                return;
+
+            var relegated = 0;
+            var indexFromBottom = 0;
+            var subCompetitionCounter = 0;
+
+            while (relegated < rules.RelegationPlaces && indexFromBottom < clubLeagueCompetition.Count)
+            {
+                var rankingIndex = clubLeagueCompetition.Count - 1 - indexFromBottom;
+                var clubToRelegateId = clubLeagueCompetition[rankingIndex].ClubId;
+
+                indexFromBottom++;
+
+                var clubToRelegate = allClubs.First(_ => _.Id == clubToRelegateId);
+
+                if (clubToRelegate == null)
+                    continue;
+
+                var conflictWasHandled = TryHandleFeederClubConflict(
+                    competition,
+                    rules,
+                    clubToRelegate,
+                    ref subCompetitionCounter,
+                    regularMoves,
+                    allClubs,
+                    clubLeagueCompetition);
+
+                if (!conflictWasHandled)
+                {
+                    MoveClubToCompetition(
+                        clubToRelegate,
+                        competition,
+                        rules.RelegationTo,
+                        ref subCompetitionCounter,
+                        regularMoves);
+                }
+
+                relegated++;
+            }
+        }
+
+        private bool TryHandleFeederClubConflict(
+    Competition currentCompetition,
+    CompetitionRules currentRules,
+    Club clubToRelegate,
+    ref int subCompetitionCounter,
+    List<ClubMove> moves,
+    IList<Club> allClubs,
+    List<ClubLeagueCompetition> clubLeagueCompetition)
+        {
+            if (clubToRelegate.FeederClubId == null)
+                return false;
+
+            var feederClub = allClubs.First(_ => _.Id == clubToRelegate.FeederClubId.Value);
+
+            if (feederClub == null)
+                return false;
+
+            var relegationTarget = currentRules.RelegationTo;
+
+            if (relegationTarget == null)
+                return false;
+
+            var feederClubIsAlreadyInTarget = CompetitionContainsClub(
+                clubLeagueCompetition,
+                feederClub.Id);
+
+            if (!feederClubIsAlreadyInTarget)
+                return false;
+
+            var lowerRules = GetCompetitionRules(relegationTarget.Id);
+
+            if (lowerRules == null || lowerRules.RelegationTo == null)
+            {
+                // Feeder zit al in de lagere reeks en kan zelf niet lager.
+                // Dan slaan we deze degradatie inhoudelijk over.
+                return true;
+            }
+
+            MoveClubToCompetition(
+                feederClub,
+                relegationTarget,
+                lowerRules.RelegationTo,
+                ref subCompetitionCounter,
+                moves);
+
+            MoveClubToCompetition(
+                clubToRelegate,
+                currentCompetition,
+                relegationTarget,
+                ref subCompetitionCounter,
+                moves);
+
+            return true;
+        }
+
+        private void MoveClubToCompetition(
+    Club club,
+    Competition fromCompetition,
+    Competition toCompetition,
+    ref int subCompetitionCounter,
+    List<ClubMove> moves)
+        {
+            var targetCompetition = ResolveTargetCompetition(
+                club,
+                toCompetition,
+                subCompetitionCounter);
+
+            if (targetCompetition == null)
+                return;
+
+            if (toCompetition.SubCompetitions != null && toCompetition.SubCompetitions.Count > 0)
+            {
+                var availableSubCompetitions = GetMatchingSubCompetitions(club, toCompetition);
+
+                if (availableSubCompetitions.Count > 0)
+                {
+                    subCompetitionCounter++;
+
+                    if (subCompetitionCounter >= availableSubCompetitions.Count)
+                        subCompetitionCounter = 0;
+                }
+            }
+
+            moves.Add(ClubMove.Remove(club.Id, fromCompetition.Id));
+            moves.Add(ClubMove.Add(club.Id, targetCompetition.Id));
+        }
+
+        private Competition ResolveTargetCompetition(
+    Club club,
+    Competition competition,
+    int subCompetitionCounter)
+        {
+            if (competition.SubCompetitions == null || competition.SubCompetitions.Count == 0)
+                return competition;
+
+            var availableSubCompetitions = GetMatchingSubCompetitions(club, competition);
+
+            if (!availableSubCompetitions.Any())
+                return null;
+
+            if (subCompetitionCounter >= availableSubCompetitions.Count)
+                subCompetitionCounter = 0;
+
+            return availableSubCompetitions[subCompetitionCounter];
+        }
+
+        private List<Competition> GetMatchingSubCompetitions(
+    Club club,
+    Competition competition)
+        {
+            if (competition.SubCompetitions == null)
+                return new List<Competition>();
+
+            return competition.SubCompetitions
+                .Where(subCompetition =>
+                    subCompetition.SplitParameters != null &&
+                    club.CompetitionSplitParameters != null &&
+                    subCompetition.SplitParameters.Any(splitParameter =>
+                        club.CompetitionSplitParameters.Contains(splitParameter)))
+                .ToList();
         }
 
         private bool PromotionBlockedByParentClub(Guid clubId, List<ClubLeagueCompetition> clubLeagueCompetition, Club? parentClub)
