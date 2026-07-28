@@ -34,16 +34,21 @@ services.AddSingleton<IClubPerCompetitionRepository>(
 services.AddSingleton<IRepository<CompetitionRules>>(
     _ => new CompetitionRulesRepository(Path.Combine(dataRoot, "CompetitionRules.json")));
 
+services.AddSingleton<IRepository<CompetitionSplitParameters>>(
+    _ => new CompetitionSplitParametersRepository(Path.Combine(dataRoot, "CompetitionSplitParameters.json")));
+
 // Editors
 services.AddSingleton<CountryEditor>();
 services.AddSingleton<ClubEditor>();
 services.AddSingleton<CompetitionEditor>();
+services.AddSingleton<CompetitionSplitParametersEditor>();
 
 var provider = services.BuildServiceProvider();
 
 var clubEditor = provider.GetRequiredService<ClubEditor>();
 var countryEditor = provider.GetRequiredService<CountryEditor>();
 var competitionEditor = provider.GetRequiredService<CompetitionEditor>();
+var competitionSplitParametersEditor = provider.GetRequiredService<CompetitionSplitParametersEditor>();
 
 
 
@@ -51,7 +56,7 @@ while (true)
 {
     Console.Clear();
     Console.WriteLine("What to edit?");
-    Console.WriteLine("\n[C]lubs  |  C[O]untry  |  [P]competitions  |  [Q]uit");
+    Console.WriteLine("\n[C]lubs  |  C[O]untry  |  [P]competitions  |  Competition [S]plit Parameters  |  [Q]uit");
 
     var key = Console.ReadKey(intercept: true).Key;
     switch (key)
@@ -64,6 +69,9 @@ while (true)
             break;
         case ConsoleKey.P:
             competitionEditor.Run();
+            break;
+        case ConsoleKey.S:
+            competitionSplitParametersEditor.Run();
             break;
         case ConsoleKey.Q:
             return;
