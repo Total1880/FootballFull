@@ -293,7 +293,7 @@ namespace FootballFullEditor.ConsoleUI
                 Console.Write("Enter number of competition for Relegation (or ENTER to cancel): ");
                 var inputRel = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(inputRel))
-                    continue;
+                    break;
 
                 if (!int.TryParse(inputRel, out var indexRel))
                     continue;

@@ -30,12 +30,12 @@ namespace FootballFull.Services
 
         public CompetitionRules GetCompetitionRules(Guid competitionId)
         {
-            var rules = _repository.Load().FirstOrDefault(_ => _.Competition?.Id == competitionId);
+            var rules = _repository.Load().FirstOrDefault(_ => _.CompetitionId == competitionId);
             if (rules != null)
             {
                 rules.Competition = _competitionService.GetCompetitionById(rules.CompetitionId);
                 rules.PromotionTo = _competitionService.GetCompetitionById(rules.CompetitionPromotionToId);
-                rules.Competition = _competitionService.GetCompetitionById(rules.CompetitionRelegationToId);
+                rules.RelegationTo = _competitionService.GetCompetitionById(rules.CompetitionRelegationToId);
             }
             return rules == null ? new CompetitionRules { CompetitionId = competitionId } : rules;
         }
