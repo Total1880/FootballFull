@@ -16,6 +16,7 @@ services.AddSingleton<ICompetitionService, CompetitionService>();
 services.AddSingleton<IClubPerCompetitionService, ClubPerCompetitionService>();
 services.AddSingleton<ICompetitionRulesService, CompetitionRulesService>();
 services.AddSingleton<IClubLeagueCompetitionService, ClubLeagueCompetitionService>();
+services.AddSingleton<ICompetitionSplitParametersService, CompetitionSplitParametersService>();
 
 // Repositories
 const string dataRoot = @"C:\Users\olavh\source\repos\FootballFull\data";
