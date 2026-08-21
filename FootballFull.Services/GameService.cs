@@ -105,7 +105,7 @@ namespace FootballFull.Services
                     Console.WriteLine($"=== Date {_currentDate:dddd dd/MM/yyyy} ===");
 
                     Console.WriteLine();
-                    Console.WriteLine("Druk op een toets om deze week te simuleren...");
+                    Console.WriteLine("Druk op een toets om deze dag te simuleren...");
                     Console.ReadKey();
 
                     _seasonService.PlayMatchDay(_fixtures, _currentDate, false, _userClubId);
@@ -122,7 +122,7 @@ namespace FootballFull.Services
                     Console.Clear();
 
                     ShowNews(_currentDate, competitionId);
-                    _currentDate.AddDays(1);
+                    _currentDate = _currentDate.AddDays(1);
                 } while (_currentDate < _newSeasonDate);
 
                 // End of season
@@ -470,6 +470,7 @@ namespace FootballFull.Services
 
             var competitionToShow = _competitions.First(_ => _.Id == competitionId);
 
+            Console.Clear();
             Console.WriteLine($"=== League Table: {competitionToShow.Name} ===");
             Console.WriteLine();
 
@@ -669,11 +670,11 @@ namespace FootballFull.Services
         {
             if (date < _newSeasonDate)
             {
-                Console.WriteLine($"Next Week: {date.AddDays(7)}");
+                Console.WriteLine($"Next day: {date.AddDays(1)}");
                 Console.WriteLine(new string('-', 25));
 
                 var nextFixtures = _fixtures
-                    .Where(_ => _.MatchDay == date && _.CompetitionId == competitionToShow.Id)
+                    .Where(_ => _.MatchDay == date.AddDays(1) && _.CompetitionId == competitionToShow.Id)
                     .ToList();
 
                 if (nextFixtures.Count == 0)
@@ -682,7 +683,7 @@ namespace FootballFull.Services
                     if (waitForKey)
                     {
                         Console.WriteLine();
-                        Console.WriteLine("Press any key for next week...");
+                        Console.WriteLine("Press any key for next day...");
                         Console.ReadKey();
                     }
                     return;

@@ -84,6 +84,17 @@ namespace FootballFullEditor.ConsoleUI
                 return;
             }
 
+            Console.WriteLine("Has feeder club? (y/n)");
+            var key = Console.ReadKey(intercept: true).Key;
+            if (key == ConsoleKey.Y)
+                _clubService.Add(new Club
+                {
+                    Id = Guid.NewGuid(),
+                    Name = name.Trim() + " B",
+                    Strength = strength - 20,
+                    CountryId = countryId
+                });
+
             _clubService.Add(new Club
             {
                 Id = Guid.NewGuid(),
@@ -125,7 +136,15 @@ namespace FootballFullEditor.ConsoleUI
             }
 
             var clubToDelete = list[index - 1];
+            if(clubToDelete.FeederClubId != null)
+            {
+                var feederClub = _clubService.GetClubById((Guid)clubToDelete.FeederClubId);
+                _clubService.Delete(feederClub.Id);
+                Console.WriteLine($"Feeder Club '{feederClub.Name}' deleted.");
+            }
             _clubService.Delete(clubToDelete.Id);
+
+            if(_clubService.FindParentClub(clubToDelete.Id) != null) { }
 
             Console.WriteLine($"Club '{clubToDelete.Name}' deleted. Press any key to continue...");
             Console.ReadKey();
@@ -160,18 +179,26 @@ namespace FootballFullEditor.ConsoleUI
             }
 
             var club = list[index - 1];
+            Club feederClub = club.FeederClubId == null || club.FeederClubId == Guid.Empty ? new Club { Name = club.Name + " B" } : _clubService.GetClubById((Guid)club.FeederClubId);
+            if (feederClub.CountryId == Guid.Empty) feederClub.CountryId = club.CountryId;
 
             Console.WriteLine($"Current name: {club.Name}");
             Console.Write("New name (leave empty to keep): ");
             var newName = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(newName))
+            {
                 club.Name = newName.Trim();
+                feederClub.Name = club.Name + " B";
+            }
 
             Console.WriteLine($"Current strength: {club.Strength}");
             Console.Write("New strength (leave empty to keep): ");
             var newStrengthInput = Console.ReadLine();
             if (int.TryParse(newStrengthInput, out var newStrength))
+            {
                 club.Strength = newStrength;
+                feederClub.Strength = newStrength - 20;
+            }
 
             Console.WriteLine("Change country? [Y/N]");
             var changeCountryKey = Console.ReadKey(intercept: true).Key;
@@ -179,9 +206,41 @@ namespace FootballFullEditor.ConsoleUI
             {
                 var newCountryId = SelectCountry();
                 if (newCountryId != Guid.Empty)
+                {
                     club.CountryId = newCountryId;
+                    feederClub.CountryId = newCountryId;
+                }
             }
-
+            Console.WriteLine("Has feeder club? [Y/N]");
+            var feederClubKey = Console.ReadKey(intercept: true).Key;
+            if (feederClubKey == ConsoleKey.Y)
+            {
+                if (club.FeederClubId == null || club.FeederClubId == Guid.Empty)
+                {
+                    feederClub.Id = new Guid();
+                    club.FeederClubId = feederClub.Id;
+                    _clubService.Add(feederClub);
+                    Console.WriteLine("Feeder Club added.");
+                }
+                else
+                {
+                    _clubService.Update(feederClub);
+                    Console.WriteLine("Feeder Club updated.");
+                }
+            }
+            else if (feederClubKey == ConsoleKey.N)
+            {
+                if (club.FeederClubId != null && club.FeederClubId != Guid.Empty)
+                {
+                    _clubService.Delete((Guid)club.FeederClubId);
+                    Console.WriteLine("Feeder Club Deleted.");
+                }
+            }
+            else if(feederClub.Id != Guid.Empty) 
+            {
+                _clubService.Update(feederClub);
+                Console.WriteLine("Feeder Club updated.");
+            }
             _clubService.Update(club);
 
             Console.WriteLine("\nClub updated. Press any key to continue...");

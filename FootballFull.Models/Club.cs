@@ -4,10 +4,12 @@ namespace FootballFull.Models
 {
     public class Club
     {
+        private int _strength = 0;
         public required string Name { get; set; }
-        public int Strength { get; set; }
+        public int Strength { get { return _strength; } set { _strength = value < 0 ? 0 : value; } }
         public Guid Id { get; set; }
         public Guid CountryId { get; set; }
+        public Guid? FeederClubId { get; set; }
         [JsonIgnore]
         public string Last5Games { get; set; }
         [JsonIgnore]

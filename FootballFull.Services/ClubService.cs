@@ -59,5 +59,15 @@ namespace FootballFull.Services
         {
             _clubRepository.Create(clubs, true);
         }
+
+        public Club FindParentClub(Guid feederClubId)
+        {
+            if (feederClubId == Guid.Empty)
+                throw new ArgumentException("Id cannot be empty.", nameof(feederClubId));
+
+            return _clubRepository
+                .Load()
+                .FirstOrDefault(c => c.FeederClubId == feederClubId);
+        }
     }
 }
