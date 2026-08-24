@@ -95,6 +95,8 @@ namespace FootballFullEditor.ConsoleUI
                     CountryId = countryId
                 });
 
+            // Add split parameters
+
             _clubService.Add(new Club
             {
                 Id = Guid.NewGuid(),
@@ -211,6 +213,9 @@ namespace FootballFullEditor.ConsoleUI
                     feederClub.CountryId = newCountryId;
                 }
             }
+            // Add split parameters
+            // Remove split parameters 
+            // for both clubs
             Console.WriteLine("Has feeder club? [Y/N]");
             var feederClubKey = Console.ReadKey(intercept: true).Key;
             if (feederClubKey == ConsoleKey.Y)
