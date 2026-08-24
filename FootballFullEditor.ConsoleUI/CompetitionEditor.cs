@@ -160,8 +160,19 @@ namespace FootballFullEditor.ConsoleUI
             Console.Clear();
             Console.WriteLine("Adding competition split parameters...");
             ShowCompetitionSplitParameters();
-            // ask user to select a split parameter
+            Console.Write("Enter number: ");
+            var input = Console.ReadLine();
 
+            if (!int.TryParse(input, out var index))
+                return;
+
+            var cspAll = _competitionSplitParametersService.GetCompetitionSplitParameters();
+            if (index < 1 || index > cspAll.Count)
+                return;
+
+            var csp = cspAll[index - 1];
+            competition.SplitParameters.Add(csp);
+            Console.WriteLine($"Split parameter added: {csp.Name}");
         }
 
         private void ShowCompetitionSplitParameters()
@@ -238,12 +249,39 @@ namespace FootballFullEditor.ConsoleUI
             // Nieuw: type aanpassen
             Console.WriteLine();
             comp.Type = SelectCompetitionType(comp.Type, allowEmpty: true);
+
             // Add or remove split parameters
+            Console.WriteLine("Add split parameter? Y/N");
+            if (Console.ReadKey(true).Key == ConsoleKey.Y)
+            {
+                AddCompetitionSplitParameter(comp);
+            }
+
+            Console.WriteLine("Remove split parameter? Y/N");
+            if (Console.ReadKey(true).Key == ConsoleKey.Y)
+            {
+                DeleteCompetitionSplitParameter(comp);
+            }
 
             _competitionService.Update(comp);
 
             Console.WriteLine("Updated. Press any key...");
             Console.ReadKey();
+        }
+
+        private void DeleteCompetitionSplitParameter(Competition comp)
+        {
+            for(int i = 0; i < comp.SplitParameters.Count; i++)
+            {
+                var csp = comp.SplitParameters[i];
+                Console.WriteLine($"{i + 1}. {csp.Name}");
+            }
+            Console.WriteLine("Choose a parameter to delete (or press any other key to cancel): ");
+            var input = Console.ReadLine();
+            if (int.TryParse(input, out var index) && index >= 1 && index <= comp.SplitParameters.Count)
+            {
+                comp.SplitParameters.RemoveAt(index - 1);
+            }
         }
 
         private void ManageRules()
