@@ -1,4 +1,5 @@
 ﻿using FootballFull.Models;
+using FootballFull.Services;
 using FootballFull.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace FootballFullEditor.ConsoleUI
         {
             _competitionSplitParametersService = competitionSplitParametersService;
         }
+
         public void Run()
         {
             while (true)
@@ -33,13 +35,13 @@ namespace FootballFullEditor.ConsoleUI
                 switch (key)
                 {
                     case ConsoleKey.A:
-                        AddCompetitionSplitParameters();
+                        AddSplitParameter();
                         break;
                     case ConsoleKey.D:
-                        DeleteCompetitionSplitParameters();
+                        DeleteSplitParameter(); 
                         break;
                     case ConsoleKey.E:
-                        EditCompetitionSplitParameters();  
+                        EditSplitParameter();
                         break;
                     case ConsoleKey.B:
                         return;
@@ -47,34 +49,79 @@ namespace FootballFullEditor.ConsoleUI
             }
         }
 
-        private void EditCompetitionSplitParameters()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void DeleteCompetitionSplitParameters()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void AddCompetitionSplitParameters()
+        private void EditSplitParameter()
         {
             Console.Clear();
-            Console.WriteLine("Adding new competition split parameter...");
+            Console.WriteLine("Editing competition split parameters...");
+            ShowCompetitionSplitParameters();
 
-            Console.Write("Name: ");
+            Console.Write("Enter number: ");
+            var input = Console.ReadLine();
+
+            if (!int.TryParse(input, out var index))
+                return;
+
+            var cspAll = _competitionSplitParametersService.GetCompetitionSplitParameters();
+            if (index < 1 || index > cspAll.Count)
+                return;
+
+            var csp = cspAll[index - 1];
+            Console.WriteLine($"Editing: {csp.Name}");
+            Console.Write("Enter new name: ");
+            var newName = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(newName))
+            {
+                csp.Name = newName;
+                _competitionSplitParametersService.Update(csp);
+            }
+        }
+
+        private void DeleteSplitParameter()
+        {
+            Console.Clear();
+            Console.WriteLine("Delete competition split parameters...");
+            ShowCompetitionSplitParameters();
+
+            Console.Write("Enter number: ");
+            var input = Console.ReadLine();
+
+            if (!int.TryParse(input, out var index))
+                return;
+
+            var cspAll = _competitionSplitParametersService.GetCompetitionSplitParameters();
+            if (index < 1 || index > cspAll.Count)
+                return;
+
+            var csp = cspAll[index - 1];
+            Console.WriteLine($"Deleting: {csp.Name}");
+            Console.Write("Are you sure? (Y/N): ");
+            var confirm = Console.ReadKey(true).Key;
+            if (confirm == ConsoleKey.Y)
+            {
+                _competitionSplitParametersService.Delete(csp.Id);
+            }
+        }
+
+        private void AddSplitParameter()
+        {
+            Console.Clear();
+            Console.WriteLine("Add competition split parameters...");
+
+            Console.Write("Enter name: ");
             var name = Console.ReadLine();
-
-            _competitionSplitParametersService.Add(new CompetitionSplitParameters { Name = name });
+            if (!string.IsNullOrWhiteSpace(name)) {
+                var csp = new CompetitionSplitParameters { Name = name };
+                _competitionSplitParametersService.Add(csp);
+            }
         }
 
         private void ShowCompetitionSplitParameters()
         {
-            var competitionSplitParameters = _competitionSplitParametersService.GetCompetitionSplitParameters();
-            foreach (var c in competitionSplitParameters)
+            var counter = 1;
+            _competitionSplitParametersService.GetCompetitionSplitParameters().ToList().ForEach(csp =>
             {
-                Console.WriteLine($"ID: {c.Id}, Name: {c.Name}");
-            }
+                Console.WriteLine($"{counter++}. Name: {csp.Name}");
+            });
         }
     }
 }

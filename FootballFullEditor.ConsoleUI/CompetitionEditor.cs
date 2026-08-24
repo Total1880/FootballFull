@@ -1,4 +1,5 @@
 ﻿using FootballFull.Models;
+using FootballFull.Services;
 using FootballFull.Services.Interfaces;
 
 namespace FootballFullEditor.ConsoleUI
@@ -10,19 +11,22 @@ namespace FootballFullEditor.ConsoleUI
         private readonly IClubService _clubService;
         private readonly IClubPerCompetitionService _clubCompetitionService;
         private readonly ICompetitionRulesService _competitionRulesService;
+        private readonly ICompetitionSplitParametersService _competitionSplitParametersService;
 
         public CompetitionEditor(
             ICompetitionService competitionService,
             ICountryService countryService,
             IClubService clubService,
             IClubPerCompetitionService clubCompetitionService,
-            ICompetitionRulesService competitionRulesService)
+            ICompetitionRulesService competitionRulesService,
+            ICompetitionSplitParametersService competitionSplitParametersService)
         {
             _competitionService = competitionService;
             _countryService = countryService;
             _clubService = clubService;
             _clubCompetitionService = clubCompetitionService;
             _competitionRulesService = competitionRulesService;
+            _competitionSplitParametersService = competitionSplitParametersService;
         }
 
         public void Run()
@@ -134,17 +138,39 @@ namespace FootballFullEditor.ConsoleUI
 
             // Nieuw: type kiezen
             var type = SelectCompetitionType();
-
-            _competitionService.Add(new Competition
+            var competition = new Competition
             {
                 Name = name,
                 Tier = tier,
                 CountryId = countryId,
                 Type = type
-            });
+            };
+            AddCompetitionSplitParameter(competition);
+
+            _competitionService.Add(competition);
+
+
 
             Console.WriteLine("Competition added. Press any key...");
             Console.ReadKey();
+        }
+
+        private void AddCompetitionSplitParameter(Competition competition)
+        {
+            Console.Clear();
+            Console.WriteLine("Adding competition split parameters...");
+            ShowCompetitionSplitParameters();
+            // ask user to select a split parameter
+
+        }
+
+        private void ShowCompetitionSplitParameters()
+        {
+            var counter = 1;
+            _competitionSplitParametersService.GetCompetitionSplitParameters().ToList().ForEach(csp =>
+            {
+                Console.WriteLine($"{counter++}. Name: {csp.Name}");
+            });
         }
 
         private void DeleteCompetition()
@@ -212,6 +238,7 @@ namespace FootballFullEditor.ConsoleUI
             // Nieuw: type aanpassen
             Console.WriteLine();
             comp.Type = SelectCompetitionType(comp.Type, allowEmpty: true);
+            // Add or remove split parameters
 
             _competitionService.Update(comp);
 
