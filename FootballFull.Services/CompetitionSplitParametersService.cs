@@ -20,6 +20,9 @@ namespace FootballFull.Services
 
         public void Add(CompetitionSplitParameters competitionSplitParameters)
         {
+            if (GetCompetitionSplitParameters().Any(c => c.Name.Equals(competitionSplitParameters.Name, StringComparison.OrdinalIgnoreCase)))
+                throw new InvalidOperationException($"Competition Split Parameters with name '{competitionSplitParameters.Name}' already exists.");
+
             _competitionSplitParametersRepository.Add(competitionSplitParameters);
         }
 
