@@ -1,4 +1,5 @@
 ﻿using FootballFull.Models;
+using FootballFull.Services;
 using FootballFull.Services.Interfaces;
 
 namespace FootballFullEditor.ConsoleUI
@@ -7,11 +8,13 @@ namespace FootballFullEditor.ConsoleUI
     {
         private readonly IClubService _clubService;
         private readonly ICountryService _countryService;
+        private readonly ICompetitionSplitParametersService _competitionSplitParametersService;
 
-        public ClubEditor(IClubService clubService, ICountryService countryService)
+        public ClubEditor(IClubService clubService, ICountryService countryService, ICompetitionSplitParametersService competitionSplitParametersService)
         {
             _clubService = clubService ?? throw new ArgumentNullException(nameof(clubService));
             _countryService = countryService ?? throw new ArgumentNullException(nameof(countryService));
+            _competitionSplitParametersService = competitionSplitParametersService ?? throw new ArgumentNullException(nameof(competitionSplitParametersService));
         }
 
         public void Run()
@@ -84,26 +87,30 @@ namespace FootballFullEditor.ConsoleUI
                 return;
             }
 
-            Console.WriteLine("Has feeder club? (y/n)");
-            var key = Console.ReadKey(intercept: true).Key;
-            if (key == ConsoleKey.Y)
-                _clubService.Add(new Club
-                {
-                    Id = Guid.NewGuid(),
-                    Name = name.Trim() + " B",
-                    Strength = strength - 20,
-                    CountryId = countryId
-                });
-
-            // Add split parameters
-
-            _clubService.Add(new Club
+            var newClub = new Club
             {
                 Id = Guid.NewGuid(),
                 Name = name.Trim(),
                 Strength = strength,
                 CountryId = countryId
-            });
+            };
+            AddCompetitionSplitParameter(newClub);
+
+            Console.WriteLine("Has feeder club? (y/n)");
+            var key = Console.ReadKey(intercept: true).Key;
+            if (key == ConsoleKey.Y)
+            {
+                var newFeederClub = new Club
+                {
+                    Id = Guid.NewGuid(),
+                    Name = name.Trim() + " B",
+                    Strength = strength - 20,
+                    CountryId = countryId,
+                    CompetitionSplitParameters = newClub.CompetitionSplitParameters
+                };
+                _clubService.Add(newFeederClub);
+            }
+            _clubService.Add(newClub);
 
             Console.WriteLine("Club added. Press any key to continue...");
             Console.ReadKey();
@@ -216,6 +223,19 @@ namespace FootballFullEditor.ConsoleUI
             // Add split parameters
             // Remove split parameters 
             // for both clubs
+            Console.WriteLine("Add split parameter? Y/N");
+            if (Console.ReadKey(true).Key == ConsoleKey.Y)
+            {
+                AddCompetitionSplitParameter(club);
+            }
+
+            Console.WriteLine("Remove split parameter? Y/N");
+            if (Console.ReadKey(true).Key == ConsoleKey.Y)
+            {
+                DeleteCompetitionSplitParameter(club);
+            }
+            feederClub.CompetitionSplitParameters = club.CompetitionSplitParameters;
+
             Console.WriteLine("Has feeder club? [Y/N]");
             var feederClubKey = Console.ReadKey(intercept: true).Key;
             if (feederClubKey == ConsoleKey.Y)
@@ -285,6 +305,50 @@ namespace FootballFullEditor.ConsoleUI
                 return Guid.Empty;
 
             return countries[index - 1].Id;
+        }
+
+        private void AddCompetitionSplitParameter(Club club)
+        {
+            Console.Clear();
+            Console.WriteLine("Adding competition split parameters...");
+            ShowCompetitionSplitParameters();
+            Console.Write("Enter number: ");
+            var input = Console.ReadLine();
+
+            if (!int.TryParse(input, out var index))
+                return;
+
+            var cspAll = _competitionSplitParametersService.GetCompetitionSplitParameters();
+            if (index < 1 || index > cspAll.Count)
+                return;
+
+            var csp = cspAll[index - 1];
+            club.CompetitionSplitParameters.Add(csp);
+            Console.WriteLine($"Split parameter added: {csp.Name}");
+        }
+
+        private void DeleteCompetitionSplitParameter(Club club)
+        {
+            for (int i = 0; i < club.CompetitionSplitParameters.Count; i++)
+            {
+                var csp = club.CompetitionSplitParameters[i];
+                Console.WriteLine($"{i + 1}. {csp.Name}");
+            }
+            Console.WriteLine("Choose a parameter to delete (or press any other key to cancel): ");
+            var input = Console.ReadLine();
+            if (int.TryParse(input, out var index) && index >= 1 && index <= club.CompetitionSplitParameters.Count)
+            {
+                club.CompetitionSplitParameters.RemoveAt(index - 1);
+            }
+        }
+
+        private void ShowCompetitionSplitParameters()
+        {
+            var counter = 1;
+            _competitionSplitParametersService.GetCompetitionSplitParameters().ToList().ForEach(csp =>
+            {
+                Console.WriteLine($"{counter++}. Name: {csp.Name}");
+            });
         }
     }
 }
