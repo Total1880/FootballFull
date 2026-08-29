@@ -10,8 +10,7 @@ namespace FootballFull.Models
         public Guid Id { get; set; }
         public Guid CountryId { get; set; }
         public Guid? FeederClubId { get; set; }
-        [JsonIgnore]
-        public List<CompetitionSplitParameters> CompetitionSplitParameters { get; set; }
+        public List<CompetitionSplitParameters> CompetitionSplitParameters { get; set; } = new List<CompetitionSplitParameters>();
         [JsonIgnore]
         public string Last5Games { get; set; }
         [JsonIgnore]
