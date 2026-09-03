@@ -145,12 +145,37 @@ namespace FootballFullEditor.ConsoleUI
                 CountryId = countryId,
                 Type = type
             };
+            if(type == Competition.CompetitionType.ParentCompetition)
+            {
+                AddCompetitionToParent(competition);
+            }
             AddCompetitionSplitParameter(competition);
 
             _competitionService.Add(competition);
 
             Console.WriteLine("Competition added. Press any key...");
             Console.ReadKey();
+        }
+
+        private void AddCompetitionToParent(Competition competition)
+        {
+            var input = string.Empty;
+            Console.WriteLine("Adding new subcompetition...");
+            do
+            {
+                var newChildCompetition = new Competition
+                {
+                    Tier = competition.Tier,
+                    CountryId = competition.CountryId,
+                    Type = Competition.CompetitionType.League,
+                };
+                Console.Write("Name: ");
+                newChildCompetition.Name = Console.ReadLine();
+                AddCompetitionSplitParameter(competition);
+                competition.SubCompetitions.Add(newChildCompetition);
+                Console.WriteLine("Add Another? (Y/N)");
+                input = Console.ReadLine();
+            } while (input?.ToUpper() == "Y");
         }
 
         private void AddCompetitionSplitParameter(Competition competition)
@@ -260,6 +285,14 @@ namespace FootballFullEditor.ConsoleUI
             {
                 DeleteCompetitionSplitParameter(comp);
             }
+
+            Console.WriteLine("Add Sub Competition? Y/N");
+            if (Console.ReadKey(true).Key == ConsoleKey.Y)
+            {
+                AddCompetitionToParent(comp);
+            }
+
+            Console.WriteLine("To delete a subcompetition, just do it as a regular competition deletion.");
 
             _competitionService.Update(comp);
 
