@@ -109,6 +109,7 @@ namespace FootballFullEditor.ConsoleUI
                     CompetitionSplitParameters = newClub.CompetitionSplitParameters
                 };
                 _clubService.Add(newFeederClub);
+                newClub.FeederClubId = newFeederClub.Id;
             }
             _clubService.Add(newClub);
 
