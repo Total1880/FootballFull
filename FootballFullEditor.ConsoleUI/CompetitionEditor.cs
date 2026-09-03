@@ -149,8 +149,6 @@ namespace FootballFullEditor.ConsoleUI
 
             _competitionService.Add(competition);
 
-
-
             Console.WriteLine("Competition added. Press any key...");
             Console.ReadKey();
         }
@@ -554,6 +552,7 @@ namespace FootballFullEditor.ConsoleUI
                 Console.WriteLine("1) League");
                 Console.WriteLine("2) Cup");
                 Console.WriteLine("3) International");
+                Console.WriteLine("4) Parent Competition");
 
                 if (allowEmpty)
                     Console.WriteLine("Leave empty to keep current value.");
@@ -571,6 +570,7 @@ namespace FootballFullEditor.ConsoleUI
                         case 1: return Competition.CompetitionType.League;
                         case 2: return Competition.CompetitionType.Cup;
                         case 3: return Competition.CompetitionType.International;
+                        case 4: return Competition.CompetitionType.ParentCompetition;
                     }
                 }
 

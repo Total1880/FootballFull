@@ -18,7 +18,8 @@ namespace FootballFull.Models
         {
             League,
             Cup,
-            International
+            International,
+            ParentCompetition
         }
         public IDictionary<int, DateTime> MatchDay { get; set; }
         [JsonIgnore]
