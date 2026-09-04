@@ -13,6 +13,7 @@ namespace FootballFull.Models
         public CompetitionType Type { get; set; }
         [JsonIgnore]
         public List<Competition> SubCompetitions { get; set; } = new List<Competition>();
+        public List<Guid> SubCompetitionIds { get; set; } = new List<Guid>();
 
         public enum CompetitionType
         {

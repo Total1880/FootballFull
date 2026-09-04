@@ -165,14 +165,16 @@ namespace FootballFullEditor.ConsoleUI
             {
                 var newChildCompetition = new Competition
                 {
+                    Id = Guid.NewGuid(),
                     Tier = competition.Tier,
                     CountryId = competition.CountryId,
                     Type = Competition.CompetitionType.League,
                 };
                 Console.Write("Name: ");
                 newChildCompetition.Name = Console.ReadLine();
-                AddCompetitionSplitParameter(competition);
-                competition.SubCompetitions.Add(newChildCompetition);
+                AddCompetitionSplitParameter(newChildCompetition);
+                competition.SubCompetitionIds.Add(newChildCompetition.Id);
+                _competitionService.Add(newChildCompetition);
                 Console.WriteLine("Add Another? (Y/N)");
                 input = Console.ReadLine();
             } while (input?.ToUpper() == "Y");

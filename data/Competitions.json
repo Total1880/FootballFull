@@ -1,0 +1,51 @@
+[
+  {
+    "Id": "e207eaca-11d9-4c0e-872d-8ab67c6ee498",
+    "Name": "Eerste Nationale VV",
+    "Country": null,
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Tier": 3,
+    "Strength": 0,
+    "Type": 0,
+    "SubCompetitionIds": [],
+    "MatchDay": {},
+    "SplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Id": "51eb3b5a-0c08-4206-afbf-9d3888c7455c",
+    "Name": "Eerste Nationale ACFF",
+    "Country": null,
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Tier": 3,
+    "Strength": 0,
+    "Type": 0,
+    "SubCompetitionIds": [],
+    "MatchDay": {},
+    "SplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Id": "6e76f6ca-823a-4e8e-8fca-322667f7efdb",
+    "Name": "Eerste Nationale",
+    "Country": null,
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Tier": 3,
+    "Strength": 0,
+    "Type": 3,
+    "SubCompetitionIds": [
+      "e207eaca-11d9-4c0e-872d-8ab67c6ee498",
+      "51eb3b5a-0c08-4206-afbf-9d3888c7455c"
+    ],
+    "MatchDay": {},
+    "SplitParameters": []
+  }
+]
