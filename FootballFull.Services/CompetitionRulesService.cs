@@ -2,6 +2,7 @@
 using FootballFull.Repositories;
 using FootballFull.Repositories.Interfaces;
 using FootballFull.Services.Interfaces;
+using System.Data;
 using static FootballFull.Models.Competition;
 
 namespace FootballFull.Services
@@ -55,12 +56,12 @@ namespace FootballFull.Services
                 if (rules == null)
                     continue;
 
-                ApplyPromotions(competition, rules, regularMoves, clubLeagueCompetition, allClubs);
-                ApplyRelegations(competition, rules, regularMoves, clubLeagueCompetition, allClubs);
+                ApplyPromotions(competition, rules, regularMoves, clubLeagueCompetition, allClubs, allClubsPerCompetition);
+                ApplyRelegations(competition, rules, regularMoves, clubLeagueCompetition, allClubs, allClubsPerCompetition);
             }
         }
 
-        private void ApplyPromotions(Competition competition, CompetitionRules rules, List<ClubMove> moves, List<ClubLeagueCompetition> clubLeagueCompetition, IList<Club> allClubs)
+        private void ApplyPromotions(Competition competition, CompetitionRules rules, List<ClubMove> moves, List<ClubLeagueCompetition> clubLeagueCompetition, IList<Club> allClubs, IList<ClubPerCompetition> allClubsPerCompetition)
         {
             if (rules.PromotionTo == null || rules.PromotionPlaces <= 0)
                 return;
@@ -73,7 +74,7 @@ namespace FootballFull.Services
                 var clubId = clubLeagueCompetition[index].ClubId;
                 index++;
 
-                if (PromotionBlockedByParentClub(clubId, clubLeagueCompetition.Where(_ => _.CompetitionId == rules.PromotionTo.Id).ToList(), allClubs.FirstOrDefault(_ => _.FeederClubId == clubId)))
+                if (PromotionBlockedByParentClub(clubId, allClubsPerCompetition.Where(_ => _.CompetitionId == rules.PromotionTo.Id).ToList(), allClubs.FirstOrDefault(_ => _.FeederClubId == clubId), moves, rules.PromotionTo.Id))
                     continue;
 
                 var club = allClubs.First(_ => _.Id == clubId);
@@ -85,7 +86,7 @@ namespace FootballFull.Services
             }
         }
 
-        private void ApplyRelegations(Competition competition, CompetitionRules rules, List<ClubMove> regularMoves, List<ClubLeagueCompetition> clubLeagueCompetition, IList<Club> allClubs)
+        private void ApplyRelegations(Competition competition, CompetitionRules rules, List<ClubMove> regularMoves, List<ClubLeagueCompetition> clubLeagueCompetition, IList<Club> allClubs, IList<ClubPerCompetition> allClubsPerCompetition)
         {
             if (rules.RelegationTo == null || rules.RelegationPlaces <= 0)
                 return;
@@ -113,7 +114,8 @@ namespace FootballFull.Services
                     ref subCompetitionCounter,
                     regularMoves,
                     allClubs,
-                    clubLeagueCompetition);
+                    clubLeagueCompetition,
+                    allClubsPerCompetition);
 
                 if (!conflictWasHandled)
                 {
@@ -123,9 +125,9 @@ namespace FootballFull.Services
                         rules.RelegationTo,
                         ref subCompetitionCounter,
                         regularMoves);
-                }
 
-                relegated++;
+                    relegated++;
+                }
             }
         }
 
@@ -136,7 +138,8 @@ namespace FootballFull.Services
     ref int subCompetitionCounter,
     List<ClubMove> moves,
     IList<Club> allClubs,
-    List<ClubLeagueCompetition> clubLeagueCompetition)
+    List<ClubLeagueCompetition> clubLeagueCompetition,
+    IList<ClubPerCompetition> allClubsPerCompetition)
         {
             if (clubToRelegate.FeederClubId == null)
                 return false;
@@ -151,9 +154,23 @@ namespace FootballFull.Services
             if (relegationTarget == null)
                 return false;
 
-            var feederClubIsAlreadyInTarget = CompetitionContainsClub(
-                clubLeagueCompetition,
+            var feederClubIsAlreadyInTarget = false;
+            if (relegationTarget.Type == CompetitionType.ParentCompetition)
+            {
+                for (int i = 0; i < relegationTarget.SubCompetitionIds.Count; i++)
+                {
+                    feederClubIsAlreadyInTarget = CompetitionContainsClub(allClubsPerCompetition.Where(_ => _.CompetitionId == relegationTarget.SubCompetitionIds[i]).ToList(), feederClub.Id);
+                    if (feederClubIsAlreadyInTarget) break;
+                }
+            }
+            else
+            {
+                feederClubIsAlreadyInTarget = CompetitionContainsClub(
+                allClubsPerCompetition.Where(_ => _.CompetitionId == relegationTarget.Id).ToList(),
                 feederClub.Id);
+            }
+
+
 
             if (!feederClubIsAlreadyInTarget)
                 return false;
@@ -174,14 +191,7 @@ namespace FootballFull.Services
                 ref subCompetitionCounter,
                 moves);
 
-            MoveClubToCompetition(
-                clubToRelegate,
-                currentCompetition,
-                relegationTarget,
-                ref subCompetitionCounter,
-                moves);
-
-            return true;
+            return false;
         }
 
         private void MoveClubToCompetition(
@@ -199,7 +209,7 @@ namespace FootballFull.Services
             if (targetCompetition == null)
                 return;
 
-            if (toCompetition.SubCompetitions != null && toCompetition.SubCompetitions.Count > 0)
+            if (toCompetition.SubCompetitionIds != null && toCompetition.SubCompetitionIds.Count > 0)
             {
                 var availableSubCompetitions = GetMatchingSubCompetitions(club, toCompetition);
 
@@ -221,7 +231,7 @@ namespace FootballFull.Services
     Competition competition,
     int subCompetitionCounter)
         {
-            if (competition.SubCompetitions == null || competition.SubCompetitions.Count == 0)
+            if (competition.SubCompetitionIds == null || competition.SubCompetitionIds.Count == 0)
                 return competition;
 
             var availableSubCompetitions = GetMatchingSubCompetitions(club, competition);
@@ -239,27 +249,41 @@ namespace FootballFull.Services
     Club club,
     Competition competition)
         {
-            if (competition.SubCompetitions == null)
+            if (competition.SubCompetitionIds == null)
                 return new List<Competition>();
 
-            return competition.SubCompetitions
+            var subCompetitions = _competitionService.GetSubCompetitions(competition);
+
+            var matchingSubCompetitions = subCompetitions
                 .Where(subCompetition =>
                     subCompetition.SplitParameters != null &&
                     club.CompetitionSplitParameters != null &&
-                    subCompetition.SplitParameters.Any(splitParameter =>
-                        club.CompetitionSplitParameters.Contains(splitParameter)))
+                    subCompetition.SplitParameters.Any(subParameter =>
+                        club.CompetitionSplitParameters.Any(clubParameter =>
+                            clubParameter.Id == subParameter.Id)))
                 .ToList();
+
+            return matchingSubCompetitions;
         }
 
-        private bool PromotionBlockedByParentClub(Guid clubId, List<ClubLeagueCompetition> clubLeagueCompetition, Club? parentClub)
+        private bool PromotionBlockedByParentClub(Guid clubId, List<ClubPerCompetition> clubPerCompetition, Club? parentClub, List<ClubMove> moves, Guid promotionCompetitionId)
         {
-            return parentClub != null &&
-                   CompetitionContainsClub(clubLeagueCompetition, parentClub.Id);
+            var parentClubIsInTargetCompetition = parentClub != null && CompetitionContainsClub(clubPerCompetition, parentClub.Id);
+            if (!parentClubIsInTargetCompetition && moves.Any(_ => _.Type == ClubMoveType.Add && _.ClubId == parentClub.Id && _.CompetitionId == promotionCompetitionId))
+            {
+                parentClubIsInTargetCompetition = true;
+            }
+            else if (parentClubIsInTargetCompetition && moves.Any(_ => _.Type == ClubMoveType.Remove && _.ClubId == parentClub.Id && _.CompetitionId == promotionCompetitionId))
+            {
+                parentClubIsInTargetCompetition = false;
+            }
+
+            return parentClubIsInTargetCompetition;
         }
 
-        private bool CompetitionContainsClub(List<ClubLeagueCompetition> clubLeagueCompetition, Guid id)
+        private bool CompetitionContainsClub(IList<ClubPerCompetition> clubPerCompetition, Guid id)
         {
-            return clubLeagueCompetition.Any(_ => _.ClubId == id);
+            return clubPerCompetition.Any(_ => _.ClubId == id);
         }
 
         private void AddCompetitionRecursive(
@@ -285,7 +309,7 @@ namespace FootballFull.Services
         {
             if (competitionRules.Id == Guid.Empty)
             {
-                competitionRules.Id = new Guid(); 
+                competitionRules.Id = new Guid();
                 _repository.Add(competitionRules);
             }
             else

@@ -104,17 +104,20 @@ namespace FootballFull.Services
                     Console.Clear();
                     Console.WriteLine($"=== Date {_currentDate:dddd dd/MM/yyyy} ===");
 
-                    Console.WriteLine();
-                    Console.WriteLine("Druk op een toets om deze dag te simuleren...");
-                    Console.ReadKey();
-
                     _seasonService.PlayMatchDay(_fixtures, _currentDate, false, _userClubId);
 
                     DisplayResult(_currentDate);
                     Console.WriteLine();
                     DisplayLeagueTable();
                     Console.WriteLine();
-                    DisplayNextFixture(competitionToShow, _currentDate);
+                    var hasNextFixture = DisplayNextFixture(competitionToShow, _currentDate);
+                    if(hasNextFixture)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Druk op een toets om deze dag te simuleren...");
+                        Console.ReadKey();
+                    }
+
                     PlayCupGames(_currentDate);
                     PlayInternationalGames(_currentDate);
                     _seasonService.UpdateWeekStats(_userClubId, _currentDate);
@@ -666,7 +669,7 @@ namespace FootballFull.Services
             Console.ReadKey();
         }
 
-        private void DisplayNextFixture(Competition competitionToShow, DateTime date, bool waitForKey = true)
+        private bool DisplayNextFixture(Competition competitionToShow, DateTime date, bool waitForKey = true)
         {
             if (date < _newSeasonDate)
             {
@@ -680,13 +683,13 @@ namespace FootballFull.Services
                 if (nextFixtures.Count == 0)
                 {
                     Console.WriteLine("No fixtures available.");
-                    if (waitForKey)
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("Press any key for next day...");
-                        Console.ReadKey();
-                    }
-                    return;
+                    //if (waitForKey)
+                    //{
+                    //    Console.WriteLine();
+                    //    Console.WriteLine("Press any key for next day...");
+                    //    Console.ReadKey();
+                    //}
+                    return false;
                 }
 
                 foreach (var f in nextFixtures)
@@ -710,6 +713,8 @@ namespace FootballFull.Services
                 Console.WriteLine("Season complete! Press any key...");
                 Console.ReadKey();
             }
+
+            return true;
         }
 
         private void ResetStrength()
@@ -740,7 +745,7 @@ namespace FootballFull.Services
             for (int i = 0; i < clubsInCountry.Count; i++)
             {
                 var club = clubsInCountry[i];
-                club.Strength = currentStrength > 0 ? currentStrength : 1;
+                club.Strength = club.Strength > 0 ? currentStrength : 1;
                 _clubService.Update(club);
 
                 counter--;

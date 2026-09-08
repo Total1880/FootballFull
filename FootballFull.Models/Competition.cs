@@ -4,6 +4,8 @@ namespace FootballFull.Models
 {
     public class Competition
     {
+        private List<Competition> _subCompetitions = new();
+
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Country Country { get; set; }
@@ -12,8 +14,8 @@ namespace FootballFull.Models
         public int Strength { get; set; }
         public CompetitionType Type { get; set; }
         [JsonIgnore]
-        public List<Competition> SubCompetitions { get; set; } = new List<Competition>();
-        public List<Guid> SubCompetitionIds { get; set; } = new List<Guid>();
+        public List<Competition> SubCompetitions => _subCompetitions;
+        public List<Guid> SubCompetitionIds { get; set; } = new();
 
         public enum CompetitionType
         {

@@ -32,6 +32,7 @@ services.AddSingleton<ITrainerService, TrainerService>();
 services.AddSingleton<IClubInternationalRankingService, ClubInternationalRankingService>();
 services.AddSingleton<ISaveDataService, SaveDataService>();
 services.AddSingleton<ICompetitionRulesService, CompetitionRulesService>();
+services.AddSingleton<IClubLeagueCompetitionService, ClubLeagueCompetitionService>();
 
 // Repositories (V2-varianten)
 services.AddSingleton<IRepository<Club>>(

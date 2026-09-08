@@ -82,5 +82,34 @@ namespace FootballFull.Services
 
             return competition.MatchDay;
         }
+
+        public List<Competition> GetSubCompetitions(
+    Competition competition)
+        {
+            var requestedIds = competition.SubCompetitionIds.ToHashSet();
+
+            // Verwijder eerder geladen competities die niet meer gevraagd zijn.
+            competition.SubCompetitions.RemoveAll(
+                subCompetition => !requestedIds.Contains(subCompetition.Id));
+
+            var loadedIds = competition.SubCompetitions
+                .Select(subCompetition => subCompetition.Id)
+                .ToHashSet();
+
+            var missingIds = requestedIds
+                .Where(id => !loadedIds.Contains(id))
+                .ToList();
+
+            if (missingIds.Count > 0)
+            {
+                var missingCompetitions =
+                    _competitionRepository
+                .Load().Where(c => missingIds.Contains(c.Id));
+
+                competition.SubCompetitions.AddRange(missingCompetitions);
+            }
+
+            return competition.SubCompetitions;
+        }
     }
 }

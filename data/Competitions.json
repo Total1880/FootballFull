@@ -1,6 +1,30 @@
 [
   {
-    "Id": "e207eaca-11d9-4c0e-872d-8ab67c6ee498",
+    "Id": "ddb0edcc-0f8f-433e-8c73-c153dbe92ddc",
+    "Name": "Jupiler Pro League",
+    "Country": null,
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Tier": 1,
+    "Strength": 0,
+    "Type": 0,
+    "SubCompetitionIds": [],
+    "MatchDay": {},
+    "SplitParameters": []
+  },
+  {
+    "Id": "cfb561ed-478e-48eb-9a52-50ff1adacc83",
+    "Name": "Challenger Pro League",
+    "Country": null,
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Tier": 2,
+    "Strength": 0,
+    "Type": 0,
+    "SubCompetitionIds": [],
+    "MatchDay": {},
+    "SplitParameters": []
+  },
+  {
+    "Id": "bd573f1c-7806-422c-85ac-596fb0ede075",
     "Name": "Eerste Nationale VV",
     "Country": null,
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
@@ -17,7 +41,7 @@
     ]
   },
   {
-    "Id": "51eb3b5a-0c08-4206-afbf-9d3888c7455c",
+    "Id": "6bf6c0d0-a545-4bf1-aab3-da67f8b525b7",
     "Name": "Eerste Nationale ACFF",
     "Country": null,
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
@@ -34,7 +58,7 @@
     ]
   },
   {
-    "Id": "6e76f6ca-823a-4e8e-8fca-322667f7efdb",
+    "Id": "fe97e8b1-13b3-4465-a18d-053cf23c302c",
     "Name": "Eerste Nationale",
     "Country": null,
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
@@ -42,8 +66,8 @@
     "Strength": 0,
     "Type": 3,
     "SubCompetitionIds": [
-      "e207eaca-11d9-4c0e-872d-8ab67c6ee498",
-      "51eb3b5a-0c08-4206-afbf-9d3888c7455c"
+      "bd573f1c-7806-422c-85ac-596fb0ede075",
+      "6bf6c0d0-a545-4bf1-aab3-da67f8b525b7"
     ],
     "MatchDay": {},
     "SplitParameters": []
