@@ -104,7 +104,7 @@ namespace FootballFullEditor.ConsoleUI
                 {
                     Id = Guid.NewGuid(),
                     Name = name.Trim() + " B",
-                    Strength = strength - 20,
+                    Strength = strength - 5,
                     CountryId = countryId,
                     CompetitionSplitParameters = newClub.CompetitionSplitParameters
                 };

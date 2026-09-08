@@ -814,7 +814,11 @@ chosenCompetitionIndex <= competitions.Count)
                 .ToList();
 
             var internationalCompetition = allCompetitions
-                .First(_ => _.Type == Competition.CompetitionType.International);
+                .FirstOrDefault(_ => _.Type == Competition.CompetitionType.International);
+
+            if (internationalCompetition == null) {
+                return new List<Fixture>();
+            }
 
             if (!loadFromSavedGames)
             {
