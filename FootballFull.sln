@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9
+# Visual Studio Version 18
+VisualStudioVersion = 18.9.12120.119 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballFull", "FootballFull\FootballFull.csproj", "{41BF57D9-60C9-4285-9B6D-508F949C96E0}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballFullEditor.ConsoleUI", "FootballFullEditor.ConsoleUI\FootballFullEditor.ConsoleUI.csproj", "{9C58E38C-C5D8-4541-AAAC-32BCF4F0E884}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OlavFramework", "OlavFramework\OlavFramework.csproj", "{E2CFCF6E-BE83-4ED4-B8EE-61A909879BDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballFull.Tests", "FootballFull.Tests\FootballFull.Tests.csproj", "{00A13548-A26E-435A-9037-2D17CDE691D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{E2CFCF6E-BE83-4ED4-B8EE-61A909879BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2CFCF6E-BE83-4ED4-B8EE-61A909879BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2CFCF6E-BE83-4ED4-B8EE-61A909879BDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00A13548-A26E-435A-9037-2D17CDE691D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00A13548-A26E-435A-9037-2D17CDE691D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00A13548-A26E-435A-9037-2D17CDE691D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00A13548-A26E-435A-9037-2D17CDE691D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
