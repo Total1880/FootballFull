@@ -29,7 +29,7 @@ namespace FootballFull.Services
         private SaveData _saveData;
 
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
-        public IList<NewsMessage> NewsMessages{ get { UpdateNewsMessages(); return _newsMessages; } }
+        public IList<NewsMessage> NewsMessages { get { UpdateNewsMessages(); return _newsMessages; } }
         public IList<ClubInternationalRanking> ClubInternationalRankings => _clubInternationalRankings;
 
         public int Year { get => _year; set => _year = value; }
@@ -74,14 +74,16 @@ namespace FootballFull.Services
             InitializeNewSeason(Year, true);
         }
 
-        public void InitializeNewSeason(int year, bool isNew = false)
+        public IList<ClubPerCompetition> InitializeNewSeason(int year, bool isNew = false)
         {
             _year = year;
             RecalculateCompetitionStrenghts(Configuration.MinStrength, Configuration.MaxStrength);
             RecalculateClubStrengths(Configuration.MinStrength, Configuration.MaxStrength);
 
-            if(!isNew)
+            if (!isNew)
                 PromotionsAndRelegations();
+
+            _clubsPerCompetition = _clubPerCompetitionService.GetAllClubPerCompetitions();
 
             _clubLeagueCompetitions = _clubsPerCompetition.Select(club => new ClubLeagueCompetition
             {
@@ -93,6 +95,8 @@ namespace FootballFull.Services
             }).ToList();
             _clubs = _clubService.GetClubs();
             ResetClubRuntimeState();
+
+            return _clubsPerCompetition;
         }
 
         private void RecalculateCompetitionStrenghts(int minStrength, int maxStrength)
@@ -766,7 +770,8 @@ chosenCompetitionIndex <= competitions.Count)
             var internationalCompetition = allCompetitions
                 .FirstOrDefault(_ => _.Type == Competition.CompetitionType.International);
 
-            if (internationalCompetition == null) {
+            if (internationalCompetition == null)
+            {
                 return new List<Fixture>();
             }
 

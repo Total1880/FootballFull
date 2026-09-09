@@ -49,6 +49,8 @@ namespace FootballFull.Services
 
         public void Run(bool isNew)
         {
+            var _dayCounter = 0;
+
             // Data laden
             _clubsPerCompetition = _clubPerCompetitionService.GetAllClubPerCompetitions();
             _competitions = _competitionService.GetCompetitions();
@@ -71,6 +73,7 @@ namespace FootballFull.Services
             _year = _seasonService.Year;
             _fixtures = _fixtureService.Generate(_clubsPerCompetition, _currentDate);
             _cupFixtures = _seasonService.InitializeNationalCups(_currentDate);
+
 
 
             if (!isNew)
@@ -100,7 +103,14 @@ namespace FootballFull.Services
 
                 do
                 {
-                    ShowBetweenMatchdaysMenu();
+                    _dayCounter++;
+
+                    var hasNextFixture = DisplayNextFixture(competitionToShow, _currentDate);
+                    Console.Clear();
+
+                    if (hasNextFixture || _dayCounter == 7)
+                        ShowBetweenMatchdaysMenu();
+
                     Console.Clear();
                     Console.WriteLine($"=== Date {_currentDate:dddd dd/MM/yyyy} ===");
 
@@ -110,9 +120,10 @@ namespace FootballFull.Services
                     Console.WriteLine();
                     DisplayLeagueTable();
                     Console.WriteLine();
-                    var hasNextFixture = DisplayNextFixture(competitionToShow, _currentDate);
-                    if(hasNextFixture)
+                    DisplayNextFixture(competitionToShow, _currentDate);
+                    if (hasNextFixture || _dayCounter == 7)
                     {
+                        _dayCounter = 0;
                         Console.WriteLine();
                         Console.WriteLine("Druk op een toets om deze dag te simuleren...");
                         Console.ReadKey();
@@ -133,11 +144,13 @@ namespace FootballFull.Services
                 Console.ReadKey();
                 Console.Clear();
 
+                _newSeasonDate = _newSeasonDate.AddYears(1);
+
                 _internationalFixtures = _seasonService.InitializeInternationalGames(_currentDate);
-                _seasonService.InitializeNewSeason(_year);
+                _clubsPerCompetition = _seasonService.InitializeNewSeason(_year);
                 _fixtures = _fixtureService.Generate(_clubsPerCompetition, _currentDate);
                 _cupFixtures = _seasonService.InitializeNationalCups(_currentDate);
-                _newSeasonDate = _newSeasonDate.AddYears(1);
+
                 _seasonService.SaveGame();
 
             } while (true);
@@ -683,12 +696,6 @@ namespace FootballFull.Services
                 if (nextFixtures.Count == 0)
                 {
                     Console.WriteLine("No fixtures available.");
-                    //if (waitForKey)
-                    //{
-                    //    Console.WriteLine();
-                    //    Console.WriteLine("Press any key for next day...");
-                    //    Console.ReadKey();
-                    //}
                     return false;
                 }
 
@@ -701,18 +708,18 @@ namespace FootballFull.Services
                     Console.ResetColor();
                 }
 
-                if (waitForKey)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Press any key for next week...");
-                    Console.ReadKey();
-                }
+                //if (waitForKey)
+                //{
+                //    Console.WriteLine();
+                //    Console.WriteLine("Press any key for next week...");
+                //    Console.ReadKey();
+                //}
             }
-            else
-            {
-                Console.WriteLine("Season complete! Press any key...");
-                Console.ReadKey();
-            }
+            //else
+            //{
+            //    Console.WriteLine("Season complete! Press any key...");
+            //    Console.ReadKey();
+            //}
 
             return true;
         }

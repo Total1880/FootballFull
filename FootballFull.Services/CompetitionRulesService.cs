@@ -116,6 +116,9 @@ namespace FootballFull.Services
                 var rankingIndex = clubLeagueCompetition.Count - 1 - indexFromBottom;
                 var clubToRelegateId = clubLeagueCompetition[rankingIndex].ClubId;
 
+                if (regularMoves.Any(_ => _.ClubId == clubToRelegateId))
+                    continue;
+
                 indexFromBottom++;
 
                 var clubToRelegate = allClubs.First(_ => _.Id == clubToRelegateId);
