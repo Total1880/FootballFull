@@ -137,7 +137,7 @@ namespace FootballFull.Services
                 _seasonService.InitializeNewSeason(_year);
                 _fixtures = _fixtureService.Generate(_clubsPerCompetition, _currentDate);
                 _cupFixtures = _seasonService.InitializeNationalCups(_currentDate);
-
+                _newSeasonDate = _newSeasonDate.AddYears(1);
                 _seasonService.SaveGame();
 
             } while (true);

@@ -14,7 +14,7 @@
   },
   {
     "Name": "Club Brugge",
-    "Strength": 20,
+    "Strength": 19,
     "Id": "298ba8a5-e4a5-491d-bdde-2e9676926dc1",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "f1119bf3-2183-49cf-ac8b-c9b8b7a0093f",
@@ -53,7 +53,7 @@
   },
   {
     "Name": "STVV",
-    "Strength": 16,
+    "Strength": 17,
     "Id": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -144,7 +144,7 @@
   },
   {
     "Name": "RC Genk",
-    "Strength": 11,
+    "Strength": 14,
     "Id": "889d9ae2-a459-479d-b4f9-e567226c7da9",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "1d12164d-1cbb-4eca-9f34-18ec428f813b",
@@ -157,7 +157,7 @@
   },
   {
     "Name": "Standard B",
-    "Strength": 6,
+    "Strength": 4,
     "Id": "d478825a-fcf1-4366-8b73-e5abbe08cb1a",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -183,7 +183,7 @@
   },
   {
     "Name": "Westerlo",
-    "Strength": 10,
+    "Strength": 11,
     "Id": "b28c7309-c771-4e74-aa18-abbae081bf3b",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -196,7 +196,7 @@
   },
   {
     "Name": "Antwerp",
-    "Strength": 8,
+    "Strength": 10,
     "Id": "0b672324-44a7-4d63-b7c1-9e4dc334e1ef",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -222,7 +222,7 @@
   },
   {
     "Name": "Sporting Charleroi",
-    "Strength": 7,
+    "Strength": 11,
     "Id": "942b9db7-69fd-4eb6-8d65-48d3b0ad451a",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "b2df7cca-5185-40fa-972c-64fdf7ddaee3",
@@ -235,7 +235,7 @@
   },
   {
     "Name": "OH Leuven B",
-    "Strength": 6,
+    "Strength": 7,
     "Id": "ec52e6fd-f6aa-40e7-8e97-d3c683da309a",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -248,7 +248,7 @@
   },
   {
     "Name": "OH Leuven",
-    "Strength": 6,
+    "Strength": 11,
     "Id": "c70df603-15bc-4fcc-b100-8c44f8987c75",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "ec52e6fd-f6aa-40e7-8e97-d3c683da309a",
@@ -261,7 +261,7 @@
   },
   {
     "Name": "Zulte Waregem",
-    "Strength": 3,
+    "Strength": 6,
     "Id": "4a4d39a4-327d-43fd-b584-47c08819cebc",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -274,7 +274,7 @@
   },
   {
     "Name": "Cercle Brugge B",
-    "Strength": 5,
+    "Strength": 6,
     "Id": "0adda25b-a905-44d5-8596-93fc402dd291",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -287,7 +287,7 @@
   },
   {
     "Name": "Cercle Brugge",
-    "Strength": 8,
+    "Strength": 11,
     "Id": "c0add5f6-6856-4995-a2e8-6f7331219928",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "0adda25b-a905-44d5-8596-93fc402dd291",
@@ -313,7 +313,7 @@
   },
   {
     "Name": "Dender",
-    "Strength": 5,
+    "Strength": 6,
     "Id": "2e54e407-6af4-4e95-954f-17943b68f35e",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -326,7 +326,7 @@
   },
   {
     "Name": "SK Beveren",
-    "Strength": 4,
+    "Strength": 8,
     "Id": "d5102ff5-4c92-498b-9cca-5776300578e6",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -339,7 +339,7 @@
   },
   {
     "Name": "KV Kortrijk",
-    "Strength": 5,
+    "Strength": 6,
     "Id": "10cf3375-df99-4d65-bfee-cfce6591c97d",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -352,7 +352,7 @@
   },
   {
     "Name": "SK Lommel",
-    "Strength": 5,
+    "Strength": 7,
     "Id": "0cb0d407-4b35-4e7e-8de2-50f1af57a529",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
