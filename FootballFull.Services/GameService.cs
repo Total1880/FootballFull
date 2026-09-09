@@ -731,7 +731,7 @@ namespace FootballFull.Services
 
             foreach (var country in countries)
             {
-                ResetClubStrength(clubs, country);
+                //ResetClubStrength(clubs, country);
                 ResetCompetitionStrength(country);
             }
         }

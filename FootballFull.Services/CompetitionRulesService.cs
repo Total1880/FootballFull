@@ -107,7 +107,9 @@ namespace FootballFull.Services
             if (rules.RelegationTo == null || rules.RelegationPlaces <= 0)
                 return;
 
-            var relegated = extraRelegations.Where(_ => _.Value == competition.Id).ToList().Count();
+            var extraRelegationsCount = regularMoves.Where(_ => _.Type == ClubMoveType.Add && _.CompetitionId == rules.RelegationTo.Id).ToList().Count() - rules.PromotionPlaces;
+
+            var relegated = extraRelegations.Where(_ => _.Value == competition.Id).ToList().Count() - extraRelegationsCount;
             var indexFromBottom = 0;
             var subCompetitionCounter = 0;
 
