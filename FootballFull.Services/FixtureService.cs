@@ -1,203 +1,162 @@
-﻿using FootballFull.Models;
+using FootballFull.Models;
 using FootballFull.Services.Interfaces;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FootballFull.Services
 {
     public class FixtureService : IFixtureService
     {
-        private IList<ClubPerCompetition> _teamsPerCompetition;
-        private int _roundCount;
-        private int _matchesPerRoundCount;
-        private bool _alternate = false;
-        private IList<int> _offsetList;
-        private readonly Random rng = new Random();
-
         private readonly IClubService _clubService;
         private readonly ICompetitionService _competitionService;
 
         public FixtureService(IClubService clubService, ICompetitionService competitionService)
         {
-            _offsetList = new List<int>();
             _clubService = clubService;
             _competitionService = competitionService;
         }
 
         public IList<Fixture> Generate(IList<ClubPerCompetition> clubsPerCompetition, DateTime seasonStartDate)
         {
-            var competitions = clubsPerCompetition.GroupBy(c => c.CompetitionId)
-                .Select(g => g.Key)
-                .ToList();
-            var list = new List<Fixture>();
-            var date = SearchFirstWeekend(seasonStartDate);
+            var fixtures = new List<Fixture>();
+            var firstMatchDay = FindFirstSaturday(seasonStartDate);
 
-            foreach (var competitionId in competitions)
+            foreach (var competitionId in clubsPerCompetition.Select(x => x.CompetitionId).Distinct())
             {
                 var competition = _competitionService.GetCompetitionById(competitionId);
-                if (competition.Type != Competition.CompetitionType.League)
+                if (competition == null || competition.Type != Competition.CompetitionType.League)
                     continue;
-                _teamsPerCompetition = clubsPerCompetition.Where(_ => _.CompetitionId == competitionId).ToList();
-                Shuffle(_teamsPerCompetition);
-                _roundCount = _teamsPerCompetition.Count - 1;
-                _matchesPerRoundCount = _teamsPerCompetition.Count / 2;
 
-                var firstHalfSeasonFixtures = GenerateFixtures(0, competitionId, date);
-                var secondHalfSeasonFixtures = GenerateFixtures(_teamsPerCompetition.Count - 1, competitionId, date);
+                var teams = clubsPerCompetition
+                    .Where(x => x.CompetitionId == competitionId)
+                    .Select(x => _clubService.GetClubById(x.ClubId))
+                    .Where(x => x != null)
+                    .DistinctBy(x => x.Id)
+                    .ToList();
 
-                list = list.Concat(firstHalfSeasonFixtures).ToList();
-                list = list.Concat(secondHalfSeasonFixtures).ToList();
+                if (teams.Count < 2)
+                    continue;
+
+                Shuffle(teams);
+                fixtures.AddRange(GenerateLeagueFixtures(teams, competition, firstMatchDay));
             }
 
-            return list;
-        }
-
-        private DateTime SearchFirstWeekend(DateTime seasonStartDate)
-        {
-            if (seasonStartDate.DayOfWeek == DayOfWeek.Saturday)
-            {
-                return seasonStartDate;
-            }
-            else if (seasonStartDate.DayOfWeek == DayOfWeek.Sunday)
-            {
-                return seasonStartDate.AddDays(1);
-            }
-            else
-            {
-                var daysUntilSaturday = ((int)DayOfWeek.Saturday - (int)seasonStartDate.DayOfWeek + 7) % 7;
-                return seasonStartDate.AddDays(daysUntilSaturday);
-            }
-        }
-
-        private IList<Fixture> GenerateFixtures(int roundNoOffset, Guid competitionId, DateTime date, IDictionary<int, DateTime> competitionWeekdays = null)
-        {
-            IList<Fixture> fixtures = new List<Fixture>();
-            competitionWeekdays ??= new Dictionary<int, DateTime>();
-
-            _offsetList = GenerateOffsetArray(_teamsPerCompetition.Count);
-
-            for (int roundNo = 1; roundNo <= _roundCount; roundNo++)
-            {
-                _alternate = !_alternate;
-
-                IList<int> homes = getHomes(roundNo);
-                IList<int> aways = getAways(roundNo);
-
-                for (int matchIndex = 0; matchIndex < _matchesPerRoundCount; matchIndex++)
-                {
-                    if (_alternate)
-                    {
-                        if (!competitionWeekdays.ContainsKey(roundNo + roundNoOffset))
-                        {
-                            competitionWeekdays = _competitionService.UpdateMatchDays(competitionId, new Dictionary<int, DateTime>
-                            {
-                                { roundNo + roundNoOffset, date.AddDays((roundNo + roundNoOffset - 1) * 7) }
-                            });
-
-                        }
-                        fixtures.Add(new Fixture
-                        {
-                            HomeTeamId = _teamsPerCompetition[homes[matchIndex]].ClubId,
-                            HomeTeam = _clubService.GetClubById(_teamsPerCompetition[homes[matchIndex]].ClubId),
-                            AwayTeamId = _teamsPerCompetition[aways[matchIndex]].ClubId,
-                            AwayTeam = _clubService.GetClubById(_teamsPerCompetition[aways[matchIndex]].ClubId),
-                            RoundNo = roundNo + roundNoOffset,
-                            MatchDay = competitionWeekdays != null && competitionWeekdays.ContainsKey(roundNo + roundNoOffset) ? competitionWeekdays[roundNo + roundNoOffset] : date.AddDays((roundNo + roundNoOffset - 1) * 7),
-                            CompetitionId = competitionId
-                        });
-                    }
-                    else
-                    {
-                        if (!competitionWeekdays.ContainsKey(roundNo + roundNoOffset))
-                        {
-                            competitionWeekdays = _competitionService.UpdateMatchDays(competitionId, new Dictionary<int, DateTime>
-                            {
-                                { roundNo + roundNoOffset, date.AddDays((roundNo + roundNoOffset - 1) * 7) }
-                            });
-                        }
-                        fixtures.Add(new Fixture
-                        {
-                            HomeTeamId = _teamsPerCompetition[aways[matchIndex]].ClubId,
-                            HomeTeam = _clubService.GetClubById(_teamsPerCompetition[aways[matchIndex]].ClubId),
-                            AwayTeamId = _teamsPerCompetition[homes[matchIndex]].ClubId,
-                            AwayTeam = _clubService.GetClubById(_teamsPerCompetition[homes[matchIndex]].ClubId),
-                            RoundNo = roundNo + roundNoOffset,
-                            MatchDay = competitionWeekdays != null && competitionWeekdays.ContainsKey(roundNo + roundNoOffset) ? competitionWeekdays[roundNo + roundNoOffset] : date.AddDays((roundNo + roundNoOffset - 1) * 7),
-                            CompetitionId = competitionId
-                        });
-                    }
-
-                    if (homes[matchIndex] == aways[matchIndex])
-                    {
-                        throw new Exception("Teams cannot play themselves");
-                    }
-                }
-            }
             return fixtures;
         }
 
-        private IList<int> getHomes(int roundNo)
+        private IList<Fixture> GenerateLeagueFixtures(
+            IList<Club> teams,
+            Competition competition,
+            DateTime firstMatchDay)
         {
-            var offset = _teamsPerCompetition.Count - roundNo;
-            var array = _offsetList.ToArray();
-            var homes = new ArraySegment<int>(array, offset, _matchesPerRoundCount - 1);
+            // Circle method needs an even participant count. Null is a bye.
+            var rotation = teams.Cast<Club?>().ToList();
+            if (rotation.Count % 2 != 0)
+                rotation.Add(null);
 
-            var output = homes.ToList();
-            output.Add(0);
-            return output;
-        }
+            var roundsPerHalf = rotation.Count - 1;
+            var matchDays = CreateAndSaveMatchDays(
+                competition,
+                firstMatchDay,
+                roundsPerHalf * 2);
 
-        private IList<int> getAways(int roundNo)
-        {
-            var offset = _teamsPerCompetition.Count - roundNo + _matchesPerRoundCount - 1;
-            var array = _offsetList.ToArray();
-            var aways = new ArraySegment<int>(array, offset, _matchesPerRoundCount);
-            var output = aways.ToArray();
-            Array.Reverse(output);
+            var firstHalf = new List<Fixture>();
 
-            return output;
-        }
-
-        private IList<int> GenerateOffsetArray(int count)
-        {
-            var offsetArray = new List<int>();
-
-            for (int i = 1; i < count; i++)
+            for (var roundIndex = 0; roundIndex < roundsPerHalf; roundIndex++)
             {
-                offsetArray.Add(i);
+                var roundNo = roundIndex + 1;
+
+                for (var pairIndex = 0; pairIndex < rotation.Count / 2; pairIndex++)
+                {
+                    var first = rotation[pairIndex];
+                    var second = rotation[rotation.Count - 1 - pairIndex];
+
+                    if (first == null || second == null)
+                        continue;
+
+                    var switchHomeAndAway = (roundIndex + pairIndex) % 2 != 0;
+                    var home = switchHomeAndAway ? second : first;
+                    var away = switchHomeAndAway ? first : second;
+
+                    firstHalf.Add(CreateFixture(
+                        competition.Id,
+                        roundNo,
+                        matchDays[roundNo],
+                        home,
+                        away));
+                }
+
+                RotateTeams(rotation);
             }
 
-            offsetArray = offsetArray.Concat(offsetArray).ToList();
-            offsetArray = offsetArray.Concat(offsetArray).ToList();
-            return offsetArray;
+            // Mirror the first half, guaranteeing one home and one away match
+            // for every pair of clubs.
+            var secondHalf = firstHalf.Select(firstLeg =>
+            {
+                var roundNo = firstLeg.RoundNo + roundsPerHalf;
+                return CreateFixture(
+                    competition.Id,
+                    roundNo,
+                    matchDays[roundNo],
+                    firstLeg.AwayTeam,
+                    firstLeg.HomeTeam);
+            });
+
+            return firstHalf.Concat(secondHalf).ToList();
         }
 
-        private int IsInBinarySequence(int number)
+        private IDictionary<int, DateTime> CreateAndSaveMatchDays(
+            Competition competition,
+            DateTime firstMatchDay,
+            int roundCount)
         {
-            var numbertocheck = 1;
-            var counter = 0;
-            do
-            {
+            var matchDays = Enumerable.Range(1, roundCount).ToDictionary(
+                roundNo => roundNo,
+                roundNo => firstMatchDay.AddDays((roundNo - 1) * 7));
 
-                if (number == numbertocheck)
-                {
-                    return counter;
-                }
-                counter++;
-                numbertocheck *= 2;
-            } while (numbertocheck <= number);
-
-            return -1;
+            // Always overwrite the dates; otherwise a new season reuses the
+            // dates stored for the previous season.
+            return _competitionService.UpdateMatchDays(competition.Id, matchDays);
         }
-        private void Shuffle<T>(IList<T> list)
+
+        private static Fixture CreateFixture(
+            Guid competitionId,
+            int roundNo,
+            DateTime matchDay,
+            Club home,
+            Club away)
         {
-            int n = list.Count;
-            while (n > 1)
+            return new Fixture
             {
-                n--;
-                int k = rng.Next(n + 1);
-                T value = list[k];
-                list[k] = list[n];
-                list[n] = value;
+                CompetitionId = competitionId,
+                RoundNo = roundNo,
+                MatchDay = matchDay,
+                HomeTeamId = home.Id,
+                HomeTeam = home,
+                AwayTeamId = away.Id,
+                AwayTeam = away
+            };
+        }
+
+        private static void RotateTeams(IList<Club?> teams)
+        {
+            var last = teams[^1];
+            for (var index = teams.Count - 1; index > 1; index--)
+                teams[index] = teams[index - 1];
+            teams[1] = last;
+        }
+
+        private static DateTime FindFirstSaturday(DateTime seasonStartDate)
+        {
+            var daysUntilSaturday =
+                ((int)DayOfWeek.Saturday - (int)seasonStartDate.DayOfWeek + 7) % 7;
+            return seasonStartDate.AddDays(daysUntilSaturday);
+        }
+
+        private static void Shuffle<T>(IList<T> list)
+        {
+            for (var index = list.Count - 1; index > 0; index--)
+            {
+                var randomIndex = Random.Shared.Next(index + 1);
+                (list[index], list[randomIndex]) = (list[randomIndex], list[index]);
             }
         }
 
@@ -209,148 +168,90 @@ namespace FootballFull.Services
             if (clubsPerCompetition == null || clubsPerCompetition.Count < 2)
                 return new List<Fixture>();
 
-            // Pak de clubs voor deze competitie
             var teams = clubsPerCompetition
-                .Where(cpc => cpc.CompetitionId == competitionCup.Id)
-                .Select(cpc => _clubService.GetClubById(cpc.ClubId))
-                .Where(c => c != null)
+                .Where(x => x.CompetitionId == competitionCup.Id)
+                .Select(x => _clubService.GetClubById(x.ClubId))
+                .Where(x => x != null)
+                .DistinctBy(x => x.Id)
                 .ToList();
 
             return GenerateCup(teams, competitionCup, seasonStartDate);
         }
 
-        private IList<Fixture> GenerateCup(IList<Club> teams, Competition competitionCup, DateTime startdate)
+        private IList<Fixture> GenerateCup(
+            IList<Club> teams,
+            Competition competitionCup,
+            DateTime seasonStartDate)
         {
             if (teams == null || teams.Count < 2)
                 return new List<Fixture>();
 
             var fixtures = new List<Fixture>();
-            var date = SearchFirstWeekend(startdate);
-
-            // Kopie zodat we de originele lijst niet wijzigen
             var realTeams = teams.ToList();
-            int n = realTeams.Count;
-
-            // 1) Bracket size = eerstvolgende macht van 2 (bv. 5 -> 8)
-            int bracketSize = 1;
-            while (bracketSize < n)
-                bracketSize *= 2;
-
-            int byeCount = bracketSize - n;
-
-            // 2) Byes aanmaken
-            var byeTeams = new List<Club>();
-            for (int i = 0; i < byeCount; i++)
-            {
-                byeTeams.Add(new Club
-                {
-                    Id = Guid.Empty,
-                    Name = "bye"
-                });
-            }
-
-            // 3) Real teams schudden (of seeden zoals je wil)
             Shuffle(realTeams);
 
-            // 4) Eerste ronde (RoundNo = 0)
-            var currentRoundFixtures = new List<Fixture>();
-            int realIndex = 0;
-            int byeIndex = 0;
+            var bracketSize = 1;
+            while (bracketSize < realTeams.Count)
+                bracketSize *= 2;
 
-            // 4a) Eerst alle bye-wedstrijden: real vs bye -> bye is sowieso na ronde 0 weg
-            for (int i = 0; i < byeCount; i++)
+            var byeCount = bracketSize - realTeams.Count;
+            var roundCount = (int)Math.Log2(bracketSize);
+            var firstMatchDay = FindFirstSaturday(seasonStartDate);
+            var matchDays = CreateAndSaveMatchDays(
+                competitionCup,
+                firstMatchDay,
+                roundCount);
+
+            var bye = new Club { Id = Guid.Empty, Name = "Bye" };
+            var currentRound = new List<Fixture>();
+            var teamIndex = 0;
+
+            for (var index = 0; index < byeCount; index++)
             {
-                var home = realTeams[realIndex++];
-                var away = byeTeams[byeIndex++];
-
-                if (competitionCup.MatchDay == null || !competitionCup.MatchDay.ContainsKey(1))
-                {
-                    competitionCup.MatchDay = _competitionService.UpdateMatchDays(competitionCup.Id, new Dictionary<int, DateTime>
-                            {
-                                { 1, date }
-                            });
-                }
-
-                var fixture = new Fixture
-                {
-                    CompetitionId = competitionCup.Id,
-                    RoundNo = 1,
-                    MatchDay = competitionCup.MatchDay == null ? date : competitionCup.MatchDay[1],
-                    HomeTeamId = home.Id,
-                    HomeTeam = home,
-                    AwayTeamId = away.Id,
-                    AwayTeam = away
-                };
-
+                var fixture = CreateFixture(
+                    competitionCup.Id,
+                    1,
+                    matchDays[1],
+                    realTeams[teamIndex++],
+                    bye);
                 fixtures.Add(fixture);
-                currentRoundFixtures.Add(fixture);
+                currentRound.Add(fixture);
             }
 
-            // 4b) Overgebleven echte teams spelen onder elkaar (geen byes meer)
-            while (realIndex < realTeams.Count)
+            while (teamIndex < realTeams.Count)
             {
-                var home = realTeams[realIndex++];
-                var away = realTeams[realIndex++];
-
-                if (competitionCup.MatchDay == null || !competitionCup.MatchDay.ContainsKey(1))
-                {
-                    competitionCup.MatchDay = _competitionService.UpdateMatchDays(competitionCup.Id, new Dictionary<int, DateTime>
-                            {
-                                { 1, date }
-                            });
-                }
-
-                var fixture = new Fixture
-                {
-                    CompetitionId = competitionCup.Id,
-                    RoundNo = 1,
-                    MatchDay = competitionCup.MatchDay == null ? date : competitionCup.MatchDay[1],
-                    HomeTeamId = home.Id,
-                    HomeTeam = home,
-                    AwayTeamId = away.Id,
-                    AwayTeam = away
-                };
-
+                var fixture = CreateFixture(
+                    competitionCup.Id,
+                    1,
+                    matchDays[1],
+                    realTeams[teamIndex++],
+                    realTeams[teamIndex++]);
                 fixtures.Add(fixture);
-                currentRoundFixtures.Add(fixture);
+                currentRound.Add(fixture);
             }
 
-            // 5) Volgende rondes: winners vs winners, geen byes meer
-            int round = 2;
-            while (currentRoundFixtures.Count > 1)
+            for (var roundNo = 2; currentRound.Count > 1; roundNo++)
             {
-                var nextRoundFixtures = new List<Fixture>();
+                var nextRound = new List<Fixture>();
 
-                for (int i = 0; i < currentRoundFixtures.Count; i += 2)
+                for (var index = 0; index < currentRound.Count; index += 2)
                 {
-                    if (competitionCup.MatchDay == null || !competitionCup.MatchDay.ContainsKey(round))
-                    {
-                        competitionCup.MatchDay = _competitionService.UpdateMatchDays(competitionCup.Id, new Dictionary<int, DateTime>
-                            {
-                                { round, date.AddDays((round - 1) * 7) }
-                            });
-                    }
-
                     var fixture = new Fixture
                     {
                         CompetitionId = competitionCup.Id,
-                        RoundNo = round,
-                        MatchDay = competitionCup.MatchDay == null ? date.AddDays((round - 1) * 7) : competitionCup.MatchDay[round],
-                        CupPreviousFixtureHomeTeam = currentRoundFixtures[i],
-                        CupPreviousFixtureAwayTeam = currentRoundFixtures[i + 1]
+                        RoundNo = roundNo,
+                        MatchDay = matchDays[roundNo],
+                        CupPreviousFixtureHomeTeam = currentRound[index],
+                        CupPreviousFixtureAwayTeam = currentRound[index + 1]
                     };
-
                     fixtures.Add(fixture);
-                    nextRoundFixtures.Add(fixture);
+                    nextRound.Add(fixture);
                 }
 
-                currentRoundFixtures = nextRoundFixtures;
-                round++;
+                currentRound = nextRound;
             }
 
             return fixtures;
         }
-
-
     }
 }
