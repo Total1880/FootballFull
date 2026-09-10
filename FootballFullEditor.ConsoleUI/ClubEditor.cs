@@ -207,7 +207,6 @@ namespace FootballFullEditor.ConsoleUI
             if (int.TryParse(newStrengthInput, out var newStrength))
             {
                 club.Strength = newStrength;
-                feederClub.Strength = newStrength - 20;
             }
 
             Console.WriteLine("Change country? [Y/N]");
@@ -244,12 +243,14 @@ namespace FootballFullEditor.ConsoleUI
                 if (club.FeederClubId == null || club.FeederClubId == Guid.Empty)
                 {
                     feederClub.Id = new Guid();
+                    feederClub.Strength = club.Strength - 5;
                     club.FeederClubId = feederClub.Id;
                     _clubService.Add(feederClub);
                     Console.WriteLine("Feeder Club added.");
                 }
                 else
                 {
+                    feederClub.Strength = club.Strength - 5;
                     _clubService.Update(feederClub);
                     Console.WriteLine("Feeder Club updated.");
                 }

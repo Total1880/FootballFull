@@ -88,10 +88,6 @@
     "CompetitionId": "cfb561ed-478e-48eb-9a52-50ff1adacc83"
   },
   {
-    "ClubId": "2e54e407-6af4-4e95-954f-17943b68f35e",
-    "CompetitionId": "cfb561ed-478e-48eb-9a52-50ff1adacc83"
-  },
-  {
     "ClubId": "b73abdd8-c9b0-4e6c-a56f-4ce2b2dab4a8",
     "CompetitionId": "cfb561ed-478e-48eb-9a52-50ff1adacc83"
   },
@@ -246,5 +242,205 @@
   {
     "ClubId": "b5741a15-e316-48cd-9be0-1cfa7ba80591",
     "CompetitionId": "bd573f1c-7806-422c-85ac-596fb0ede075"
+  },
+  {
+    "ClubId": "0067014d-0960-4501-8408-c5e202f23d5f",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "001a1339-0f67-4f03-be34-12bc3db9fd02",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "5846ae9b-4790-4a9d-92c7-7e90c89fe7ce",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "e8d73344-7265-4f7c-b45e-76a34613b92a",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "0cf797c2-78e7-47b2-b704-2fcd31aa2047",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "ff721ff4-2dd3-47c5-ab3b-f75c0b3dccfb",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "e0188e4d-c6c4-4741-9e24-3c2f38cd3f94",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "ba7bf6b2-8818-48a7-b73e-ad50207f54bd",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "2b584c1b-6f69-4179-80f7-4755779d9cf1",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "ba130fe5-f55d-4a92-8efd-21f21d4fa450",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "22783ce8-2254-46e5-8669-7dde5ba69ec7",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "742e3612-948e-4cf6-935a-968cce86f868",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "f1959942-9823-4155-93bb-e3d48fba394e",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "597197bb-2c84-479d-a265-de37cf52b944",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "31601baa-8a3c-419f-815a-2cc022a9f140",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "e8563b33-6477-42db-9a73-3b11e6d9edab",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933"
+  },
+  {
+    "ClubId": "8cbba601-a92d-415f-af7c-7474ffb74123",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "d62d652c-0b2d-4f72-bf71-bca8a1a5edae",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "8546603c-0cfd-4cff-89a0-ebf6932b47e2",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "25b94d1b-7221-499f-bc28-e5d54169e0d0",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "b3862344-4697-4d5b-a23e-5670f93937eb",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "95fd49b5-4db8-4b42-b623-5827c6498769",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "f00729f0-b7f4-4de0-b0a9-ec984efaa4bf",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "7509fb94-0e26-4ef9-b4c6-87232948ffe7",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "3263356e-b3db-4ba0-a4d3-b22886712a24",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "849053b1-ed24-4ad3-b691-feaac1b0c525",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "a9dbd013-307c-4e3b-811d-1a1e54efb033",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "c223582c-868c-41fd-80c5-39785a173789",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "35c3929a-09fb-48f5-b82e-7a637c9abb4a",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "e04ee762-71dd-4ddf-8bab-b154f07f4d4c",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "78f15e01-48ca-4445-931b-ff6fdce98c21",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "df6a5ade-3c09-4f8b-b01e-9afda99876fb",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70"
+  },
+  {
+    "ClubId": "eb190e74-fd35-4b6d-b5b5-0a612a697398",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "6ac65899-f146-44f5-873b-d51877810fa4",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "16b6c7e0-c7ab-48f5-ba90-0f5de3f7eea6",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "eeea7ffe-cf8d-4ffd-b964-9a751cc40252",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "ba19fa16-c85c-4e32-857a-ff6f103e77dc",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "33b9ddcf-0063-4358-adb2-938c75bd49cb",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "26392d4b-c778-43ec-a3cf-120f5af1cf34",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "e7812243-5fd5-433c-a4a6-4eda4722a6b2",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "14019d89-e959-4dad-807d-f07d7db01c25",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "aa4aa84d-cf72-4377-a0a9-eac5957a703b",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "c8695797-fa00-4663-81c0-b4a347482d54",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "60d04171-cf46-4fd7-bc26-bedcf3d70368",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "80ea49b3-1e76-456c-92d5-c04b86e8209a",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "fc36d598-6436-4825-aac8-c7cc9c3b3fc0",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "fa0e12dd-b746-40f2-a65f-df7fc29b1a1c",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "8d16aee7-c2da-4554-abd6-375ed7225de9",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "0b92f026-3e99-404c-8705-f9777232bcc5",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
+  },
+  {
+    "ClubId": "6f7cbb66-772a-4d56-9a8e-1589ac52960b",
+    "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd"
   }
 ]

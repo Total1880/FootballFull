@@ -56,7 +56,7 @@
     "Strength": 18,
     "Id": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
-    "FeederClubId": null,
+    "FeederClubId": "00000000-0000-0000-0000-000000000000",
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -95,7 +95,7 @@
     "Strength": 16,
     "Id": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
-    "FeederClubId": null,
+    "FeederClubId": "00000000-0000-0000-0000-000000000000",
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -199,7 +199,7 @@
     "Strength": 11,
     "Id": "0b672324-44a7-4d63-b7c1-9e4dc334e1ef",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
-    "FeederClubId": null,
+    "FeederClubId": "00000000-0000-0000-0000-000000000000",
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -264,7 +264,7 @@
     "Strength": 9,
     "Id": "4a4d39a4-327d-43fd-b584-47c08819cebc",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
-    "FeederClubId": null,
+    "FeederClubId": "00000000-0000-0000-0000-000000000000",
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -394,7 +394,7 @@
     "Strength": 5,
     "Id": "7da8bdbc-aab7-4f87-8eac-ee47823c05b6",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
-    "FeederClubId": null,
+    "FeederClubId": "00000000-0000-0000-0000-000000000000",
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
@@ -789,6 +789,656 @@
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Aalst-Lede",
+    "Strength": 3,
+    "Id": "0067014d-0960-4501-8408-c5e202f23d5f",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Wetteren",
+    "Strength": 3,
+    "Id": "001a1339-0f67-4f03-be34-12bc3db9fd02",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Torhout",
+    "Strength": 3,
+    "Id": "5846ae9b-4790-4a9d-92c7-7e90c89fe7ce",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Oostkamp",
+    "Strength": 3,
+    "Id": "e8d73344-7265-4f7c-b45e-76a34613b92a",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Voorde-Appelterre",
+    "Strength": 3,
+    "Id": "0cf797c2-78e7-47b2-b704-2fcd31aa2047",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Londerzeel",
+    "Strength": 3,
+    "Id": "ff721ff4-2dd3-47c5-ab3b-f75c0b3dccfb",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "KVDO",
+    "Strength": 3,
+    "Id": "e0188e4d-c6c4-4741-9e24-3c2f38cd3f94",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Oudenaarde",
+    "Strength": 3,
+    "Id": "ba7bf6b2-8818-48a7-b73e-ad50207f54bd",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "VW Hamme",
+    "Strength": 3,
+    "Id": "2b584c1b-6f69-4179-80f7-4755779d9cf1",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "RC Gent",
+    "Strength": 3,
+    "Id": "ba130fe5-f55d-4a92-8efd-21f21d4fa450",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Petegem-Deinze",
+    "Strength": 3,
+    "Id": "22783ce8-2254-46e5-8669-7dde5ba69ec7",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "HO Kalken",
+    "Strength": 3,
+    "Id": "742e3612-948e-4cf6-935a-968cce86f868",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Lebbeke",
+    "Strength": 3,
+    "Id": "f1959942-9823-4155-93bb-e3d48fba394e",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Ninove",
+    "Strength": 3,
+    "Id": "597197bb-2c84-479d-a265-de37cf52b944",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Zulte Waregem B",
+    "Strength": 0,
+    "Id": "31601baa-8a3c-419f-815a-2cc022a9f140",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "KV Mechelen B",
+    "Strength": 0,
+    "Id": "e8563b33-6477-42db-9a73-3b11e6d9edab",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Tempo Overijse",
+    "Strength": 3,
+    "Id": "8cbba601-a92d-415f-af7c-7474ffb74123",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "KVK Wellen",
+    "Strength": 3,
+    "Id": "d62d652c-0b2d-4f72-bf71-bca8a1a5edae",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Diegem Sport",
+    "Strength": 3,
+    "Id": "8546603c-0cfd-4cff-89a0-ebf6932b47e2",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "VC Wilrijk",
+    "Strength": 3,
+    "Id": "25b94d1b-7221-499f-bc28-e5d54169e0d0",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Termien",
+    "Strength": 3,
+    "Id": "b3862344-4697-4d5b-a23e-5670f93937eb",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Rotselaar",
+    "Strength": 3,
+    "Id": "95fd49b5-4db8-4b42-b623-5827c6498769",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Hades Kiewit",
+    "Strength": 3,
+    "Id": "f00729f0-b7f4-4de0-b0a9-ec984efaa4bf",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "De Kempen",
+    "Strength": 3,
+    "Id": "7509fb94-0e26-4ef9-b4c6-87232948ffe7",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Cappellen",
+    "Strength": 3,
+    "Id": "3263356e-b3db-4ba0-a4d3-b22886712a24",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Tongeren",
+    "Strength": 3,
+    "Id": "849053b1-ed24-4ad3-b691-feaac1b0c525",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "RC Mechelen",
+    "Strength": 3,
+    "Id": "a9dbd013-307c-4e3b-811d-1a1e54efb033",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Bocholter",
+    "Strength": 3,
+    "Id": "c223582c-868c-41fd-80c5-39785a173789",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Rupel-Boom",
+    "Strength": 3,
+    "Id": "35c3929a-09fb-48f5-b82e-7a637c9abb4a",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Nijlen",
+    "Strength": 3,
+    "Id": "e04ee762-71dd-4ddf-8bab-b154f07f4d4c",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Antwerp B",
+    "Strength": 6,
+    "Id": "78f15e01-48ca-4445-931b-ff6fdce98c21",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "STVV B",
+    "Strength": 13,
+    "Id": "df6a5ade-3c09-4f8b-b01e-9afda99876fb",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "VV",
+        "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+      }
+    ]
+  },
+  {
+    "Name": "Crossing Schaerbeek",
+    "Strength": 3,
+    "Id": "eb190e74-fd35-4b6d-b5b5-0a612a697398",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Saint Ghislain",
+    "Strength": 3,
+    "Id": "6ac65899-f146-44f5-873b-d51877810fa4",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "RSD Jette",
+    "Strength": 3,
+    "Id": "16b6c7e0-c7ab-48f5-ba90-0f5de3f7eea6",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Ostiches-Ath",
+    "Strength": 3,
+    "Id": "eeea7ffe-cf8d-4ffd-b964-9a751cc40252",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Stade Verviers",
+    "Strength": 3,
+    "Id": "ba19fa16-c85c-4e32-857a-ff6f103e77dc",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "RCS Braine",
+    "Strength": 3,
+    "Id": "33b9ddcf-0063-4358-adb2-938c75bd49cb",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Union Hutoise",
+    "Strength": 3,
+    "Id": "26392d4b-c778-43ec-a3cf-120f5af1cf34",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Ganshoren",
+    "Strength": 3,
+    "Id": "e7812243-5fd5-433c-a4a6-4eda4722a6b2",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Stockay-Saint-Georges",
+    "Strength": 3,
+    "Id": "14019d89-e959-4dad-807d-f07d7db01c25",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "RUS Binche",
+    "Strength": 3,
+    "Id": "aa4aa84d-cf72-4377-a0a9-eac5957a703b",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Union Richelle",
+    "Strength": 3,
+    "Id": "c8695797-fa00-4663-81c0-b4a347482d54",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Mouscron",
+    "Strength": 3,
+    "Id": "60d04171-cf46-4fd7-bc26-bedcf3d70368",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Acren-Lessines",
+    "Strength": 3,
+    "Id": "80ea49b3-1e76-456c-92d5-c04b86e8209a",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Union La Calamine",
+    "Strength": 3,
+    "Id": "fc36d598-6436-4825-aac8-c7cc9c3b3fc0",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Entit\u00E9 Manageoise",
+    "Strength": 3,
+    "Id": "fa0e12dd-b746-40f2-a65f-df7fc29b1a1c",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Aywaille",
+    "Strength": 3,
+    "Id": "8d16aee7-c2da-4554-abd6-375ed7225de9",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Union Namur",
+    "Strength": 3,
+    "Id": "0b92f026-3e99-404c-8705-f9777232bcc5",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+      }
+    ]
+  },
+  {
+    "Name": "Eupen B",
+    "Strength": 0,
+    "Id": "6f7cbb66-772a-4d56-9a8e-1589ac52960b",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": [
+      {
+        "Name": "ACFF",
+        "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
     ]
   }
