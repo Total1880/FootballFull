@@ -16,6 +16,7 @@ namespace FootballFull.Services
         private IClubPerCompetitionService _clubPerCompetitionService;
         private IClubInternationalRankingService _clubInternationalRankingService;
         private ISaveDataService _saveDataService;
+        private readonly ICompetitionRulesService _competitionRulesService;
         private IList<ClubLeagueCompetition> _clubLeagueCompetitions;
         private IList<ClubPerCompetition> _clubsPerCompetition;
         private IList<Club> _clubs;
@@ -28,7 +29,7 @@ namespace FootballFull.Services
         private SaveData _saveData;
 
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
-        public IList<NewsMessage> NewsMessages{ get { UpdateNewsMessages(); return _newsMessages; } }
+        public IList<NewsMessage> NewsMessages { get { UpdateNewsMessages(); return _newsMessages; } }
         public IList<ClubInternationalRanking> ClubInternationalRankings => _clubInternationalRankings;
 
         public int Year { get => _year; set => _year = value; }
@@ -42,7 +43,8 @@ namespace FootballFull.Services
             ICompetitionService competitionService,
             IClubPerCompetitionService clubPerCompetitionService,
             IClubInternationalRankingService clubInternationalRankingService,
-            ISaveDataService saveDataService)
+            ISaveDataService saveDataService,
+            ICompetitionRulesService competitionRulesService)
         {
             _competitionRepository = competitionRepository;
             _clubService = clubService;
@@ -53,6 +55,7 @@ namespace FootballFull.Services
             _clubPerCompetitionService = clubPerCompetitionService;
             _clubInternationalRankingService = clubInternationalRankingService;
             _saveDataService = saveDataService;
+            _competitionRulesService = competitionRulesService;
 
             _newsMessages = new List<NewsMessage>();
             _clubInternationalRankings = _clubInternationalRankingService.GetAll();
@@ -68,15 +71,20 @@ namespace FootballFull.Services
             _clubs = _clubService.GetClubs();
             _trainers = _trainerService.Load();
 
-            InitializeNewSeason(Year);
+            InitializeNewSeason(Year, true);
         }
 
-        public void InitializeNewSeason(int year)
+        public IList<ClubPerCompetition> InitializeNewSeason(int year, bool isNew = false)
         {
             _year = year;
             RecalculateCompetitionStrenghts(Configuration.MinStrength, Configuration.MaxStrength);
             RecalculateClubStrengths(Configuration.MinStrength, Configuration.MaxStrength);
-            PromotionsAndRelegations();
+
+            if (!isNew)
+                PromotionsAndRelegations();
+
+            _clubsPerCompetition = _clubPerCompetitionService.GetAllClubPerCompetitions();
+
             _clubLeagueCompetitions = _clubsPerCompetition.Select(club => new ClubLeagueCompetition
             {
                 ClubId = club.ClubId,
@@ -87,6 +95,8 @@ namespace FootballFull.Services
             }).ToList();
             _clubs = _clubService.GetClubs();
             ResetClubRuntimeState();
+
+            return _clubsPerCompetition;
         }
 
         private void RecalculateCompetitionStrenghts(int minStrength, int maxStrength)
@@ -189,63 +199,7 @@ namespace FootballFull.Services
 
         private void PromotionsAndRelegations()
         {
-            if (_clubLeagueCompetitions == null) return;
-
-            const int places = 2;
-
-            var competitions = _competitionRepository.Load()
-                .Where(c => c.Type == Competition.CompetitionType.League)   // <— enkel leagues
-                .ToList();
-
-            // maxTier PER LAND, niet globaal
-            var maxTierPerCountry = competitions
-                .GroupBy(c => c.CountryId)
-                .ToDictionary(g => g.Key, g => g.Max(x => x.Tier));
-
-            foreach (var competition in competitions)
-            {
-                var clubsInCompetition = _clubLeagueCompetitions
-                    .Where(x => x.CompetitionId == competition.Id)
-                    .OrderByDescending(x => x.Points)
-                    .ThenByDescending(x => x.GoalsFor - x.GoalsAgainst)
-                    .ThenByDescending(x => x.GoalsFor)
-                    .ToList();
-
-                if (clubsInCompetition.Count == 0) continue;
-
-                var relegated = clubsInCompetition.Skip(Math.Max(0, clubsInCompetition.Count - places)).ToList();
-                var promoted = clubsInCompetition.Take(Math.Min(places, clubsInCompetition.Count)).ToList();
-
-                // promotie
-                if (competition.Tier > 1)
-                {
-                    var higher = competitions.FirstOrDefault(c => c.CountryId == competition.CountryId && c.Tier == competition.Tier - 1);
-                    if (higher != null)
-                    {
-                        foreach (var club in promoted)
-                        {
-                            // <— update exact dezelfde link (club + huidige competitie)
-                            var link = _clubsPerCompetition.FirstOrDefault(l => l.ClubId == club.ClubId && l.CompetitionId == competition.Id);
-                            if (link != null) link.CompetitionId = higher.Id;
-                        }
-                    }
-                }
-
-                // degradatie
-                var maxTier = maxTierPerCountry[competition.CountryId];
-                if (competition.Tier < maxTier)
-                {
-                    var lower = competitions.FirstOrDefault(c => c.CountryId == competition.CountryId && c.Tier == competition.Tier + 1);
-                    if (lower != null)
-                    {
-                        foreach (var club in relegated)
-                        {
-                            var link = _clubsPerCompetition.FirstOrDefault(l => l.ClubId == club.ClubId && l.CompetitionId == competition.Id);
-                            if (link != null) link.CompetitionId = lower.Id;
-                        }
-                    }
-                }
-            }
+            _competitionRulesService.ApplyPromotionAndRelegations(_clubLeagueCompetitions);
         }
 
 
@@ -814,7 +768,12 @@ chosenCompetitionIndex <= competitions.Count)
                 .ToList();
 
             var internationalCompetition = allCompetitions
-                .First(_ => _.Type == Competition.CompetitionType.International);
+                .FirstOrDefault(_ => _.Type == Competition.CompetitionType.International);
+
+            if (internationalCompetition == null)
+            {
+                return new List<Fixture>();
+            }
 
             if (!loadFromSavedGames)
             {

@@ -1,4 +1,5 @@
 ﻿using FootballFull.Models;
+using FootballFull.Services;
 using FootballFull.Services.Interfaces;
 
 namespace FootballFullEditor.ConsoleUI
@@ -9,17 +10,23 @@ namespace FootballFullEditor.ConsoleUI
         private readonly ICountryService _countryService;
         private readonly IClubService _clubService;
         private readonly IClubPerCompetitionService _clubCompetitionService;
+        private readonly ICompetitionRulesService _competitionRulesService;
+        private readonly ICompetitionSplitParametersService _competitionSplitParametersService;
 
         public CompetitionEditor(
             ICompetitionService competitionService,
             ICountryService countryService,
             IClubService clubService,
-            IClubPerCompetitionService clubCompetitionService)
+            IClubPerCompetitionService clubCompetitionService,
+            ICompetitionRulesService competitionRulesService,
+            ICompetitionSplitParametersService competitionSplitParametersService)
         {
             _competitionService = competitionService;
             _countryService = countryService;
             _clubService = clubService;
             _clubCompetitionService = clubCompetitionService;
+            _competitionRulesService = competitionRulesService;
+            _competitionSplitParametersService = competitionSplitParametersService;
         }
 
         public void Run()
@@ -32,7 +39,7 @@ namespace FootballFullEditor.ConsoleUI
                 ShowCompetitions();
 
                 Console.WriteLine();
-                Console.WriteLine("[A]dd  |  [D]elete  |  [E]dit  |  [M]anage clubs  |  [B]ack");
+                Console.WriteLine("[A]dd  |  [D]elete  |  [E]dit  |  [M]anage clubs  |  [R]ules  |  [B]ack");
 
                 var key = Console.ReadKey(true).Key;
 
@@ -46,6 +53,9 @@ namespace FootballFullEditor.ConsoleUI
                         break;
                     case ConsoleKey.E:
                         EditCompetition();
+                        break;
+                    case ConsoleKey.R:
+                        ManageRules();
                         break;
                     case ConsoleKey.M:
                         ManageClubsForCompetition();
@@ -128,17 +138,75 @@ namespace FootballFullEditor.ConsoleUI
 
             // Nieuw: type kiezen
             var type = SelectCompetitionType();
-
-            _competitionService.Add(new Competition
+            var competition = new Competition
             {
                 Name = name,
                 Tier = tier,
                 CountryId = countryId,
                 Type = type
-            });
+            };
+            if(type == Competition.CompetitionType.ParentCompetition)
+            {
+                AddCompetitionToParent(competition);
+            }
+            AddCompetitionSplitParameter(competition);
+
+            _competitionService.Add(competition);
 
             Console.WriteLine("Competition added. Press any key...");
             Console.ReadKey();
+        }
+
+        private void AddCompetitionToParent(Competition competition)
+        {
+            var input = string.Empty;
+            Console.WriteLine("Adding new subcompetition...");
+            do
+            {
+                var newChildCompetition = new Competition
+                {
+                    Id = Guid.NewGuid(),
+                    Tier = competition.Tier,
+                    CountryId = competition.CountryId,
+                    Type = Competition.CompetitionType.League,
+                };
+                Console.Write("Name: ");
+                newChildCompetition.Name = Console.ReadLine();
+                AddCompetitionSplitParameter(newChildCompetition);
+                competition.SubCompetitionIds.Add(newChildCompetition.Id);
+                _competitionService.Add(newChildCompetition);
+                Console.WriteLine("Add Another? (Y/N)");
+                input = Console.ReadLine();
+            } while (input?.ToUpper() == "Y");
+        }
+
+        private void AddCompetitionSplitParameter(Competition competition)
+        {
+            Console.Clear();
+            Console.WriteLine("Adding competition split parameters...");
+            ShowCompetitionSplitParameters();
+            Console.Write("Enter number: ");
+            var input = Console.ReadLine();
+
+            if (!int.TryParse(input, out var index))
+                return;
+
+            var cspAll = _competitionSplitParametersService.GetCompetitionSplitParameters();
+            if (index < 1 || index > cspAll.Count)
+                return;
+
+            var csp = cspAll[index - 1];
+            competition.SplitParameters.Add(csp);
+            Console.WriteLine($"Split parameter added: {csp.Name}");
+        }
+
+        private void ShowCompetitionSplitParameters()
+        {
+            var counter = 1;
+            _competitionSplitParametersService.GetCompetitionSplitParameters().ToList().ForEach(csp =>
+            {
+                Console.WriteLine($"{counter++}. Name: {csp.Name}");
+            });
         }
 
         private void DeleteCompetition()
@@ -207,10 +275,153 @@ namespace FootballFullEditor.ConsoleUI
             Console.WriteLine();
             comp.Type = SelectCompetitionType(comp.Type, allowEmpty: true);
 
+            // Add or remove split parameters
+            Console.WriteLine("Add split parameter? Y/N");
+            if (Console.ReadKey(true).Key == ConsoleKey.Y)
+            {
+                AddCompetitionSplitParameter(comp);
+            }
+
+            Console.WriteLine("Remove split parameter? Y/N");
+            if (Console.ReadKey(true).Key == ConsoleKey.Y)
+            {
+                DeleteCompetitionSplitParameter(comp);
+            }
+
+            Console.WriteLine("Add Sub Competition? Y/N");
+            if (Console.ReadKey(true).Key == ConsoleKey.Y)
+            {
+                AddCompetitionToParent(comp);
+            }
+
+            Console.WriteLine("To delete a subcompetition, just do it as a regular competition deletion.");
+
             _competitionService.Update(comp);
 
             Console.WriteLine("Updated. Press any key...");
             Console.ReadKey();
+        }
+
+        private void DeleteCompetitionSplitParameter(Competition comp)
+        {
+            for(int i = 0; i < comp.SplitParameters.Count; i++)
+            {
+                var csp = comp.SplitParameters[i];
+                Console.WriteLine($"{i + 1}. {csp.Name}");
+            }
+            Console.WriteLine("Choose a parameter to delete (or press any other key to cancel): ");
+            var input = Console.ReadLine();
+            if (int.TryParse(input, out var index) && index >= 1 && index <= comp.SplitParameters.Count)
+            {
+                comp.SplitParameters.RemoveAt(index - 1);
+            }
+        }
+
+        private void ManageRules()
+        {
+            Console.Clear();
+            Console.WriteLine("Manage rules of competition");
+            ShowCompetitions();
+
+            Console.Write("Enter number of competition (or ENTER to cancel): ");
+            var input = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(input))
+                return;
+
+            if (!int.TryParse(input, out var index))
+                return;
+
+            var comps = _competitionService.GetCompetitions();
+            if (index < 1 || index > comps.Count)
+                return;
+
+            var competition = comps[index - 1];
+
+            if (competition.Type != Competition.CompetitionType.League)
+            {
+                Console.WriteLine("Only league rules can be edited.");
+                Console.ReadLine();
+                return;
+            }
+
+            var competitionRules = _competitionRulesService.GetCompetitionRules(competition.Id);
+            if (competitionRules.Competition == null) competitionRules.Competition = competition;
+
+            Console.WriteLine($"Competition:        {competitionRules.Competition.Name}");
+            Console.WriteLine($"Promotion places:   [#{competitionRules.PromotionPlaces}]");
+            Console.WriteLine($"Promotion to:       {competitionRules.PromotionTo?.Name}");
+            Console.WriteLine($"Relegation places:  [#{competitionRules.RelegationPlaces}]");
+            Console.WriteLine($"Relegation to:      {competitionRules.RelegationTo?.Name}");
+
+            while (true)
+            {
+                Console.Write("Enter number of competition for promotion (or ENTER to cancel): ");
+                var inputProm = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(inputProm))
+                    break;
+
+                if (!int.TryParse(inputProm, out var indexProm))
+                    continue;
+
+                if (indexProm < 1 || indexProm > comps.Count)
+                    continue;
+                var competitionPromotion = comps[indexProm - 1];
+                if (competitionPromotion.Id != competition.Id)
+                {
+                    Console.WriteLine($"{competitionPromotion.Name}");
+                    competitionRules.PromotionTo = competitionPromotion;
+                    competitionRules.CompetitionPromotionToId = competitionPromotion.Id;
+
+                    Console.WriteLine("Enter number of promotion places: ");
+                    var inputPromPlaces = Console.ReadLine();
+                    if (string.IsNullOrWhiteSpace(inputPromPlaces))
+                        continue;
+
+                    if (!int.TryParse(inputPromPlaces, out var output))
+                        continue;
+
+                    competitionRules.PromotionPlaces = output;
+                    break;
+                }
+            }
+
+            while (true)
+            {
+                Console.Write("Enter number of competition for Relegation (or ENTER to cancel): ");
+                var inputRel = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(inputRel))
+                    break;
+
+                if (!int.TryParse(inputRel, out var indexRel))
+                    continue;
+
+                if (indexRel < 1 || indexRel > comps.Count)
+                    continue;
+                var competitionRelegation = comps[indexRel - 1];
+                if (competitionRelegation.Id != competition.Id)
+                {
+                    Console.WriteLine($"{competitionRelegation.Name}");
+                    competitionRules.RelegationTo = competitionRelegation;
+                    competitionRules.CompetitionRelegationToId = competitionRelegation.Id;
+
+                    Console.WriteLine("Enter number of relegation places: ");
+                    var inputRelPlaces = Console.ReadLine();
+                    if (string.IsNullOrWhiteSpace(inputRelPlaces))
+                        continue;
+
+                    if (!int.TryParse(inputRelPlaces, out var output))
+                        continue;
+
+                    competitionRules.RelegationPlaces = output;
+                    break;
+                }
+            }
+
+            _competitionRulesService.Save(competitionRules);
+            Console.WriteLine("Rules are updated! Press enter to continue;");
+            Console.ReadLine();
+            return;
         }
 
         private void ManageClubsForCompetition()
@@ -376,6 +587,7 @@ namespace FootballFullEditor.ConsoleUI
                 Console.WriteLine("1) League");
                 Console.WriteLine("2) Cup");
                 Console.WriteLine("3) International");
+                Console.WriteLine("4) Parent Competition");
 
                 if (allowEmpty)
                     Console.WriteLine("Leave empty to keep current value.");
@@ -393,6 +605,7 @@ namespace FootballFullEditor.ConsoleUI
                         case 1: return Competition.CompetitionType.League;
                         case 2: return Competition.CompetitionType.Cup;
                         case 3: return Competition.CompetitionType.International;
+                        case 4: return Competition.CompetitionType.ParentCompetition;
                     }
                 }
 
