@@ -20,11 +20,10 @@ namespace FootballFull.Services
         private IList<Fixture> _cupFixtures = new List<Fixture>();
         private IList<Trainer> _trainers;
         private IList<Fixture>? _internationalFixtures;
-        private IList<NewsMessage> _news;
         private Guid _userClubId;
         private DateTime _currentDate;
         private DateTime _newSeasonDate;
-        private int _year = DateTime.Now.Year;
+        private int _year;
 
         public GameService(
             ISeasonService seasonService,
@@ -44,19 +43,15 @@ namespace FootballFull.Services
             _trainerService = trainerService;
 
             _trainers = _trainerService.Load();
-            _news = new List<NewsMessage>();
         }
 
         public void Run(bool isNew)
         {
-            var _dayCounter = 0;
+            var dayCounter = 0;
 
             // Data laden
             _clubsPerCompetition = _clubPerCompetitionService.GetAllClubPerCompetitions();
             _competitions = _competitionService.GetCompetitions();
-            _currentDate = new DateTime(_year, 7, 1);
-            _newSeasonDate = _currentDate.AddYears(1);
-
             // Initialize data
             if (isNew)
             {
@@ -70,7 +65,12 @@ namespace FootballFull.Services
 
             // Eerste seizoen initialiseren
             _seasonService.Initialize(_clubsPerCompetition);
-            _year = _seasonService.Year;
+            _year = _seasonService.Year > 0
+                ? _seasonService.Year
+                : DateTime.Now.Year;
+            _seasonService.Year = _year;
+            _currentDate = new DateTime(_year, 7, 1);
+            _newSeasonDate = _currentDate.AddYears(1);
             _fixtures = _fixtureService.Generate(_clubsPerCompetition, _currentDate);
             _cupFixtures = _seasonService.InitializeNationalCups(_currentDate);
 
@@ -84,31 +84,45 @@ namespace FootballFull.Services
             // Hoofdloop
             do
             {
-                var competitionId = _clubsPerCompetition
-                    .First(_ => _.ClubId == _userClubId)
-                    .CompetitionId;
+                var userCompetition = _clubsPerCompetition
+                    .FirstOrDefault(club => club.ClubId == _userClubId);
 
-                var competitionToShow = _competitions.First(_ => _.Id == competitionId);
+                if (userCompetition == null)
+                {
+                    Console.WriteLine("Je club is niet aan een competitie gekoppeld.");
+                    Console.WriteLine("Druk op een toets om af te sluiten...");
+                    Console.ReadKey(true);
+                    return;
+                }
+
+                var competitionId = userCompetition.CompetitionId;
+
+                var competitionToShow = _competitions.FirstOrDefault(_ => _.Id == competitionId);
+                if (competitionToShow == null)
+                {
+                    Console.WriteLine("De competitie van je club kon niet worden gevonden.");
+                    Console.ReadKey(true);
+                    return;
+                }
 
                 Console.Clear();
 
                 // Fixture overview
                 DisplayLeagueTable();
                 Console.WriteLine();
-                DisplayNextFixture(competitionToShow, _currentDate, waitForKey: false);
+                DisplayNextFixture(competitionToShow, _currentDate);
 
-                Console.WriteLine("Press any key to start the season simulation...");
-                Console.ReadKey();
+                Console.WriteLine();
+                Console.WriteLine("Druk op een toets om het seizoen te starten...");
+                Console.ReadKey(true);
                 Console.Clear();
 
                 do
                 {
-                    _dayCounter++;
+                    dayCounter++;
 
-                    var hasNextFixture = DisplayNextFixture(competitionToShow, _currentDate);
-                    Console.Clear();
-
-                    if (hasNextFixture || _dayCounter == 7)
+                    var userPlaysToday = UserPlaysOn(_currentDate);
+                    if (userPlaysToday || dayCounter >= 7)
                         ShowBetweenMatchdaysMenu();
 
                     Console.Clear();
@@ -120,13 +134,13 @@ namespace FootballFull.Services
                     Console.WriteLine();
                     DisplayLeagueTable();
                     Console.WriteLine();
-                    DisplayNextFixture(competitionToShow, _currentDate);
-                    if (hasNextFixture || _dayCounter == 7)
+                    DisplayNextFixture(competitionToShow, _currentDate.AddDays(1));
+                    if (userPlaysToday || dayCounter >= 7)
                     {
-                        _dayCounter = 0;
+                        dayCounter = 0;
                         Console.WriteLine();
-                        Console.WriteLine("Druk op een toets om deze dag te simuleren...");
-                        Console.ReadKey();
+                        Console.WriteLine("Druk op een toets om verder te gaan...");
+                        Console.ReadKey(true);
                     }
 
                     PlayCupGames(_currentDate);
@@ -140,13 +154,18 @@ namespace FootballFull.Services
                 } while (_currentDate < _newSeasonDate);
 
                 // End of season
-                Console.WriteLine("Season complete! Press any key to restart a new season.");
-                Console.ReadKey();
+                Console.WriteLine($"Seizoen {_year}/{_year + 1} afgelopen.");
+                Console.WriteLine("Druk op een toets om het volgende seizoen te starten...");
+                Console.ReadKey(true);
                 Console.Clear();
 
-                _newSeasonDate = _newSeasonDate.AddYears(1);
-
+                // Internationale deelnemers worden nog bepaald met de eindstand
+                // van het afgelopen seizoen.
                 _internationalFixtures = _seasonService.InitializeInternationalGames(_currentDate);
+
+                _year++;
+                _currentDate = new DateTime(_year, 7, 1);
+                _newSeasonDate = _currentDate.AddYears(1);
                 _clubsPerCompetition = _seasonService.InitializeNewSeason(_year);
                 _fixtures = _fixtureService.Generate(_clubsPerCompetition, _currentDate);
                 _cupFixtures = _seasonService.InitializeNationalCups(_currentDate);
@@ -202,34 +221,42 @@ namespace FootballFull.Services
                 Console.WriteLine("0. Stoppen");
                 Console.Write("Maak een keuze: ");
 
-                var input = Console.ReadKey();
+                var input = Console.ReadKey(true);
+                Console.WriteLine(input.KeyChar);
 
                 switch (input.Key)
                 {
+                    case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
-                        // Terug naar de for-loop: volgende matchday
                         return;
 
+                    case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
-                        ShowOtherCompetitionsMenu(); // hieronder
-                                                     // Na terugkeer tonen we opnieuw dit menu
+                        ShowOtherCompetitionsMenu();
                         break;
+                    case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
                         ClubMenu();
                         break;
+                    case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
-                        Console.WriteLine("Not implemented yet");
+                        Console.WriteLine("Deze functie is nog niet beschikbaar.");
+                        Console.WriteLine("Druk op een toets om terug te gaan...");
+                        Console.ReadKey(true);
                         break;
+                    case ConsoleKey.D5:
                     case ConsoleKey.NumPad5:
                         DisplayInternationalRankingPerYear();
                         break;
 
+                    case ConsoleKey.D0:
                     case ConsoleKey.NumPad0:
                         Environment.Exit(0);
                         return;
 
                     default:
                         Console.WriteLine("Ongeldige keuze, probeer opnieuw.");
+                        Thread.Sleep(750);
                         break;
                 }
             }
@@ -245,12 +272,17 @@ namespace FootballFull.Services
             Console.WriteLine($"Tactical: {trainer?.TacticalSkill}");
             Console.WriteLine($"Motivational: {trainer?.Motivation}");
 #endif
-            Console.WriteLine("Trainer ontslagen? (Y/N)");
-            var input = Console.ReadKey();
+            Console.WriteLine();
+            Console.WriteLine("Wil je de trainer ontslaan? (J/N)");
+            var input = Console.ReadKey(true);
             switch (input.Key)
             {
+                case ConsoleKey.J:
                 case ConsoleKey.Y:
                     _seasonService.NewTrainer(_userClubId, _currentDate);
+                    Console.WriteLine("Er werd een nieuwe trainer aangesteld.");
+                    Console.WriteLine("Druk op een toets om verder te gaan...");
+                    Console.ReadKey(true);
                     break;
                 default:
                     break;
@@ -682,46 +714,48 @@ namespace FootballFull.Services
             Console.ReadKey();
         }
 
-        private bool DisplayNextFixture(Competition competitionToShow, DateTime date, bool waitForKey = true)
+        private bool DisplayNextFixture(Competition competitionToShow, DateTime fromDate)
         {
-            if (date < _newSeasonDate)
+            var nextDate = _fixtures
+                .Where(fixture =>
+                    fixture.CompetitionId == competitionToShow.Id &&
+                    fixture.MatchDay >= fromDate &&
+                    (fixture.HomeTeamId == _userClubId || fixture.AwayTeamId == _userClubId))
+                .Select(fixture => fixture.MatchDay)
+                .OrderBy(date => date)
+                .FirstOrDefault();
+
+            if (nextDate == default || nextDate >= _newSeasonDate)
             {
-                Console.WriteLine($"Next day: {date.AddDays(1)}");
-                Console.WriteLine(new string('-', 25));
-
-                var nextFixtures = _fixtures
-                    .Where(_ => _.MatchDay == date.AddDays(1) && _.CompetitionId == competitionToShow.Id)
-                    .ToList();
-
-                if (nextFixtures.Count == 0)
-                {
-                    Console.WriteLine("No fixtures available.");
-                    return false;
-                }
-
-                foreach (var f in nextFixtures)
-                {
-                    if (f.HomeTeamId == _userClubId || f.AwayTeamId == _userClubId)
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-
-                    Console.WriteLine($"{f.HomeTeam.Name} vs {f.AwayTeam.Name}");
-                    Console.ResetColor();
-                }
-
-                //if (waitForKey)
-                //{
-                //    Console.WriteLine();
-                //    Console.WriteLine("Press any key for next week...");
-                //    Console.ReadKey();
-                //}
+                Console.WriteLine("Geen volgende competitiewedstrijd gevonden.");
+                return false;
             }
-            //else
-            //{
-            //    Console.WriteLine("Season complete! Press any key...");
-            //    Console.ReadKey();
-            //}
+
+            var fixture = _fixtures.First(f =>
+                f.CompetitionId == competitionToShow.Id &&
+                f.MatchDay == nextDate &&
+                (f.HomeTeamId == _userClubId || f.AwayTeamId == _userClubId));
+
+            Console.WriteLine($"Volgende wedstrijd: {nextDate:dddd dd/MM/yyyy}");
+            Console.WriteLine(new string('-', 40));
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{fixture.HomeTeam.Name} - {fixture.AwayTeam.Name}");
+            Console.ResetColor();
 
             return true;
+        }
+
+        private bool UserPlaysOn(DateTime date)
+        {
+            return _fixtures.Any(fixture =>
+                       fixture.MatchDay == date &&
+                       (fixture.HomeTeamId == _userClubId || fixture.AwayTeamId == _userClubId)) ||
+                   _cupFixtures.Any(fixture =>
+                       fixture.MatchDay == date &&
+                       (fixture.HomeTeamId == _userClubId || fixture.AwayTeamId == _userClubId)) ||
+                   (_internationalFixtures?.Any(fixture =>
+                       fixture.MatchDay == date &&
+                       (fixture.HomeTeamId == _userClubId || fixture.AwayTeamId == _userClubId)) ?? false);
         }
 
         private void ResetStrength()
@@ -895,7 +929,9 @@ namespace FootballFull.Services
             Console.WriteLine("=== Results Played ===");
 
             var fixtures = _fixtures
-                .Where(_ => _.CompetitionId == competitionId && _.HomeScore >= 0)
+                .Where(_ =>
+                    _.CompetitionId == competitionId &&
+                    _.MatchDay < _currentDate)
                 .OrderBy(_ => _.MatchDay)
                 .ToList();
 
