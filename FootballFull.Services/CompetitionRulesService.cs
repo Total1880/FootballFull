@@ -1,19 +1,17 @@
-﻿using FootballFull.Models;
-using FootballFull.Repositories;
+using FootballFull.Models;
 using FootballFull.Repositories.Interfaces;
 using FootballFull.Services.Interfaces;
-using System.Data;
 using static FootballFull.Models.Competition;
 
 namespace FootballFull.Services
 {
     public class CompetitionRulesService : ICompetitionRulesService
     {
-        private ICompetitionService _competitionService;
-        private IClubPerCompetitionService _clubPerCompetitionService;
-        private IClubLeagueCompetitionService _clubLeagueCompetitionService;
-        private IClubService _clubService;
-        private IRepository<CompetitionRules> _repository;
+        private readonly ICompetitionService _competitionService;
+        private readonly IClubPerCompetitionService _clubPerCompetitionService;
+        private readonly IClubLeagueCompetitionService _clubLeagueCompetitionService;
+        private readonly IClubService _clubService;
+        private readonly IRepository<CompetitionRules> _repository;
 
         public CompetitionRulesService(
             ICompetitionService competitionService,
@@ -31,347 +29,517 @@ namespace FootballFull.Services
 
         public CompetitionRules GetCompetitionRules(Guid competitionId)
         {
-            var rules = _repository.Load().FirstOrDefault(_ => _.CompetitionId == competitionId);
-            if (rules != null)
-            {
-                rules.Competition = _competitionService.GetCompetitionById(rules.CompetitionId);
-                rules.PromotionTo = _competitionService.GetCompetitionById(rules.CompetitionPromotionToId);
-                rules.RelegationTo = _competitionService.GetCompetitionById(rules.CompetitionRelegationToId);
-            }
-            return rules == null ? new CompetitionRules { CompetitionId = competitionId } : rules;
+            var rules = _repository.Load()
+                .FirstOrDefault(rule => rule.CompetitionId == competitionId);
+
+            if (rules == null)
+                return new CompetitionRules { CompetitionId = competitionId };
+
+            rules.Competition = _competitionService.GetCompetitionById(rules.CompetitionId);
+            rules.PromotionTo = GetCompetitionOrNull(rules.CompetitionPromotionToId);
+            rules.RelegationTo = GetCompetitionOrNull(rules.CompetitionRelegationToId);
+
+            return rules;
         }
 
-        public void ApplyPromotionAndRelegations(IList<ClubLeagueCompetition> clubLeagueCompetitions)
+        public void ApplyPromotionAndRelegations(
+            IList<ClubLeagueCompetition> clubLeagueCompetitions)
         {
-            var allLeagueCompetitions = _competitionService.GetCompetitions().Where(_ => _.Type == CompetitionType.League);
-            var allClubsPerCompetition = _clubPerCompetitionService.GetAllClubPerCompetitions();
-            var allClubs = _clubService.GetClubs();
-            var regularMoves = new List<ClubMove>();
-            var extraRelegations = new Dictionary<Guid, Guid>(); // Key = ClubId, Value = CompetitionId
+            var competitions = _competitionService.GetCompetitions()
+                .Where(competition => competition.Type == CompetitionType.League)
+                .OrderBy(competition => competition.Tier)
+                .ThenBy(competition => competition.Name)
+                .ToList();
 
-            foreach (var competition in allLeagueCompetitions)
+            var allClubs = _clubService.GetClubs().ToList();
+            var allClubsPerCompetition = _clubPerCompetitionService
+                .GetAllClubPerCompetitions()
+                .ToList();
+
+            var rankings = competitions.ToDictionary(
+                competition => competition.Id,
+                competition => _clubLeagueCompetitionService
+                    .GetOrderedRanking(clubLeagueCompetitions
+                        .Where(row => row.CompetitionId == competition.Id)
+                        .ToList())
+                    .ToList());
+
+            var rulesByCompetition = competitions.ToDictionary(
+                competition => competition.Id,
+                competition => GetCompetitionRules(competition.Id));
+
+            var state = new MovementState();
+
+            // Tier per tier is essential: when a lower tier is processed, all
+            // relegations received from the tier above are already known.
+            foreach (var tierGroup in competitions.GroupBy(c => c.Tier).OrderBy(g => g.Key))
             {
-                var clubLeagueCompetition = _clubLeagueCompetitionService.GetOrderedRanking(clubLeagueCompetitions.Where(_ => _.CompetitionId.Equals(competition.Id)).ToList()).ToList();
+                foreach (var competition in tierGroup)
+                {
+                    var rules = rulesByCompetition[competition.Id];
+                    var ranking = rankings[competition.Id];
 
-                var rules = GetCompetitionRules(competition.Id);
-                if (rules == null)
-                    continue;
+                    ApplyPromotions(
+                        competition,
+                        rules,
+                        ranking,
+                        allClubs,
+                        allClubsPerCompetition,
+                        state);
+                }
 
-                ApplyPromotions(competition, rules, regularMoves, clubLeagueCompetition, allClubs, allClubsPerCompetition);
-                ApplyRelegations(competition, rules, regularMoves, clubLeagueCompetition, allClubs, allClubsPerCompetition, extraRelegations);
+                foreach (var competition in tierGroup)
+                {
+                    var rules = rulesByCompetition[competition.Id];
+                    var ranking = rankings[competition.Id];
+
+                    var received = GetCount(state.RelegationsReceived, competition.Id);
+                    var promoted = GetCount(state.PromotionsOut, competition.Id);
+                    var balance = received - promoted;
+
+                    if (balance < 0)
+                    {
+                        // This competition lost more clubs through promotion than
+                        // it received through relegation. A lower competition must
+                        // therefore supply additional promoted clubs.
+                        AddCount(state.PromotionBonuses, competition.Id, -balance);
+                    }
+
+                    var extraRelegations = Math.Max(0, balance);
+                    var forcedRelegations = GetCount(
+                        state.ForcedRelegationsOut,
+                        competition.Id);
+
+                    var relegationsToSelect = Math.Max(
+                        0,
+                        rules.RelegationPlaces + extraRelegations - forcedRelegations);
+
+                    ApplyRelegations(
+                        competition,
+                        rules,
+                        ranking,
+                        relegationsToSelect,
+                        allClubs,
+                        allClubsPerCompetition,
+                        state);
+                }
             }
 
-            ApplyMoves(regularMoves, allClubsPerCompetition);
+            ApplyMoves(state.Moves);
         }
 
-        private void ApplyMoves(List<ClubMove> moves, IList<ClubPerCompetition> allClubsPerCompetition)
+        private void ApplyPromotions(
+            Competition competition,
+            CompetitionRules rules,
+            IList<ClubLeagueCompetition> ranking,
+            IList<Club> allClubs,
+            IList<ClubPerCompetition> allClubsPerCompetition,
+            MovementState state)
         {
-            foreach (var move in moves.Where(m => m.Type == ClubMoveType.Remove))
-            {
-                _clubPerCompetitionService.RemoveClubFromCompetition(move.ClubId, move.CompetitionId);
-            }
-
-            foreach (var move in moves.Where(m => m.Type == ClubMoveType.Add))
-            {
-                _clubPerCompetitionService.AddClubToCompetition(move.ClubId, move.CompetitionId);
-            }
-        }
-
-        private void ApplyPromotions(Competition competition, CompetitionRules rules, List<ClubMove> moves, List<ClubLeagueCompetition> clubLeagueCompetition, IList<Club> allClubs, IList<ClubPerCompetition> allClubsPerCompetition)
-        {
-            if (rules.PromotionTo == null || rules.PromotionPlaces <= 0)
+            if (rules.PromotionTo == null)
                 return;
 
             var promoted = 0;
-            var index = 0;
 
-            while (promoted < rules.PromotionPlaces && index < clubLeagueCompetition.Count)
+            // First apply the normal promotion places.
+            foreach (var rankingRow in ranking)
             {
-                var clubId = clubLeagueCompetition[index].ClubId;
-                index++;
+                if (promoted >= rules.PromotionPlaces)
+                    break;
 
-                if (PromotionBlockedByParentClub(clubId, allClubsPerCompetition.Where(_ => _.CompetitionId == rules.PromotionTo.Id).ToList(), allClubs.FirstOrDefault(_ => _.FeederClubId == clubId), moves, rules.PromotionTo.Id))
+                var club = allClubs.FirstOrDefault(c => c.Id == rankingRow.ClubId);
+                if (club == null || ClubAlreadyMoved(club.Id, state.Moves))
                     continue;
 
-                var club = allClubs.First(_ => _.Id == clubId);
+                var target = ResolveTargetCompetition(club, rules.PromotionTo, 0);
+                if (target == null || PromotionBlockedByParentClub(
+                        club,
+                        target,
+                        allClubs,
+                        allClubsPerCompetition,
+                        state.Moves))
+                    continue;
 
-                moves.Add(ClubMove.Remove(club.Id, competition.Id));
-                moves.Add(ClubMove.Add(club.Id, rules.PromotionTo.Id));
-
+                AddMove(club, competition, target, ClubMoveReason.Promotion, state);
                 promoted++;
             }
+
+            // Then consume bonuses meant for this exact competition or for one
+            // of the subcompetitions of the configured parent competition.
+            foreach (var bonusTarget in GetBonusTargets(rules.PromotionTo, state).ToList())
+            {
+                while (GetCount(state.PromotionBonuses, bonusTarget.Id) > 0)
+                {
+                    var club = FindNextPromotableClub(
+                        ranking,
+                        bonusTarget,
+                        allClubs,
+                        allClubsPerCompetition,
+                        state.Moves);
+
+                    if (club == null)
+                        break;
+
+                    AddMove(
+                        club,
+                        competition,
+                        bonusTarget,
+                        ClubMoveReason.Promotion,
+                        state);
+
+                    AddCount(state.PromotionBonuses, bonusTarget.Id, -1);
+                }
+            }
         }
 
-        private void ApplyRelegations(Competition competition, CompetitionRules rules, List<ClubMove> regularMoves, List<ClubLeagueCompetition> clubLeagueCompetition, IList<Club> allClubs, IList<ClubPerCompetition> allClubsPerCompetition, Dictionary<Guid, Guid> extraRelegations)
+        private void ApplyRelegations(
+            Competition competition,
+            CompetitionRules rules,
+            IList<ClubLeagueCompetition> ranking,
+            int numberOfRelegations,
+            IList<Club> allClubs,
+            IList<ClubPerCompetition> allClubsPerCompetition,
+            MovementState state)
         {
-            if (rules.RelegationTo == null || rules.RelegationPlaces <= 0)
+            if (rules.RelegationTo == null || numberOfRelegations <= 0)
                 return;
 
-            var extraRelegationsCount = regularMoves.Where(_ => _.Type == ClubMoveType.Add && _.CompetitionId == rules.RelegationTo.Id).ToList().Count() - rules.PromotionPlaces;
-
-            var relegated = extraRelegations.Where(_ => _.Value == competition.Id).ToList().Count() - extraRelegationsCount;
-            var indexFromBottom = 0;
+            var relegated = 0;
             var subCompetitionCounter = 0;
 
-            while (relegated < rules.RelegationPlaces && indexFromBottom < clubLeagueCompetition.Count)
+            for (var index = ranking.Count - 1;
+                 index >= 0 && relegated < numberOfRelegations;
+                 index--)
             {
-                var rankingIndex = clubLeagueCompetition.Count - 1 - indexFromBottom;
-                var clubToRelegateId = clubLeagueCompetition[rankingIndex].ClubId;
-
-                if (regularMoves.Any(_ => _.ClubId == clubToRelegateId))
+                var club = allClubs.FirstOrDefault(c => c.Id == ranking[index].ClubId);
+                if (club == null || ClubAlreadyMoved(club.Id, state.Moves))
                     continue;
 
-                indexFromBottom++;
+                var target = ResolveTargetCompetition(
+                    club,
+                    rules.RelegationTo,
+                    subCompetitionCounter);
 
-                var clubToRelegate = allClubs.First(_ => _.Id == clubToRelegateId);
-
-                if (clubToRelegate == null)
+                if (target == null)
                     continue;
 
-                var conflictWasHandled = TryHandleFeederClubConflict(
+                if (!TryMakeRoomForParentClub(
+                        club,
+                        target,
+                        allClubs,
+                        allClubsPerCompetition,
+                        state))
+                    continue;
+
+                AddMove(
+                    club,
                     competition,
-                    rules,
-                    clubToRelegate,
-                    ref subCompetitionCounter,
-                    regularMoves,
-                    allClubs,
-                    clubLeagueCompetition,
-                    allClubsPerCompetition,
-                    extraRelegations);
+                    target,
+                    ClubMoveReason.Relegation,
+                    state);
 
-                if (!conflictWasHandled)
-                {
-                    MoveClubToCompetition(
-                        clubToRelegate,
-                        competition,
-                        rules.RelegationTo,
-                        ref subCompetitionCounter,
-                        regularMoves);
+                relegated++;
 
-                    relegated++;
-                }
+                if (rules.RelegationTo.SubCompetitionIds.Count > 0)
+                    subCompetitionCounter++;
             }
         }
 
-        private bool TryHandleFeederClubConflict(
-    Competition currentCompetition,
-    CompetitionRules currentRules,
-    Club clubToRelegate,
-    ref int subCompetitionCounter,
-    List<ClubMove> moves,
-    IList<Club> allClubs,
-    List<ClubLeagueCompetition> clubLeagueCompetition,
-    IList<ClubPerCompetition> allClubsPerCompetition,
-    Dictionary<Guid, Guid> extraRelegations)
+        private bool TryMakeRoomForParentClub(
+            Club parentClub,
+            Competition relegationTarget,
+            IList<Club> allClubs,
+            IList<ClubPerCompetition> allClubsPerCompetition,
+            MovementState state)
         {
-            if (clubToRelegate.FeederClubId == null)
-                return false;
-
-            var feederClub = allClubs.First(_ => _.Id == clubToRelegate.FeederClubId.Value);
-
-            if (feederClub == null)
-                return false;
-
-            var relegationTarget = currentRules.RelegationTo;
-
-            if (relegationTarget == null)
-                return false;
-
-            var feederClubIsAlreadyInTarget = false;
-            if (relegationTarget.Type == CompetitionType.ParentCompetition)
-            {
-                for (int i = 0; i < relegationTarget.SubCompetitionIds.Count; i++)
-                {
-                    feederClubIsAlreadyInTarget = CompetitionContainsClub(allClubsPerCompetition.Where(_ => _.CompetitionId == relegationTarget.SubCompetitionIds[i]).ToList(), feederClub.Id);
-                    if (feederClubIsAlreadyInTarget) break;
-                }
-            }
-            else
-            {
-                feederClubIsAlreadyInTarget = CompetitionContainsClub(
-                allClubsPerCompetition.Where(_ => _.CompetitionId == relegationTarget.Id).ToList(),
-                feederClub.Id);
-            }
-
-
-
-            if (!feederClubIsAlreadyInTarget)
-                return false;
-
-            var lowerRules = GetCompetitionRules(relegationTarget.Id);
-
-            if (lowerRules == null || lowerRules.RelegationTo == null)
-            {
-                // Feeder zit al in de lagere reeks en kan zelf niet lager.
-                // Dan slaan we deze degradatie inhoudelijk over.
+            if (parentClub.FeederClubId == null)
                 return true;
-            }
 
-            MoveClubToCompetition(
+            var feederClub = allClubs.FirstOrDefault(
+                club => club.Id == parentClub.FeederClubId.Value);
+
+            if (feederClub == null || !ClubWillBeInCompetition(
+                    feederClub.Id,
+                    relegationTarget.Id,
+                    allClubsPerCompetition,
+                    state.Moves))
+                return true;
+
+            var feederRules = GetCompetitionRules(relegationTarget.Id);
+            if (feederRules.RelegationTo == null)
+                return false;
+
+            var feederTarget = ResolveTargetCompetition(
+                feederClub,
+                feederRules.RelegationTo,
+                0);
+
+            if (feederTarget == null || ClubAlreadyMoved(feederClub.Id, state.Moves))
+                return false;
+
+            AddMove(
                 feederClub,
                 relegationTarget,
-                lowerRules.RelegationTo,
-                ref subCompetitionCounter,
-                moves);
+                feederTarget,
+                ClubMoveReason.ForcedRelegation,
+                state);
 
-            extraRelegations.Add(feederClub.Id, relegationTarget.Id);
-
-            return false;
+            return true;
         }
 
-        private void MoveClubToCompetition(
-    Club club,
-    Competition fromCompetition,
-    Competition toCompetition,
-    ref int subCompetitionCounter,
-    List<ClubMove> moves)
+        private void AddMove(
+            Club club,
+            Competition from,
+            Competition to,
+            ClubMoveReason reason,
+            MovementState state)
         {
-            var targetCompetition = ResolveTargetCompetition(
-                club,
-                toCompetition,
-                subCompetitionCounter);
+            state.Moves.Add(ClubMove.Remove(club.Id, from.Id, reason));
+            state.Moves.Add(ClubMove.Add(club.Id, to.Id, reason));
 
-            if (targetCompetition == null)
-                return;
-
-            if (toCompetition.SubCompetitionIds != null && toCompetition.SubCompetitionIds.Count > 0)
+            if (reason == ClubMoveReason.Promotion)
             {
-                var availableSubCompetitions = GetMatchingSubCompetitions(club, toCompetition);
-
-                if (availableSubCompetitions.Count > 0)
-                {
-                    subCompetitionCounter++;
-
-                    if (subCompetitionCounter >= availableSubCompetitions.Count)
-                        subCompetitionCounter = 0;
-                }
+                AddCount(state.PromotionsOut, from.Id, 1);
+                return;
             }
 
-            moves.Add(ClubMove.Remove(club.Id, fromCompetition.Id));
-            moves.Add(ClubMove.Add(club.Id, targetCompetition.Id));
+            AddCount(state.RelegationsReceived, to.Id, 1);
+
+            if (reason == ClubMoveReason.ForcedRelegation)
+                AddCount(state.ForcedRelegationsOut, from.Id, 1);
         }
 
-        private Competition ResolveTargetCompetition(
-    Club club,
-    Competition competition,
-    int subCompetitionCounter)
+        private Club? FindNextPromotableClub(
+            IEnumerable<ClubLeagueCompetition> ranking,
+            Competition requiredTarget,
+            IList<Club> allClubs,
+            IList<ClubPerCompetition> allClubsPerCompetition,
+            IList<ClubMove> moves)
         {
-            if (competition.SubCompetitionIds == null || competition.SubCompetitionIds.Count == 0)
+            foreach (var rankingRow in ranking)
+            {
+                var club = allClubs.FirstOrDefault(c => c.Id == rankingRow.ClubId);
+                if (club == null || ClubAlreadyMoved(club.Id, moves))
+                    continue;
+
+                if (!ClubMatchesCompetition(club, requiredTarget))
+                    continue;
+
+                if (PromotionBlockedByParentClub(
+                        club,
+                        requiredTarget,
+                        allClubs,
+                        allClubsPerCompetition,
+                        moves))
+                    continue;
+
+                return club;
+            }
+
+            return null;
+        }
+
+        private IEnumerable<Competition> GetBonusTargets(
+            Competition promotionTarget,
+            MovementState state)
+        {
+            if (promotionTarget.SubCompetitionIds.Count == 0)
+            {
+                if (GetCount(state.PromotionBonuses, promotionTarget.Id) > 0)
+                    yield return promotionTarget;
+
+                yield break;
+            }
+
+            foreach (var subCompetition in _competitionService
+                         .GetSubCompetitions(promotionTarget))
+            {
+                if (GetCount(state.PromotionBonuses, subCompetition.Id) > 0)
+                    yield return subCompetition;
+            }
+        }
+
+        private Competition? ResolveTargetCompetition(
+            Club club,
+            Competition competition,
+            int subCompetitionCounter)
+        {
+            if (competition.SubCompetitionIds.Count == 0)
                 return competition;
 
-            var availableSubCompetitions = GetMatchingSubCompetitions(club, competition);
-
-            if (!availableSubCompetitions.Any())
+            var matches = GetMatchingSubCompetitions(club, competition);
+            if (matches.Count == 0)
                 return null;
 
-            if (subCompetitionCounter >= availableSubCompetitions.Count)
-                subCompetitionCounter = 0;
-
-            return availableSubCompetitions[subCompetitionCounter];
+            return matches[subCompetitionCounter % matches.Count];
         }
 
         private List<Competition> GetMatchingSubCompetitions(
-    Club club,
-    Competition competition)
+            Club club,
+            Competition competition)
         {
-            if (competition.SubCompetitionIds == null)
+            if (competition.SubCompetitionIds.Count == 0)
                 return new List<Competition>();
 
-            var subCompetitions = _competitionService.GetSubCompetitions(competition);
-
-            var matchingSubCompetitions = subCompetitions
-                .Where(subCompetition =>
-                    subCompetition.SplitParameters != null &&
-                    club.CompetitionSplitParameters != null &&
-                    subCompetition.SplitParameters.Any(subParameter =>
-                        club.CompetitionSplitParameters.Any(clubParameter =>
-                            clubParameter.Id == subParameter.Id)))
+            return _competitionService.GetSubCompetitions(competition)
+                .Where(subCompetition => ClubMatchesCompetition(club, subCompetition))
                 .ToList();
-
-            return matchingSubCompetitions;
         }
 
-        private bool PromotionBlockedByParentClub(Guid clubId, List<ClubPerCompetition> clubPerCompetition, Club? parentClub, List<ClubMove> moves, Guid promotionCompetitionId)
+        private static bool ClubMatchesCompetition(
+            Club club,
+            Competition competition)
         {
-            if (moves.Any(_ => _.ClubId == clubId)) // If the club is already moved, we don't need to check for parent club conflicts
+            if (competition.SplitParameters.Count == 0)
                 return true;
 
-
-            var parentClubIsInTargetCompetition = parentClub != null && CompetitionContainsClub(clubPerCompetition, parentClub.Id);
-            if (!parentClubIsInTargetCompetition && moves.Any(_ => _.Type == ClubMoveType.Add && _.ClubId == parentClub?.Id && _.CompetitionId == promotionCompetitionId))
-            {
-                parentClubIsInTargetCompetition = true;
-            }
-            else if (parentClubIsInTargetCompetition && moves.Any(_ => _.Type == ClubMoveType.Remove && _.ClubId == parentClub?.Id && _.CompetitionId == promotionCompetitionId))
-            {
-                parentClubIsInTargetCompetition = false;
-            }
-
-
-
-            return parentClubIsInTargetCompetition;
+            return competition.SplitParameters.Any(subParameter =>
+                club.CompetitionSplitParameters.Any(clubParameter =>
+                    clubParameter.Id == subParameter.Id));
         }
 
-        private bool CompetitionContainsClub(IList<ClubPerCompetition> clubPerCompetition, Guid id)
+        private static bool PromotionBlockedByParentClub(
+            Club club,
+            Competition target,
+            IList<Club> allClubs,
+            IList<ClubPerCompetition> allClubsPerCompetition,
+            IList<ClubMove> moves)
         {
-            return clubPerCompetition.Any(_ => _.ClubId == id);
+            var parentClub = allClubs.FirstOrDefault(
+                possibleParent => possibleParent.FeederClubId == club.Id);
+
+            return parentClub != null && ClubWillBeInCompetition(
+                parentClub.Id,
+                target.Id,
+                allClubsPerCompetition,
+                moves);
         }
 
-        private void AddCompetitionRecursive(
-    List<Competition> result,
-    Competition competition)
+        private static bool ClubWillBeInCompetition(
+            Guid clubId,
+            Guid competitionId,
+            IList<ClubPerCompetition> currentMemberships,
+            IList<ClubMove> moves)
         {
-            if (competition == null)
-                return;
+            var isInCompetition = currentMemberships.Any(membership =>
+                membership.ClubId == clubId &&
+                membership.CompetitionId == competitionId);
 
-            if (!result.Any(c => c.Id == competition.Id))
-                result.Add(competition);
+            if (moves.Any(move =>
+                    move.Type == ClubMoveType.Remove &&
+                    move.ClubId == clubId &&
+                    move.CompetitionId == competitionId))
+                isInCompetition = false;
 
-            if (competition.SubCompetitions == null)
-                return;
+            if (moves.Any(move =>
+                    move.Type == ClubMoveType.Add &&
+                    move.ClubId == clubId &&
+                    move.CompetitionId == competitionId))
+                isInCompetition = true;
 
-            foreach (var subCompetition in competition.SubCompetitions)
-            {
-                AddCompetitionRecursive(result, subCompetition);
-            }
+            return isInCompetition;
+        }
+
+        private static bool ClubAlreadyMoved(
+            Guid clubId,
+            IEnumerable<ClubMove> moves)
+        {
+            return moves.Any(move => move.ClubId == clubId);
+        }
+
+        private Competition? GetCompetitionOrNull(Guid competitionId)
+        {
+            return competitionId == Guid.Empty
+                ? null
+                : _competitionService.GetCompetitionById(competitionId);
+        }
+
+        private void ApplyMoves(IEnumerable<ClubMove> moves)
+        {
+            foreach (var move in moves.Where(move => move.Type == ClubMoveType.Remove))
+                _clubPerCompetitionService.RemoveClubFromCompetition(
+                    move.ClubId,
+                    move.CompetitionId);
+
+            foreach (var move in moves.Where(move => move.Type == ClubMoveType.Add))
+                _clubPerCompetitionService.AddClubToCompetition(
+                    move.ClubId,
+                    move.CompetitionId);
+        }
+
+        private static int GetCount(
+            IReadOnlyDictionary<Guid, int> values,
+            Guid competitionId)
+        {
+            return values.TryGetValue(competitionId, out var value) ? value : 0;
+        }
+
+        private static void AddCount(
+            IDictionary<Guid, int> values,
+            Guid competitionId,
+            int amount)
+        {
+            values[competitionId] = values.TryGetValue(competitionId, out var current)
+                ? current + amount
+                : amount;
         }
 
         public bool Save(CompetitionRules competitionRules)
         {
             if (competitionRules.Id == Guid.Empty)
             {
-                competitionRules.Id = new Guid();
+                competitionRules.Id = Guid.NewGuid();
                 _repository.Add(competitionRules);
             }
             else
+            {
                 _repository.Update(competitionRules);
+            }
 
             return true;
         }
 
-        private class ClubMove
+        private sealed class MovementState
         {
-            public Guid ClubId { get; private set; }
-            public Guid CompetitionId { get; private set; }
-            public ClubMoveType Type { get; private set; }
+            public List<ClubMove> Moves { get; } = new();
+            public Dictionary<Guid, int> PromotionsOut { get; } = new();
+            public Dictionary<Guid, int> RelegationsReceived { get; } = new();
+            public Dictionary<Guid, int> ForcedRelegationsOut { get; } = new();
+            public Dictionary<Guid, int> PromotionBonuses { get; } = new();
+        }
 
-            public static ClubMove Add(Guid clubId, Guid competitionId)
+        private sealed class ClubMove
+        {
+            public Guid ClubId { get; private init; }
+            public Guid CompetitionId { get; private init; }
+            public ClubMoveType Type { get; private init; }
+            public ClubMoveReason Reason { get; private init; }
+
+            public static ClubMove Add(
+                Guid clubId,
+                Guid competitionId,
+                ClubMoveReason reason)
             {
                 return new ClubMove
                 {
                     ClubId = clubId,
                     CompetitionId = competitionId,
-                    Type = ClubMoveType.Add
+                    Type = ClubMoveType.Add,
+                    Reason = reason
                 };
             }
 
-            public static ClubMove Remove(Guid clubId, Guid competitionId)
+            public static ClubMove Remove(
+                Guid clubId,
+                Guid competitionId,
+                ClubMoveReason reason)
             {
                 return new ClubMove
                 {
                     ClubId = clubId,
                     CompetitionId = competitionId,
-                    Type = ClubMoveType.Remove
+                    Type = ClubMoveType.Remove,
+                    Reason = reason
                 };
             }
         }
@@ -380,6 +548,13 @@ namespace FootballFull.Services
         {
             Add,
             Remove
+        }
+
+        private enum ClubMoveReason
+        {
+            Promotion,
+            Relegation,
+            ForcedRelegation
         }
     }
 }
