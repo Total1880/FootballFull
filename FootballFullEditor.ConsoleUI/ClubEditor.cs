@@ -242,7 +242,7 @@ namespace FootballFullEditor.ConsoleUI
             {
                 if (club.FeederClubId == null || club.FeederClubId == Guid.Empty)
                 {
-                    feederClub.Id = new Guid();
+                    feederClub.Id = Guid.NewGuid();
                     feederClub.Strength = club.Strength - 5;
                     club.FeederClubId = feederClub.Id;
                     _clubService.Add(feederClub);

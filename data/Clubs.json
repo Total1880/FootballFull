@@ -56,7 +56,7 @@
     "Strength": 18,
     "Id": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
-    "FeederClubId": "00000000-0000-0000-0000-000000000000",
+    "FeederClubId": "df6a5ade-3c09-4f8b-b01e-9afda99876fb",
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -95,7 +95,7 @@
     "Strength": 16,
     "Id": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
-    "FeederClubId": "00000000-0000-0000-0000-000000000000",
+    "FeederClubId": "e8563b33-6477-42db-9a73-3b11e6d9edab",
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -199,7 +199,7 @@
     "Strength": 11,
     "Id": "0b672324-44a7-4d63-b7c1-9e4dc334e1ef",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
-    "FeederClubId": "00000000-0000-0000-0000-000000000000",
+    "FeederClubId": "78f15e01-48ca-4445-931b-ff6fdce98c21",
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -264,7 +264,7 @@
     "Strength": 9,
     "Id": "4a4d39a4-327d-43fd-b584-47c08819cebc",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
-    "FeederClubId": "00000000-0000-0000-0000-000000000000",
+    "FeederClubId": "31601baa-8a3c-419f-815a-2cc022a9f140",
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -394,7 +394,7 @@
     "Strength": 5,
     "Id": "7da8bdbc-aab7-4f87-8eac-ee47823c05b6",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
-    "FeederClubId": "00000000-0000-0000-0000-000000000000",
+    "FeederClubId": "6f7cbb66-772a-4d56-9a8e-1589ac52960b",
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",

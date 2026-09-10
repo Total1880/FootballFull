@@ -5,14 +5,14 @@
     "CompetitionPromotionToId": "00000000-0000-0000-0000-000000000000",
     "CompetitionRelegationToId": "cfb561ed-478e-48eb-9a52-50ff1adacc83",
     "PromotionPlaces": 0,
-    "RelegationPlaces": 1
+    "RelegationPlaces": 2
   },
   {
     "Id": "7c1eb3d9-6727-4eb1-b679-b36175863f72",
     "CompetitionId": "cfb561ed-478e-48eb-9a52-50ff1adacc83",
     "CompetitionPromotionToId": "ddb0edcc-0f8f-433e-8c73-c153dbe92ddc",
     "CompetitionRelegationToId": "fe97e8b1-13b3-4465-a18d-053cf23c302c",
-    "PromotionPlaces": 1,
+    "PromotionPlaces": 2,
     "RelegationPlaces": 2
   },
   {
@@ -29,7 +29,7 @@
     "CompetitionPromotionToId": "cfb561ed-478e-48eb-9a52-50ff1adacc83",
     "CompetitionRelegationToId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd",
     "PromotionPlaces": 1,
-    "RelegationPlaces": 1
+    "RelegationPlaces": 2
   },
   {
     "Id": "96bc3a93-3826-4b54-8c5d-94511a1bc3c9",
@@ -43,6 +43,22 @@
     "Id": "d49dab4f-107a-414b-abe5-00b78ded5664",
     "CompetitionId": "d1f77e01-4b4b-42af-9600-9f512ac12ccd",
     "CompetitionPromotionToId": "6bf6c0d0-a545-4bf1-aab3-da67f8b525b7",
+    "CompetitionRelegationToId": "00000000-0000-0000-0000-000000000000",
+    "PromotionPlaces": 2,
+    "RelegationPlaces": 0
+  },
+  {
+    "Id": "9fc78950-892c-4790-be46-bd79a0b4433f",
+    "CompetitionId": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933",
+    "CompetitionPromotionToId": "bd573f1c-7806-422c-85ac-596fb0ede075",
+    "CompetitionRelegationToId": "00000000-0000-0000-0000-000000000000",
+    "PromotionPlaces": 1,
+    "RelegationPlaces": 0
+  },
+  {
+    "Id": "f72bee98-cc47-4615-8091-d15f34327b9e",
+    "CompetitionId": "a98cfb04-6cde-4451-b3d2-91fd5d089e70",
+    "CompetitionPromotionToId": "bd573f1c-7806-422c-85ac-596fb0ede075",
     "CompetitionRelegationToId": "00000000-0000-0000-0000-000000000000",
     "PromotionPlaces": 1,
     "RelegationPlaces": 0
