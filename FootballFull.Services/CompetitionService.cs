@@ -1,17 +1,27 @@
 ﻿using FootballFull.Models;
 using FootballFull.Repositories.Interfaces;
 using FootballFull.Services.Interfaces;
+using static FootballFull.Models.Competition;
 
 namespace FootballFull.Services
 {
     public class CompetitionService : ICompetitionService
     {
         private readonly IRepository<Competition> _competitionRepository;
+        private readonly IClubPerCompetitionRepository _clubPerCompetitionRepository;
+        private readonly IRepository<CompetitionRules> _competitionRulesRepository;
+        private readonly IRepository<Club> _clubRepository;
 
-        public CompetitionService(IRepository<Competition> competitionRepository)
+        public CompetitionService(IRepository<Competition> competitionRepository, IClubPerCompetitionRepository clubPerCompetitionRepository, IRepository<CompetitionRules> competitionRulesRepository, IRepository<Club> clubRepository)
         {
             _competitionRepository = competitionRepository
                 ?? throw new ArgumentNullException(nameof(competitionRepository));
+            _clubPerCompetitionRepository = clubPerCompetitionRepository
+                ?? throw new ArgumentNullException(nameof(clubPerCompetitionRepository));
+            _competitionRulesRepository = competitionRulesRepository
+                ?? throw new ArgumentNullException(nameof(competitionRulesRepository));
+            _clubRepository = clubRepository
+                ?? throw new ArgumentNullException(nameof(clubRepository));
         }
 
         public void Add(Competition competition)
@@ -110,6 +120,56 @@ namespace FootballFull.Services
             }
 
             return competition.SubCompetitions;
+        }
+
+        public void InitializeStarterCompetition(Guid countryId)
+        {
+            var competitions = GetCompetitions().Where(c => c.CountryId == countryId).ToList();
+            for (int i = 0; i < competitions.Count(); i++)
+            {
+                var clubPerCompetitionEntries = _clubPerCompetitionRepository.Load().Where(cpc => cpc.CompetitionId == competitions[i].Id).ToList();
+                foreach (var entry in clubPerCompetitionEntries)
+                    _clubPerCompetitionRepository.Delete(entry.ClubId, entry.CompetitionId);
+
+                var rules = _competitionRulesRepository.Load().Where(r => r.CompetitionId == competitions[i].Id);
+                foreach (var rule in rules)
+                    _competitionRulesRepository.Delete(rule.Id);
+
+                _competitionRepository.Delete(competitions[i].Id);
+            }
+
+            var clubsWithFeeders = _clubRepository.Load().Where(r => r.CountryId == countryId && r.FeederClubId != null && r.FeederClubId != Guid.Empty).ToList();
+            foreach (var club in clubsWithFeeders)
+            {
+                _clubRepository.Delete((Guid)club.FeederClubId);
+                club.FeederClubId = null;
+                _clubRepository.Update(club);
+            }
+
+            var newCompetition = new Competition
+            {
+                Id = Guid.NewGuid(),
+                Name = "Division 1",
+                CountryId = countryId,
+                Tier = 1,
+                Type = CompetitionType.League,
+                Strength = new Random().Next(OlavFramework.Configuration.MinStrength, OlavFramework.Configuration.MinStrength + 3),
+            };
+            _competitionRepository.Add(newCompetition);
+
+            var clubs = _clubRepository.Load().Where(c => c.CountryId == countryId).OrderByDescending(_ => _.Strength).Take(6).ToList();
+
+            foreach (var club in clubs)
+            {
+                _clubPerCompetitionRepository.Add(new ClubPerCompetition
+                {
+                    ClubId = club.Id,
+                    CompetitionId = newCompetition.Id,
+                });
+
+                club.Strength = new Random().Next(OlavFramework.Configuration.MinStrength, OlavFramework.Configuration.MinStrength + 3);
+                _clubRepository.Update(club);
+            }
         }
     }
 }

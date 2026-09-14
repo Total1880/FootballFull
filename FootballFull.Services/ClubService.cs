@@ -69,5 +69,28 @@ namespace FootballFull.Services
                 .Load()
                 .FirstOrDefault(c => c.FeederClubId == feederClubId);
         }
+
+        public bool DeleteAllSplitParametersForThisCountry(Guid countryId)
+        {
+            var clubs = _clubRepository.Load().Where(c => c.CountryId == countryId).ToList();
+            foreach (var club in clubs)
+            {
+                club.CompetitionSplitParameters = null;
+                _clubRepository.Update(club);
+            }
+            return true;
+        }
+
+        public bool DeleteAllFeederClubsForThisCountry(Guid countryId)
+        {
+            var clubs = _clubRepository.Load().Where(c => c.CountryId == countryId && (c.FeederClubId != null || c.FeederClubId != Guid.Empty)).ToList();
+            foreach(var club in clubs)
+            {
+                _clubRepository.Delete((Guid)club.FeederClubId);
+                club.FeederClubId = null;
+                _clubRepository.Update(club);
+            }
+            return true;
+        }
     }
 }

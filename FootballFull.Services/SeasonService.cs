@@ -752,6 +752,43 @@ chosenCompetitionIndex <= competitions.Count)
             //}
         }
 
+        public Guid ChoosePlayerCompetition()
+        {
+            var countries = _countryService.GetCountries();
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("Kies het land of kies 0 voor een compleet nieuw land:");
+                for (int i = 0; i < countries.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {countries[i].Name}");
+                }
+                Console.Write("\nGeef het nummer van het land: ");
+                var input = Console.ReadLine();
+
+                if(int.TryParse(input,out int chosenIndex) && chosenIndex > 0 && chosenIndex <= countries.Count)
+                {
+                    var chosenCountry = countries[chosenIndex - 1].Id;
+                    do
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"Je hebt gekozen: {countries[chosenIndex - 1].Name}");
+                        return chosenCountry;
+                    } while (true);
+                }
+                else if (chosenIndex == 0)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Je hebt gekozen voor een compleet nieuw land.");
+                    Console.Write("Geef de naam van het nieuwe land: ");
+                    var newCountryName = Console.ReadLine();
+                    var newCountryGuid = Guid.NewGuid();
+                    _countryService.Add(new Country { Name = newCountryName, Id = newCountryGuid });
+                    return newCountryGuid;
+                }
+            } while (true);
+        }
+
         private bool IsCupWorthy(int count)
         {
             // Count moet > 1 zijn en een macht van 2

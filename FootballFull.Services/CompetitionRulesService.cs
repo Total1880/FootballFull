@@ -499,6 +499,14 @@ namespace FootballFull.Services
             return true;
         }
 
+        public bool DeleteEverythingForCompetition(Guid competitionId)
+        {
+            var rule = GetCompetitionRules(competitionId);
+
+            _repository.Delete(rule.Id);
+            return true;
+        }
+
         private sealed class MovementState
         {
             public List<ClubMove> Moves { get; } = new();

@@ -14,5 +14,7 @@ namespace FootballFull.Services.Interfaces
 
         List<Competition> GetSubCompetitions(
 Competition competition);
+
+        void InitializeStarterCompetition(Guid countryId);
     }
 }

@@ -97,5 +97,15 @@ namespace FootballFull.Services
         {
             return GetAllClubPerCompetitions().Where(_ => _.CompetitionId == competitionId).ToList();
         }
+
+        public bool DeleteEverythingForCompetition(Guid competitionId)
+        {
+            var list = GetAllClubPerSpecificCompetitions(competitionId);
+            foreach (var item in list)
+            {
+                RemoveClubFromCompetition(item.ClubId, item.CompetitionId);
+            }
+            return true;
+        }
     }
 }

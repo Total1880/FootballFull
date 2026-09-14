@@ -11,5 +11,8 @@ namespace FootballFull.Services.Interfaces
         void Update(Club updatedClub);
         void Delete(Guid id);
         void SaveAll(IList<Club> clubs);
+        bool DeleteAllSplitParametersForThisCountry(Guid countryId);
+        bool DeleteAllFeederClubsForThisCountry(Guid countryId);
+
     }
 }

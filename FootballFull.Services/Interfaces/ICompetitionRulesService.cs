@@ -12,5 +12,6 @@ namespace FootballFull.Services.Interfaces
         public void ApplyPromotionAndRelegations(IList<ClubLeagueCompetition> clubLeagueCompetitions);
         public CompetitionRules GetCompetitionRules(Guid id);
         public bool Save(CompetitionRules competitionRules);
+        bool DeleteEverythingForCompetition(Guid competitionId);
     }
 }
