@@ -23,6 +23,8 @@ namespace FootballFull.Services
         private IList<Fixture> _cupFixtures = new List<Fixture>();
         private IList<Trainer> _trainers;
         private IList<Fixture>? _internationalFixtures;
+        private IList<FootballAssociation> _footballAssociations = new List<FootballAssociation>();
+
         private Guid _userCountryId;
         private DateTime _currentDate;
         private DateTime _newSeasonDate;
@@ -63,10 +65,7 @@ namespace FootballFull.Services
                 ResetStrength();
                 CreateTrainers();
                 _internationalFixtures = null;
-
                 _competitionService.InitializeStarterCompetition(_userCountryId);
-
-
             }
 
             // Data laden
@@ -84,11 +83,22 @@ namespace FootballFull.Services
             _fixtures = _fixtureService.Generate(_clubsPerCompetition, _currentDate);
             _cupFixtures = _seasonService.InitializeNationalCups(_currentDate);
 
-
-
             if (!isNew)
             {
                 _internationalFixtures = _seasonService.InitializeInternationalGames(_currentDate, true);
+            }
+
+            //temp
+            foreach (var country in _countryService.GetCountries())
+            {
+                _footballAssociations.Add(new FootballAssociation
+                {
+                    Id = Guid.NewGuid(),
+                    CountryId = country.Id,
+                    Name = $"{country.Name} Football Association",
+                    Reputation = Configuration.StartReputation,
+                    Balance = Configuration.StartBalance
+                });
             }
 
             // Hoofdloop
@@ -161,7 +171,7 @@ namespace FootballFull.Services
                 // Internationale deelnemers worden nog bepaald met de eindstand
                 // van het afgelopen seizoen.
                 _internationalFixtures = _seasonService.InitializeInternationalGames(_currentDate);
-
+                CalculateSeasonFinancialResult();
                 EndOfSeasonChoices();
 
                 _year++;
@@ -174,6 +184,17 @@ namespace FootballFull.Services
                 _seasonService.SaveGame();
 
             } while (true);
+        }
+
+        private void CalculateSeasonFinancialResult()
+        {
+            var _seasonFinancialResult = new SeasonFinancialResult();
+            var existingClubs = _clubPerCompetitionService.GetAllClubPerCompetitionForCountry(_userCountryId);
+            var footballAssociation = _footballAssociations.First(fa => fa.CountryId == _userCountryId);
+
+            _seasonFinancialResult.ClubIncome = existingClubs.Count * Configuration.BasicClubRevenue;
+            _seasonFinancialResult.ReputationIncome = footballAssociation.Reputation * Configuration.ReputationRevenueMultiplier;
+
         }
 
         private void EndOfSeasonChoices()
@@ -249,7 +270,7 @@ namespace FootballFull.Services
                 } while (continueLoop);
             }
 
-            if(existingClubs.Count >= 12)
+            if (existingClubs.Count >= 12)
             {
                 Console.WriteLine("Er zijn al 12 clubs in de competitie, je kan geen extra club toevoegen.");
                 Console.WriteLine("Druk op een toets om verder te gaan...");
