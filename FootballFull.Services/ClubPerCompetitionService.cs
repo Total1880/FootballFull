@@ -107,5 +107,11 @@ namespace FootballFull.Services
             }
             return true;
         }
+
+        public IList<ClubPerCompetition> GetAllClubPerCompetitionForCountry(Guid countryId)
+        {
+            var competitions = _competitionService.GetCompetitions().Where(c => c.CountryId == countryId).Select(c => c.Id).ToList();
+            return GetAllClubPerCompetitions().Where(cpc => competitions.Contains(cpc.CompetitionId)).ToList();
+        }
     }
 }

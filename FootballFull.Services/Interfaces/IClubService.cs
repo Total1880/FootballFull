@@ -7,6 +7,7 @@ namespace FootballFull.Services.Interfaces
         Club GetClubById(Guid clubId);
         Club FindParentClub(Guid feederClubId);
         IList <Club> GetClubs();
+        IList<Club> GetEndOfSeasonRequestClubs(Guid countryId, int numberOfClubs, List<Guid> existingClubIds);
         void Add(Club club);
         void Update(Club updatedClub);
         void Delete(Guid id);

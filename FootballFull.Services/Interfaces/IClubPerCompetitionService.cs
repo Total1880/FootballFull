@@ -11,6 +11,7 @@ namespace FootballFull.Services.Interfaces
         IList<Competition> GetCompetitionsForClub(Guid clubId);
         IList<ClubPerCompetition> GetAllClubPerCompetitions();
         IList<ClubPerCompetition> GetAllClubPerSpecificCompetitions(Guid competitionId);
+        IList<ClubPerCompetition> GetAllClubPerCompetitionForCountry(Guid countryId);
         void SaveAll(IList<ClubPerCompetition> clubPerCompetition);
         void UpdateInternationalCompetition(IList<ClubPerCompetition> clubPerCompetitions);
         bool DeleteEverythingForCompetition(Guid competitionId);

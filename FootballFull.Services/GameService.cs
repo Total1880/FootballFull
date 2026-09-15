@@ -160,6 +160,8 @@ namespace FootballFull.Services
                 // van het afgelopen seizoen.
                 _internationalFixtures = _seasonService.InitializeInternationalGames(_currentDate);
 
+                EndOfSeasonChoices();
+
                 _year++;
                 _currentDate = new DateTime(_year, 7, 1);
                 _newSeasonDate = _currentDate.AddYears(1);
@@ -170,6 +172,45 @@ namespace FootballFull.Services
                 _seasonService.SaveGame();
 
             } while (true);
+        }
+
+        private void EndOfSeasonChoices()
+        {
+            var existingClubs = _clubPerCompetitionService.GetAllClubPerCompetitionForCountry(_userCountryId);
+            var newClubs = _clubService.GetEndOfSeasonRequestClubs(_userCountryId, 3, existingClubs.Select(cpc => cpc.ClubId).ToList());
+            var counter = 0;
+
+            if (newClubs.Count < 3)
+            {
+                for (int i = newClubs.Count; i < 3; i++) { 
+                    Console.Write("Kies een club naam om toe te voegen aan de competitie: ");
+                    var name = Console.ReadLine();
+                    var newClub = new Club
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = name,
+                        CountryId = _userCountryId,
+                        Strength = Configuration.MinStrength
+                    };
+                    _clubService.Add(newClub);
+                    newClubs.Add(newClub);
+                }
+            }
+
+            Console.Clear();
+            Console.WriteLine("Deze 3 clubs hebben een aanvraag ingediend om toegang te krijgen tot de competitie:");
+            foreach (var club in newClubs)
+            {
+                counter++;
+                Console.WriteLine($"{counter}. {club.Name}");
+            }
+            Console.Write("Geef de nummer van de club die je wilt toevoegen: ");
+            var choice = Console.ReadLine();
+
+            var newClubRequested = newClubs[int.Parse(choice) - 1];
+            _trainerService.CreateRandomTrainer(newClubRequested.Id);
+
+            _clubPerCompetitionService.AddClubToCompetition(newClubRequested.Id, _competitionService.GetCompetitions().First(c => c.CountryId == _userCountryId && c.Tier == 1).Id);
         }
 
         private void ShowNews(DateTime date, Guid competitionId)
@@ -735,7 +776,7 @@ namespace FootballFull.Services
 
             Console.WriteLine($"Volgende wedstrijd: {nextDate:dddd dd/MM/yyyy}");
             Console.WriteLine(new string('-', 40));
-            foreach(var f in fixtures)
+            foreach (var f in fixtures)
             {
                 Console.WriteLine($"{f.HomeTeam.Name} vs {f.AwayTeam.Name}");
             }

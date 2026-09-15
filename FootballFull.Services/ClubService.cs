@@ -92,5 +92,21 @@ namespace FootballFull.Services
             }
             return true;
         }
+
+        public IList<Club> GetEndOfSeasonRequestClubs(Guid countryId, int numberOfClubs, List<Guid> existingClubIds)
+        {
+            var list = new List<Club>();
+            var clubs = _clubRepository.Load().Where(c => c.CountryId == countryId && !existingClubIds.Contains(c.Id)).ToList();
+
+            for (int i = 0; i < numberOfClubs && i < clubs.Count; i++)
+            {
+                var randomClub = clubs[new Random().Next(clubs.Count)];
+                randomClub.Strength = OlavFramework.Configuration.MinStrength;
+                _clubRepository.Update(randomClub);
+                list.Add(randomClub);
+                clubs.Remove(randomClub); // Remove the selected club to avoid duplicates
+            }
+            return list;
+        }
     }
 }
