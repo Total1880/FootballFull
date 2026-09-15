@@ -60,7 +60,6 @@ namespace FootballFull.Services
             _newsMessages = new List<NewsMessage>();
             _clubInternationalRankings = _clubInternationalRankingService.GetAll();
             _competitions = _competitionRepository.Load();
-            _countries = _countryService.GetCountries();
             _saveData = _saveDataService.Load();
             Year = _saveData.Year;
         }
@@ -70,6 +69,7 @@ namespace FootballFull.Services
             _clubsPerCompetition = clubsPerCompetition;
             _clubs = _clubService.GetClubs();
             _trainers = _trainerService.Load();
+            _countries = _countryService.GetCountries();
 
             InitializeNewSeason(Year, true);
         }

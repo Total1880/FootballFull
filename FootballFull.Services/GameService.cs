@@ -1,6 +1,8 @@
 ﻿using FootballFull.Models;
+using FootballFull.Repositories;
 using FootballFull.Services.Interfaces;
 using OlavFramework;
+using static FootballFull.Models.Competition;
 
 namespace FootballFull.Services
 {
@@ -50,7 +52,7 @@ namespace FootballFull.Services
             var dayCounter = 0;
 
             // User club kiezen
-            _userCountryId = _seasonService.ChoosePlayerCompetition();
+            _userCountryId = ChoosePlayerCompetition();
 
             // Initialize data
             if (isNew)
@@ -60,6 +62,8 @@ namespace FootballFull.Services
                 _internationalFixtures = null;
 
                 _competitionService.InitializeStarterCompetition(_userCountryId);
+
+
             }
 
             // Data laden
@@ -950,6 +954,73 @@ namespace FootballFull.Services
             }
 
             _trainerService.SaveAll(_trainers);
+        }
+
+        private Guid ChoosePlayerCompetition()
+        {
+            var countries = _countryService.GetCountries();
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("Kies het land of kies 0 voor een compleet nieuw land:");
+                for (int i = 0; i < countries.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {countries[i].Name}");
+                }
+                Console.Write("\nGeef het nummer van het land: ");
+                var input = Console.ReadLine();
+
+                if (int.TryParse(input, out int chosenIndex) && chosenIndex > 0 && chosenIndex <= countries.Count)
+                {
+                    var chosenCountry = countries[chosenIndex - 1].Id;
+                    do
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"Je hebt gekozen: {countries[chosenIndex - 1].Name}");
+                        return chosenCountry;
+                    } while (true);
+                }
+                else if (chosenIndex == 0)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Je hebt gekozen voor een compleet nieuw land.");
+                    Console.Write("Geef de naam van het nieuwe land: ");
+                    var newCountryName = Console.ReadLine();
+                    _userCountryId = Guid.NewGuid();
+                    _countryService.Add(new Country { Name = newCountryName, Id = _userCountryId });
+
+                    CreateStarterClubs();
+
+                    return _userCountryId;
+                }
+            } while (true);
+        }
+
+        private void CreateStarterClubs()
+        {
+            Console.WriteLine("Geef de namen van de starterclubs:");
+            Console.Write("Club 1: ");
+            var club1Name = Console.ReadLine();
+            _clubService.Add(new Club { Name = club1Name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
+            Console.Write("Club 2: ");
+            var club2Name = Console.ReadLine();
+            _clubService.Add(new Club { Name = club2Name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
+
+            Console.Write("Club 3: ");
+            var club3Name = Console.ReadLine();
+            _clubService.Add(new Club { Name = club3Name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
+
+            Console.Write("Club 4: ");
+            var club4Name = Console.ReadLine();
+            _clubService.Add(new Club { Name = club4Name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
+            Console.Write("Club 5: ");
+            var club5Name = Console.ReadLine();
+            _clubService.Add(new Club { Name = club5Name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
+
+            Console.Write("Club 6: ");
+            var club6Name = Console.ReadLine();
+            _clubService.Add(new Club { Name = club6Name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
+
         }
         #endregion
     }

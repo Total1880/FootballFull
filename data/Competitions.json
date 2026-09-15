@@ -142,5 +142,29 @@
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
     ]
+  },
+  {
+    "Id": "78392db7-1664-4b1f-982c-459f9a4fcc16",
+    "Name": "Premier League",
+    "Country": null,
+    "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+    "Tier": 1,
+    "Strength": 0,
+    "Type": 0,
+    "SubCompetitionIds": [],
+    "MatchDay": {},
+    "SplitParameters": []
+  },
+  {
+    "Id": "553dd1b1-2bc1-48c0-addf-ddf46d296024",
+    "Name": "Champions League",
+    "Country": null,
+    "CountryId": "6476f65e-3889-4b8d-9eae-61da7b1ace05",
+    "Tier": 1,
+    "Strength": 0,
+    "Type": 2,
+    "SubCompetitionIds": [],
+    "MatchDay": {},
+    "SplitParameters": []
   }
 ]
