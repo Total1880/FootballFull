@@ -57,7 +57,9 @@
       "Id": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
       "Name": "Engeland"
     },
-    "PointsPerYear": {}
+    "PointsPerYear": {
+      "2029": 0
+    }
   },
   {
     "ClubId": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
@@ -65,6 +67,30 @@
       "Name": "AA Gent",
       "Strength": 2,
       "Id": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
+      "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "FeederClubId": null,
+      "CompetitionSplitParameters": [
+        {
+          "Name": "VV",
+          "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+        }
+      ]
+    },
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Country": {
+      "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {
+      "2029": 2
+    }
+  },
+  {
+    "ClubId": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
+    "Club": {
+      "Name": "KV Mechelen",
+      "Strength": 3,
+      "Id": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
       "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
       "FeederClubId": null,
       "CompetitionSplitParameters": [

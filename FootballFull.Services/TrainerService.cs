@@ -91,14 +91,14 @@ namespace FootballFull.Services
 
         public void ClubsFireTrainer(Guid userClubId, DateTime date, IList<Club> clubs, IList<ClubLeagueCompetition> clubLeagueCompetitions)
         {
-            var clubsFiltered = clubs.Where(_ => _.Id != userClubId && _.Momentum < 3 && _.Morale < 3 && _.HasTrainerSinceWeek.AddDays(28) < date).ToList();
+            var clubsFiltered = clubs.Where(_ => _.Id != userClubId && _.Momentum < 3 && _.Morale < 3 && _.HasTrainerSinceWeek.AddDays(28) < date && _.NumberOfGamesWithTrainer >= 5).ToList();
 
             foreach (var club in clubsFiltered)
             {
                 var maxValue = 20 - ((date - club.HasTrainerSinceWeek).Days / 7);
                 if (Random.Shared.Next(0, maxValue > 0 ? maxValue : 0) == 0)
                 {
-                    var firedTrainer = FireTrainer(club.Id, club.Strength);
+                    var firedTrainer = FireTrainer(club);
                     var newTrainer = FindNewTrainer(club, date, club.Strength, firedTrainer, clubs, clubLeagueCompetitions, true);
                 }
             }
@@ -159,11 +159,12 @@ namespace FootballFull.Services
             return _trainers.FirstOrDefault(_ => _.ClubId == club?.Id);
         }
 
-        private Guid FireTrainer(Guid id, int strength)
+        private Guid FireTrainer(Club club)
         {
-            var trainer = _trainers.First(_ => _.ClubId.Equals(id));
+            var trainer = _trainers.First(_ => _.ClubId.Equals(club.Id));
             trainer.ClubId = Guid.Empty;
-            trainer.LastTeamStrength = strength;
+            trainer.LastTeamStrength = club.Strength;
+            club.NumberOfGamesWithTrainer = 0;
             return trainer.Id;
         }
     }

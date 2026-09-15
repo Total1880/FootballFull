@@ -11,10 +11,10 @@
   },
   {
     "Id": "572caca0-cd15-40a3-9507-26feed4e0aaa",
-    "ClubId": "298ba8a5-e4a5-491d-bdde-2e9676926dc1",
+    "ClubId": "5d7f7343-6bc5-4265-8f1a-280a7febbd1a",
     "TacticalSkill": 4,
     "Motivation": 3,
-    "LastTeamStrength": 0,
+    "LastTeamStrength": 2,
     "PersonId": "60450ebc-91d5-4e7d-9c1e-ea0ef2d21b12",
     "Name": "Noah",
     "LastName": "Janssens"
@@ -31,20 +31,20 @@
   },
   {
     "Id": "7400de62-d33c-4f4d-870a-ae85922703e6",
-    "ClubId": "1ec6ca95-750b-4c80-ad2b-7327b9ae33c1",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
     "TacticalSkill": 0,
     "Motivation": 2,
-    "LastTeamStrength": 0,
+    "LastTeamStrength": 13,
     "PersonId": "fbb802b0-aa47-48cb-9f77-55c790d40ac5",
     "Name": "Jules",
     "LastName": "Maes"
   },
   {
     "Id": "ff356bec-179e-4b00-8fea-d4fb9098a373",
-    "ClubId": "23f38c29-7e72-4509-beb6-4ee9b6298ee6",
+    "ClubId": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
     "TacticalSkill": 2,
     "Motivation": 3,
-    "LastTeamStrength": 2,
+    "LastTeamStrength": 1,
     "PersonId": "8296c474-0caf-4689-b862-3a8a924769c4",
     "Name": "Liam",
     "LastName": "Peeters"
@@ -61,20 +61,20 @@
   },
   {
     "Id": "32326ad2-b664-44c4-99fe-bce9915f8a3f",
-    "ClubId": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
+    "ClubId": "23f38c29-7e72-4509-beb6-4ee9b6298ee6",
     "TacticalSkill": 0,
     "Motivation": 2,
-    "LastTeamStrength": 2,
+    "LastTeamStrength": 3,
     "PersonId": "3d8ff10f-5e72-4903-9558-d48b821641c1",
     "Name": "Louis",
     "LastName": "Willems"
   },
   {
     "Id": "dfb0694e-779b-41f1-bd17-3a7d0f5a5875",
-    "ClubId": "2f175089-1ab0-43b4-a316-bfa457eb7d5a",
+    "ClubId": "2b042474-2fa9-47f2-98d6-fab72959ab51",
     "TacticalSkill": 4,
     "Motivation": 4,
-    "LastTeamStrength": 2,
+    "LastTeamStrength": 15,
     "PersonId": "e84f8ec4-a0e7-479c-be3a-dc6221cbf4e3",
     "Name": "Jules",
     "LastName": "Janssens"
@@ -91,7 +91,7 @@
   },
   {
     "Id": "4f273efd-59b9-44ec-8bca-20dd3876e856",
-    "ClubId": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
+    "ClubId": "f86e9385-9d6a-4832-9fd7-a895b5d55c79",
     "TacticalSkill": 4,
     "Motivation": 3,
     "LastTeamStrength": 2,
@@ -414,7 +414,7 @@
     "ClubId": "43e4ef55-346c-4780-9df7-1b79876d38bf",
     "TacticalSkill": 4,
     "Motivation": 1,
-    "LastTeamStrength": 0,
+    "LastTeamStrength": 1,
     "PersonId": "8b76b46d-9415-4358-bf7c-2073c5ed00df",
     "Name": "Noah",
     "LastName": "Janssens"
@@ -471,10 +471,10 @@
   },
   {
     "Id": "1927674c-fddc-4e13-b6f3-c5336038e2b1",
-    "ClubId": "00000000-0000-0000-0000-000000000000",
+    "ClubId": "0f6f0a35-50f0-481d-9884-34ec9ea0bea0",
     "TacticalSkill": 0,
     "Motivation": 4,
-    "LastTeamStrength": 2,
+    "LastTeamStrength": 14,
     "PersonId": "af9becde-487a-4b9e-bf38-36215ba9ec4d",
     "Name": "Arthur",
     "LastName": "Peeters"
@@ -571,10 +571,10 @@
   },
   {
     "Id": "e378d480-5d28-4063-8b1b-047964cf4daf",
-    "ClubId": "56a51e38-6bdf-49a5-8d0b-dd31f56675a2",
+    "ClubId": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
     "TacticalSkill": 1,
     "Motivation": 3,
-    "LastTeamStrength": 0,
+    "LastTeamStrength": 1,
     "PersonId": "c57dda06-2a9a-4bf3-b5f0-ae6ed680c02e",
     "Name": "Arthur",
     "LastName": "Jacobs"
@@ -1181,7 +1181,7 @@
   },
   {
     "Id": "544df032-4c3e-4428-93b6-37254d597fda",
-    "ClubId": "7e8588ee-24d9-4c82-9e80-75ae2b2c700c",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
     "TacticalSkill": 3,
     "Motivation": 0,
     "LastTeamStrength": 13,
@@ -1201,87 +1201,87 @@
   },
   {
     "Id": "2f62553d-5492-4cc7-8476-100f652d5b49",
-    "ClubId": "1bbde3b8-37fb-4460-ae9b-36d0362ead65",
+    "ClubId": "dbbe91cf-3562-4b60-b4a6-63cc83cfffb9",
     "TacticalSkill": 1,
     "Motivation": 4,
-    "LastTeamStrength": 13,
+    "LastTeamStrength": 14,
     "PersonId": "8be77af1-5e4f-472f-b5aa-05cc4d5c017b",
     "Name": "Noah",
     "LastName": "Janssens"
   },
   {
     "Id": "c7a7851c-e3c1-437a-8def-9b0042434cfa",
-    "ClubId": "f86e9385-9d6a-4832-9fd7-a895b5d55c79",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
     "TacticalSkill": 1,
     "Motivation": 4,
-    "LastTeamStrength": 12,
+    "LastTeamStrength": 14,
     "PersonId": "bc3c3fcc-f0e1-4935-94ca-863a1f650906",
     "Name": "Noah",
     "LastName": "Peeters"
   },
   {
     "Id": "9d515f0d-cb89-4f76-9f2a-fc69765a4fb9",
-    "ClubId": "50dbc572-c3f0-446e-ac9c-95d065a26916",
+    "ClubId": "1bbde3b8-37fb-4460-ae9b-36d0362ead65",
     "TacticalSkill": 3,
     "Motivation": 1,
-    "LastTeamStrength": 15,
+    "LastTeamStrength": 14,
     "PersonId": "32516cb0-55c5-4c95-98cd-ae33e3b18877",
     "Name": "Liam",
     "LastName": "Peeters"
   },
   {
     "Id": "0750d401-7971-47d5-a409-84cf4a612afd",
-    "ClubId": "987a7737-2fdc-4f19-999a-483cfe37c121",
+    "ClubId": "50dbc572-c3f0-446e-ac9c-95d065a26916",
     "TacticalSkill": 2,
     "Motivation": 1,
-    "LastTeamStrength": 13,
+    "LastTeamStrength": 15,
     "PersonId": "9fe5e91e-497f-4c8a-993f-1b9d30c5948d",
     "Name": "Louis",
     "LastName": "Maes"
   },
   {
     "Id": "fb56416a-af63-4895-8c14-3114b2ff4bdb",
-    "ClubId": "deaad09f-7dee-47ce-9f53-f61a85473215",
+    "ClubId": "ba578b1e-da84-4e92-8e88-0ebefa44f278",
     "TacticalSkill": 4,
     "Motivation": 3,
-    "LastTeamStrength": 16,
+    "LastTeamStrength": 14,
     "PersonId": "53667e76-1ffb-46b6-b2cf-bad823726401",
     "Name": "Noah",
     "LastName": "Maes"
   },
   {
     "Id": "1798b208-9acd-47c5-aad9-109f73a07e60",
-    "ClubId": "5d7f7343-6bc5-4265-8f1a-280a7febbd1a",
+    "ClubId": "deaad09f-7dee-47ce-9f53-f61a85473215",
     "TacticalSkill": 0,
     "Motivation": 1,
-    "LastTeamStrength": 12,
+    "LastTeamStrength": 14,
     "PersonId": "23b87db7-19a7-4de9-8153-e8b212ab910b",
     "Name": "Liam",
     "LastName": "Mertens"
   },
   {
     "Id": "60de285e-69cb-4e29-831f-69e32ae8c6ce",
-    "ClubId": "6bd3f9b1-399f-4d62-bf8a-d7b9207083cf",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
     "TacticalSkill": 2,
     "Motivation": 2,
-    "LastTeamStrength": 12,
+    "LastTeamStrength": 13,
     "PersonId": "8a5ad48d-898d-40f0-84b5-26016844f558",
     "Name": "R\u00E9mus",
     "LastName": "Jacobs"
   },
   {
     "Id": "9392f621-3df7-460e-9993-9bae183443b2",
-    "ClubId": "668fe480-eff9-4ad5-991f-3e36c6b86840",
+    "ClubId": "6bd3f9b1-399f-4d62-bf8a-d7b9207083cf",
     "TacticalSkill": 3,
     "Motivation": 4,
-    "LastTeamStrength": 13,
+    "LastTeamStrength": 15,
     "PersonId": "804a9b4a-6488-4e82-bab4-d464e0ee1905",
     "Name": "Liam",
     "LastName": "Willems"
   },
   {
     "Id": "767c483d-9f6c-4e15-9e00-5ce212cbaf23",
-    "ClubId": "2b042474-2fa9-47f2-98d6-fab72959ab51",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
     "TacticalSkill": 2,
     "Motivation": 3,
     "LastTeamStrength": 12,
@@ -1291,42 +1291,182 @@
   },
   {
     "Id": "d364c590-6cc9-4dfd-874b-bfc84f78893e",
-    "ClubId": "dbbe91cf-3562-4b60-b4a6-63cc83cfffb9",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
     "TacticalSkill": 4,
     "Motivation": 1,
-    "LastTeamStrength": 12,
+    "LastTeamStrength": 13,
     "PersonId": "4fa32b49-d831-423a-ae70-396a12351b65",
     "Name": "Jules",
     "LastName": "Willems"
   },
   {
     "Id": "5ccddc1f-aeb0-4290-8182-7142833a1ddb",
-    "ClubId": "ba578b1e-da84-4e92-8e88-0ebefa44f278",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
     "TacticalSkill": 4,
     "Motivation": 4,
-    "LastTeamStrength": 12,
+    "LastTeamStrength": 14,
     "PersonId": "ce33242c-64bb-46d6-8c61-956196b7d59b",
     "Name": "Liam",
     "LastName": "Mertens"
   },
   {
     "Id": "bae0180d-8e27-4c15-889e-d5c5372734ca",
-    "ClubId": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
     "TacticalSkill": 0,
     "Motivation": 4,
-    "LastTeamStrength": 1,
+    "LastTeamStrength": 14,
     "PersonId": "67ee8836-80e9-447a-b3fc-442292b11d8b",
     "Name": "Arthur",
     "LastName": "Mertens"
   },
   {
     "Id": "40c01e11-1c01-4c85-a60f-c61a61c2c49d",
-    "ClubId": "0f6f0a35-50f0-481d-9884-34ec9ea0bea0",
+    "ClubId": "987a7737-2fdc-4f19-999a-483cfe37c121",
     "TacticalSkill": 0,
     "Motivation": 4,
-    "LastTeamStrength": 12,
+    "LastTeamStrength": 15,
     "PersonId": "b857d19d-7fbd-4c88-ae36-8cff51ae1488",
     "Name": "Arthur",
     "LastName": "Jacobs"
+  },
+  {
+    "Id": "9938a203-ab55-455d-9a19-252c5c67974e",
+    "ClubId": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
+    "TacticalSkill": 4,
+    "Motivation": 1,
+    "LastTeamStrength": 2,
+    "PersonId": "88a4d697-3a59-4a79-89a9-f3384c366e08",
+    "Name": "Jules",
+    "LastName": "Jacobs"
+  },
+  {
+    "Id": "fa91f240-2104-4a68-b6db-0aacdad1cc0e",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
+    "TacticalSkill": 0,
+    "Motivation": 0,
+    "LastTeamStrength": 13,
+    "PersonId": "effcec0e-a197-477d-9bf2-5d161294da5e",
+    "Name": "Arthur",
+    "LastName": "Hendrickx"
+  },
+  {
+    "Id": "c435e08f-3a0a-41d9-8cdb-be960f633bd3",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
+    "TacticalSkill": 3,
+    "Motivation": 0,
+    "LastTeamStrength": 13,
+    "PersonId": "f2c95c6c-fb26-42f8-bd26-d39af9fcbdcc",
+    "Name": "Louis",
+    "LastName": "Willems"
+  },
+  {
+    "Id": "3a20d93d-8f97-4dd7-8e19-f855450b844c",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
+    "TacticalSkill": 3,
+    "Motivation": 1,
+    "LastTeamStrength": 14,
+    "PersonId": "cbe9491b-2eba-4c9f-bb97-54346bf1a31a",
+    "Name": "Noah",
+    "LastName": "Mertens"
+  },
+  {
+    "Id": "88a05102-56fc-4327-8062-6a0ee98ca96d",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
+    "TacticalSkill": 4,
+    "Motivation": 1,
+    "LastTeamStrength": 13,
+    "PersonId": "bea347e8-6fb4-4e79-a77b-416c5591df56",
+    "Name": "Liam",
+    "LastName": "Peeters"
+  },
+  {
+    "Id": "b83c84de-c1e8-4e41-830a-86385a38a05a",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
+    "TacticalSkill": 0,
+    "Motivation": 4,
+    "LastTeamStrength": 14,
+    "PersonId": "7160b2ac-4636-4820-aeae-e51dc6a4d672",
+    "Name": "Noah",
+    "LastName": "Janssens"
+  },
+  {
+    "Id": "2d4f92b6-506e-48ed-9d57-73ca4290131e",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
+    "TacticalSkill": 1,
+    "Motivation": 1,
+    "LastTeamStrength": 14,
+    "PersonId": "b18bf84e-3c76-4b70-a415-ab24eed70be5",
+    "Name": "Noah",
+    "LastName": "Peeters"
+  },
+  {
+    "Id": "86cdb0cd-3854-472a-9804-099e7cb379bc",
+    "ClubId": "56a51e38-6bdf-49a5-8d0b-dd31f56675a2",
+    "TacticalSkill": 3,
+    "Motivation": 3,
+    "LastTeamStrength": 0,
+    "PersonId": "0e7796ff-615c-441c-8fd5-4caa222035a0",
+    "Name": "Jules",
+    "LastName": "Hendrickx"
+  },
+  {
+    "Id": "a1d78dd7-3504-4477-ba71-9044a7c9f2ca",
+    "ClubId": "00000000-0000-0000-0000-000000000000",
+    "TacticalSkill": 1,
+    "Motivation": 3,
+    "LastTeamStrength": 14,
+    "PersonId": "86fd8211-ee1b-4416-b9eb-873ebe76d30a",
+    "Name": "Louis",
+    "LastName": "Maes"
+  },
+  {
+    "Id": "d8ca3951-e598-4cea-9726-843c94011539",
+    "ClubId": "298ba8a5-e4a5-491d-bdde-2e9676926dc1",
+    "TacticalSkill": 3,
+    "Motivation": 4,
+    "LastTeamStrength": 0,
+    "PersonId": "6d407f57-b73f-4146-893b-849afa9084cb",
+    "Name": "Arthur",
+    "LastName": "Hendrickx"
+  },
+  {
+    "Id": "2dce200d-6d47-4dad-ade5-09bbec7c96cd",
+    "ClubId": "2f175089-1ab0-43b4-a316-bfa457eb7d5a",
+    "TacticalSkill": 4,
+    "Motivation": 4,
+    "LastTeamStrength": 0,
+    "PersonId": "08835649-c964-4ee0-9f09-6da86f3705e0",
+    "Name": "Jules",
+    "LastName": "Willems"
+  },
+  {
+    "Id": "ab6d6a94-47de-44ce-b7b4-04a1f4a33299",
+    "ClubId": "7e8588ee-24d9-4c82-9e80-75ae2b2c700c",
+    "TacticalSkill": 2,
+    "Motivation": 1,
+    "LastTeamStrength": 0,
+    "PersonId": "d9399d24-6327-4ea8-ba38-953de32dccf2",
+    "Name": "Louis",
+    "LastName": "Maes"
+  },
+  {
+    "Id": "649bd25b-62b5-4dd8-862d-379e5f83c348",
+    "ClubId": "668fe480-eff9-4ad5-991f-3e36c6b86840",
+    "TacticalSkill": 2,
+    "Motivation": 4,
+    "LastTeamStrength": 0,
+    "PersonId": "44f4c4d9-3772-491e-a3e1-70b496dc0136",
+    "Name": "Louis",
+    "LastName": "Peeters"
+  },
+  {
+    "Id": "aad416f0-5932-44dd-94c8-0e4f2b340b97",
+    "ClubId": "1ec6ca95-750b-4c80-ad2b-7327b9ae33c1",
+    "TacticalSkill": 4,
+    "Motivation": 3,
+    "LastTeamStrength": 0,
+    "PersonId": "70e4f758-eb50-44f6-aacf-d048bd89f08b",
+    "Name": "Arthur",
+    "LastName": "Hendrickx"
   }
 ]

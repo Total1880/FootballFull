@@ -1048,6 +1048,9 @@ chosenCompetitionIndex <= competitions.Count)
             // 3) Clamp Morale tussen 1 en 10
             if (club.Morale < 1) club.Morale = 1;
             if (club.Morale > 10) club.Morale = 10;
+
+            // 4) add trainermatches
+            club.NumberOfGamesWithTrainer++;
         }
 
         public void UpdateWeekStats(Guid userClubId, DateTime date)

@@ -1,7 +1,7 @@
 [
   {
     "Name": "Club Brugge",
-    "Strength": 2,
+    "Strength": 3,
     "Id": "298ba8a5-e4a5-491d-bdde-2e9676926dc1",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -40,7 +40,7 @@
   },
   {
     "Name": "AA Gent",
-    "Strength": 3,
+    "Strength": 4,
     "Id": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -53,7 +53,7 @@
   },
   {
     "Name": "KV Mechelen",
-    "Strength": 3,
+    "Strength": 4,
     "Id": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -209,7 +209,7 @@
   },
   {
     "Name": "KV Kortrijk",
-    "Strength": 6,
+    "Strength": 1,
     "Id": "10cf3375-df99-4d65-bfee-cfce6591c97d",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -417,7 +417,7 @@
   },
   {
     "Name": "Tubize-Braine",
-    "Strength": 1,
+    "Strength": 2,
     "Id": "43e4ef55-346c-4780-9df7-1b79876d38bf",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -430,7 +430,7 @@
   },
   {
     "Name": "Mons",
-    "Strength": 4,
+    "Strength": 1,
     "Id": "c10d7a40-1258-42bf-8f30-18283d7ba5a4",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -456,7 +456,7 @@
   },
   {
     "Name": "Onhaye",
-    "Strength": 4,
+    "Strength": 1,
     "Id": "94331536-1d96-4e0d-aeaf-c58d897d401e",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -469,7 +469,7 @@
   },
   {
     "Name": "Fl\u00E9nu",
-    "Strength": 4,
+    "Strength": 1,
     "Id": "836ea150-faa4-4a4d-bd22-e944194df225",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -495,7 +495,7 @@
   },
   {
     "Name": "Houtvenne",
-    "Strength": 1,
+    "Strength": 2,
     "Id": "2f175089-1ab0-43b4-a316-bfa457eb7d5a",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -625,7 +625,7 @@
   },
   {
     "Name": "Hoogstraten",
-    "Strength": 4,
+    "Strength": 2,
     "Id": "56a51e38-6bdf-49a5-8d0b-dd31f56675a2",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -742,7 +742,7 @@
   },
   {
     "Name": "Londerzeel",
-    "Strength": 3,
+    "Strength": 1,
     "Id": "ff721ff4-2dd3-47c5-ab3b-f75c0b3dccfb",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -1278,7 +1278,7 @@
   },
   {
     "Name": "Liverpool",
-    "Strength": 19,
+    "Strength": 20,
     "Id": "04167cff-66a0-46ec-969a-f7c3f71d68e2",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
@@ -1294,7 +1294,7 @@
   },
   {
     "Name": "Manchester United",
-    "Strength": 18,
+    "Strength": 19,
     "Id": "9a4b8314-0342-49d8-8657-a8f12e56878c",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
@@ -1302,7 +1302,7 @@
   },
   {
     "Name": "Leeds United",
-    "Strength": 17,
+    "Strength": 18,
     "Id": "008e5eea-1847-4208-9368-7b01fb70a442",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
@@ -1374,7 +1374,7 @@
   },
   {
     "Name": "Bournemouth",
-    "Strength": 13,
+    "Strength": 14,
     "Id": "5d7f7343-6bc5-4265-8f1a-280a7febbd1a",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
@@ -1390,7 +1390,7 @@
   },
   {
     "Name": "Tottenham",
-    "Strength": 13,
+    "Strength": 14,
     "Id": "1bbde3b8-37fb-4460-ae9b-36d0362ead65",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
@@ -1398,7 +1398,7 @@
   },
   {
     "Name": "Fulham",
-    "Strength": 13,
+    "Strength": 14,
     "Id": "50dbc572-c3f0-446e-ac9c-95d065a26916",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
@@ -1414,7 +1414,7 @@
   },
   {
     "Name": "Coventry",
-    "Strength": 12,
+    "Strength": 14,
     "Id": "2b042474-2fa9-47f2-98d6-fab72959ab51",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
