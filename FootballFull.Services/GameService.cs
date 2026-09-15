@@ -15,6 +15,7 @@ namespace FootballFull.Services
         private readonly IClubPerCompetitionService _clubPerCompetitionService;
         private readonly ICountryService _countryService;
         private readonly ITrainerService _trainerService;
+        private readonly ICompetitionRulesService _competitionRulesService;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
         private IList<Competition> _competitions = new List<Competition>();
@@ -34,7 +35,8 @@ namespace FootballFull.Services
             ICompetitionService competitionService,
             IClubPerCompetitionService clubPerCompetitionService,
             ICountryService countryService,
-            ITrainerService trainerService)
+            ITrainerService trainerService,
+            ICompetitionRulesService competitionRulesService)
         {
             _seasonService = seasonService;
             _fixtureService = fixtureService;
@@ -43,6 +45,7 @@ namespace FootballFull.Services
             _clubPerCompetitionService = clubPerCompetitionService;
             _countryService = countryService;
             _trainerService = trainerService;
+            _competitionRulesService = competitionRulesService;
 
             _trainers = _trainerService.Load();
         }
@@ -91,9 +94,8 @@ namespace FootballFull.Services
             // Hoofdloop
             do
             {
-                var competitionId = _competitionService.GetCompetitions().First(_ => _.CountryId == _userCountryId).Id;
+                var competitionToShow = _competitions.OrderBy(c => c.Tier).First(_ => _.CountryId == _userCountryId);
 
-                var competitionToShow = _competitions.FirstOrDefault(_ => _.Id == competitionId);
                 var fixturesLeft = true;
                 if (competitionToShow == null)
                 {
@@ -105,7 +107,7 @@ namespace FootballFull.Services
                 Console.Clear();
 
                 // Fixture overview
-                DisplayLeagueTable();
+                DisplayLeagueTable(competitionToShow.Id);
                 Console.WriteLine();
                 DisplayNextFixture(competitionToShow, _currentDate);
 
@@ -127,9 +129,9 @@ namespace FootballFull.Services
 
                     _seasonService.PlayMatchDay(_fixtures, _currentDate, false, _userCountryId);
 
-                    DisplayLeagueTable();
+                    DisplayLeagueTable(competitionToShow.Id);
                     Console.WriteLine();
-                    DisplayResult(_currentDate);
+                    DisplayResult(competitionToShow, _currentDate);
                     Console.WriteLine();
                     fixturesLeft = DisplayNextFixture(competitionToShow, _currentDate.AddDays(1));
                     if (fixturesLeft == true && (userPlaysToday || dayCounter >= 7))
@@ -146,7 +148,7 @@ namespace FootballFull.Services
 
                     Console.Clear();
 
-                    ShowNews(_currentDate, competitionId);
+                    ShowNews(_currentDate, competitionToShow.Id);
                     _currentDate = _currentDate.AddDays(1);
                 } while (_currentDate < _newSeasonDate);
 
@@ -177,12 +179,91 @@ namespace FootballFull.Services
         private void EndOfSeasonChoices()
         {
             var existingClubs = _clubPerCompetitionService.GetAllClubPerCompetitionForCountry(_userCountryId);
+            var existingCompetitions = _competitionService.GetCompetitionsForCountry(_userCountryId);
+
+            if (existingClubs.Count >= 8 && !existingCompetitions.Any(c => c.Tier == 2))
+            {
+                var continueLoop = true;
+                do
+                {
+                    Console.Clear();
+                    Console.WriteLine("Wil je een [e]xtra club toelaten, of wil je een [l]agere competitie oprichten?");
+                    var key = Console.ReadKey(true);
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.E:
+                            continueLoop = false;
+                            break;
+                        case ConsoleKey.L:
+                            Console.WriteLine($"Hoeveel clubs wil je toevoegen aan de lagere competitie van totaal {existingClubs.Count} clubs?");
+                            var input = Console.ReadLine();
+                            if (int.TryParse(input, out int numberOfClubs) && numberOfClubs > 0 && numberOfClubs < existingClubs.Count)
+                            {
+                                var ranking = _seasonService.GetRanking(_competitions.First(c => c.CountryId == _userCountryId && c.Tier == 1).Id);
+                                var clubsToMove = ranking.TakeLast(numberOfClubs).ToList();
+                                var newCompetition = new Competition
+                                {
+                                    Id = Guid.NewGuid(),
+                                    Name = "Division 2",
+                                    CountryId = _userCountryId,
+                                    Tier = 2,
+                                    Type = CompetitionType.League,
+                                    Strength = Configuration.MinStrength,
+                                };
+                                var newRule1 = new CompetitionRules
+                                {
+                                    CompetitionId = existingCompetitions.First(c => c.Tier == 1).Id,
+                                    CompetitionRelegationToId = newCompetition.Id,
+                                    RelegationPlaces = 1
+                                };
+                                var newRule2 = new CompetitionRules
+                                {
+                                    CompetitionId = newCompetition.Id,
+                                    CompetitionPromotionToId = existingCompetitions.First(c => c.Tier == 1).Id,
+                                    PromotionPlaces = 1
+                                };
+
+                                _competitionService.Add(newCompetition);
+                                _competitions = _competitionService.GetCompetitions();
+                                _competitionRulesService.Save(newRule1);
+                                _competitionRulesService.Save(newRule2);
+
+                                foreach (var club in clubsToMove)
+                                {
+                                    _clubPerCompetitionService.RemoveClubFromCompetition(club.ClubId, club.CompetitionId);
+                                    _clubPerCompetitionService.AddClubToCompetition(club.ClubId, newCompetition.Id);
+                                }
+
+                                return;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Ongeldige invoer. Druk op een toets om opnieuw te proberen...");
+                                Console.ReadKey(true);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                } while (continueLoop);
+            }
+
+            if(existingClubs.Count >= 12)
+            {
+                Console.WriteLine("Er zijn al 12 clubs in de competitie, je kan geen extra club toevoegen.");
+                Console.WriteLine("Druk op een toets om verder te gaan...");
+                Console.ReadKey(true);
+                return;
+            }
+
             var newClubs = _clubService.GetEndOfSeasonRequestClubs(_userCountryId, 3, existingClubs.Select(cpc => cpc.ClubId).ToList());
             var counter = 0;
 
             if (newClubs.Count < 3)
             {
-                for (int i = newClubs.Count; i < 3; i++) { 
+                for (int i = newClubs.Count; i < 3; i++)
+                {
                     Console.Write("Kies een club naam om toe te voegen aan de competitie: ");
                     var name = Console.ReadLine();
                     var newClub = new Club
@@ -210,7 +291,8 @@ namespace FootballFull.Services
             var newClubRequested = newClubs[int.Parse(choice) - 1];
             _trainerService.CreateRandomTrainer(newClubRequested.Id);
 
-            _clubPerCompetitionService.AddClubToCompetition(newClubRequested.Id, _competitionService.GetCompetitions().First(c => c.CountryId == _userCountryId && c.Tier == 1).Id);
+            var lowestTierCompetition = _competitionService.GetCompetitions().Where(c => c.CountryId == _userCountryId).OrderByDescending(c => c.Tier).First();
+            _clubPerCompetitionService.AddClubToCompetition(newClubRequested.Id, lowestTierCompetition.Id);
         }
 
         private void ShowNews(DateTime date, Guid competitionId)
@@ -528,19 +610,7 @@ namespace FootballFull.Services
             Console.ReadKey();
         }
 
-        private void DisplayLeagueTable()
-        {
-            // Bepaal competitie van de user
-            var competitionId = _competitions
-                .OrderByDescending(_ => _.Tier)
-                .First(_ => _.CountryId == _userCountryId)
-                .Id;
-
-            // User-club highlighten
-            DisplayLeagueTable(competitionId, _userCountryId);
-        }
-
-        private void DisplayLeagueTable(Guid competitionId, Guid? highlightClubId = null)
+        private IList<ClubLeagueCompetition> DisplayLeagueTable(Guid competitionId, Guid? highlightClubId = null)
         {
             const int positionWidth = 4;
             const int nameWidth = 25;
@@ -606,17 +676,12 @@ namespace FootballFull.Services
                 Console.ResetColor();
                 counter++;
             }
+
+            return table;
         }
 
-        private void DisplayResult(DateTime date)
+        private void DisplayResult(Competition competitionToShow, DateTime date)
         {
-            var competitionId = _competitions
-                .OrderByDescending(_ => _.Tier)
-                .First(_ => _.CountryId == _userCountryId)
-                .Id;
-
-            var competitionToShow = _competitions.First(_ => _.Id == competitionId);
-
             Console.WriteLine();
             Console.WriteLine($"=== Date {date} - {competitionToShow.Name} ===");
             Console.WriteLine();

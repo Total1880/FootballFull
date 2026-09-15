@@ -19,5 +19,6 @@ namespace FootballFull.Services.Interfaces
         int Year { get; set; }
         Trainer UserTrainer(Guid userClubId);
         void SaveGame();
+        IList<ClubLeagueCompetition> GetRanking(Guid competitionId);
     }
 }

@@ -1601,5 +1601,165 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Roma",
+    "Strength": 20,
+    "Id": "072c2b26-07ab-4c96-a999-5951b7973e30",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Inter",
+    "Strength": 20,
+    "Id": "d909f3ec-3e44-4156-88e4-02d0c1fa98ec",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Como",
+    "Strength": 19,
+    "Id": "8371f16f-77f8-47ab-ba85-0691c0698d9e",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Lazio",
+    "Strength": 19,
+    "Id": "2e54b003-7ff0-4146-85ad-c21f1dc8ab38",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Cagliari",
+    "Strength": 18,
+    "Id": "2c6f7c05-da79-4fed-b401-a2ae4adb5f8e",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Milan",
+    "Strength": 18,
+    "Id": "3d7c256a-740e-4f97-a8b7-6edeb0e016a6",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Frosinone",
+    "Strength": 17,
+    "Id": "c64874ca-f742-417b-9116-601ea30d1320",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Juventus",
+    "Strength": 17,
+    "Id": "a05729be-e1ac-42e7-80c2-21add73cb39d",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Sassuolo",
+    "Strength": 16,
+    "Id": "6c21ff40-6a2f-4b5e-8cf8-3b9dc2f11826",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Napoli",
+    "Strength": 16,
+    "Id": "f57d2066-9631-47a6-87f2-2dec4c62e9dc",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Atalanta",
+    "Strength": 15,
+    "Id": "1fd6c01a-b065-4c36-a20e-f15f1740ce9a",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Lecce",
+    "Strength": 15,
+    "Id": "3117b3b0-0370-40b4-ad48-50a1a2798dae",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Udinese",
+    "Strength": 14,
+    "Id": "a91a7d76-27b3-4766-8eb6-54f44798179e",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Torino",
+    "Strength": 14,
+    "Id": "ef4b596e-30e8-4469-a31c-13d93bad5f15",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Fiorentina",
+    "Strength": 13,
+    "Id": "ecb196fd-c8b8-4e90-beed-87a1923cd41f",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Bologna",
+    "Strength": 13,
+    "Id": "034d5aa9-df31-44d4-8e60-5aaba19a2170",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Parma",
+    "Strength": 12,
+    "Id": "97d3aaff-eef4-467c-bd71-7ad78647bfc4",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Monza",
+    "Strength": 12,
+    "Id": "24426f31-9823-45a0-a05e-0b9a9bc7d4c0",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Genoa",
+    "Strength": 11,
+    "Id": "387fdeaf-9e78-4c68-883f-5d289f9ebe5d",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
+  },
+  {
+    "Name": "Venezia",
+    "Strength": 11,
+    "Id": "7809c978-2591-452b-a11a-fa1563500040",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "FeederClubId": null,
+    "CompetitionSplitParameters": []
   }
 ]

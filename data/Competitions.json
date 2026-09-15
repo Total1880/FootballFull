@@ -166,5 +166,17 @@
     "SubCompetitionIds": [],
     "MatchDay": {},
     "SplitParameters": []
+  },
+  {
+    "Id": "e5209840-7c9a-4dc0-bf49-147698edeb06",
+    "Name": "Serie A",
+    "Country": null,
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "Tier": 1,
+    "Strength": 0,
+    "Type": 0,
+    "SubCompetitionIds": [],
+    "MatchDay": {},
+    "SplitParameters": []
   }
 ]

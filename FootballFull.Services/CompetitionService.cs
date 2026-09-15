@@ -171,5 +171,10 @@ namespace FootballFull.Services
                 _clubRepository.Update(club);
             }
         }
+
+        public IList<Competition> GetCompetitionsForCountry(Guid userCountryId)
+        {
+            return _competitionRepository.Load().Where(c => c.CountryId == userCountryId).ToList();
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace FootballFull.Services
         private IClubInternationalRankingService _clubInternationalRankingService;
         private ISaveDataService _saveDataService;
         private readonly ICompetitionRulesService _competitionRulesService;
+        private readonly IClubLeagueCompetitionService _clubLeagueCompetitionService;
         private IList<ClubLeagueCompetition> _clubLeagueCompetitions;
         private IList<ClubPerCompetition> _clubsPerCompetition;
         private IList<Club> _clubs;
@@ -44,7 +45,8 @@ namespace FootballFull.Services
             IClubPerCompetitionService clubPerCompetitionService,
             IClubInternationalRankingService clubInternationalRankingService,
             ISaveDataService saveDataService,
-            ICompetitionRulesService competitionRulesService)
+            ICompetitionRulesService competitionRulesService,
+            IClubLeagueCompetitionService clubLeagueCompetitionService)
         {
             _competitionRepository = competitionRepository;
             _clubService = clubService;
@@ -56,6 +58,7 @@ namespace FootballFull.Services
             _clubInternationalRankingService = clubInternationalRankingService;
             _saveDataService = saveDataService;
             _competitionRulesService = competitionRulesService;
+            _clubLeagueCompetitionService = clubLeagueCompetitionService;
 
             _newsMessages = new List<NewsMessage>();
             _clubInternationalRankings = _clubInternationalRankingService.GetAll();
@@ -1091,6 +1094,12 @@ chosenCompetitionIndex <= competitions.Count)
                     _newsMessages.Add(nm);
                 }
             }
+        }
+
+        public IList<ClubLeagueCompetition> GetRanking(Guid competitionId)
+        {
+            var rankings = _clubLeagueCompetitionService.GetOrderedRanking(_clubLeagueCompetitions.Where(c => c.CompetitionId == competitionId).ToList()).ToList();
+            return rankings;
         }
     }
 }
