@@ -194,15 +194,75 @@ namespace FootballFull.Services
 
             _seasonFinancialResult.ClubIncome = existingClubs.Count * Configuration.BasicClubRevenue;
             _seasonFinancialResult.ReputationIncome = footballAssociation.Reputation * Configuration.ReputationRevenueMultiplier;
+            _seasonFinancialResult.BonusIncome = 0; // Placeholder for any bonus income logic
 
+            _seasonFinancialResult.ClubCosts = existingClubs.Count * Configuration.BasicClubCost;
+            _seasonFinancialResult.CompetitionCosts = _competitions.Where(c => c.CountryId == _userCountryId).Count() * Configuration.BasicCompetitionCost;
+            _seasonFinancialResult.OrganisationCosts = Configuration.BasicOrganisationCost;
+
+            _seasonFinancialResult.ReputationChange = +1;
+
+            footballAssociation.Balance += _seasonFinancialResult.NetResult;
+            footballAssociation.Reputation = footballAssociation.Reputation >= Configuration.MaxReputation ? 
+                Configuration.MaxReputation : 
+                footballAssociation.Reputation <= 1 ? 
+                1 : footballAssociation.Reputation + _seasonFinancialResult.ReputationChange;
+
+            ShowSeeasonFinancialResult(_seasonFinancialResult, footballAssociation);
+        }
+
+        private void ShowSeeasonFinancialResult(SeasonFinancialResult seasonFinancialResult, FootballAssociation footballAssociation)
+        {
+            Console.Clear();
+            Console.WriteLine($"=== Season Financial Result for {footballAssociation.Name} ===");
+            Console.WriteLine($"Club Income: {seasonFinancialResult.ClubIncome:C}");
+            Console.WriteLine($"Reputation Income: {seasonFinancialResult.ReputationIncome:C}");
+            Console.WriteLine($"Bonus Income: {seasonFinancialResult.BonusIncome:C}");
+            Console.WriteLine();
+            Console.WriteLine($"Club Costs: {seasonFinancialResult.ClubCosts:C}");
+            Console.WriteLine($"Competition Costs: {seasonFinancialResult.CompetitionCosts:C}");
+            Console.WriteLine($"Organisation Costs: {seasonFinancialResult.OrganisationCosts:C}");
+            Console.WriteLine();
+            Console.WriteLine($"Net Result: {seasonFinancialResult.NetResult:C}");
+            Console.WriteLine($" Balance: {footballAssociation.Balance:C}");
+            Console.WriteLine();
+            Console.WriteLine($"Reputation Change: {seasonFinancialResult.ReputationChange}");
+            Console.WriteLine($"Reputation: {footballAssociation.Reputation}");
+            Console.ReadLine();
         }
 
         private void EndOfSeasonChoices()
         {
+            var footballAssociation = _footballAssociations.First(fa => fa.CountryId == _userCountryId);
             var existingClubs = _clubPerCompetitionService.GetAllClubPerCompetitionForCountry(_userCountryId);
             var existingCompetitions = _competitionService.GetCompetitionsForCountry(_userCountryId);
 
-            if (existingClubs.Count >= 8 && !existingCompetitions.Any(c => c.Tier == 2))
+            if(footballAssociation.Balance < 10000)
+            {
+                Console.Clear();
+                Console.WriteLine("Je hebt onvoldoende saldo om een extra club toe te laten in de competitie.");
+                Console.ReadLine();
+                return;
+            }
+
+            if(footballAssociation.Reputation < 10 && existingClubs.Count >= 6)
+            {
+                Console.Clear();
+                Console.WriteLine("Je reputatie is te laag om een extra club toe te laten in de competitie.");
+                Console.ReadLine();
+                return;
+            }
+
+            if (footballAssociation.Reputation < 15 && existingClubs.Count >= 7)
+            {
+                Console.Clear();
+                Console.WriteLine("Je reputatie is te laag om een extra club toe te laten in de competitie.");
+                Console.ReadLine();
+                return;
+            }
+
+
+            if (existingClubs.Count >= 8 && !existingCompetitions.Any(c => c.Tier == 2) && footballAssociation.Balance >= 100000 && footballAssociation.Reputation >= 20)
             {
                 var continueLoop = true;
                 do
@@ -255,6 +315,8 @@ namespace FootballFull.Services
                                     _clubPerCompetitionService.AddClubToCompetition(club.ClubId, newCompetition.Id);
                                 }
 
+                                footballAssociation.Balance -= 100000;
+
                                 return;
                             }
                             else
@@ -285,7 +347,7 @@ namespace FootballFull.Services
             {
                 for (int i = newClubs.Count; i < 3; i++)
                 {
-                    Console.Write("Kies een club naam om toe te voegen aan de competitie: ");
+                    Console.Write("Kies een club naam om toe te voegen aan de competitie (10 000€): ");
                     var name = Console.ReadLine();
                     var newClub = new Club
                     {
@@ -296,6 +358,7 @@ namespace FootballFull.Services
                     };
                     _clubService.Add(newClub);
                     newClubs.Add(newClub);
+                    footballAssociation.Balance -= 10000;
                 }
             }
 

@@ -6,12 +6,12 @@
         public static int MinStrength = 1;
         public static int MaxReputation = 100;
         public static int StartReputation = 10;
-        public static decimal StartBalance = 1000000;
+        public static decimal StartBalance = 100000;
         public static decimal BasicClubRevenue = 10000;
         public static decimal ReputationRevenueMultiplier = 1000;
         public static decimal BasicClubCost = 5000;
         public static decimal BasicCompetitionCost = 15000;
-        public static decimal BasicOrganizationCost = 10000;
+        public static decimal BasicOrganisationCost = 10000;
 
         public static string DataRoot { get; private set; }
 
