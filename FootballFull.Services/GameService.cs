@@ -16,6 +16,7 @@ namespace FootballFull.Services
         private readonly ICountryService _countryService;
         private readonly ITrainerService _trainerService;
         private readonly ICompetitionRulesService _competitionRulesService;
+        private readonly ISeasonFinancialResultService _seasonFinancialResultService;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
         private IList<Competition> _competitions = new List<Competition>();
@@ -188,27 +189,12 @@ namespace FootballFull.Services
 
         private void CalculateSeasonFinancialResult()
         {
-            var _seasonFinancialResult = new SeasonFinancialResult();
             var existingClubs = _clubPerCompetitionService.GetAllClubPerCompetitionForCountry(_userCountryId);
             var footballAssociation = _footballAssociations.First(fa => fa.CountryId == _userCountryId);
 
-            _seasonFinancialResult.ClubIncome = existingClubs.Count * Configuration.BasicClubRevenue;
-            _seasonFinancialResult.ReputationIncome = footballAssociation.Reputation * Configuration.ReputationRevenueMultiplier;
-            _seasonFinancialResult.BonusIncome = 0; // Placeholder for any bonus income logic
+            var seasonFinancialResult = _seasonFinancialResultService.CalculateFinancialResults(existingClubs.Count, _competitions.Where(c => c.CountryId == _userCountryId).Count(), footballAssociation);
 
-            _seasonFinancialResult.ClubCosts = existingClubs.Count * Configuration.BasicClubCost;
-            _seasonFinancialResult.CompetitionCosts = _competitions.Where(c => c.CountryId == _userCountryId).Count() * Configuration.BasicCompetitionCost;
-            _seasonFinancialResult.OrganisationCosts = Configuration.BasicOrganisationCost;
-
-            _seasonFinancialResult.ReputationChange = +1;
-
-            footballAssociation.Balance += _seasonFinancialResult.NetResult;
-            footballAssociation.Reputation = footballAssociation.Reputation >= Configuration.MaxReputation ? 
-                Configuration.MaxReputation : 
-                footballAssociation.Reputation <= 1 ? 
-                1 : footballAssociation.Reputation + _seasonFinancialResult.ReputationChange;
-
-            ShowSeeasonFinancialResult(_seasonFinancialResult, footballAssociation);
+            ShowSeeasonFinancialResult(seasonFinancialResult, footballAssociation);
         }
 
         private void ShowSeeasonFinancialResult(SeasonFinancialResult seasonFinancialResult, FootballAssociation footballAssociation)
