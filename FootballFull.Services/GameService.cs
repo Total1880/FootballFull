@@ -17,6 +17,7 @@ namespace FootballFull.Services
         private readonly ITrainerService _trainerService;
         private readonly ICompetitionRulesService _competitionRulesService;
         private readonly ISeasonFinancialResultService _seasonFinancialResultService;
+        private readonly IEndOfSeasonService _endOfSeasonService;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
         private IList<Competition> _competitions = new List<Competition>();
@@ -39,7 +40,9 @@ namespace FootballFull.Services
             IClubPerCompetitionService clubPerCompetitionService,
             ICountryService countryService,
             ITrainerService trainerService,
-            ICompetitionRulesService competitionRulesService)
+            ICompetitionRulesService competitionRulesService,
+            IEndOfSeasonService endOfSeasonService,
+            ISeasonFinancialResultService seasonFinancialResultService)
         {
             _seasonService = seasonService;
             _fixtureService = fixtureService;
@@ -49,6 +52,8 @@ namespace FootballFull.Services
             _countryService = countryService;
             _trainerService = trainerService;
             _competitionRulesService = competitionRulesService;
+            _endOfSeasonService = endOfSeasonService;
+            _seasonFinancialResultService = seasonFinancialResultService;
 
             _trainers = _trainerService.Load();
         }
@@ -219,150 +224,215 @@ namespace FootballFull.Services
 
         private void EndOfSeasonChoices()
         {
-            var footballAssociation = _footballAssociations.First(fa => fa.CountryId == _userCountryId);
-            var existingClubs = _clubPerCompetitionService.GetAllClubPerCompetitionForCountry(_userCountryId);
-            var existingCompetitions = _competitionService.GetCompetitionsForCountry(_userCountryId);
+            var footballAssociation = _footballAssociations
+                .First(fa => fa.CountryId == _userCountryId);
 
-            if(footballAssociation.Balance < 10000)
+            var options = _endOfSeasonService.GetOptions(
+                _userCountryId,
+                footballAssociation);
+
+            if (!options.CanAddClub && !options.CanCreateLowerDivision)
             {
-                Console.Clear();
-                Console.WriteLine("Je hebt onvoldoende saldo om een extra club toe te laten in de competitie.");
-                Console.ReadLine();
+                ShowMessage(options.CannotAddClubReason);
                 return;
             }
 
-            if(footballAssociation.Reputation < 10 && existingClubs.Count >= 6)
+            if (options.CanCreateLowerDivision &&
+                AskToCreateLowerDivision())
             {
-                Console.Clear();
-                Console.WriteLine("Je reputatie is te laag om een extra club toe te laten in de competitie.");
-                Console.ReadLine();
+                var numberOfClubs = AskNumberOfClubs(options.CurrentClubCount);
+
+                _endOfSeasonService.CreateLowerDivision(
+                    _userCountryId,
+                    numberOfClubs,
+                    footballAssociation);
+
+                _competitions = _competitionService.GetCompetitions();
+
                 return;
             }
 
-            if (footballAssociation.Reputation < 15 && existingClubs.Count >= 7)
+            if (!options.CanAddClub)
             {
-                Console.Clear();
-                Console.WriteLine("Je reputatie is te laag om een extra club toe te laten in de competitie.");
-                Console.ReadLine();
+                ShowMessage(options.CannotAddClubReason);
                 return;
             }
 
+            var applicants = _endOfSeasonService.GetApplicantClubs(
+                _userCountryId,
+                footballAssociation,
+                3);
 
-            if (existingClubs.Count >= 8 && !existingCompetitions.Any(c => c.Tier == 2) && footballAssociation.Balance >= 100000 && footballAssociation.Reputation >= 20)
+            while (applicants.Count < 3)
             {
-                var continueLoop = true;
-                do
+                Console.Clear();
+                Console.WriteLine(
+                    $"Er zijn nog {3 - applicants.Count} kandidaat-club(s) nodig.");
+
+                Console.Write("Geef de naam van de nieuwe club: ");
+                var clubName = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(clubName))
                 {
-                    Console.Clear();
-                    Console.WriteLine("Wil je een [e]xtra club toelaten, of wil je een [l]agere competitie oprichten?");
-                    var key = Console.ReadKey(true);
-                    switch (key.Key)
-                    {
-                        case ConsoleKey.E:
-                            continueLoop = false;
-                            break;
-                        case ConsoleKey.L:
-                            Console.WriteLine($"Hoeveel clubs wil je toevoegen aan de lagere competitie van totaal {existingClubs.Count} clubs?");
-                            var input = Console.ReadLine();
-                            if (int.TryParse(input, out int numberOfClubs) && numberOfClubs > 0 && numberOfClubs < existingClubs.Count)
-                            {
-                                var ranking = _seasonService.GetRanking(_competitions.First(c => c.CountryId == _userCountryId && c.Tier == 1).Id);
-                                var clubsToMove = ranking.TakeLast(numberOfClubs).ToList();
-                                var newCompetition = new Competition
-                                {
-                                    Id = Guid.NewGuid(),
-                                    Name = "Division 2",
-                                    CountryId = _userCountryId,
-                                    Tier = 2,
-                                    Type = CompetitionType.League,
-                                    Strength = Configuration.MinStrength,
-                                };
-                                var newRule1 = new CompetitionRules
-                                {
-                                    CompetitionId = existingCompetitions.First(c => c.Tier == 1).Id,
-                                    CompetitionRelegationToId = newCompetition.Id,
-                                    RelegationPlaces = 1
-                                };
-                                var newRule2 = new CompetitionRules
-                                {
-                                    CompetitionId = newCompetition.Id,
-                                    CompetitionPromotionToId = existingCompetitions.First(c => c.Tier == 1).Id,
-                                    PromotionPlaces = 1
-                                };
+                    ShowMessage("De naam van een club mag niet leeg zijn.");
+                    continue;
+                }
 
-                                _competitionService.Add(newCompetition);
-                                _competitions = _competitionService.GetCompetitions();
-                                _competitionRulesService.Save(newRule1);
-                                _competitionRulesService.Save(newRule2);
+                var newClub = _endOfSeasonService.CreateApplicantClub(
+                    _userCountryId,
+                    clubName);
 
-                                foreach (var club in clubsToMove)
-                                {
-                                    _clubPerCompetitionService.RemoveClubFromCompetition(club.ClubId, club.CompetitionId);
-                                    _clubPerCompetitionService.AddClubToCompetition(club.ClubId, newCompetition.Id);
-                                }
-
-                                footballAssociation.Balance -= 100000;
-
-                                return;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Ongeldige invoer. Druk op een toets om opnieuw te proberen...");
-                                Console.ReadKey(true);
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-
-                } while (continueLoop);
+                applicants.Add(newClub);
             }
 
-            if (existingClubs.Count >= 12)
+            var selectedClub = AskPlayerToSelectClub(applicants);
+
+            _endOfSeasonService.AdmitClub(
+                _userCountryId,
+                selectedClub.Id,
+                footballAssociation);
+        }
+
+        private Club AskPlayerToSelectClub(IList<Club> applicants)
+        {
+            if (applicants == null || applicants.Count == 0)
+                throw new ArgumentException(
+                    "Er zijn geen kandidaat-clubs beschikbaar.",
+                    nameof(applicants));
+
+            while (true)
             {
-                Console.WriteLine("Er zijn al 12 clubs in de competitie, je kan geen extra club toevoegen.");
-                Console.WriteLine("Druk op een toets om verder te gaan...");
+                Console.Clear();
+                Console.WriteLine("=== Aanvragen van clubs ===");
+                Console.WriteLine();
+                Console.WriteLine(
+                    "De volgende clubs willen toetreden tot de competitie:");
+                Console.WriteLine();
+
+                for (var i = 0; i < applicants.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {applicants[i].Name}");
+                }
+
+                Console.WriteLine();
+                Console.Write(
+                    $"Kies een club (1-{applicants.Count}): ");
+
+                var input = Console.ReadLine();
+
+                if (int.TryParse(input, out var selectedNumber) &&
+                    selectedNumber >= 1 &&
+                    selectedNumber <= applicants.Count)
+                {
+                    return applicants[selectedNumber - 1];
+                }
+
+                Console.WriteLine();
+                Console.WriteLine(
+                    "Ongeldige keuze. Kies een nummer uit de lijst.");
+                Console.WriteLine("Druk op een toets om opnieuw te proberen...");
                 Console.ReadKey(true);
-                return;
+            }
+        }
+        private int AskNumberOfClubs(int currentClubCount)
+        {
+            const int minimumClubsPerDivision = 2;
+
+            var minimumClubsToMove = minimumClubsPerDivision;
+            var maximumClubsToMove =
+                currentClubCount - minimumClubsPerDivision;
+
+            if (maximumClubsToMove < minimumClubsToMove)
+            {
+                throw new InvalidOperationException(
+                    "Er zijn onvoldoende clubs om twee geldige divisies te maken.");
             }
 
-            var newClubs = _clubService.GetEndOfSeasonRequestClubs(_userCountryId, 3, existingClubs.Select(cpc => cpc.ClubId).ToList());
-            var counter = 0;
-
-            if (newClubs.Count < 3)
+            while (true)
             {
-                for (int i = newClubs.Count; i < 3; i++)
+                Console.Clear();
+                Console.WriteLine("=== Lagere divisie oprichten ===");
+                Console.WriteLine();
+                Console.WriteLine(
+                    $"Er zijn momenteel {currentClubCount} clubs.");
+                Console.WriteLine(
+                    "De laagst geklasseerde clubs worden naar Division 2 verplaatst.");
+                Console.WriteLine();
+                Console.WriteLine(
+                    $"Je kan tussen {minimumClubsToMove} en " +
+                    $"{maximumClubsToMove} clubs verplaatsen.");
+                Console.WriteLine();
+
+                Console.Write("Hoeveel clubs wil je verplaatsen? ");
+                var input = Console.ReadLine();
+
+                if (int.TryParse(input, out var numberOfClubs) &&
+                    numberOfClubs >= minimumClubsToMove &&
+                    numberOfClubs <= maximumClubsToMove)
                 {
-                    Console.Write("Kies een club naam om toe te voegen aan de competitie (10 000€): ");
-                    var name = Console.ReadLine();
-                    var newClub = new Club
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = name,
-                        CountryId = _userCountryId,
-                        Strength = Configuration.MinStrength
-                    };
-                    _clubService.Add(newClub);
-                    newClubs.Add(newClub);
-                    footballAssociation.Balance -= 10000;
+                    return numberOfClubs;
+                }
+
+                Console.WriteLine();
+                Console.WriteLine(
+                    $"Voer een getal in tussen {minimumClubsToMove} " +
+                    $"en {maximumClubsToMove}.");
+                Console.WriteLine("Druk op een toets om opnieuw te proberen...");
+                Console.ReadKey(true);
+            }
+
+        }
+
+        private bool AskToCreateLowerDivision()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("=== Einde van het seizoen ===");
+                Console.WriteLine();
+                Console.WriteLine("Je kan dit seizoen:");
+                Console.WriteLine();
+                Console.WriteLine("[E] Een extra club toelaten");
+                Console.WriteLine("[L] Een lagere divisie oprichten");
+                Console.WriteLine();
+                Console.Write("Maak een keuze: ");
+
+                var key = Console.ReadKey(true);
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.E:
+                        return false;
+
+                    case ConsoleKey.L:
+                        return true;
+
+                    default:
+                        Console.WriteLine();
+                        Console.WriteLine(
+                            "Ongeldige keuze. Kies E of L.");
+                        Console.WriteLine(
+                            "Druk op een toets om opnieuw te proberen...");
+                        Console.ReadKey(true);
+                        break;
                 }
             }
+        }
 
+        private void ShowMessage(string? message)
+        {
             Console.Clear();
-            Console.WriteLine("Deze 3 clubs hebben een aanvraag ingediend om toegang te krijgen tot de competitie:");
-            foreach (var club in newClubs)
-            {
-                counter++;
-                Console.WriteLine($"{counter}. {club.Name}");
-            }
-            Console.Write("Geef de nummer van de club die je wilt toevoegen: ");
-            var choice = Console.ReadLine();
+            Console.WriteLine("=== Einde van het seizoen ===");
+            Console.WriteLine();
 
-            var newClubRequested = newClubs[int.Parse(choice) - 1];
-            _trainerService.CreateRandomTrainer(newClubRequested.Id);
+            Console.WriteLine(
+                string.IsNullOrWhiteSpace(message)
+                    ? "Deze actie is momenteel niet beschikbaar."
+                    : message);
 
-            var lowestTierCompetition = _competitionService.GetCompetitions().Where(c => c.CountryId == _userCountryId).OrderByDescending(c => c.Tier).First();
-            _clubPerCompetitionService.AddClubToCompetition(newClubRequested.Id, lowestTierCompetition.Id);
+            Console.WriteLine();
+            Console.WriteLine("Druk op een toets om verder te gaan...");
+            Console.ReadKey(true);
         }
 
         private void ShowNews(DateTime date, Guid competitionId)
