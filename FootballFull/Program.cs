@@ -35,6 +35,7 @@ services.AddSingleton<ICompetitionRulesService, CompetitionRulesService>();
 services.AddSingleton<IClubLeagueCompetitionService, ClubLeagueCompetitionService>();
 services.AddSingleton<ISeasonFinancialResultService, SeasonFinancialResultService>();
 services.AddSingleton<IEndOfSeasonService, EndOfSeasonService>();
+services.AddSingleton<ISeasonEventService, SeasonEventService>();
 
 // Repositories (V2-varianten)
 services.AddSingleton<IRepository<Club>>(

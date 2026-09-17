@@ -17,7 +17,7 @@ namespace FootballFull.Services
 
             seasonFinancialResult.ClubIncome = clubsCount * Configuration.BasicClubRevenue;
             seasonFinancialResult.ReputationIncome = association.Reputation * Configuration.ReputationRevenueMultiplier;
-            seasonFinancialResult.BonusIncome = 0; // Placeholder for any bonus income logic
+            seasonFinancialResult.BonusIncome = CalculateBonusIncome(association);
 
             seasonFinancialResult.ClubCosts = clubsCount * Configuration.BasicClubCost;
             seasonFinancialResult.CompetitionCosts = competitionsCount * Configuration.BasicCompetitionCost;
@@ -45,6 +45,22 @@ namespace FootballFull.Services
                 change += 1;
 
             return change;
+        }
+
+        private decimal CalculateBonusIncome(FootballAssociation fa)
+        {
+            decimal bonus = 0;
+
+            if (fa.Reputation >= 10)
+                bonus += 5_000;
+
+            if (fa.Reputation >= 20)
+                bonus += 10_000;
+
+            if (fa.Reputation >= 30)
+                bonus += 20_000;
+
+            return bonus;
         }
     }
 }

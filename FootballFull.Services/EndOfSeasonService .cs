@@ -11,8 +11,6 @@ namespace FootballFull.Services
 {
     public class EndOfSeasonService : IEndOfSeasonService
     {
-        private const decimal AddClubCost = 10_000;
-        private const decimal LowerDivisionCost = 100_000;
         private const int MaximumNumberOfClubs = 12;
 
         private readonly ISeasonService _seasonService;
@@ -53,13 +51,13 @@ namespace FootballFull.Services
 
             var canAddClub =
                 clubCount < MaximumNumberOfClubs &&
-                footballAssociation.Balance >= AddClubCost &&
+                footballAssociation.Balance >= Configuration.NewClubCost &&
                 footballAssociation.Reputation >= requiredReputation;
 
             var canCreateLowerDivision =
                 clubCount >= 8 &&
                 competitions.All(c => c.Tier != 2) &&
-                footballAssociation.Balance >= LowerDivisionCost &&
+                footballAssociation.Balance >= Configuration.LowerDivisionCost &&
                 footballAssociation.Reputation >= 20;
 
             return new EndOfSeasonOptions
@@ -97,7 +95,7 @@ namespace FootballFull.Services
             if (clubCount >= MaximumNumberOfClubs)
                 return $"Er zijn al {MaximumNumberOfClubs} clubs.";
 
-            if (footballAssociation.Balance < AddClubCost)
+            if (footballAssociation.Balance < Configuration.NewClubCost)
                 return "Je hebt onvoldoende saldo.";
 
             if (footballAssociation.Reputation < requiredReputation)
@@ -174,7 +172,7 @@ namespace FootballFull.Services
                 clubId,
                 lowestCompetition.Id);
 
-            footballAssociation.Balance -= AddClubCost;
+            footballAssociation.Balance -= Configuration.NewClubCost;
         }
 
         public void CreateLowerDivision(
@@ -236,7 +234,7 @@ namespace FootballFull.Services
                     secondDivision.Id);
             }
 
-            footballAssociation.Balance -= LowerDivisionCost;
+            footballAssociation.Balance -= Configuration.LowerDivisionCost;
         }
 
         public Club CreateApplicantClub(Guid countryId, string clubName)

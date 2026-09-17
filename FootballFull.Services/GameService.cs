@@ -15,9 +15,9 @@ namespace FootballFull.Services
         private readonly IClubPerCompetitionService _clubPerCompetitionService;
         private readonly ICountryService _countryService;
         private readonly ITrainerService _trainerService;
-        private readonly ICompetitionRulesService _competitionRulesService;
         private readonly ISeasonFinancialResultService _seasonFinancialResultService;
         private readonly IEndOfSeasonService _endOfSeasonService;
+        private readonly ISeasonEventService _seasonEventService;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
         private IList<Competition> _competitions = new List<Competition>();
@@ -40,9 +40,9 @@ namespace FootballFull.Services
             IClubPerCompetitionService clubPerCompetitionService,
             ICountryService countryService,
             ITrainerService trainerService,
-            ICompetitionRulesService competitionRulesService,
             IEndOfSeasonService endOfSeasonService,
-            ISeasonFinancialResultService seasonFinancialResultService)
+            ISeasonFinancialResultService seasonFinancialResultService,
+            ISeasonEventService seasonEventService)
         {
             _seasonService = seasonService;
             _fixtureService = fixtureService;
@@ -50,10 +50,10 @@ namespace FootballFull.Services
             _competitionService = competitionService;
             _clubPerCompetitionService = clubPerCompetitionService;
             _countryService = countryService;
-            _trainerService = trainerService;
-            _competitionRulesService = competitionRulesService;
             _endOfSeasonService = endOfSeasonService;
             _seasonFinancialResultService = seasonFinancialResultService;
+            _seasonEventService = seasonEventService;
+            _trainerService = trainerService;
 
             _trainers = _trainerService.Load();
         }
@@ -178,6 +178,7 @@ namespace FootballFull.Services
                 // van het afgelopen seizoen.
                 _internationalFixtures = _seasonService.InitializeInternationalGames(_currentDate);
                 CalculateSeasonFinancialResult();
+                Events();
                 EndOfSeasonChoices();
 
                 _year++;
@@ -190,6 +191,21 @@ namespace FootballFull.Services
                 _seasonService.SaveGame();
 
             } while (true);
+        }
+
+        private void Events()
+        {
+            var footballAssociation = _footballAssociations.First(fa => fa.CountryId == _userCountryId);
+
+            var events = _seasonEventService.GetRandomSeasonEvents();
+            Console.Clear();
+            Console.WriteLine(events.Description);
+            Console.WriteLine($"Balance Change: {events.BalanceChange}");
+            Console.WriteLine($"Reputation Change: {events.ReputationChange}");
+            Console.ReadLine();
+
+            footballAssociation.Balance += events.BalanceChange;
+            footballAssociation.Reputation += events.ReputationChange;
         }
 
         private void CalculateSeasonFinancialResult()
@@ -218,7 +234,7 @@ namespace FootballFull.Services
             Console.WriteLine($" Balance: {footballAssociation.Balance:C}");
             Console.WriteLine();
             Console.WriteLine($"Reputation Change: {seasonFinancialResult.ReputationChange}");
-            Console.WriteLine($"Reputation: {footballAssociation.Reputation}");
+            Console.WriteLine($"Reputation: {footballAssociation.Reputation} ({footballAssociation.ReputationDescription})");
             Console.ReadLine();
         }
 
@@ -255,6 +271,13 @@ namespace FootballFull.Services
             if (!options.CanAddClub)
             {
                 ShowMessage(options.CannotAddClubReason);
+                return;
+            }
+
+            Console.WriteLine("Wil je een nieuwe club toevoegen? Kostprijs {0} (y/n)", Configuration.NewClubCost);
+            var input = Console.ReadLine();
+            if (input?.ToLower() != "y")
+            {
                 return;
             }
 

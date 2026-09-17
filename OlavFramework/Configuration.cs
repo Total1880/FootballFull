@@ -15,6 +15,9 @@
         public static decimal BasicOrganisationCost = 10000;
 
         public static string DataRoot { get; private set; }
+        public static decimal LowerDivisionCost = 100000;
+
+        public static decimal NewClubCost = 10000;
 
         // Je basisfolder (de standaard data)
         private static readonly string BaseDataPath =
