@@ -865,7 +865,18 @@ chosenCompetitionIndex <= competitions.Count)
                     clubCounter++;
                     var countryId = orderCountries[counterCountry];
 
-                    var competition = competitions.First(_ => _.CountryId == countryId);
+                    var competition = competitions.FirstOrDefault(_ => _.CountryId == countryId);
+
+                    if(competition == null)
+                    {
+                        counterCountry++;
+                        if (counterCountry >= orderCountries.Count)
+                        {
+                            counterCountry = 0;
+                            counterPosition++;
+                        }
+                        continue;
+                    }
 
                     var extra = _clubLeagueCompetitions
                         .Where(_ => _.CompetitionId == competition.Id)

@@ -578,7 +578,6 @@ namespace FootballFull.Services
             if (!_cupFixtures.Any(_ => _.MatchDay == date))
                 return;
 
-            var userCountry = _clubService.GetClubById(_userCountryId).CountryId;
             var cupCompetitions = _competitions
                 .Where(_ => _.Type == Competition.CompetitionType.Cup)
                 .ToList();
@@ -589,7 +588,7 @@ namespace FootballFull.Services
 
             foreach (var cupCompetition in cupCompetitions)
             {
-                var display = cupCompetition.CountryId == userCountry;
+                var display = cupCompetition.CountryId == _userCountryId;
                 if (display)
                     Console.WriteLine($"--- {cupCompetition.Name} ---");
                 var fixturesForCompetition = _cupFixtures

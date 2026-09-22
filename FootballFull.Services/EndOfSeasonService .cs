@@ -274,6 +274,8 @@ namespace FootballFull.Services
 
             _clubService.Add(club);
 
+            _trainerService.CreateRandomTrainer(club.Id);
+
             return club;
         }
     }

@@ -178,5 +178,29 @@
     "SubCompetitionIds": [],
     "MatchDay": {},
     "SplitParameters": []
+  },
+  {
+    "Id": "0a57f4ee-8b2f-4b9a-ba05-1448266fede4",
+    "Name": "La Liga",
+    "Country": null,
+    "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+    "Tier": 1,
+    "Strength": 0,
+    "Type": 0,
+    "SubCompetitionIds": [],
+    "MatchDay": {},
+    "SplitParameters": []
+  },
+  {
+    "Id": "5bc3f3e1-b74c-4acb-a4a0-911473699dee",
+    "Name": "Croky Cup",
+    "Country": null,
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Tier": 1,
+    "Strength": 0,
+    "Type": 1,
+    "SubCompetitionIds": [],
+    "MatchDay": {},
+    "SplitParameters": []
   }
 ]
