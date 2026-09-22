@@ -18,6 +18,7 @@ namespace FootballFull.Services
         private readonly ISeasonFinancialResultService _seasonFinancialResultService;
         private readonly IEndOfSeasonService _endOfSeasonService;
         private readonly ISeasonEventService _seasonEventService;
+        private readonly IStrengthService _strengthService;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
         private IList<Competition> _competitions = new List<Competition>();
@@ -42,7 +43,8 @@ namespace FootballFull.Services
             ITrainerService trainerService,
             IEndOfSeasonService endOfSeasonService,
             ISeasonFinancialResultService seasonFinancialResultService,
-            ISeasonEventService seasonEventService)
+            ISeasonEventService seasonEventService,
+            IStrengthService strengthService)
         {
             _seasonService = seasonService;
             _fixtureService = fixtureService;
@@ -53,6 +55,7 @@ namespace FootballFull.Services
             _endOfSeasonService = endOfSeasonService;
             _seasonFinancialResultService = seasonFinancialResultService;
             _seasonEventService = seasonEventService;
+            _strengthService = strengthService;
             _trainerService = trainerService;
 
             _trainers = _trainerService.Load();
@@ -178,6 +181,9 @@ namespace FootballFull.Services
                 // van het afgelopen seizoen.
                 _internationalFixtures = _seasonService.InitializeInternationalGames(_currentDate);
                 CalculateSeasonFinancialResult();
+                CalculateClubFinancialResults();
+                _strengthService.RecalculateClubStrengths();
+                _strengthService.RecalculateCompetitionStrengths(_seasonService.Year);
                 Events();
                 EndOfSeasonChoices();
 
@@ -215,10 +221,18 @@ namespace FootballFull.Services
 
             var seasonFinancialResult = _seasonFinancialResultService.CalculateFinancialResults(existingClubs.Count, _competitions.Where(c => c.CountryId == _userCountryId).Count(), footballAssociation);
 
-            ShowSeeasonFinancialResult(seasonFinancialResult, footballAssociation);
+            ShowSeasonFinancialResult(seasonFinancialResult, footballAssociation);
         }
 
-        private void ShowSeeasonFinancialResult(SeasonFinancialResult seasonFinancialResult, FootballAssociation footballAssociation)
+        private void CalculateClubFinancialResults()
+        {
+            foreach( var country in _countryService.GetCountries())
+            {
+               _endOfSeasonService.ProcessClubFinances(country.Id);
+            }
+        }
+
+        private void ShowSeasonFinancialResult(SeasonFinancialResult seasonFinancialResult, FootballAssociation footballAssociation)
         {
             Console.Clear();
             Console.WriteLine($"=== Season Financial Result for {footballAssociation.Name} ===");

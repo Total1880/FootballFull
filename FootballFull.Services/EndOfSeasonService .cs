@@ -19,6 +19,7 @@ namespace FootballFull.Services
         private readonly ICompetitionService _competitionService;
         private readonly ICompetitionRulesService _competitionRulesService;
         private readonly IClubPerCompetitionService _clubPerCompetitionService;
+        private readonly IClubFinancialService _clubFinancialService;
 
         public EndOfSeasonService(
             ISeasonService seasonService,
@@ -26,7 +27,8 @@ namespace FootballFull.Services
             ITrainerService trainerService,
             ICompetitionService competitionService,
             ICompetitionRulesService competitionRulesService,
-            IClubPerCompetitionService clubPerCompetitionService)
+            IClubPerCompetitionService clubPerCompetitionService,
+            IClubFinancialService clubFinancialService)
         {
             _seasonService = seasonService;
             _clubService = clubService;
@@ -34,6 +36,7 @@ namespace FootballFull.Services
             _competitionService = competitionService;
             _competitionRulesService = competitionRulesService;
             _clubPerCompetitionService = clubPerCompetitionService;
+            _clubFinancialService = clubFinancialService;
         }
 
         public EndOfSeasonOptions GetOptions(
@@ -104,10 +107,7 @@ namespace FootballFull.Services
             return "Je kan momenteel geen club toelaten.";
         }
 
-        public IList<Club> GetApplicantClubs(
-            Guid countryId,
-            FootballAssociation footballAssociation,
-            int numberOfApplicants)
+        public IList<Club> GetApplicantClubs(Guid countryId, FootballAssociation footballAssociation, int numberOfApplicants)
         {
             if (countryId == Guid.Empty)
                 throw new ArgumentException(
@@ -277,6 +277,30 @@ namespace FootballFull.Services
             _trainerService.CreateRandomTrainer(club.Id);
 
             return club;
+        }
+
+        public void ProcessClubFinances(Guid countryId)
+        {
+            var clubsPerCompetition =
+                _clubPerCompetitionService
+                    .GetAllClubPerCompetitionForCountry(countryId);
+
+            foreach (var cpc in clubsPerCompetition)
+            {
+                var club = _clubService.GetClubById(cpc.ClubId);
+                var competition =
+                    _competitionService.GetCompetitionById(
+                        cpc.CompetitionId);
+
+                var result =
+                    _clubFinancialService.CalculateSeasonResult(
+                        club,
+                        competition);
+
+                club.Balance += result.NetResult;
+
+                _clubService.Update(club);
+            }
         }
     }
 }

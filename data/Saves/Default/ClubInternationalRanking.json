@@ -1,0 +1,442 @@
+[
+  {
+    "ClubId": "5f3c0e37-734e-40f5-88a5-9a897e66926b",
+    "Club": {
+      "Name": "Arsenal",
+      "Strength": 20,
+      "Id": "5f3c0e37-734e-40f5-88a5-9a897e66926b",
+      "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "FeederClubId": null,
+      "Balance": 0,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+    "Country": {
+      "Id": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "Name": "Engeland"
+    },
+    "PointsPerYear": {
+      "2027": 0
+    }
+  },
+  {
+    "ClubId": "072c2b26-07ab-4c96-a999-5951b7973e30",
+    "Club": {
+      "Name": "Roma",
+      "Strength": 20,
+      "Id": "072c2b26-07ab-4c96-a999-5951b7973e30",
+      "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "FeederClubId": null,
+      "Balance": 0,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "Country": {
+      "Id": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "Name": "Italy"
+    },
+    "PointsPerYear": {
+      "2027": 4,
+      "2028": 0,
+      "2029": 2,
+      "2030": 2,
+      "2031": 0
+    }
+  },
+  {
+    "ClubId": "24a4f252-3428-4e5b-b198-feda1e455501",
+    "Club": {
+      "Name": "Atl\u00E9tico Madrid",
+      "Strength": 19,
+      "Id": "24a4f252-3428-4e5b-b198-feda1e455501",
+      "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "FeederClubId": null,
+      "Balance": 0,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+    "Country": {
+      "Id": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "Name": "Spain"
+    },
+    "PointsPerYear": {
+      "2027": 2,
+      "2028": 4,
+      "2029": 0
+    }
+  },
+  {
+    "ClubId": "1ec6ca95-750b-4c80-ad2b-7327b9ae33c1",
+    "Club": {
+      "Name": "Union SG",
+      "Strength": 2,
+      "Id": "1ec6ca95-750b-4c80-ad2b-7327b9ae33c1",
+      "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "FeederClubId": null,
+      "Balance": 0,
+      "CompetitionSplitParameters": [
+        {
+          "Name": "ACFF",
+          "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+        }
+      ]
+    },
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Country": {
+      "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {
+      "2027": 0,
+      "2029": 0,
+      "2030": 0
+    }
+  },
+  {
+    "ClubId": "a058d0e0-e7eb-4e92-8191-cf8c04d0d111",
+    "Club": {
+      "Name": "Manchester City",
+      "Strength": 20,
+      "Id": "a058d0e0-e7eb-4e92-8191-cf8c04d0d111",
+      "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "FeederClubId": null,
+      "Balance": 60000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+    "Country": {
+      "Id": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "Name": "Engeland"
+    },
+    "PointsPerYear": {
+      "2028": 2,
+      "2030": 0,
+      "2033": 4
+    }
+  },
+  {
+    "ClubId": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
+    "Club": {
+      "Name": "KV Mechelen",
+      "Strength": 3,
+      "Id": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
+      "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "FeederClubId": null,
+      "Balance": -1000,
+      "CompetitionSplitParameters": [
+        {
+          "Name": "VV",
+          "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+        }
+      ]
+    },
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Country": {
+      "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {
+      "2028": 0,
+      "2032": 2
+    }
+  },
+  {
+    "ClubId": "04167cff-66a0-46ec-969a-f7c3f71d68e2",
+    "Club": {
+      "Name": "Liverpool",
+      "Strength": 19,
+      "Id": "04167cff-66a0-46ec-969a-f7c3f71d68e2",
+      "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "FeederClubId": null,
+      "Balance": 134000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+    "Country": {
+      "Id": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "Name": "Engeland"
+    },
+    "PointsPerYear": {
+      "2029": 4
+    }
+  },
+  {
+    "ClubId": "da152f7e-cad4-49d6-afdc-62af6fea1f92",
+    "Club": {
+      "Name": "Sevilla",
+      "Strength": 20,
+      "Id": "da152f7e-cad4-49d6-afdc-62af6fea1f92",
+      "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "FeederClubId": null,
+      "Balance": 195000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+    "Country": {
+      "Id": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "Name": "Spain"
+    },
+    "PointsPerYear": {
+      "2030": 4,
+      "2031": 4,
+      "2032": 4
+    }
+  },
+  {
+    "ClubId": "0d8c6345-f7ce-413d-905c-cbcf799133a9",
+    "Club": {
+      "Name": "Chelsea",
+      "Strength": 20,
+      "Id": "0d8c6345-f7ce-413d-905c-cbcf799133a9",
+      "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "FeederClubId": null,
+      "Balance": 227000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+    "Country": {
+      "Id": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "Name": "Engeland"
+    },
+    "PointsPerYear": {
+      "2031": 2
+    }
+  },
+  {
+    "ClubId": "05ad443f-ba6e-4393-bec8-85953fe8b886",
+    "Club": {
+      "Name": "KVK Tienen",
+      "Strength": 3,
+      "Id": "05ad443f-ba6e-4393-bec8-85953fe8b886",
+      "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "FeederClubId": null,
+      "Balance": 319000,
+      "CompetitionSplitParameters": [
+        {
+          "Name": "VV",
+          "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+        }
+      ]
+    },
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Country": {
+      "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {
+      "2031": 0
+    }
+  },
+  {
+    "ClubId": "cda596bc-25ec-448f-b03a-293fee5b225a",
+    "Club": {
+      "Name": "Hull City",
+      "Strength": 20,
+      "Id": "cda596bc-25ec-448f-b03a-293fee5b225a",
+      "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "FeederClubId": null,
+      "Balance": 316000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+    "Country": {
+      "Id": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "Name": "Engeland"
+    },
+    "PointsPerYear": {
+      "2032": 0,
+      "2034": 4
+    }
+  },
+  {
+    "ClubId": "2e54b003-7ff0-4146-85ad-c21f1dc8ab38",
+    "Club": {
+      "Name": "Lazio",
+      "Strength": 20,
+      "Id": "2e54b003-7ff0-4146-85ad-c21f1dc8ab38",
+      "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "FeederClubId": null,
+      "Balance": 301000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "Country": {
+      "Id": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "Name": "Italy"
+    },
+    "PointsPerYear": {
+      "2032": 0
+    }
+  },
+  {
+    "ClubId": "3d7c256a-740e-4f97-a8b7-6edeb0e016a6",
+    "Club": {
+      "Name": "Milan",
+      "Strength": 20,
+      "Id": "3d7c256a-740e-4f97-a8b7-6edeb0e016a6",
+      "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "FeederClubId": null,
+      "Balance": 361000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "Country": {
+      "Id": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "Name": "Italy"
+    },
+    "PointsPerYear": {
+      "2033": 0
+    }
+  },
+  {
+    "ClubId": "d7f20b6f-c31a-4125-b5d1-fd3509b26662",
+    "Club": {
+      "Name": "Real Madrid",
+      "Strength": 20,
+      "Id": "d7f20b6f-c31a-4125-b5d1-fd3509b26662",
+      "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "FeederClubId": null,
+      "Balance": 320000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+    "Country": {
+      "Id": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "Name": "Spain"
+    },
+    "PointsPerYear": {
+      "2033": 2
+    }
+  },
+  {
+    "ClubId": "889d9ae2-a459-479d-b4f9-e567226c7da9",
+    "Club": {
+      "Name": "RC Genk",
+      "Strength": 4,
+      "Id": "889d9ae2-a459-479d-b4f9-e567226c7da9",
+      "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "FeederClubId": null,
+      "Balance": 644000,
+      "CompetitionSplitParameters": [
+        {
+          "Name": "VV",
+          "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+        }
+      ]
+    },
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Country": {
+      "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {
+      "2033": 0
+    }
+  },
+  {
+    "ClubId": "2c6f7c05-da79-4fed-b401-a2ae4adb5f8e",
+    "Club": {
+      "Name": "Cagliari",
+      "Strength": 20,
+      "Id": "2c6f7c05-da79-4fed-b401-a2ae4adb5f8e",
+      "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "FeederClubId": null,
+      "Balance": 421000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "Country": {
+      "Id": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "Name": "Italy"
+    },
+    "PointsPerYear": {
+      "2034": 2
+    }
+  },
+  {
+    "ClubId": "c20965a4-11ce-4151-a15c-02fb05818152",
+    "Club": {
+      "Name": "Deportivo",
+      "Strength": 17,
+      "Id": "c20965a4-11ce-4151-a15c-02fb05818152",
+      "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "FeederClubId": null,
+      "Balance": 517000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+    "Country": {
+      "Id": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "Name": "Spain"
+    },
+    "PointsPerYear": {
+      "2034": 0
+    }
+  },
+  {
+    "ClubId": "23f38c29-7e72-4509-beb6-4ee9b6298ee6",
+    "Club": {
+      "Name": "Anderlecht",
+      "Strength": 3,
+      "Id": "23f38c29-7e72-4509-beb6-4ee9b6298ee6",
+      "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "FeederClubId": null,
+      "Balance": 820000,
+      "CompetitionSplitParameters": [
+        {
+          "Name": "ACFF",
+          "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+        }
+      ]
+    },
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Country": {
+      "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {
+      "2034": 0
+    }
+  },
+  {
+    "ClubId": "876840b4-4e05-44ef-bc0e-fdf11916944f",
+    "Club": {
+      "Name": "Real Betis",
+      "Strength": 20,
+      "Id": "876840b4-4e05-44ef-bc0e-fdf11916944f",
+      "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "FeederClubId": null,
+      "Balance": 521000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+    "Country": {
+      "Id": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "Name": "Spain"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
+    "Club": {
+      "Name": "AA Gent",
+      "Strength": 4,
+      "Id": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
+      "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "FeederClubId": null,
+      "Balance": 871000,
+      "CompetitionSplitParameters": [
+        {
+          "Name": "VV",
+          "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+        }
+      ]
+    },
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Country": {
+      "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {}
+  }
+]

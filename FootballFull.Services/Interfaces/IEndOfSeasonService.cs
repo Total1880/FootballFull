@@ -29,5 +29,7 @@ namespace FootballFull.Services.Interfaces
             FootballAssociation footballAssociation);
 
         Club CreateApplicantClub(Guid countryId, string clubName);
+
+        void ProcessClubFinances(Guid countryId);
     }
 }

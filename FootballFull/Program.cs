@@ -21,6 +21,7 @@ var isNew = Configuration.Initialize(saveName: saveName);
 Console.WriteLine($"DataRoot: {Configuration.DataRoot}");
 
 // Services
+services.AddSingleton<IStrengthService, StrengthService>();
 services.AddSingleton<IClubService, ClubService>();
 services.AddSingleton<ISeasonService, SeasonService>();
 services.AddSingleton<IFixtureService, FixtureService>();
@@ -36,6 +37,8 @@ services.AddSingleton<IClubLeagueCompetitionService, ClubLeagueCompetitionServic
 services.AddSingleton<ISeasonFinancialResultService, SeasonFinancialResultService>();
 services.AddSingleton<IEndOfSeasonService, EndOfSeasonService>();
 services.AddSingleton<ISeasonEventService, SeasonEventService>();
+services.AddSingleton<IClubFinancialService, ClubFinancialService>();
+
 
 // Repositories (V2-varianten)
 services.AddSingleton<IRepository<Club>>(
@@ -61,6 +64,9 @@ services.AddSingleton<ISaveDataRepository>(
 
 services.AddSingleton<IRepository<CompetitionRules>>(
     _ => new CompetitionRulesRepository(Path.Combine(Configuration.DataRoot, "CompetitionRules.json")));
+
+services.AddSingleton<IRepository<ClubLeagueCompetition>>(
+    _ => new ClubLeagueCompetitionRepository(Path.Combine(Configuration.DataRoot, "ClubLeagueCompetition.json")));
 
 services.AddSingleton<INameRepository>(
     _ => new NameRepository());

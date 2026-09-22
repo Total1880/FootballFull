@@ -62,7 +62,7 @@ namespace FootballFull.Services
 
             _newsMessages = new List<NewsMessage>();
             _clubInternationalRankings = _clubInternationalRankingService.GetAll();
-            _competitions = _competitionRepository.Load();
+            _competitions = _competitionService.GetCompetitions();
             _saveData = _saveDataService.Load();
             Year = _saveData.Year;
         }
@@ -80,8 +80,6 @@ namespace FootballFull.Services
         public IList<ClubPerCompetition> InitializeNewSeason(int year, bool isNew = false)
         {
             _year = year;
-            RecalculateCompetitionStrenghts(Configuration.MinStrength, Configuration.MaxStrength);
-            RecalculateClubStrengths(Configuration.MinStrength, Configuration.MaxStrength);
 
             if (!isNew)
                 PromotionsAndRelegations();
@@ -100,104 +98,6 @@ namespace FootballFull.Services
             ResetClubRuntimeState();
 
             return _clubsPerCompetition;
-        }
-
-        private void RecalculateCompetitionStrenghts(int minStrength, int maxStrength)
-        {
-            var initial = Configuration.MaxStrength - Configuration.MinStrength;
-            var countryRankings = _clubInternationalRankings
-.GroupBy(c => c.CountryId)
-.Select(g => new
-{
-    CountryId = g.Key,
-    PointsPerClub = g.Average(c => c.TotalPoints(_year)) // = totaal / aantal clubs
-})
-.OrderByDescending(x => x.PointsPerClub)
-.ToList();
-
-            var competitions = _competitionRepository.Load().Where(_ => _.Type == Competition.CompetitionType.League);
-            foreach (var country in countryRankings)
-            {
-                var current = initial;
-                var competitionsCountry = competitions.Where(_ => _.CountryId == country.CountryId).OrderBy(_ => _.Tier).ToList();
-                var step = current / (competitionsCountry.Count == 0 ? 1 : competitionsCountry.Count);
-
-                foreach (var competition in competitionsCountry)
-                {
-                    competition.Strength = current;
-                    _competitionRepository.Update(competition);
-                    current -= step;
-
-                }
-                initial--;
-            }
-
-            _competitions = _competitionRepository.Load();
-        }
-
-        private void RecalculateClubStrengths(int minStrength = 1, int maxStrength = 9)
-        {
-            if (_clubLeagueCompetitions == null || !_clubLeagueCompetitions.Any())
-                return;
-
-            // Per competitie de ranking bepalen
-            var competitions = _clubLeagueCompetitions
-                .GroupBy(clc => clc.CompetitionId);
-
-            foreach (var competitionGroup in competitions)
-            {
-                var ranked = competitionGroup
-                    .OrderByDescending(c => c.Points)
-                    .ThenByDescending(c => c.GoalsFor - c.GoalsAgainst)
-                    .ThenByDescending(c => c.GoalsFor)
-                    .ToList();
-
-                int teamCount = ranked.Count;
-
-                for (int i = 0; i < teamCount; i++)
-                {
-                    var entry = ranked[i];
-                    int position = i + 1;
-                    double percentile = position / (double)teamCount;
-
-                    int delta = 0;
-
-                    // Top 20% stijgt
-                    if (percentile <= 0.20)
-                        delta = +1;
-                    // Onderste 20% daalt
-                    else if (percentile >= 0.80)
-                        delta = -1;
-
-                    if (delta == 0)
-                        continue;
-
-                    var club = _clubService.GetClubById(entry.ClubId);
-                    if (club == null)
-                        continue;
-
-                    var competitionStrength = _competitionRepository.Load()
-                        .First(c => c.Id == entry.CompetitionId).Strength;
-
-                    if (delta < 0 && club.Strength + 3 <= competitionStrength)
-                        if (club.Strength + 5 <= competitionStrength)
-                            delta = 1;
-                        else
-                            continue;
-                    if (delta > 0 && club.Strength - 3 >= competitionStrength)
-                        if (club.Strength - 5 >= competitionStrength)
-                            delta = -1;
-                        else
-                            continue;
-
-                    var newStrength = club.Strength + delta;
-                    if (newStrength < minStrength) newStrength = minStrength;
-                    if (newStrength > maxStrength) newStrength = maxStrength;
-
-                    club.Strength = newStrength;
-                    _clubService.Update(club);
-                }
-            }
         }
 
         private void PromotionsAndRelegations()
@@ -1070,6 +970,7 @@ chosenCompetitionIndex <= competitions.Count)
         public void UpdateWeekStats(Guid userClubId, DateTime date)
         {
             _trainerService.ClubsFireTrainer(userClubId, date, _clubs, _clubLeagueCompetitions);
+            _clubLeagueCompetitionService.SaveFullClubLeagueCompetitions(_clubLeagueCompetitions);
         }
 
         public Trainer UserTrainer(Guid userClubId)
@@ -1080,7 +981,6 @@ chosenCompetitionIndex <= competitions.Count)
         public void SaveGame()
         {
             _clubService.SaveAll(_clubs);
-            _competitionService.SaveAll(_competitions);
             _clubPerCompetitionService.SaveAll(_clubsPerCompetition);
             _trainerService.SaveAll(_trainers);
             _clubInternationalRankingService.SaveAll(_clubInternationalRankings);

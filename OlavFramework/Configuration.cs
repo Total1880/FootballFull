@@ -15,6 +15,12 @@
         public static decimal BasicOrganisationCost = 10000;
 
         public static string DataRoot { get; private set; }
+        public static decimal BasicClubSeasonRevenue = 50_000m;
+        public static decimal CompetitionRevenueMultiplier = 10_000m;
+        public static decimal ClubRevenueMultiplier = 5_000m;
+        public static decimal BasicClubSeasonExpenses = 40_000m;
+        public static decimal ClubExpenseMultiplier = 12_000m;
+
         public static decimal LowerDivisionCost = 100000;
 
         public static decimal NewClubCost = 10000;
