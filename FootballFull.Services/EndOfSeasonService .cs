@@ -50,18 +50,28 @@ namespace FootballFull.Services
             var competitions = _competitionService
                 .GetCompetitionsForCountry(countryId);
 
-            var requiredReputation = GetRequiredReputationForNextClub(clubCount);
+            // Get lowest competition tier
+            var lowestTier = competitions.Max(c => c.Tier);
+            var lowestTierCompetitions = competitions.Where(_ => _.Tier == lowestTier);
+
+            // count clubs in lowest tier
+            var lowestTierClubCount = 0;
+            foreach (var competition in lowestTierCompetitions)
+                lowestTierClubCount += _clubPerCompetitionService.GetAllClubPerSpecificCompetitions(competition.Id).Count;
+
+            // GetRequiredReputationForNextTier of zoeits maken, ook om max tier te controleren
+            var requiredReputationForNextTier = GetRequiredReputationForNextTier(lowestTier);
+            var requiredReputationForNextClub = GetRequiredReputationForNextClub(clubCount);
 
             var canAddClub =
                 clubCount < MaximumNumberOfClubs &&
                 footballAssociation.Balance >= Configuration.NewClubCost &&
-                footballAssociation.Reputation >= requiredReputation;
+                footballAssociation.Reputation >= requiredReputationForNextClub;
 
             var canCreateLowerDivision =
-                clubCount >= 8 &&
-                competitions.All(c => c.Tier != 2) &&
+                lowestTierClubCount >= 8 &&
                 footballAssociation.Balance >= Configuration.LowerDivisionCost &&
-                footballAssociation.Reputation >= 20;
+                footballAssociation.Reputation >= requiredReputationForNextTier;
 
             return new EndOfSeasonOptions
             {
@@ -72,11 +82,23 @@ namespace FootballFull.Services
                     ? null
                     : GetCannotAddClubReason(
                         clubCount,
-                        requiredReputation,
+                        requiredReputationForNextClub,
                         footballAssociation),
                 CannotCreateLowerDivisionReason = canCreateLowerDivision
                     ? null
-                    : "Je voldoet nog niet aan de voorwaarden voor een tweede divisie."
+                    : "Je voldoet nog niet aan de voorwaarden voor een lagere divisie divisie."
+            };
+        }
+
+        private static int GetRequiredReputationForNextTier(int lowestTier)
+        {
+            return lowestTier switch
+            {
+                >= 4 => 50,
+                >= 3 => 40,
+                >= 2 => 30,
+                >= 1 => 20,
+                _ => 0
             };
         }
 

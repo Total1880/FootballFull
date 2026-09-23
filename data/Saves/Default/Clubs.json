@@ -5,7 +5,7 @@
     "Id": "298ba8a5-e4a5-491d-bdde-2e9676926dc1",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 1061000,
+    "Balance": 839000,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -15,11 +15,11 @@
   },
   {
     "Name": "Union SG",
-    "Strength": 6,
+    "Strength": 2,
     "Id": "1ec6ca95-750b-4c80-ad2b-7327b9ae33c1",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 1085000,
+    "Balance": 874000,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
@@ -29,11 +29,11 @@
   },
   {
     "Name": "STVV",
-    "Strength": 4,
+    "Strength": 3,
     "Id": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 1260000,
+    "Balance": 752000,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -47,7 +47,7 @@
     "Id": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 1148000,
+    "Balance": 605000,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -57,11 +57,11 @@
   },
   {
     "Name": "KV Mechelen",
-    "Strength": 7,
+    "Strength": 2,
     "Id": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 1078000,
+    "Balance": 881000,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -71,11 +71,11 @@
   },
   {
     "Name": "Anderlecht",
-    "Strength": 4,
+    "Strength": 9,
     "Id": "23f38c29-7e72-4509-beb6-4ee9b6298ee6",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 1253000,
+    "Balance": 643000,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
@@ -85,11 +85,11 @@
   },
   {
     "Name": "RC Genk",
-    "Strength": 5,
+    "Strength": 14,
     "Id": "889d9ae2-a459-479d-b4f9-e567226c7da9",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 1191000,
+    "Balance": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -239,11 +239,11 @@
   },
   {
     "Name": "SK Lommel",
-    "Strength": 1,
+    "Strength": 2,
     "Id": "0cb0d407-4b35-4e7e-8de2-50f1af57a529",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 0,
+    "Balance": 761000,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -267,7 +267,7 @@
   },
   {
     "Name": "Francs Borains",
-    "Strength": 5,
+    "Strength": 1,
     "Id": "f1a5e0d2-ff70-43d7-b11f-8af974893622",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -309,7 +309,7 @@
   },
   {
     "Name": "Virton",
-    "Strength": 5,
+    "Strength": 1,
     "Id": "0e68c5ab-fbb7-40b5-961b-edcf6fd6707c",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -393,7 +393,7 @@
   },
   {
     "Name": "Seraing",
-    "Strength": 1,
+    "Strength": 5,
     "Id": "0c8f5114-79d6-4050-86fa-1df1bbae89d5",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -463,11 +463,11 @@
   },
   {
     "Name": "Mons",
-    "Strength": 4,
+    "Strength": 1,
     "Id": "c10d7a40-1258-42bf-8f30-18283d7ba5a4",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 0,
+    "Balance": 335000,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
@@ -561,11 +561,11 @@
   },
   {
     "Name": "Roeselare",
-    "Strength": 4,
+    "Strength": 3,
     "Id": "198ca079-027b-4689-9415-890c769f79bb",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 0,
+    "Balance": 159000,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -705,7 +705,7 @@
     "Id": "05ad443f-ba6e-4393-bec8-85953fe8b886",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 1178000,
+    "Balance": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -733,7 +733,7 @@
     "Id": "0067014d-0960-4501-8408-c5e202f23d5f",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 415000,
+    "Balance": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -813,7 +813,7 @@
   },
   {
     "Name": "KVDO",
-    "Strength": 1,
+    "Strength": 3,
     "Id": "e0188e4d-c6c4-4741-9e24-3c2f38cd3f94",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -883,7 +883,7 @@
   },
   {
     "Name": "HO Kalken",
-    "Strength": 1,
+    "Strength": 3,
     "Id": "742e3612-948e-4cf6-935a-968cce86f868",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -939,7 +939,7 @@
   },
   {
     "Name": "KVK Wellen",
-    "Strength": 1,
+    "Strength": 3,
     "Id": "d62d652c-0b2d-4f72-bf71-bca8a1a5edae",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -981,7 +981,7 @@
   },
   {
     "Name": "Termien",
-    "Strength": 3,
+    "Strength": 1,
     "Id": "b3862344-4697-4d5b-a23e-5670f93937eb",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -1107,11 +1107,11 @@
   },
   {
     "Name": "Nijlen",
-    "Strength": 2,
+    "Strength": 3,
     "Id": "e04ee762-71dd-4ddf-8bab-b154f07f4d4c",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 728000,
+    "Balance": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
@@ -1121,11 +1121,11 @@
   },
   {
     "Name": "Crossing Schaerbeek",
-    "Strength": 2,
+    "Strength": 3,
     "Id": "eb190e74-fd35-4b6d-b5b5-0a612a697398",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 713000,
+    "Balance": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
@@ -1135,7 +1135,7 @@
   },
   {
     "Name": "Saint Ghislain",
-    "Strength": 1,
+    "Strength": 3,
     "Id": "6ac65899-f146-44f5-873b-d51877810fa4",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -1149,7 +1149,7 @@
   },
   {
     "Name": "RSD Jette",
-    "Strength": 1,
+    "Strength": 3,
     "Id": "16b6c7e0-c7ab-48f5-ba90-0f5de3f7eea6",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -1163,7 +1163,7 @@
   },
   {
     "Name": "Ostiches-Ath",
-    "Strength": 3,
+    "Strength": 1,
     "Id": "eeea7ffe-cf8d-4ffd-b964-9a751cc40252",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -1205,7 +1205,7 @@
   },
   {
     "Name": "Union Hutoise",
-    "Strength": 1,
+    "Strength": 3,
     "Id": "26392d4b-c778-43ec-a3cf-120f5af1cf34",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -1233,7 +1233,7 @@
   },
   {
     "Name": "Stockay-Saint-Georges",
-    "Strength": 1,
+    "Strength": 3,
     "Id": "14019d89-e959-4dad-807d-f07d7db01c25",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -1275,7 +1275,7 @@
   },
   {
     "Name": "Mouscron",
-    "Strength": 1,
+    "Strength": 3,
     "Id": "60d04171-cf46-4fd7-bc26-bedcf3d70368",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
@@ -1293,7 +1293,7 @@
     "Id": "80ea49b3-1e76-456c-92d5-c04b86e8209a",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 869000,
+    "Balance": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
@@ -1317,11 +1317,11 @@
   },
   {
     "Name": "Entit\u00E9 Manageoise",
-    "Strength": 3,
+    "Strength": 1,
     "Id": "fa0e12dd-b746-40f2-a65f-df7fc29b1a1c",
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
-    "Balance": 0,
+    "Balance": 83000,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
@@ -1363,7 +1363,7 @@
     "Id": "5f3c0e37-734e-40f5-88a5-9a897e66926b",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 480000,
+    "Balance": 390000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1372,7 +1372,7 @@
     "Id": "a058d0e0-e7eb-4e92-8191-cf8c04d0d111",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 480000,
+    "Balance": 390000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1381,7 +1381,7 @@
     "Id": "04167cff-66a0-46ec-969a-f7c3f71d68e2",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 501000,
+    "Balance": 404000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1390,7 +1390,7 @@
     "Id": "0d8c6345-f7ce-413d-905c-cbcf799133a9",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 487000,
+    "Balance": 397000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1399,7 +1399,7 @@
     "Id": "9a4b8314-0342-49d8-8657-a8f12e56878c",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 522000,
+    "Balance": 432000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1408,16 +1408,16 @@
     "Id": "008e5eea-1847-4208-9368-7b01fb70a442",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 690000,
+    "Balance": 537000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Hull City",
-    "Strength": 20,
+    "Strength": 17,
     "Id": "cda596bc-25ec-448f-b03a-293fee5b225a",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 536000,
+    "Balance": 537000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1426,70 +1426,70 @@
     "Id": "dbbe91cf-3562-4b60-b4a6-63cc83cfffb9",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 760000,
+    "Balance": 586000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Brentford",
-    "Strength": 15,
+    "Strength": 20,
     "Id": "987a7737-2fdc-4f19-999a-483cfe37c121",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 788000,
+    "Balance": 481000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Everton",
-    "Strength": 13,
+    "Strength": 14,
     "Id": "668fe480-eff9-4ad5-991f-3e36c6b86840",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 893000,
+    "Balance": 642000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Ipswich",
-    "Strength": 12,
+    "Strength": 15,
     "Id": "6bd3f9b1-399f-4d62-bf8a-d7b9207083cf",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 921000,
+    "Balance": 642000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Forest",
-    "Strength": 14,
+    "Strength": 15,
     "Id": "ba578b1e-da84-4e92-8e88-0ebefa44f278",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 907000,
+    "Balance": 656000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Newcastle",
-    "Strength": 14,
+    "Strength": 15,
     "Id": "f86e9385-9d6a-4832-9fd7-a895b5d55c79",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 956000,
+    "Balance": 649000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Sunderland",
-    "Strength": 14,
+    "Strength": 13,
     "Id": "deaad09f-7dee-47ce-9f53-f61a85473215",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 963000,
+    "Balance": 705000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Bournemouth",
-    "Strength": 13,
+    "Strength": 14,
     "Id": "5d7f7343-6bc5-4265-8f1a-280a7febbd1a",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 956000,
+    "Balance": 705000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1498,16 +1498,16 @@
     "Id": "0f6f0a35-50f0-481d-9884-34ec9ea0bea0",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 872000,
+    "Balance": 726000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Tottenham",
-    "Strength": 15,
+    "Strength": 14,
     "Id": "1bbde3b8-37fb-4460-ae9b-36d0362ead65",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 858000,
+    "Balance": 705000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1516,25 +1516,25 @@
     "Id": "50dbc572-c3f0-446e-ac9c-95d065a26916",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 998000,
+    "Balance": 740000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Aston Villa",
-    "Strength": 13,
+    "Strength": 15,
     "Id": "7e8588ee-24d9-4c82-9e80-75ae2b2c700c",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 914000,
+    "Balance": 635000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Coventry",
-    "Strength": 13,
+    "Strength": 14,
     "Id": "2b042474-2fa9-47f2-98d6-fab72959ab51",
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
-    "Balance": 1005000,
+    "Balance": 733000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1543,7 +1543,7 @@
     "Id": "072c2b26-07ab-4c96-a999-5951b7973e30",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 530000,
+    "Balance": 400000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1552,7 +1552,7 @@
     "Id": "d909f3ec-3e44-4156-88e4-02d0c1fa98ec",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 530000,
+    "Balance": 400000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1561,25 +1561,25 @@
     "Id": "8371f16f-77f8-47ab-ba85-0691c0698d9e",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 544000,
+    "Balance": 407000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Lazio",
-    "Strength": 20,
+    "Strength": 19,
     "Id": "2e54b003-7ff0-4146-85ad-c21f1dc8ab38",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 551000,
+    "Balance": 449000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Cagliari",
-    "Strength": 20,
+    "Strength": 18,
     "Id": "2c6f7c05-da79-4fed-b401-a2ae4adb5f8e",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 551000,
+    "Balance": 498000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1588,79 +1588,79 @@
     "Id": "3d7c256a-740e-4f97-a8b7-6edeb0e016a6",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 551000,
+    "Balance": 421000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Frosinone",
-    "Strength": 16,
+    "Strength": 17,
     "Id": "c64874ca-f742-417b-9116-601ea30d1320",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 761000,
+    "Balance": 547000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Juventus",
-    "Strength": 17,
+    "Strength": 19,
     "Id": "a05729be-e1ac-42e7-80c2-21add73cb39d",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 740000,
+    "Balance": 519000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Sassuolo",
-    "Strength": 15,
+    "Strength": 16,
     "Id": "6c21ff40-6a2f-4b5e-8cf8-3b9dc2f11826",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 873000,
+    "Balance": 596000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Napoli",
-    "Strength": 12,
+    "Strength": 14,
     "Id": "f57d2066-9631-47a6-87f2-2dec4c62e9dc",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 887000,
+    "Balance": 631000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Atalanta",
-    "Strength": 13,
+    "Strength": 16,
     "Id": "1fd6c01a-b065-4c36-a20e-f15f1740ce9a",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 950000,
+    "Balance": 631000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Lecce",
-    "Strength": 12,
+    "Strength": 14,
     "Id": "3117b3b0-0370-40b4-ad48-50a1a2798dae",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 964000,
+    "Balance": 666000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Udinese",
-    "Strength": 12,
+    "Strength": 15,
     "Id": "a91a7d76-27b3-4766-8eb6-54f44798179e",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 915000,
+    "Balance": 666000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Torino",
-    "Strength": 15,
+    "Strength": 14,
     "Id": "ef4b596e-30e8-4469-a31c-13d93bad5f15",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 922000,
+    "Balance": 680000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1669,7 +1669,7 @@
     "Id": "ecb196fd-c8b8-4e90-beed-87a1923cd41f",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 943000,
+    "Balance": 701000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1678,16 +1678,16 @@
     "Id": "034d5aa9-df31-44d4-8e60-5aaba19a2170",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 922000,
+    "Balance": 708000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Parma",
-    "Strength": 13,
+    "Strength": 14,
     "Id": "97d3aaff-eef4-467c-bd71-7ad78647bfc4",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 971000,
+    "Balance": 694000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1696,25 +1696,25 @@
     "Id": "24426f31-9823-45a0-a05e-0b9a9bc7d4c0",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 964000,
+    "Balance": 701000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Genoa",
-    "Strength": 12,
+    "Strength": 14,
     "Id": "387fdeaf-9e78-4c68-883f-5d289f9ebe5d",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 992000,
+    "Balance": 764000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Venezia",
-    "Strength": 15,
+    "Strength": 13,
     "Id": "7809c978-2591-452b-a11a-fa1563500040",
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
-    "Balance": 985000,
+    "Balance": 743000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1723,7 +1723,7 @@
     "Id": "d9149508-4ba5-4b85-8e17-44448884880e",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 550000,
+    "Balance": 320000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1732,7 +1732,7 @@
     "Id": "24a4f252-3428-4e5b-b198-feda1e455501",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 557000,
+    "Balance": 327000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1741,7 +1741,7 @@
     "Id": "876840b4-4e05-44ef-bc0e-fdf11916944f",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 641000,
+    "Balance": 355000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1750,7 +1750,7 @@
     "Id": "d7f20b6f-c31a-4125-b5d1-fd3509b26662",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 550000,
+    "Balance": 320000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1759,7 +1759,7 @@
     "Id": "da152f7e-cad4-49d6-afdc-62af6fea1f92",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 585000,
+    "Balance": 355000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1768,25 +1768,25 @@
     "Id": "c1b537cc-8678-433e-ac27-40d84f661a96",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 571000,
+    "Balance": 348000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Deportivo",
-    "Strength": 18,
+    "Strength": 17,
     "Id": "c20965a4-11ce-4151-a15c-02fb05818152",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 746000,
+    "Balance": 467000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Real Sociedad",
-    "Strength": 17,
+    "Strength": 19,
     "Id": "7d843c22-f84f-4a80-97a8-fc99b3abba3a",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 760000,
+    "Balance": 439000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1795,52 +1795,52 @@
     "Id": "7e963b52-8ba8-45f4-9074-883bbccb6c67",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 830000,
+    "Balance": 516000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Athletic Bilbao",
-    "Strength": 18,
+    "Strength": 17,
     "Id": "9f23d409-34d4-45f9-9c35-2a5e8b91e660",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 718000,
+    "Balance": 467000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Getafe",
-    "Strength": 15,
+    "Strength": 14,
     "Id": "e4457b7a-3286-4da3-8251-eb535f3d87d3",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 949000,
+    "Balance": 593000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Rayo",
-    "Strength": 15,
+    "Strength": 13,
     "Id": "947cf76f-2d52-4cb6-8c0e-27cd7517127d",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 949000,
+    "Balance": 579000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Osasuna",
-    "Strength": 14,
+    "Strength": 15,
     "Id": "9d08c724-cc91-4bc1-b4e7-cdcc540e058e",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 1005000,
+    "Balance": 572000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Celta",
-    "Strength": 15,
+    "Strength": 13,
     "Id": "2b597214-35f8-4439-ba9d-75c5b43e7aab",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 970000,
+    "Balance": 642000,
     "CompetitionSplitParameters": []
   },
   {
@@ -1849,52 +1849,52 @@
     "Id": "44a51ae1-5d82-40b7-ae18-04b6b693a046",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 928000,
+    "Balance": 593000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Santandar",
-    "Strength": 14,
+    "Strength": 12,
     "Id": "a231e394-11e7-49be-907d-0784de53567c",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 1012000,
+    "Balance": 677000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Levante",
-    "Strength": 15,
+    "Strength": 13,
     "Id": "e949674a-e2ec-4f35-afd8-fe0934e7a9bd",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 1012000,
+    "Balance": 684000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Elche",
-    "Strength": 15,
+    "Strength": 13,
     "Id": "00d391fe-b777-4cb9-b210-51935c800f6c",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 991000,
+    "Balance": 628000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Valencia",
-    "Strength": 15,
+    "Strength": 12,
     "Id": "22f621be-0c59-4561-8244-4eae5b91a870",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 1047000,
+    "Balance": 698000,
     "CompetitionSplitParameters": []
   },
   {
     "Name": "Malaga",
-    "Strength": 15,
+    "Strength": 13,
     "Id": "daf6fcb6-0657-430d-9d98-28cc5438ff2e",
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
-    "Balance": 1054000,
+    "Balance": 698000,
     "CompetitionSplitParameters": []
   }
 ]
