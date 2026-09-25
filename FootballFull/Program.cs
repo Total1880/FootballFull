@@ -38,6 +38,7 @@ services.AddSingleton<ISeasonFinancialResultService, SeasonFinancialResultServic
 services.AddSingleton<IEndOfSeasonService, EndOfSeasonService>();
 services.AddSingleton<ISeasonEventService, SeasonEventService>();
 services.AddSingleton<IClubFinancialService, ClubFinancialService>();
+services.AddSingleton<IFootballAssociationsService, FootballAssociationService>();
 
 
 // Repositories (V2-varianten)
@@ -67,6 +68,9 @@ services.AddSingleton<IRepository<CompetitionRules>>(
 
 services.AddSingleton<IRepository<ClubLeagueCompetition>>(
     _ => new ClubLeagueCompetitionRepository(Path.Combine(Configuration.DataRoot, "ClubLeagueCompetition.json")));
+
+services.AddSingleton<IRepository<FootballAssociation>>(
+    _ => new FootballAssociationRepository(Path.Combine(Configuration.DataRoot, "FootballAssociation.json")));
 
 services.AddSingleton<INameRepository>(
     _ => new NameRepository());

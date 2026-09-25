@@ -19,6 +19,7 @@ namespace FootballFull.Services
         private readonly IEndOfSeasonService _endOfSeasonService;
         private readonly ISeasonEventService _seasonEventService;
         private readonly IStrengthService _strengthService;
+        private readonly IFootballAssociationsService _footballAssociationsService;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
         private IList<Competition> _competitions = new List<Competition>();
@@ -44,7 +45,8 @@ namespace FootballFull.Services
             IEndOfSeasonService endOfSeasonService,
             ISeasonFinancialResultService seasonFinancialResultService,
             ISeasonEventService seasonEventService,
-            IStrengthService strengthService)
+            IStrengthService strengthService,
+            IFootballAssociationsService footballAssociationsService)
         {
             _seasonService = seasonService;
             _fixtureService = fixtureService;
@@ -57,6 +59,7 @@ namespace FootballFull.Services
             _seasonEventService = seasonEventService;
             _strengthService = strengthService;
             _trainerService = trainerService;
+            _footballAssociationsService = footballAssociationsService;
 
             _trainers = _trainerService.Load();
         }
@@ -80,6 +83,7 @@ namespace FootballFull.Services
             // Data laden
             _clubsPerCompetition = _clubPerCompetitionService.GetAllClubPerCompetitions();
             _competitions = _competitionService.GetCompetitions();
+            CreateFootballAssocations();
 
             // Eerste seizoen initialiseren
             _seasonService.Initialize(_clubsPerCompetition);
@@ -95,19 +99,6 @@ namespace FootballFull.Services
             if (!isNew)
             {
                 _internationalFixtures = _seasonService.InitializeInternationalGames(_currentDate, true);
-            }
-
-            //temp
-            foreach (var country in _countryService.GetCountries())
-            {
-                _footballAssociations.Add(new FootballAssociation
-                {
-                    Id = Guid.NewGuid(),
-                    CountryId = country.Id,
-                    Name = $"{country.Name} Football Association",
-                    Reputation = Configuration.StartReputation,
-                    Balance = Configuration.StartBalance
-                });
             }
 
             // Hoofdloop
@@ -199,6 +190,25 @@ namespace FootballFull.Services
             } while (true);
         }
 
+        private void CreateFootballAssocations()
+        {
+            _footballAssociations = _footballAssociationsService.GetAll() ?? new List<FootballAssociation>();
+            var countries = _countryService.GetCountries();
+
+            foreach (var country in countries) {
+                if (_footballAssociations.Any(_ => _.CountryId == country.Id)) continue;
+                var newFA = new FootballAssociation
+                {
+                    CountryId = country.Id,
+                    Name = country.Name + " FA",
+                    Balance = 0,
+                    Reputation = 0
+                };
+                _footballAssociationsService.Add(newFA);
+                _footballAssociations.Add(newFA);
+            }
+        }
+
         private void Events()
         {
             var footballAssociation = _footballAssociations.First(fa => fa.CountryId == _userCountryId);
@@ -212,6 +222,8 @@ namespace FootballFull.Services
 
             footballAssociation.Balance += events.BalanceChange;
             footballAssociation.Reputation += events.ReputationChange;
+
+            _footballAssociationsService.Update(footballAssociation);
         }
 
         private void CalculateSeasonFinancialResult()
@@ -222,6 +234,8 @@ namespace FootballFull.Services
             var seasonFinancialResult = _seasonFinancialResultService.CalculateFinancialResults(existingClubs.Count, _competitions.Where(c => c.CountryId == _userCountryId).Count(), footballAssociation);
 
             ShowSeasonFinancialResult(seasonFinancialResult, footballAssociation);
+
+            _footballAssociationsService.Update(footballAssociation);
         }
 
         private void CalculateClubFinancialResults()
