@@ -1,9 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using FootballFull.Models;
+using FootballFull.ConsoleUI;
 using FootballFull.Repositories;
 using FootballFull.Repositories.Interfaces;
 using FootballFull.Services;
 using FootballFull.Services.Interfaces;
+using FootballFull.Services.UI;
 using Microsoft.Extensions.DependencyInjection;
 using OlavFramework;
 
@@ -39,6 +41,7 @@ services.AddSingleton<IEndOfSeasonService, EndOfSeasonService>();
 services.AddSingleton<ISeasonEventService, SeasonEventService>();
 services.AddSingleton<IClubFinancialService, ClubFinancialService>();
 services.AddSingleton<IFootballAssociationsService, FootballAssociationService>();
+services.AddSingleton<IGameUI, ConsoleGameUI>();
 
 
 // Repositories (V2-varianten)
