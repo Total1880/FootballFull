@@ -162,6 +162,8 @@ namespace FootballFull.Services
                     _currentDate = _currentDate.AddDays(1);
                 } while (_currentDate < _newSeasonDate);
 
+
+
                 // End of season
                 Console.WriteLine($"Seizoen {_year}/{_year + 1} afgelopen.");
                 Console.WriteLine("Druk op een toets om het volgende seizoen te starten...");
@@ -188,6 +190,51 @@ namespace FootballFull.Services
                 _seasonService.SaveGame();
 
             } while (true);
+        }
+
+        private void GameLoop()
+        {
+            while (true)
+            {
+                var dashboard = CreateDashboard();
+
+                var choice = _gameUI.ShowMainMenu(dashboard);
+
+                switch (choice)
+                {
+                    case MainMenuChoice.Continue:
+                        PlayUntilNextMatchday();
+                        break;
+
+                    case MainMenuChoice.LeagueTables:
+                        ShowCompetitionSelection();
+                        break;
+
+                    case MainMenuChoice.Clubs:
+                        ShowClubOverview();
+                        break;
+
+                    case MainMenuChoice.Finances:
+                        ShowFinancialOverview();
+                        break;
+
+                    case MainMenuChoice.Competitions:
+                        ShowCompetitionOverview();
+                        break;
+
+                    case MainMenuChoice.News:
+                        ShowLatestNews();
+                        break;
+
+                    case MainMenuChoice.Save:
+                        _seasonService.SaveGame();
+                        break;
+
+                    case MainMenuChoice.SaveAndExit:
+                        _seasonService.SaveGame();
+                        return;
+                }
+            }
         }
 
         private void CreateFootballAssocations()

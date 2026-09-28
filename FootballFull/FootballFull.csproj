@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FootballFull.ConsoleUI\FootballFull.ConsoleUI.csproj" />
     <ProjectReference Include="..\FootballFull.Services\FootballFull.Services.csproj" />
     <ProjectReference Include="..\OlavFramework\OlavFramework.csproj" />
   </ItemGroup>
