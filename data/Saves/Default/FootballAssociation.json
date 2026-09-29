@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "3547c3f6-9ecb-481a-80d2-153c013ca013",
+    "Name": "Belgium FA",
+    "Balance": 144000,
+    "Reputation": 15,
+    "ReputationDescription": "Regional",
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b"
+  },
+  {
+    "Id": "6abbeaec-1f51-494e-a835-f9257e1b0d96",
+    "Name": "Engeland FA",
+    "Balance": 100000,
+    "Reputation": 10,
+    "ReputationDescription": "Regional",
+    "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef"
+  },
+  {
+    "Id": "3da9bb6c-d843-44f6-af74-1b15fe7a69f7",
+    "Name": "Europe FA",
+    "Balance": 100000,
+    "Reputation": 10,
+    "ReputationDescription": "Regional",
+    "CountryId": "6476f65e-3889-4b8d-9eae-61da7b1ace05"
+  },
+  {
+    "Id": "befe7a69-a832-4d3e-b0c3-8a87c01555e4",
+    "Name": "Italy FA",
+    "Balance": 100000,
+    "Reputation": 10,
+    "ReputationDescription": "Regional",
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83"
+  },
+  {
+    "Id": "d522881f-28ed-445c-98cf-d50a99935330",
+    "Name": "Spain FA",
+    "Balance": 100000,
+    "Reputation": 10,
+    "ReputationDescription": "Regional",
+    "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37"
+  }
+]

@@ -119,6 +119,7 @@ namespace FootballFull.Services
                 {
                     case MainMenuChoice.Continue:
                         PlayUntilNextMatchday();
+                        _gameUI.ShowTable(CreateTableDashBoard(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id));
                         break;
 
                     case MainMenuChoice.Save:
@@ -131,6 +132,20 @@ namespace FootballFull.Services
                         return;
                 }
             }
+        }
+
+        private CompetitionTableViewModel CreateTableDashBoard(Guid competitionId)
+        {
+            var ranking = _seasonService.GetRanking(competitionId);
+
+            foreach (var rank in ranking)
+                if (rank.Club == null) rank.Club = _clubService.GetClubById(rank.ClubId);
+
+            return new CompetitionTableViewModel
+            {
+                CompetitionName = _competitions.First(_ => _.Id == competitionId).Name,
+                ClubLeagueCompetitions = ranking
+            };
         }
 
         private GameDashboardViewModel CreateDashboard()
@@ -242,7 +257,8 @@ namespace FootballFull.Services
             _footballAssociations = _footballAssociationsService.GetAll() ?? new List<FootballAssociation>();
             var countries = _countryService.GetCountries();
 
-            foreach (var country in countries) {
+            foreach (var country in countries)
+            {
                 if (_footballAssociations.Any(_ => _.CountryId == country.Id)) continue;
                 var newFA = new FootballAssociation
                 {
@@ -288,9 +304,9 @@ namespace FootballFull.Services
 
         private void CalculateClubFinancialResults()
         {
-            foreach( var country in _countryService.GetCountries())
+            foreach (var country in _countryService.GetCountries())
             {
-               _endOfSeasonService.ProcessClubFinances(country.Id);
+                _endOfSeasonService.ProcessClubFinances(country.Id);
             }
         }
 

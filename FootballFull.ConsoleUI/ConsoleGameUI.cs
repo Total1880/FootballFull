@@ -61,5 +61,60 @@ namespace FootballFull.ConsoleUI
             Console.WriteLine("Druk op een toets om verder te gaan...");
             Console.ReadKey(true);
         }
+
+        public void ShowTable(CompetitionTableViewModel competitionTable)
+        {
+            const int positionWidth = 4;
+            const int nameWidth = 25;
+            const int gamesWidth = 8;
+            const int wonWidth = 8;
+            const int drawWidth = 8;
+            const int lostWidth = 8;
+            const int gfWidth = 6;
+            const int gaWidth = 6;
+            const int gdWidth = 6;
+            const int pointsWidth = 8;
+
+            Console.Clear();
+            Console.WriteLine($"=== League Table: {competitionTable.CompetitionName} ===");
+            Console.WriteLine();
+
+            Console.WriteLine(
+    $"{"P".PadRight(positionWidth)}" +
+    $"{"Club".PadRight(nameWidth)}" +
+    $"{"Games".PadLeft(gamesWidth)}" +
+    $"{"Won".PadLeft(wonWidth)}" +
+    $"{"Draw".PadLeft(drawWidth)}" +
+    $"{"Lost".PadLeft(lostWidth)}" +
+    $"{"GF".PadLeft(gfWidth)}" +
+    $"{"GA".PadLeft(gaWidth)}" +
+    $"{"GD".PadLeft(gdWidth)}" +
+    $"{"Points".PadLeft(pointsWidth)}"
+);
+            Console.WriteLine(new string('-', positionWidth + nameWidth + gamesWidth + wonWidth + drawWidth + lostWidth + pointsWidth + gfWidth + gaWidth + gdWidth));
+
+            var counter = 1;
+
+            foreach (var c in competitionTable.ClubLeagueCompetitions)
+            {
+                Console.WriteLine(
+                    $"{counter.ToString().PadRight(positionWidth)}" +
+                    $"{c.Club.Name.PadLeft(nameWidth)}" +
+                    $"{c.MatchesPlayed.ToString().PadLeft(gamesWidth)}" +
+                    $"{c.Won.ToString().PadLeft(wonWidth)}" +
+                    $"{c.Draw.ToString().PadLeft(drawWidth)}" +
+                    $"{c.Lost.ToString().PadLeft(lostWidth)}" +
+                    $"{c.GoalsFor.ToString().PadLeft(gfWidth)}" +
+                    $"{c.GoalsAgainst.ToString().PadLeft(gaWidth)}" +
+                    $"{c.GoalDifference.ToString().PadLeft(gdWidth)}" +
+                    $"{c.Points.ToString().PadLeft(pointsWidth)}"
+                );
+
+                Console.ResetColor();
+                counter++;
+            }
+
+            Console.ReadLine();
+        }
     }
 }
