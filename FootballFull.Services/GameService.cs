@@ -120,6 +120,8 @@ namespace FootballFull.Services
                     case MainMenuChoice.Continue:
                         PlayUntilNextMatchday();
                         _gameUI.ShowTable(CreateTableDashBoard(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id));
+                        _gameUI.ShowResults(GetResult(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id, _currentDate));
+                        _gameUI.ShowFixtures(GetNextFixture(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id, _currentDate), true);
                         break;
 
                     case MainMenuChoice.Save:
@@ -449,6 +451,7 @@ namespace FootballFull.Services
                 Console.ReadKey(true);
             }
         }
+
         private int AskNumberOfClubs(int currentClubCount)
         {
             const int minimumClubsPerDivision = 2;
@@ -864,115 +867,20 @@ namespace FootballFull.Services
             Console.ReadKey();
         }
 
-        private IList<ClubLeagueCompetition> DisplayLeagueTable(Guid competitionId, Guid? highlightClubId = null)
+        private List<Fixture> GetResult(Guid competitionId, DateTime date)
         {
-            const int positionWidth = 4;
-            const int nameWidth = 25;
-            const int gamesWidth = 8;
-            const int wonWidth = 8;
-            const int drawWidth = 8;
-            const int lostWidth = 8;
-            const int gfWidth = 6;
-            const int gaWidth = 6;
-            const int gdWidth = 6;
-            const int pointsWidth = 8;
+            var lastDate = _fixtures
+    .Where(fixture =>
+        fixture.CompetitionId == competitionId &&
+        fixture.MatchDay <= date &&
+        (fixture.AwayTeam.CountryId == _userCountryId || fixture.HomeTeam.CountryId == _userCountryId))
+    .Select(fixture => fixture.MatchDay)
+    .OrderByDescending(date => date)
+    .FirstOrDefault();
 
-            var competitionToShow = _competitions.First(_ => _.Id == competitionId);
-
-            Console.Clear();
-            Console.WriteLine($"=== League Table: {competitionToShow.Name} ===");
-            Console.WriteLine();
-
-            Console.WriteLine(
-                $"{"P".PadRight(positionWidth)}" +
-                $"{"Club".PadRight(nameWidth)}" +
-                $"{"Games".PadLeft(gamesWidth)}" +
-                $"{"Won".PadLeft(wonWidth)}" +
-                $"{"Draw".PadLeft(drawWidth)}" +
-                $"{"Lost".PadLeft(lostWidth)}" +
-                $"{"GF".PadLeft(gfWidth)}" +
-                $"{"GA".PadLeft(gaWidth)}" +
-                $"{"GD".PadLeft(gdWidth)}" +
-                $"{"Points".PadLeft(pointsWidth)}"
-            );
-
-            Console.WriteLine(new string('-', positionWidth + nameWidth + gamesWidth + wonWidth + drawWidth + lostWidth + pointsWidth + gfWidth + gaWidth + gdWidth));
-
-            var counter = 1;
-            var table = _seasonService.ClubLeagueCompetitions
-                .Where(_ => _.CompetitionId == competitionToShow.Id)
-                .OrderByDescending(_ => _.Points)
-                .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst)
-                .ThenByDescending(_ => _.GoalsFor)
+            return _fixtures
+                .Where(_ => _.MatchDay == lastDate && _.CompetitionId == competitionId)
                 .ToList();
-
-            foreach (var c in table)
-            {
-                var club = _clubService.GetClubById(c.ClubId);
-
-                // Alleen highlighten als er een club meegegeven is
-                if (highlightClubId.HasValue && c.ClubId == highlightClubId.Value)
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-
-                Console.WriteLine(
-                    $"{counter.ToString().PadRight(positionWidth)}" +
-                    $"{club.Name.PadLeft(nameWidth)}" +
-                    $"{c.MatchesPlayed.ToString().PadLeft(gamesWidth)}" +
-                    $"{c.Won.ToString().PadLeft(wonWidth)}" +
-                    $"{c.Draw.ToString().PadLeft(drawWidth)}" +
-                    $"{c.Lost.ToString().PadLeft(lostWidth)}" +
-                    $"{c.GoalsFor.ToString().PadLeft(gfWidth)}" +
-                    $"{c.GoalsAgainst.ToString().PadLeft(gaWidth)}" +
-                    $"{c.GoalDifference.ToString().PadLeft(gdWidth)}" +
-                    $"{c.Points.ToString().PadLeft(pointsWidth)}"
-                );
-
-                Console.ResetColor();
-                counter++;
-            }
-
-            return table;
-        }
-
-        private void DisplayResult(Competition competitionToShow, DateTime date)
-        {
-            Console.WriteLine();
-            Console.WriteLine($"=== Date {date} - {competitionToShow.Name} ===");
-            Console.WriteLine();
-
-            var fixturesForMatchDay = _fixtures
-                .Where(_ => _.MatchDay == date && _.CompetitionId == competitionToShow.Id)
-                .ToList();
-
-            if (fixturesForMatchDay.Count == 0)
-                return;
-
-            int homeWidth = fixturesForMatchDay.Max(f => f.HomeTeam.Name.Length) + 2;
-            int awayWidth = fixturesForMatchDay.Max(f => f.AwayTeam.Name.Length) + 2;
-
-            Console.WriteLine(
-                $"{"Home Team".PadRight(homeWidth)}" +
-                $"{"Score".PadRight(8)}" +
-                $"{"Away Team".PadRight(awayWidth)}"
-            );
-
-            Console.WriteLine(new string('-', homeWidth + 8 + awayWidth));
-
-            foreach (var fixture in fixturesForMatchDay)
-            {
-                var score = $"{fixture.HomeScore} - {fixture.AwayScore}";
-                if (fixture.HomeTeamId == _userCountryId || fixture.AwayTeamId == _userCountryId)
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-
-                Console.WriteLine(
-                    $"{fixture.HomeTeam.Name.PadRight(homeWidth)}" +
-                    $"{score.PadRight(8)}" +
-                    $"{fixture.AwayTeam.Name.PadRight(awayWidth)}"
-                );
-                Console.ResetColor();
-            }
-
-            Console.WriteLine();
         }
 
         private void DisplayInternationalRankingPerYear()
@@ -1071,11 +979,11 @@ namespace FootballFull.Services
             Console.ReadKey();
         }
 
-        private bool DisplayNextFixture(Competition competitionToShow, DateTime fromDate)
+        private List<Fixture> GetNextFixture(Guid competitionId, DateTime fromDate)
         {
             var nextDate = _fixtures
                 .Where(fixture =>
-                    fixture.CompetitionId == competitionToShow.Id &&
+                    fixture.CompetitionId == competitionId &&
                     fixture.MatchDay >= fromDate &&
                     (fixture.AwayTeam.CountryId == _userCountryId || fixture.HomeTeam.CountryId == _userCountryId))
                 .Select(fixture => fixture.MatchDay)
@@ -1083,37 +991,14 @@ namespace FootballFull.Services
                 .FirstOrDefault();
 
             if (nextDate == default || nextDate >= _newSeasonDate)
-            {
-                Console.WriteLine("Geen volgende competitiewedstrijd gevonden.");
-                return false;
-            }
+                return null;
 
             var fixtures = _fixtures.Where(f =>
-                f.CompetitionId == competitionToShow.Id &&
+                f.CompetitionId == competitionId &&
                 f.MatchDay == nextDate &&
                 (f.AwayTeam.CountryId == _userCountryId || f.HomeTeam.CountryId == _userCountryId));
 
-            Console.WriteLine($"Volgende wedstrijd: {nextDate:dddd dd/MM/yyyy}");
-            Console.WriteLine(new string('-', 40));
-            foreach (var f in fixtures)
-            {
-                Console.WriteLine($"{f.HomeTeam.Name} vs {f.AwayTeam.Name}");
-            }
-
-            return true;
-        }
-
-        private bool UserPlaysOn(DateTime date)
-        {
-            return _fixtures.Any(fixture =>
-            fixture.MatchDay == date &&
-                       (fixture.AwayTeam.CountryId == _userCountryId || fixture.HomeTeam.CountryId == _userCountryId)) ||
-                   _cupFixtures.Any(fixture =>
-                       fixture.MatchDay == date &&
-                       (fixture.AwayTeam.CountryId == _userCountryId || fixture.HomeTeam.CountryId == _userCountryId)) ||
-                   (_internationalFixtures?.Any(fixture =>
-                       fixture.MatchDay == date &&
-                       (fixture.HomeTeam.CountryId == _userCountryId || fixture.AwayTeam.CountryId == _userCountryId)) ?? false);
+            return fixtures.ToList();
         }
 
         private void ResetStrength()
@@ -1126,36 +1011,6 @@ namespace FootballFull.Services
                 //ResetClubStrength(clubs, country);
                 ResetCompetitionStrength(country);
             }
-        }
-
-        private bool ResetClubStrength(IList<Club> clubs, Country country)
-        {
-            var clubsInCountry = clubs
-                .Where(c => c.CountryId == country.Id)
-                .ToList();
-
-            if (!clubsInCountry.Any())
-                return false;
-
-            var range = Configuration.MaxStrength - Configuration.MinStrength;
-            var counter = clubsInCountry.Count / (range == 0 ? 1 : range);
-            var currentStrength = Configuration.MaxStrength;
-
-            for (int i = 0; i < clubsInCountry.Count; i++)
-            {
-                var club = clubsInCountry[i];
-                club.Strength = club.Strength > 0 ? currentStrength : 1;
-                _clubService.Update(club);
-
-                counter--;
-                if (counter <= 0)
-                {
-                    currentStrength--;
-                    counter = clubsInCountry.Count / (range == 0 ? 1 : range);
-                }
-            }
-
-            return true;
         }
 
         private bool ResetCompetitionStrength(Country country)
@@ -1249,8 +1104,7 @@ namespace FootballFull.Services
                 switch (input)
                 {
                     case "1":
-                        // Geen highlight: gewoon de tabel tonen
-                        DisplayLeagueTable(competition.Id);
+                        // Verplaatst naar viewmodel
                         break;
                     case "2":
                         DisplayFixturesForCompetition(competition.Id);

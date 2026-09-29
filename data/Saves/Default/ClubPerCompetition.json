@@ -252,10 +252,6 @@
     "CompetitionId": "04458926-b2b7-4f0f-a1df-18d7da535a33"
   },
   {
-    "ClubId": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
-    "CompetitionId": "04458926-b2b7-4f0f-a1df-18d7da535a33"
-  },
-  {
     "ClubId": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
     "CompetitionId": "04458926-b2b7-4f0f-a1df-18d7da535a33"
   },
@@ -266,5 +262,13 @@
   {
     "ClubId": "889d9ae2-a459-479d-b4f9-e567226c7da9",
     "CompetitionId": "04458926-b2b7-4f0f-a1df-18d7da535a33"
+  },
+  {
+    "ClubId": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
+    "CompetitionId": "cde09900-e41e-4a6d-b35d-c735e3f032e4"
+  },
+  {
+    "ClubId": "3ffd737a-a5ad-4744-aed3-3d60086f8a53",
+    "CompetitionId": "cde09900-e41e-4a6d-b35d-c735e3f032e4"
   }
 ]

@@ -1,10 +1,31 @@
-﻿using FootballFull.Services.UI;
+﻿using FootballFull.Models;
+using FootballFull.Services.UI;
 using FootballFull.Services.UI.ViewModels;
 
 namespace FootballFull.ConsoleUI
 {
     public class ConsoleGameUI : IGameUI
     {
+        public void ShowFixtures(List<Fixture> fixtures, bool waitForUser)
+        {
+            if (fixtures == null || fixtures.Count == 0)
+            {
+                Console.WriteLine("Geen volgende competitiewedstrijd gevonden."); 
+                return;
+            }
+            Console.WriteLine(new string('-', 40));
+            Console.WriteLine("Volgende wedstrijden");
+            Console.WriteLine();
+            foreach (var f in fixtures)
+            {
+                Console.WriteLine($"{f.HomeTeam.Name} vs {f.AwayTeam.Name}");
+            }
+            Console.WriteLine(new string('-', 40));
+
+            if (waitForUser)
+                Console.ReadLine();
+        }
+
         public MainMenuChoice ShowMainMenu(GameDashboardViewModel dashboard)
         {
             while (true)
@@ -51,18 +72,57 @@ namespace FootballFull.ConsoleUI
             }
         }
 
-        public void ShowMessage(string title, string message)
+        public void ShowMessage(string title, string message, bool waitForUser)
         {
             Console.Clear();
             Console.WriteLine($"=== {title} ===");
             Console.WriteLine();
             Console.WriteLine(message);
             Console.WriteLine();
-            Console.WriteLine("Druk op een toets om verder te gaan...");
-            Console.ReadKey(true);
+            if (waitForUser)
+            {
+                Console.WriteLine("Druk op een toets om verder te gaan...");
+                Console.ReadKey(true);
+            }
         }
 
-        public void ShowTable(CompetitionTableViewModel competitionTable)
+        public void ShowResults(List<Fixture> fixtures, bool waitForUser)
+        {
+            if (fixtures == null || fixtures.Count == 0)
+            {
+                Console.WriteLine("Geen resultaten gevonden.");
+                return;
+            }
+
+            int homeWidth = fixtures.Max(f => f.HomeTeam.Name.Length) + 2;
+            int awayWidth = fixtures.Max(f => f.AwayTeam.Name.Length) + 2;
+
+            Console.WriteLine(
+                $"{"Home Team".PadRight(homeWidth)}" +
+                $"{"Score".PadRight(8)}" +
+                $"{"Away Team".PadRight(awayWidth)}"
+            );
+
+            Console.WriteLine(new string('-', homeWidth + 8 + awayWidth));
+
+            foreach (var fixture in fixtures)
+            {
+                var score = $"{fixture.HomeScore} - {fixture.AwayScore}";
+
+                Console.WriteLine(
+                    $"{fixture.HomeTeam.Name.PadRight(homeWidth)}" +
+                    $"{score.PadRight(8)}" +
+                    $"{fixture.AwayTeam.Name.PadRight(awayWidth)}"
+                );
+            }
+
+            Console.WriteLine();
+
+            if (waitForUser)
+                Console.ReadLine();
+        }
+
+        public void ShowTable(CompetitionTableViewModel competitionTable, bool waitForUser)
         {
             const int positionWidth = 4;
             const int nameWidth = 25;
@@ -114,7 +174,8 @@ namespace FootballFull.ConsoleUI
                 counter++;
             }
 
-            Console.ReadLine();
+            if (waitForUser)
+                Console.ReadLine();
         }
     }
 }
