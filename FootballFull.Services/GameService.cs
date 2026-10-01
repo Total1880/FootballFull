@@ -257,11 +257,11 @@ namespace FootballFull.Services
             _gameUI.ShowMessage("Seizoen afgelopen", $"Seizoen {_year}/{_year + 1} is afgelopen.");
 
             _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate);
-            CalculateSeasonFinancialResult();
+            _gameUI.ShowSeasonFinancialResult(CalculateSeasonFinancialResult(), true);
             CalculateClubFinancialResults();
             _strengthService.RecalculateClubStrengths();
             _strengthService.RecalculateCompetitionStrengths(_seasonService.Year);
-            Events();
+            _gameUI.ShowSeasonEvent(Events(), true);
             EndOfSeasonChoices();
 
             _year++;
@@ -296,33 +296,31 @@ namespace FootballFull.Services
             }
         }
 
-        private void Events()
+        private SeasonEvent Events()
         {
             var footballAssociation = _footballAssociations.First(fa => fa.CountryId == _userCountryId);
 
             var events = _seasonEventService.GetRandomSeasonEvents();
-            Console.Clear();
-            Console.WriteLine(events.Description);
-            Console.WriteLine($"Balance Change: {events.BalanceChange}");
-            Console.WriteLine($"Reputation Change: {events.ReputationChange}");
-            Console.ReadLine();
+
 
             footballAssociation.Balance += events.BalanceChange;
             footballAssociation.Reputation += events.ReputationChange;
 
             _footballAssociationsService.Update(footballAssociation);
+
+            return events;
         }
 
-        private void CalculateSeasonFinancialResult()
+        private SeasonFinancialResult CalculateSeasonFinancialResult()
         {
             var existingClubs = _clubPerCompetitionService.GetAllClubPerCompetitionForCountry(_userCountryId);
             var footballAssociation = _footballAssociations.First(fa => fa.CountryId == _userCountryId);
 
             var seasonFinancialResult = _seasonFinancialResultService.CalculateFinancialResults(existingClubs.Count, _competitions.Where(c => c.CountryId == _userCountryId).Count(), footballAssociation);
 
-            ShowSeasonFinancialResult(seasonFinancialResult, footballAssociation);
-
             _footballAssociationsService.Update(footballAssociation);
+
+            return seasonFinancialResult;
         }
 
         private void CalculateClubFinancialResults()
@@ -331,26 +329,6 @@ namespace FootballFull.Services
             {
                 _endOfSeasonService.ProcessClubFinances(country.Id);
             }
-        }
-
-        private void ShowSeasonFinancialResult(SeasonFinancialResult seasonFinancialResult, FootballAssociation footballAssociation)
-        {
-            Console.Clear();
-            Console.WriteLine($"=== Season Financial Result for {footballAssociation.Name} ===");
-            Console.WriteLine($"Club Income: {seasonFinancialResult.ClubIncome:C}");
-            Console.WriteLine($"Reputation Income: {seasonFinancialResult.ReputationIncome:C}");
-            Console.WriteLine($"Bonus Income: {seasonFinancialResult.BonusIncome:C}");
-            Console.WriteLine();
-            Console.WriteLine($"Club Costs: {seasonFinancialResult.ClubCosts:C}");
-            Console.WriteLine($"Competition Costs: {seasonFinancialResult.CompetitionCosts:C}");
-            Console.WriteLine($"Organisation Costs: {seasonFinancialResult.OrganisationCosts:C}");
-            Console.WriteLine();
-            Console.WriteLine($"Net Result: {seasonFinancialResult.NetResult:C}");
-            Console.WriteLine($" Balance: {footballAssociation.Balance:C}");
-            Console.WriteLine();
-            Console.WriteLine($"Reputation Change: {seasonFinancialResult.ReputationChange}");
-            Console.WriteLine($"Reputation: {footballAssociation.Reputation} ({footballAssociation.ReputationDescription})");
-            Console.ReadLine();
         }
 
         private void EndOfSeasonChoices()
@@ -602,90 +580,6 @@ namespace FootballFull.Services
 
 
         #region Helpers
-
-        private void ShowBetweenMatchdaysMenu()
-        {
-            while (true)
-            {
-                Console.Clear();
-                Console.WriteLine();
-                Console.WriteLine("=== Menu ===");
-                Console.WriteLine("1. Volgende speeldag");
-                Console.WriteLine("2. Andere lopende competities bekijken");
-                Console.WriteLine("3. Club bekijken");
-                Console.WriteLine("4. Trainers bekijken");
-                Console.WriteLine("5. Internationale ranking bekijken");
-                Console.WriteLine("0. Stoppen");
-                Console.Write("Maak een keuze: ");
-
-                var input = Console.ReadKey(true);
-                Console.WriteLine(input.KeyChar);
-
-                switch (input.Key)
-                {
-                    case ConsoleKey.D1:
-                    case ConsoleKey.NumPad1:
-                        return;
-
-                    case ConsoleKey.D2:
-                    case ConsoleKey.NumPad2:
-                        ShowOtherCompetitionsMenu();
-                        break;
-                    case ConsoleKey.D3:
-                    case ConsoleKey.NumPad3:
-                        ClubMenu();
-                        break;
-                    case ConsoleKey.D4:
-                    case ConsoleKey.NumPad4:
-                        Console.WriteLine("Deze functie is nog niet beschikbaar.");
-                        Console.WriteLine("Druk op een toets om terug te gaan...");
-                        Console.ReadKey(true);
-                        break;
-                    case ConsoleKey.D5:
-                    case ConsoleKey.NumPad5:
-                        DisplayInternationalRankingPerYear();
-                        break;
-
-                    case ConsoleKey.D0:
-                    case ConsoleKey.NumPad0:
-                        Environment.Exit(0);
-                        return;
-
-                    default:
-                        Console.WriteLine("Ongeldige keuze, probeer opnieuw.");
-                        Thread.Sleep(750);
-                        break;
-                }
-            }
-        }
-
-        private void ClubMenu()
-        {
-            Console.Clear();
-            Console.WriteLine();
-            var trainer = _seasonService.UserTrainer(_userCountryId);
-            Console.WriteLine($"Trainer: {trainer?.Name} {trainer?.LastName}");
-#if DEBUG
-            Console.WriteLine($"Tactical: {trainer?.TacticalSkill}");
-            Console.WriteLine($"Motivational: {trainer?.Motivation}");
-#endif
-            Console.WriteLine();
-            Console.WriteLine("Wil je de trainer ontslaan? (J/N)");
-            var input = Console.ReadKey(true);
-            switch (input.Key)
-            {
-                case ConsoleKey.J:
-                case ConsoleKey.Y:
-                    _seasonService.NewTrainer(_userCountryId, _currentDate);
-                    Console.WriteLine("Er werd een nieuwe trainer aangesteld.");
-                    Console.WriteLine("Druk op een toets om verder te gaan...");
-                    Console.ReadKey(true);
-                    break;
-                default:
-                    break;
-            }
-
-        }
 
         private bool PlayCupGames(DateTime date)
         {
@@ -954,106 +848,6 @@ namespace FootballFull.Services
                 return 0;
 
             return leagueCompetition.Tier;
-        }
-
-        private void ShowOtherCompetitionsMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("=== Other Competitions ===");
-            Console.WriteLine();
-
-            var competitions = _competitionService.GetCompetitions()
-                .Where(_ => _.Type == Competition.CompetitionType.League)
-                .OrderBy(_ => _.CountryId)
-                .ThenBy(_ => _.Tier)
-                .ToList();
-
-            for (int i = 0; i < competitions.Count; i++)
-            {
-                var comp = competitions[i];
-                if (comp.Country == null)
-                {
-                    comp.Country = _countryService.GetCountryById(comp.CountryId);
-                }
-                Console.WriteLine($"{i + 1}. {comp.Country.Name} – {comp.Name} (Tier {comp.Tier})");
-            }
-
-            Console.WriteLine("0. Terug");
-            Console.Write("Maak een keuze: ");
-
-            if (!int.TryParse(Console.ReadLine(), out int choice) || choice == 0)
-                return;
-
-            if (choice > 0 && choice <= competitions.Count)
-            {
-                var selected = competitions[choice - 1];
-                ShowCompetitionDetailMenu(selected);
-            }
-        }
-
-        private void ShowCompetitionDetailMenu(Competition competition)
-        {
-            while (true)
-            {
-                Console.Clear();
-                Console.WriteLine($"=== {competition.Country.Name} – {competition.Name} ===");
-                Console.WriteLine("1. Stand bekijken");
-                Console.WriteLine("2. Fixtures bekijken");
-                Console.WriteLine("3. Resultaten tot nu toe");
-                Console.WriteLine("0. Terug");
-                Console.Write("Maak een keuze: ");
-
-                var input = Console.ReadLine();
-
-                switch (input)
-                {
-                    case "1":
-                        // Verplaatst naar viewmodel
-                        break;
-                    case "2":
-                        DisplayFixturesForCompetition(competition.Id);
-                        break;
-                    case "3":
-                        DisplayResultsForCompetition(competition.Id);
-                        break;
-                    case "0":
-                        return;
-                }
-
-                Console.WriteLine("\nDruk op een toets om terug te gaan...");
-                Console.ReadKey();
-            }
-        }
-
-        private void DisplayFixturesForCompetition(Guid competitionId)
-        {
-            Console.Clear();
-            Console.WriteLine("=== Fixtures ===");
-
-            var fixtures = _fixtures
-                .Where(_ => _.CompetitionId == competitionId)
-                .OrderBy(_ => _.MatchDay)
-                .ToList();
-
-            foreach (var f in fixtures)
-                Console.WriteLine($"MD {f.MatchDay}: {f.HomeTeam.Name} - {f.AwayTeam.Name}");
-        }
-
-        private void DisplayResultsForCompetition(Guid competitionId)
-        {
-            Console.Clear();
-            Console.WriteLine("=== Results Played ===");
-
-            var fixtures = _fixtures
-                .Where(_ =>
-                    _.CompetitionId == competitionId &&
-                    _.MatchDay < _currentDate)
-                .OrderBy(_ => _.MatchDay)
-                .ToList();
-
-            foreach (var f in fixtures)
-                Console.WriteLine(
-                    $"MD {f.MatchDay}: {f.HomeTeam.Name} {f.HomeScore} - {f.AwayScore} {f.AwayTeam.Name}");
         }
 
         private void CreateTrainers()

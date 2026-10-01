@@ -212,7 +212,7 @@ namespace FootballFull.ConsoleUI
                 Console.ReadLine();
         }
 
-        public void ShowInternationRankings(List<CountryCoefficientRanking> rankings,int currentYear, bool waitForUser = false)
+        public void ShowInternationRankings(List<CountryCoefficientRanking> rankings, int currentYear, bool waitForUser = false)
         {
             if (rankings == null || !rankings.Any())
             {
@@ -258,6 +258,37 @@ namespace FootballFull.ConsoleUI
             }
 
             Console.ReadKey();
+        }
+
+        public void ShowSeasonEvent(SeasonEvent seasonEvent, bool waitForUser = false)
+        {
+            Console.Clear();
+            Console.WriteLine(seasonEvent.Description);
+            Console.WriteLine($"Balans wijziging: {seasonEvent.BalanceChange}");
+            Console.WriteLine($"Reputatie wijziging: {seasonEvent.ReputationChange}");
+            if (waitForUser)
+                Console.ReadLine();
+        }
+
+        public void ShowSeasonFinancialResult(SeasonFinancialResult seasonFinancialResult, bool waitForUser = false)
+        {
+            Console.Clear();
+            Console.WriteLine($"=== Season Financial Result for {seasonFinancialResult.FootballAssociation.Name} ===");
+            Console.WriteLine($"Club Income: {seasonFinancialResult.ClubIncome:C}");
+            Console.WriteLine($"Reputation Income: {seasonFinancialResult.ReputationIncome:C}");
+            Console.WriteLine($"Bonus Income: {seasonFinancialResult.BonusIncome:C}");
+            Console.WriteLine();
+            Console.WriteLine($"Club Costs: {seasonFinancialResult.ClubCosts:C}");
+            Console.WriteLine($"Competition Costs: {seasonFinancialResult.CompetitionCosts:C}");
+            Console.WriteLine($"Organisation Costs: {seasonFinancialResult.OrganisationCosts:C}");
+            Console.WriteLine();
+            Console.WriteLine($"Net Result: {seasonFinancialResult.NetResult:C}");
+            Console.WriteLine($" Balance: {seasonFinancialResult.FootballAssociation.Balance:C}");
+            Console.WriteLine();
+            Console.WriteLine($"Reputation Change: {seasonFinancialResult.ReputationChange}");
+            Console.WriteLine($"Reputation: {seasonFinancialResult.FootballAssociation.Reputation} ({seasonFinancialResult.FootballAssociation.ReputationDescription})");
+            if( waitForUser ) Console.ReadLine();
+            
         }
     }
 }

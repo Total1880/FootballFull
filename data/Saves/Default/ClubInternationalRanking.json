@@ -15,7 +15,9 @@
       "Id": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
       "Name": "Engeland"
     },
-    "PointsPerYear": {}
+    "PointsPerYear": {
+      "2046": 4
+    }
   },
   {
     "ClubId": "072c2b26-07ab-4c96-a999-5951b7973e30",
@@ -74,7 +76,9 @@
       "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
       "Name": "Belgium"
     },
-    "PointsPerYear": {}
+    "PointsPerYear": {
+      "2046": 0
+    }
   },
   {
     "ClubId": "9a4b8314-0342-49d8-8657-a8f12e56878c",
@@ -653,5 +657,45 @@
       "Name": "Engeland"
     },
     "PointsPerYear": {}
+  },
+  {
+    "ClubId": "f57d2066-9631-47a6-87f2-2dec4c62e9dc",
+    "Club": {
+      "Name": "Napoli",
+      "Strength": 19,
+      "Id": "f57d2066-9631-47a6-87f2-2dec4c62e9dc",
+      "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "FeederClubId": null,
+      "Balance": 1398000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "Country": {
+      "Id": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "Name": "Italy"
+    },
+    "PointsPerYear": {
+      "2046": 0
+    }
+  },
+  {
+    "ClubId": "7d843c22-f84f-4a80-97a8-fc99b3abba3a",
+    "Club": {
+      "Name": "Real Sociedad",
+      "Strength": 20,
+      "Id": "7d843c22-f84f-4a80-97a8-fc99b3abba3a",
+      "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "FeederClubId": null,
+      "Balance": 1120000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+    "Country": {
+      "Id": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "Name": "Spain"
+    },
+    "PointsPerYear": {
+      "2046": 2
+    }
   }
 ]

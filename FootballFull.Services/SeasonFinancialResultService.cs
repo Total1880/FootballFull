@@ -15,6 +15,8 @@ namespace FootballFull.Services
         {
             var seasonFinancialResult = new SeasonFinancialResult();
 
+            seasonFinancialResult.FootballAssociation = association;
+
             seasonFinancialResult.ClubIncome = clubsCount * Configuration.BasicClubRevenue;
             seasonFinancialResult.ReputationIncome = association.Reputation * Configuration.ReputationRevenueMultiplier;
             seasonFinancialResult.BonusIncome = CalculateBonusIncome(association);

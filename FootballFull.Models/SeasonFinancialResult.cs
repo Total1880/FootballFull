@@ -1,7 +1,11 @@
-﻿namespace FootballFull.Models
+﻿using System.Text.Json.Serialization;
+
+namespace FootballFull.Models
 {
     public class SeasonFinancialResult
     {
+        [JsonIgnore]
+        public FootballAssociation FootballAssociation { get; set; }
         public decimal ClubIncome { get; set; }
         public decimal ReputationIncome { get; set; }
         public decimal BonusIncome { get; set; }
