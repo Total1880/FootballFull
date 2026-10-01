@@ -4,6 +4,7 @@ public enum MainMenuChoice
 {
     Continue,
     ShowOtherCompetitions,
+    ShowInternationalRankings,
     Save,
     SaveAndExit
 }

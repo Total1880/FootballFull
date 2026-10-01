@@ -12,4 +12,5 @@ public interface IGameUI
     void ShowResults(List<Fixture> fixtures, bool waitForUser = false);
     void ShowFixtures(List<Fixture> fixtures, bool waitForUser = false);
     Competition ChooseCompetitions(List<Competition> competitions);
+    void ShowInternationRankings(List<CountryCoefficientRanking> rankings, int currentYear, bool waitForUser = false);
 }

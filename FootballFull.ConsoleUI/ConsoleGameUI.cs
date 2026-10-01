@@ -55,6 +55,7 @@ namespace FootballFull.ConsoleUI
                 Console.WriteLine();
                 Console.WriteLine("[1] Verder naar volgende speeldag");
                 Console.WriteLine("[2] Andere competities");
+                Console.WriteLine("[3] Internationale ranglijsten");
                 Console.WriteLine("[S] Opslaan");
                 Console.WriteLine("[X] Opslaan en afsluiten");
                 Console.WriteLine();
@@ -68,6 +69,9 @@ namespace FootballFull.ConsoleUI
                     case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
                         return MainMenuChoice.ShowOtherCompetitions;
+                    case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
+                        return MainMenuChoice.ShowInternationalRankings;
                     case ConsoleKey.S:
                         return MainMenuChoice.Save;
                     case ConsoleKey.X:
@@ -206,6 +210,54 @@ namespace FootballFull.ConsoleUI
 
             if (waitForUser)
                 Console.ReadLine();
+        }
+
+        public void ShowInternationRankings(List<CountryCoefficientRanking> rankings,int currentYear, bool waitForUser = false)
+        {
+            if (rankings == null || !rankings.Any())
+            {
+                Console.WriteLine("Geen landencoëfficiënten beschikbaar.");
+                return;
+            }
+
+            // Zorg dat de lijst gesorteerd is (hoogste eerst)
+            rankings = rankings
+                .OrderByDescending(r => r.FiveYearCoefficient)
+                .ToList();
+
+            var years = Enumerable.Range(currentYear - 4, 5).ToList();
+
+            Console.WriteLine("=== Country Coefficient Ranking (5-jaars) ===");
+            Console.WriteLine();
+
+            int position = 1;
+            foreach (var r in rankings)
+            {
+                var countryName = r.Country?.Name ?? r.CountryId.ToString();
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(
+                    $"{position,2}. {countryName} – {r.FiveYearCoefficient:F2} punten");
+                Console.ResetColor();
+
+                // Detail per jaar
+                foreach (var year in years.OrderByDescending(y => y))
+                {
+                    r.CoefficientPerYear.TryGetValue(year, out var coeff);
+                    r.ClubsParticipatingPerYear.TryGetValue(year, out var clubs);
+                    r.RawPointsPerYear.TryGetValue(year, out var rawPoints);
+
+                    // bv: 2025: 7.50 (3 clubs, 22 punten)
+                    Console.WriteLine(
+                        $"    {year}: {coeff,6:F2} " +
+                        $"({clubs} clubs, {rawPoints} punten)");
+                }
+
+                Console.WriteLine();
+                position++;
+            }
+
+            Console.ReadKey();
         }
     }
 }

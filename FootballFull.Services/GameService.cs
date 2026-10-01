@@ -133,7 +133,9 @@ namespace FootballFull.Services
                     case MainMenuChoice.ShowOtherCompetitions:
                         _gameUI.ShowTable(CreateTableDashBoard(_gameUI.ChooseCompetitions(_competitions.Where(_ => _.Id != _competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id).ToList()).Id), true);
                         break;
-
+                    case MainMenuChoice.ShowInternationalRankings:
+                        _gameUI.ShowInternationRankings(DisplayInternationalRankingPerYear(), _year, true);
+                        break;
                     case MainMenuChoice.Save:
                         _seasonService.SaveGame();
                         _gameUI.ShowMessage("Spel opgeslagen", "Je spel werd succesvol opgeslagen.");
@@ -834,7 +836,7 @@ namespace FootballFull.Services
                 .ToList();
         }
 
-        private void DisplayInternationalRankingPerYear()
+        private List<CountryCoefficientRanking> DisplayInternationalRankingPerYear()
         {
             var years = Enumerable.Range(_year - 4, 5);
 
@@ -878,56 +880,7 @@ namespace FootballFull.Services
                 .OrderByDescending(r => r.FiveYearCoefficient)
                 .ToList();
 
-            DisplayCountryCoefficientRanking(rankings);
-        }
-
-        private void DisplayCountryCoefficientRanking(
-    IList<CountryCoefficientRanking> rankings)
-        {
-            if (rankings == null || !rankings.Any())
-            {
-                Console.WriteLine("Geen landencoëfficiënten beschikbaar.");
-                return;
-            }
-
-            // Zorg dat de lijst gesorteerd is (hoogste eerst)
-            rankings = rankings
-                .OrderByDescending(r => r.FiveYearCoefficient)
-                .ToList();
-
-            var years = Enumerable.Range(_year - 4, 5).ToList();
-
-            Console.WriteLine("=== Country Coefficient Ranking (5-jaars) ===");
-            Console.WriteLine();
-
-            int position = 1;
-            foreach (var r in rankings)
-            {
-                var countryName = r.Country?.Name ?? r.CountryId.ToString();
-
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(
-                    $"{position,2}. {countryName} – {r.FiveYearCoefficient:F2} punten");
-                Console.ResetColor();
-
-                // Detail per jaar
-                foreach (var year in years.OrderByDescending(y => y))
-                {
-                    r.CoefficientPerYear.TryGetValue(year, out var coeff);
-                    r.ClubsParticipatingPerYear.TryGetValue(year, out var clubs);
-                    r.RawPointsPerYear.TryGetValue(year, out var rawPoints);
-
-                    // bv: 2025: 7.50 (3 clubs, 22 punten)
-                    Console.WriteLine(
-                        $"    {year}: {coeff,6:F2} " +
-                        $"({clubs} clubs, {rawPoints} punten)");
-                }
-
-                Console.WriteLine();
-                position++;
-            }
-
-            Console.ReadKey();
+            return rankings;
         }
 
         private List<Fixture> GetNextFixture(Guid competitionId, DateTime fromDate)
