@@ -240,27 +240,27 @@
     "CompetitionId": "0a57f4ee-8b2f-4b9a-ba05-1448266fede4"
   },
   {
-    "ClubId": "298ba8a5-e4a5-491d-bdde-2e9676926dc1",
+    "ClubId": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
+    "CompetitionId": "04458926-b2b7-4f0f-a1df-18d7da535a33"
+  },
+  {
+    "ClubId": "2b584c1b-6f69-4179-80f7-4755779d9cf1",
+    "CompetitionId": "cde09900-e41e-4a6d-b35d-c735e3f032e4"
+  },
+  {
+    "ClubId": "3ffd737a-a5ad-4744-aed3-3d60086f8a53",
     "CompetitionId": "04458926-b2b7-4f0f-a1df-18d7da535a33"
   },
   {
     "ClubId": "1ec6ca95-750b-4c80-ad2b-7327b9ae33c1",
-    "CompetitionId": "04458926-b2b7-4f0f-a1df-18d7da535a33"
-  },
-  {
-    "ClubId": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
-    "CompetitionId": "04458926-b2b7-4f0f-a1df-18d7da535a33"
+    "CompetitionId": "cde09900-e41e-4a6d-b35d-c735e3f032e4"
   },
   {
     "ClubId": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
     "CompetitionId": "04458926-b2b7-4f0f-a1df-18d7da535a33"
   },
   {
-    "ClubId": "23f38c29-7e72-4509-beb6-4ee9b6298ee6",
-    "CompetitionId": "04458926-b2b7-4f0f-a1df-18d7da535a33"
-  },
-  {
-    "ClubId": "889d9ae2-a459-479d-b4f9-e567226c7da9",
+    "ClubId": "298ba8a5-e4a5-491d-bdde-2e9676926dc1",
     "CompetitionId": "04458926-b2b7-4f0f-a1df-18d7da535a33"
   },
   {
@@ -268,7 +268,23 @@
     "CompetitionId": "cde09900-e41e-4a6d-b35d-c735e3f032e4"
   },
   {
-    "ClubId": "3ffd737a-a5ad-4744-aed3-3d60086f8a53",
+    "ClubId": "889d9ae2-a459-479d-b4f9-e567226c7da9",
     "CompetitionId": "cde09900-e41e-4a6d-b35d-c735e3f032e4"
+  },
+  {
+    "ClubId": "e2626516-904d-4bcf-9723-ef4e08726998",
+    "CompetitionId": "cde09900-e41e-4a6d-b35d-c735e3f032e4"
+  },
+  {
+    "ClubId": "ba19fa16-c85c-4e32-857a-ff6f103e77dc",
+    "CompetitionId": "04458926-b2b7-4f0f-a1df-18d7da535a33"
+  },
+  {
+    "ClubId": "0067014d-0960-4501-8408-c5e202f23d5f",
+    "CompetitionId": "cde09900-e41e-4a6d-b35d-c735e3f032e4"
+  },
+  {
+    "ClubId": "23f38c29-7e72-4509-beb6-4ee9b6298ee6",
+    "CompetitionId": "04458926-b2b7-4f0f-a1df-18d7da535a33"
   }
 ]

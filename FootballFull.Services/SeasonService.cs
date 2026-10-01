@@ -106,12 +106,13 @@ namespace FootballFull.Services
         }
 
 
-        public void PlayMatchDay(IList<Fixture> fixtures, DateTime day, bool isSuddenDeath = false, Guid? playerClubId = null, bool neutralField = false)
+        public bool PlayMatchDay(IList<Fixture> fixtures, DateTime day, bool isSuddenDeath = false, Guid? playerClubId = null, bool neutralField = false)
         {
             if (_clubLeagueCompetitions == null)
                 throw new InvalidOperationException("Club league competitions not initialized.");
 
             var todaysFixtures = fixtures.Where(_ => _.MatchDay == day).ToList();
+            var gamesPlayed = false;
 
             foreach (var fixture in todaysFixtures)
             {
@@ -150,7 +151,11 @@ namespace FootballFull.Services
 
                 UpdateClubMomentumAndMorale(fixture.HomeTeamId, fixture.HomeScore, fixture.AwayScore);
                 UpdateClubMomentumAndMorale(fixture.AwayTeamId, fixture.AwayScore, fixture.HomeScore);
+
+                gamesPlayed = true;
             }
+
+            return gamesPlayed;
         }
 
         private void ApplyResultToInternationalRanking(Fixture fixture)

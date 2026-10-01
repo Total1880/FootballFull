@@ -118,10 +118,17 @@ namespace FootballFull.Services
                 switch (choice)
                 {
                     case MainMenuChoice.Continue:
-                        PlayUntilNextMatchday();
+                        var gamesToShow = PlayUntilNextMatchday();
+
                         _gameUI.ShowTable(CreateTableDashBoard(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id));
-                        _gameUI.ShowResults(GetResult(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id, _currentDate));
+                        if (gamesToShow != null && gamesToShow.LeagueCompetition)
+                            _gameUI.ShowResults(GetResult(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id, _currentDate));
                         _gameUI.ShowFixtures(GetNextFixture(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id, _currentDate), true);
+
+                        if (gamesToShow != null && gamesToShow.CupCompetition)
+                            _gameUI.ShowResults(GetResult(_competitions.First(_ => _.CountryId == _userCountryId && _.Type == CompetitionType.Cup).Id, _currentDate), true);
+                        if (gamesToShow != null && gamesToShow.InternationalCompetition)
+                            _gameUI.ShowResults(GetResult(_competitions.First(_ => _.Type == CompetitionType.International).Id, _currentDate), true);
                         break;
 
                     case MainMenuChoice.Save:
@@ -175,30 +182,39 @@ namespace FootballFull.Services
             };
         }
 
-        private void PlayUntilNextMatchday()
+        private WeekGamesToShow PlayUntilNextMatchday()
         {
             var nextMatchday = GetNextMatchday();
+            var weekGamesToShow = new WeekGamesToShow();
 
             if (!nextMatchday.HasValue || nextMatchday.Value >= _newSeasonDate)
             {
                 FinishSeason();
-                return;
+                return null;
             }
 
             while (_currentDate <= nextMatchday.Value)
             {
-                _seasonService.PlayMatchDay(_fixtures, _currentDate, false, _userCountryId);
-                PlayCupGames(_currentDate);
-                PlayInternationalGames(_currentDate);
+                if (_seasonService.PlayMatchDay(_fixtures, _currentDate, false, _userCountryId))
+                    weekGamesToShow.LeagueCompetition = true;
+
+                if (PlayCupGames(_currentDate))
+                    weekGamesToShow.CupCompetition = true;
+
+                if (PlayInternationalGames(_currentDate))
+                    weekGamesToShow.InternationalCompetition = true;
+
                 _seasonService.UpdateWeekStats(_userCountryId, _currentDate);
                 _currentDate = _currentDate.AddDays(1);
             }
+
+            return weekGamesToShow;
         }
 
         private DateTime? GetNextMatchday()
         {
             var competitionIds = _competitions
-                .Where(c => c.CountryId == _userCountryId)
+                .Where(c => c.CountryId == _userCountryId || c.Type == CompetitionType.International)
                 .Select(c => c.Id)
                 .ToHashSet();
 
@@ -235,7 +251,7 @@ namespace FootballFull.Services
         {
             _gameUI.ShowMessage("Seizoen afgelopen", $"Seizoen {_year}/{_year + 1} is afgelopen.");
 
-            _internationalFixtures = _seasonService.InitializeInternationalGames(_currentDate);
+            _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate);
             CalculateSeasonFinancialResult();
             CalculateClubFinancialResults();
             _strengthService.RecalculateClubStrengths();
@@ -666,26 +682,19 @@ namespace FootballFull.Services
 
         }
 
-        private void PlayCupGames(DateTime date)
+        private bool PlayCupGames(DateTime date)
         {
             if (_cupFixtures == null || !_cupFixtures.Any())
-                return;
+                return false;
             if (!_cupFixtures.Any(_ => _.MatchDay == date))
-                return;
+                return false;
 
             var cupCompetitions = _competitions
                 .Where(_ => _.Type == Competition.CompetitionType.Cup)
                 .ToList();
 
-            Console.Clear();
-            Console.WriteLine("=== National Cup Fixtures ===");
-            Console.WriteLine();
-
             foreach (var cupCompetition in cupCompetitions)
             {
-                var display = cupCompetition.CountryId == _userCountryId;
-                if (display)
-                    Console.WriteLine($"--- {cupCompetition.Name} ---");
                 var fixturesForCompetition = _cupFixtures
                     .Where(_ => _.CompetitionId == cupCompetition.Id && _.MatchDay == date)
                     .ToList();
@@ -693,41 +702,19 @@ namespace FootballFull.Services
                 if (fixturesForCompetition.Count == 0)
                     continue;
 
-                if (display)
-                    Console.WriteLine($"=== {cupCompetition.Name} Round {fixturesForCompetition.First().RoundNo} ===");
-
                 foreach (var fixture in fixturesForCompetition)
                 {
                     if (fixture.HomeTeamId == Guid.Empty || fixture.AwayTeamId == Guid.Empty)
                         continue;
 
-                    if (fixture.HomeTeamId == _userCountryId || fixture.AwayTeamId == _userCountryId)
-                        Console.ForegroundColor = ConsoleColor.Yellow;
 
                     var homeTier = GetClubTier(fixture.HomeTeamId);
                     var awayTier = GetClubTier(fixture.AwayTeamId);
-
-                    if (display)
-                        Console.WriteLine(
-                        $"{fixture.HomeTeam.Name} ({homeTier}) vs {fixture.AwayTeam.Name} ({awayTier})"
-                    );
-
-                    Console.ResetColor();
                 }
 
-                if (display)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Press any key to play this round...");
-                    Console.ReadKey();
-                }
                 // Speel enkel deze ronde
                 _seasonService.PlayMatchDay(fixturesForCompetition, date, true, _userCountryId, true);
-                if (display)
-                {
-                    Console.Clear();
-                    Console.WriteLine($"=== {cupCompetition.Name} Round {fixturesForCompetition.First().RoundNo} Results ===");
-                }
+
                 foreach (var fixture in fixturesForCompetition)
                 {
                     if (fixture.HomeTeamId != Guid.Empty && fixture.AwayTeamId != Guid.Empty)
@@ -739,11 +726,6 @@ namespace FootballFull.Services
                         var homeTier = GetClubTier(fixture.HomeTeamId);
                         var awayTier = GetClubTier(fixture.AwayTeamId);
 
-                        if (display)
-                            Console.WriteLine(
-                            $"{fixture.HomeTeam.Name} ({homeTier}) {fixture.HomeScore} - {fixture.AwayScore} {fixture.AwayTeam.Name} ({awayTier})"
-                        );
-                        Console.ResetColor();
                     }
                     // winners voor volgende ronde
                     var winner = fixture.HomeScore > fixture.AwayScore ? fixture.HomeTeam : fixture.AwayTeam;
@@ -767,33 +749,23 @@ namespace FootballFull.Services
                         }
                     }
                 }
-
-                if (display)
-                {
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadKey();
-                    Console.Clear();
-                }
             }
+            return true;
         }
 
-        private void PlayInternationalGames(DateTime date)
+        private bool PlayInternationalGames(DateTime date)
         {
             if (_internationalFixtures == null || !_internationalFixtures.Any())
-                return;
+                return false;
             if (!_internationalFixtures.Any(_ => _.MatchDay == date))
-                return;
+                return false;
 
             var fixturesForRound = _internationalFixtures
                 .Where(_ => _.MatchDay == date)
                 .ToList();
 
             if (fixturesForRound.Count == 0)
-                return;
-
-            Console.Clear();
-            Console.WriteLine($"=== International Round {date} ===");
-            Console.WriteLine();
+                return false;
 
             foreach (var fixture in fixturesForRound)
             {
@@ -809,23 +781,12 @@ namespace FootballFull.Services
                     fixture.AwayTeam != null ? fixture.AwayTeam.Name :
                     fixture.CupPreviousFixtureAwayTeam != null ? "Winner previous match" :
                     "TBD";
-
-                Console.WriteLine($"{homeName} vs {awayName}");
             }
-
-            Console.WriteLine();
-            Console.WriteLine("Press any key to play this round...");
-            Console.ReadKey();
 
             _seasonService.PlayMatchDay(fixturesForRound, date, true, _userCountryId, true);
 
-            Console.Clear();
-            Console.WriteLine($"=== International Round {date} Results ===");
             foreach (var fixture in fixturesForRound)
             {
-                if (fixture.HomeTeamId != Guid.Empty && fixture.AwayTeamId != Guid.Empty)
-                    Console.WriteLine($"{fixture.HomeTeam.Name} {fixture.HomeScore} - {fixture.AwayScore} {fixture.AwayTeam.Name}");
-
                 var winner = fixture.HomeScore > fixture.AwayScore ? fixture.HomeTeam : fixture.AwayTeam;
                 var cupNextFixtures = _internationalFixtures.FirstOrDefault(_ => _.CupPreviousFixtureHomeTeam == fixture);
 
@@ -848,37 +809,24 @@ namespace FootballFull.Services
                 }
             }
 
-            Console.WriteLine();
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
-            Console.Clear();
-
-            // Winnaar bepalen – finale
-            var final = _internationalFixtures
-                .OrderByDescending(f => f.RoundNo)
-                .First();
-
-            if (final.MatchDay != date)
-                return;
-
-            var finalWinner = final.HomeScore > final.AwayScore ? final.HomeTeam : final.AwayTeam;
-            Console.WriteLine($"International Cup winner: {finalWinner.Name}!");
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
+            return true;
         }
 
         private List<Fixture> GetResult(Guid competitionId, DateTime date)
         {
             var lastDate = _fixtures
+                .Concat(_cupFixtures)
+                .Concat(_internationalFixtures)
     .Where(fixture =>
         fixture.CompetitionId == competitionId &&
-        fixture.MatchDay <= date &&
-        (fixture.AwayTeam.CountryId == _userCountryId || fixture.HomeTeam.CountryId == _userCountryId))
+        fixture.MatchDay <= date)
     .Select(fixture => fixture.MatchDay)
     .OrderByDescending(date => date)
     .FirstOrDefault();
 
             return _fixtures
+                .Concat(_cupFixtures)
+                .Concat(_internationalFixtures)
                 .Where(_ => _.MatchDay == lastDate && _.CompetitionId == competitionId)
                 .ToList();
         }

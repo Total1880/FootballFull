@@ -110,7 +110,9 @@
       "Id": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
       "Name": "Italy"
     },
-    "PointsPerYear": {}
+    "PointsPerYear": {
+      "2044": 0
+    }
   },
   {
     "ClubId": "c1b537cc-8678-433e-ac27-40d84f661a96",
@@ -128,7 +130,9 @@
       "Id": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
       "Name": "Spain"
     },
-    "PointsPerYear": {}
+    "PointsPerYear": {
+      "2043": 0
+    }
   },
   {
     "ClubId": "3117b3b0-0370-40b4-ad48-50a1a2798dae",
@@ -247,5 +251,389 @@
       "Name": "Belgium"
     },
     "PointsPerYear": {}
+  },
+  {
+    "ClubId": "0d8c6345-f7ce-413d-905c-cbcf799133a9",
+    "Club": {
+      "Name": "Chelsea",
+      "Strength": 19,
+      "Id": "0d8c6345-f7ce-413d-905c-cbcf799133a9",
+      "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "FeederClubId": null,
+      "Balance": 268000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+    "Country": {
+      "Id": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "Name": "Engeland"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "da152f7e-cad4-49d6-afdc-62af6fea1f92",
+    "Club": {
+      "Name": "Sevilla",
+      "Strength": 20,
+      "Id": "da152f7e-cad4-49d6-afdc-62af6fea1f92",
+      "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "FeederClubId": null,
+      "Balance": 235000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+    "Country": {
+      "Id": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "Name": "Spain"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "04167cff-66a0-46ec-969a-f7c3f71d68e2",
+    "Club": {
+      "Name": "Liverpool",
+      "Strength": 20,
+      "Id": "04167cff-66a0-46ec-969a-f7c3f71d68e2",
+      "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "FeederClubId": null,
+      "Balance": 307000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+    "Country": {
+      "Id": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "Name": "Engeland"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
+    "Club": {
+      "Name": "AA Gent",
+      "Strength": 3,
+      "Id": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
+      "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "FeederClubId": null,
+      "Balance": 356000,
+      "CompetitionSplitParameters": [
+        {
+          "Name": "VV",
+          "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+        }
+      ]
+    },
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Country": {
+      "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "8371f16f-77f8-47ab-ba85-0691c0698d9e",
+    "Club": {
+      "Name": "Como",
+      "Strength": 20,
+      "Id": "8371f16f-77f8-47ab-ba85-0691c0698d9e",
+      "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "FeederClubId": null,
+      "Balance": 327000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "Country": {
+      "Id": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "Name": "Italy"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "1ec6ca95-750b-4c80-ad2b-7327b9ae33c1",
+    "Club": {
+      "Name": "Union SG",
+      "Strength": 3,
+      "Id": "1ec6ca95-750b-4c80-ad2b-7327b9ae33c1",
+      "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "FeederClubId": null,
+      "Balance": 697000,
+      "CompetitionSplitParameters": [
+        {
+          "Name": "ACFF",
+          "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
+        }
+      ]
+    },
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Country": {
+      "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "008e5eea-1847-4208-9368-7b01fb70a442",
+    "Club": {
+      "Name": "Leeds United",
+      "Strength": 20,
+      "Id": "008e5eea-1847-4208-9368-7b01fb70a442",
+      "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "FeederClubId": null,
+      "Balance": 476000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+    "Country": {
+      "Id": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "Name": "Engeland"
+    },
+    "PointsPerYear": {
+      "2043": 2
+    }
+  },
+  {
+    "ClubId": "2c6f7c05-da79-4fed-b401-a2ae4adb5f8e",
+    "Club": {
+      "Name": "Cagliari",
+      "Strength": 20,
+      "Id": "2c6f7c05-da79-4fed-b401-a2ae4adb5f8e",
+      "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "FeederClubId": null,
+      "Balance": 412000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "Country": {
+      "Id": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "Name": "Italy"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
+    "Club": {
+      "Name": "STVV",
+      "Strength": 4,
+      "Id": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
+      "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "FeederClubId": null,
+      "Balance": 672000,
+      "CompetitionSplitParameters": [
+        {
+          "Name": "VV",
+          "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+        }
+      ]
+    },
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Country": {
+      "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {
+      "2044": 0
+    }
+  },
+  {
+    "ClubId": "3d7c256a-740e-4f97-a8b7-6edeb0e016a6",
+    "Club": {
+      "Name": "Milan",
+      "Strength": 20,
+      "Id": "3d7c256a-740e-4f97-a8b7-6edeb0e016a6",
+      "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "FeederClubId": null,
+      "Balance": 519000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "Country": {
+      "Id": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "Name": "Italy"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "c20965a4-11ce-4151-a15c-02fb05818152",
+    "Club": {
+      "Name": "Deportivo",
+      "Strength": 20,
+      "Id": "c20965a4-11ce-4151-a15c-02fb05818152",
+      "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "FeederClubId": null,
+      "Balance": 540000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+    "Country": {
+      "Id": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "Name": "Spain"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "6c21ff40-6a2f-4b5e-8cf8-3b9dc2f11826",
+    "Club": {
+      "Name": "Sassuolo",
+      "Strength": 19,
+      "Id": "6c21ff40-6a2f-4b5e-8cf8-3b9dc2f11826",
+      "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "FeederClubId": null,
+      "Balance": 744000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "Country": {
+      "Id": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "Name": "Italy"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "889d9ae2-a459-479d-b4f9-e567226c7da9",
+    "Club": {
+      "Name": "RC Genk",
+      "Strength": 4,
+      "Id": "889d9ae2-a459-479d-b4f9-e567226c7da9",
+      "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "FeederClubId": null,
+      "Balance": 1060000,
+      "CompetitionSplitParameters": [
+        {
+          "Name": "VV",
+          "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+        }
+      ]
+    },
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Country": {
+      "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "9f23d409-34d4-45f9-9c35-2a5e8b91e660",
+    "Club": {
+      "Name": "Athletic Bilbao",
+      "Strength": 20,
+      "Id": "9f23d409-34d4-45f9-9c35-2a5e8b91e660",
+      "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "FeederClubId": null,
+      "Balance": 620000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+    "Country": {
+      "Id": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
+      "Name": "Spain"
+    },
+    "PointsPerYear": {
+      "2044": 2
+    }
+  },
+  {
+    "ClubId": "5d7f7343-6bc5-4265-8f1a-280a7febbd1a",
+    "Club": {
+      "Name": "Bournemouth",
+      "Strength": 16,
+      "Id": "5d7f7343-6bc5-4265-8f1a-280a7febbd1a",
+      "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "FeederClubId": null,
+      "Balance": 1210000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+    "Country": {
+      "Id": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "Name": "Engeland"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "3ffd737a-a5ad-4744-aed3-3d60086f8a53",
+    "Club": {
+      "Name": "Patro Eisden",
+      "Strength": 5,
+      "Id": "3ffd737a-a5ad-4744-aed3-3d60086f8a53",
+      "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "FeederClubId": null,
+      "Balance": 1114000,
+      "CompetitionSplitParameters": [
+        {
+          "Name": "VV",
+          "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+        }
+      ]
+    },
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Country": {
+      "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {}
+  },
+  {
+    "ClubId": "1fd6c01a-b065-4c36-a20e-f15f1740ce9a",
+    "Club": {
+      "Name": "Atalanta",
+      "Strength": 20,
+      "Id": "1fd6c01a-b065-4c36-a20e-f15f1740ce9a",
+      "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "FeederClubId": null,
+      "Balance": 1304000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+    "Country": {
+      "Id": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
+      "Name": "Italy"
+    },
+    "PointsPerYear": {
+      "2043": 4
+    }
+  },
+  {
+    "ClubId": "0067014d-0960-4501-8408-c5e202f23d5f",
+    "Club": {
+      "Name": "Aalst-Lede",
+      "Strength": 4,
+      "Id": "0067014d-0960-4501-8408-c5e202f23d5f",
+      "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "FeederClubId": null,
+      "Balance": 539000,
+      "CompetitionSplitParameters": [
+        {
+          "Name": "VV",
+          "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
+        }
+      ]
+    },
+    "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+    "Country": {
+      "Id": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
+      "Name": "Belgium"
+    },
+    "PointsPerYear": {
+      "2043": 0
+    }
+  },
+  {
+    "ClubId": "a058d0e0-e7eb-4e92-8191-cf8c04d0d111",
+    "Club": {
+      "Name": "Manchester City",
+      "Strength": 20,
+      "Id": "a058d0e0-e7eb-4e92-8191-cf8c04d0d111",
+      "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "FeederClubId": null,
+      "Balance": 1080000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+    "Country": {
+      "Id": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "Name": "Engeland"
+    },
+    "PointsPerYear": {
+      "2044": 4
+    }
   }
 ]
