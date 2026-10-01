@@ -111,6 +111,7 @@ namespace FootballFull.Services
         {
             while (true)
             {
+                ShowNews(_currentDate, _competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id);
                 var dashboard = CreateDashboard();
 
                 var choice = _gameUI.ShowMainMenu(dashboard);
@@ -342,14 +343,17 @@ namespace FootballFull.Services
 
             if (!options.CanAddClub && !options.CanCreateLowerDivision)
             {
-                ShowMessage(options.CannotAddClubReason);
+                _gameUI.ShowMessage("ERROR", options.CannotAddClubReason);
                 return;
             }
 
             if (options.CanCreateLowerDivision &&
-                AskToCreateLowerDivision())
+                _gameUI.AskToCreateLowerDivision())
             {
-                var numberOfClubs = AskNumberOfClubs(options.CurrentClubCount);
+                var numberOfClubs = _gameUI.AskForClubsToMove(
+                    maximumClubsToMove: options.CurrentClubCount - 2,
+                    currentClubCount: options.CurrentClubCount,
+                    minimumClubsToMove: 2);
 
                 _endOfSeasonService.CreateLowerDivision(
                     _userCountryId,
@@ -363,16 +367,12 @@ namespace FootballFull.Services
 
             if (!options.CanAddClub)
             {
-                ShowMessage(options.CannotAddClubReason);
+                _gameUI.ShowMessage("ERROR", options.CannotAddClubReason);
                 return;
             }
 
-            Console.WriteLine("Wil je een nieuwe club toevoegen? Kostprijs {0} (y/n)", Configuration.NewClubCost);
-            var input = Console.ReadLine();
-            if (input?.ToLower() != "y")
-            {
+            if (!_gameUI.AskYesNoQuestion($"Wil je een nieuwe club toevoegen? Kostprijs {Configuration.NewClubCost} (y/n)", defaultAnswer: false))
                 return;
-            }
 
             var applicants = _endOfSeasonService.GetApplicantClubs(
                 _userCountryId,
@@ -381,16 +381,13 @@ namespace FootballFull.Services
 
             while (applicants.Count < 3)
             {
-                Console.Clear();
-                Console.WriteLine(
-                    $"Er zijn nog {3 - applicants.Count} kandidaat-club(s) nodig.");
+                _gameUI.ShowMessage("Er zijn nog kandidaat-clubs nodig.", $"Er zijn nog {3 - applicants.Count} kandidaat-club(s) nodig.");
 
-                Console.Write("Geef de naam van de nieuwe club: ");
-                var clubName = Console.ReadLine();
+                var clubName = _gameUI.AskForInput("Geef de naam van de nieuwe club: ", "");
 
                 if (string.IsNullOrWhiteSpace(clubName))
                 {
-                    ShowMessage("De naam van een club mag niet leeg zijn.");
+                    _gameUI.ShowMessage("ERROR","De naam van een club mag niet leeg zijn.");
                     continue;
                 }
 
@@ -401,7 +398,7 @@ namespace FootballFull.Services
                 applicants.Add(newClub);
             }
 
-            var selectedClub = AskPlayerToSelectClub(applicants);
+            var selectedClub = _gameUI.AskPlayerToSelectClub(applicants);
 
             _endOfSeasonService.AdmitClub(
                 _userCountryId,
@@ -409,173 +406,20 @@ namespace FootballFull.Services
                 footballAssociation);
         }
 
-        private Club AskPlayerToSelectClub(IList<Club> applicants)
-        {
-            if (applicants == null || applicants.Count == 0)
-                throw new ArgumentException(
-                    "Er zijn geen kandidaat-clubs beschikbaar.",
-                    nameof(applicants));
 
-            while (true)
-            {
-                Console.Clear();
-                Console.WriteLine("=== Aanvragen van clubs ===");
-                Console.WriteLine();
-                Console.WriteLine(
-                    "De volgende clubs willen toetreden tot de competitie:");
-                Console.WriteLine();
-
-                for (var i = 0; i < applicants.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {applicants[i].Name}");
-                }
-
-                Console.WriteLine();
-                Console.Write(
-                    $"Kies een club (1-{applicants.Count}): ");
-
-                var input = Console.ReadLine();
-
-                if (int.TryParse(input, out var selectedNumber) &&
-                    selectedNumber >= 1 &&
-                    selectedNumber <= applicants.Count)
-                {
-                    return applicants[selectedNumber - 1];
-                }
-
-                Console.WriteLine();
-                Console.WriteLine(
-                    "Ongeldige keuze. Kies een nummer uit de lijst.");
-                Console.WriteLine("Druk op een toets om opnieuw te proberen...");
-                Console.ReadKey(true);
-            }
-        }
-
-        private int AskNumberOfClubs(int currentClubCount)
-        {
-            const int minimumClubsPerDivision = 2;
-
-            var minimumClubsToMove = minimumClubsPerDivision;
-            var maximumClubsToMove =
-                currentClubCount - minimumClubsPerDivision;
-
-            if (maximumClubsToMove < minimumClubsToMove)
-            {
-                throw new InvalidOperationException(
-                    "Er zijn onvoldoende clubs om twee geldige divisies te maken.");
-            }
-
-            while (true)
-            {
-                Console.Clear();
-                Console.WriteLine("=== Lagere divisie oprichten ===");
-                Console.WriteLine();
-                Console.WriteLine(
-                    $"Er zijn momenteel {currentClubCount} clubs.");
-                Console.WriteLine(
-                    "De laagst geklasseerde clubs worden naar Division 2 verplaatst.");
-                Console.WriteLine();
-                Console.WriteLine(
-                    $"Je kan tussen {minimumClubsToMove} en " +
-                    $"{maximumClubsToMove} clubs verplaatsen.");
-                Console.WriteLine();
-
-                Console.Write("Hoeveel clubs wil je verplaatsen? ");
-                var input = Console.ReadLine();
-
-                if (int.TryParse(input, out var numberOfClubs) &&
-                    numberOfClubs >= minimumClubsToMove &&
-                    numberOfClubs <= maximumClubsToMove)
-                {
-                    return numberOfClubs;
-                }
-
-                Console.WriteLine();
-                Console.WriteLine(
-                    $"Voer een getal in tussen {minimumClubsToMove} " +
-                    $"en {maximumClubsToMove}.");
-                Console.WriteLine("Druk op een toets om opnieuw te proberen...");
-                Console.ReadKey(true);
-            }
-
-        }
-
-        private bool AskToCreateLowerDivision()
-        {
-            while (true)
-            {
-                Console.Clear();
-                Console.WriteLine("=== Einde van het seizoen ===");
-                Console.WriteLine();
-                Console.WriteLine("Je kan dit seizoen:");
-                Console.WriteLine();
-                Console.WriteLine("[E] Een extra club toelaten");
-                Console.WriteLine("[L] Een lagere divisie oprichten");
-                Console.WriteLine();
-                Console.Write("Maak een keuze: ");
-
-                var key = Console.ReadKey(true);
-
-                switch (key.Key)
-                {
-                    case ConsoleKey.E:
-                        return false;
-
-                    case ConsoleKey.L:
-                        return true;
-
-                    default:
-                        Console.WriteLine();
-                        Console.WriteLine(
-                            "Ongeldige keuze. Kies E of L.");
-                        Console.WriteLine(
-                            "Druk op een toets om opnieuw te proberen...");
-                        Console.ReadKey(true);
-                        break;
-                }
-            }
-        }
-
-        private void ShowMessage(string? message)
-        {
-            Console.Clear();
-            Console.WriteLine("=== Einde van het seizoen ===");
-            Console.WriteLine();
-
-            Console.WriteLine(
-                string.IsNullOrWhiteSpace(message)
-                    ? "Deze actie is momenteel niet beschikbaar."
-                    : message);
-
-            Console.WriteLine();
-            Console.WriteLine("Druk op een toets om verder te gaan...");
-            Console.ReadKey(true);
-        }
 
         private void ShowNews(DateTime date, Guid competitionId)
         {
-            Console.Clear();
-            var countryId = _userCountryId;
 
             // Eén query, maar we vermijden dubbele enumeratie door te materializen als nodig
             var matches = _seasonService.NewsMessages.Where(nm =>
-                nm.CountryId == countryId &&
+                nm.CountryId == _userCountryId &&
                 nm.CompetitionId == competitionId &&
                 nm.Date == date);
 
-            using var enumerator = matches.GetEnumerator();
-            if (!enumerator.MoveNext())
-                return; // geen nieuws -> meteen klaar (scheelt ook een ReadKey)
+            _gameUI.ShowNews(matches.ToList());
 
-            // eerste item is er al
-            do
-            {
-                Console.WriteLine(enumerator.Current.Message);
-            }
-            while (enumerator.MoveNext());
 
-            Console.WriteLine("Press any key to continue.");
-            Console.ReadKey(true);
         }
 
 
@@ -618,10 +462,6 @@ namespace FootballFull.Services
                 {
                     if (fixture.HomeTeamId != Guid.Empty && fixture.AwayTeamId != Guid.Empty)
                     {
-
-                        if (fixture.HomeTeamId == _userCountryId || fixture.AwayTeamId == _userCountryId)
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-
                         var homeTier = GetClubTier(fixture.HomeTeamId);
                         var awayTier = GetClubTier(fixture.AwayTeamId);
 
@@ -871,68 +711,54 @@ namespace FootballFull.Services
         private Guid ChoosePlayerCompetition()
         {
             var countries = _countryService.GetCountries();
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("Kies het land of kies 0 voor een compleet nieuw land:");
-                for (int i = 0; i < countries.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {countries[i].Name}");
-                }
-                Console.Write("\nGeef het nummer van het land: ");
-                var input = Console.ReadLine();
 
-                if (int.TryParse(input, out int chosenIndex) && chosenIndex > 0 && chosenIndex <= countries.Count)
+            while (true)
+            {
+                var chosenIndex = _gameUI.AskPlayerToSelectCountry(countries);
+
+                // Bestaand land
+                if (chosenIndex > 0 && chosenIndex <= countries.Count)
                 {
-                    var chosenCountry = countries[chosenIndex - 1].Id;
-                    do
-                    {
-                        Console.Clear();
-                        Console.WriteLine($"Je hebt gekozen: {countries[chosenIndex - 1].Name}");
-                        return chosenCountry;
-                    } while (true);
+                    var chosenCountry = countries[chosenIndex - 1];
+
+                    _gameUI.ShowMessage("Keuze", $"Je hebt gekozen: {chosenCountry.Name}");
+
+                    return chosenCountry.Id;
                 }
-                else if (chosenIndex == 0)
+
+                // Nieuw land
+                if (chosenIndex == 0)
                 {
-                    Console.Clear();
-                    Console.WriteLine("Je hebt gekozen voor een compleet nieuw land.");
-                    Console.Write("Geef de naam van het nieuwe land: ");
-                    var newCountryName = Console.ReadLine();
-                    _userCountryId = Guid.NewGuid();
-                    _countryService.Add(new Country { Name = newCountryName, Id = _userCountryId });
+                    var newCountryName = _gameUI.AskNewCountryName();
+
+                    var newCountry = new Country
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = newCountryName
+                    };
+
+                    _countryService.Add(newCountry);
+
+                    _userCountryId = newCountry.Id;
+
+                    _gameUI.ShowMessage(
+                        "Nieuw land aangemaakt",
+                        $"Nieuw land '{newCountry.Name}' werd aangemaakt.");
 
                     CreateStarterClubs();
 
-                    return _userCountryId;
+                    return newCountry.Id;
                 }
-            } while (true);
+
+                _gameUI.ShowMessage("Ongeldige keuze", "Ongeldige keuze. Probeer opnieuw.");
+            }
         }
 
         private void CreateStarterClubs()
         {
-            Console.WriteLine("Geef de namen van de starterclubs:");
-            Console.Write("Club 1: ");
-            var club1Name = Console.ReadLine();
-            _clubService.Add(new Club { Name = club1Name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
-            Console.Write("Club 2: ");
-            var club2Name = Console.ReadLine();
-            _clubService.Add(new Club { Name = club2Name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
-
-            Console.Write("Club 3: ");
-            var club3Name = Console.ReadLine();
-            _clubService.Add(new Club { Name = club3Name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
-
-            Console.Write("Club 4: ");
-            var club4Name = Console.ReadLine();
-            _clubService.Add(new Club { Name = club4Name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
-            Console.Write("Club 5: ");
-            var club5Name = Console.ReadLine();
-            _clubService.Add(new Club { Name = club5Name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
-
-            Console.Write("Club 6: ");
-            var club6Name = Console.ReadLine();
-            _clubService.Add(new Club { Name = club6Name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
-
+            var starterClubNames = _gameUI.AskStarterClubNames(6);
+            foreach(var name in starterClubNames)
+                _clubService.Add(new Club { Name = name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
         }
         #endregion
     }

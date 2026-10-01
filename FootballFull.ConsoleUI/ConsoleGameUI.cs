@@ -1,6 +1,7 @@
 ﻿using FootballFull.Models;
 using FootballFull.Services.UI;
 using FootballFull.Services.UI.ViewModels;
+using System.Text.RegularExpressions;
 
 namespace FootballFull.ConsoleUI
 {
@@ -289,6 +290,227 @@ namespace FootballFull.ConsoleUI
             Console.WriteLine($"Reputation: {seasonFinancialResult.FootballAssociation.Reputation} ({seasonFinancialResult.FootballAssociation.ReputationDescription})");
             if( waitForUser ) Console.ReadLine();
             
+        }
+
+        public Club AskPlayerToSelectClub(IList<Club> applicants)
+        {
+            if (applicants == null || applicants.Count == 0)
+                throw new ArgumentException(
+                    "Er zijn geen kandidaat-clubs beschikbaar.",
+                    nameof(applicants));
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("=== Aanvragen van clubs ===");
+                Console.WriteLine();
+                Console.WriteLine(
+                    "De volgende clubs willen toetreden tot de competitie:");
+                Console.WriteLine();
+
+                for (var i = 0; i < applicants.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {applicants[i].Name}");
+                }
+
+                Console.WriteLine();
+                Console.Write(
+                    $"Kies een club (1-{applicants.Count}): ");
+
+                var input = Console.ReadLine();
+
+                if (int.TryParse(input, out var selectedNumber) &&
+                    selectedNumber >= 1 &&
+                    selectedNumber <= applicants.Count)
+                {
+                    return applicants[selectedNumber - 1];
+                }
+
+                Console.WriteLine();
+                Console.WriteLine(
+                    "Ongeldige keuze. Kies een nummer uit de lijst.");
+                Console.WriteLine("Druk op een toets om opnieuw te proberen...");
+                Console.ReadKey(true);
+            }
+        }
+
+        public bool AskYesNoQuestion(string question, bool defaultAnswer = false)
+        {
+            Console.WriteLine(question);
+            var input = Console.ReadLine()?.ToLower();
+            return input == "y" || (input == "" && defaultAnswer);
+        }
+
+        public string AskForInput(string question, string defaultAnswer = "")
+        {
+            Console.WriteLine(question);
+            var input = Console.ReadLine();
+            return string.IsNullOrEmpty(input) ? defaultAnswer : input;
+        }
+
+        public int AskForClubsToMove(int maximumClubsToMove, int currentClubCount, int minimumClubsToMove = 0)
+        {
+            if (maximumClubsToMove < minimumClubsToMove)
+            {
+                throw new InvalidOperationException(
+                    "Er zijn onvoldoende clubs om twee geldige divisies te maken.");
+            }
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("=== Lagere divisie oprichten ===");
+                Console.WriteLine();
+                Console.WriteLine(
+                    $"Er zijn momenteel {currentClubCount} clubs.");
+                Console.WriteLine(
+                    "De laagst geklasseerde clubs worden naar Division 2 verplaatst.");
+                Console.WriteLine();
+                Console.WriteLine(
+                    $"Je kan tussen {minimumClubsToMove} en " +
+                    $"{maximumClubsToMove} clubs verplaatsen.");
+                Console.WriteLine();
+
+                Console.Write("Hoeveel clubs wil je verplaatsen? ");
+                var input = Console.ReadLine();
+
+                if (int.TryParse(input, out var numberOfClubs) &&
+                    numberOfClubs >= minimumClubsToMove &&
+                    numberOfClubs <= maximumClubsToMove)
+                {
+                    return numberOfClubs;
+                }
+
+                Console.WriteLine();
+                Console.WriteLine(
+                    $"Voer een getal in tussen {minimumClubsToMove} " +
+                    $"en {maximumClubsToMove}.");
+                Console.WriteLine("Druk op een toets om opnieuw te proberen...");
+                Console.ReadKey(true);
+            }
+        }
+
+        public bool AskToCreateLowerDivision()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("=== Einde van het seizoen ===");
+                Console.WriteLine();
+                Console.WriteLine("Je kan dit seizoen:");
+                Console.WriteLine();
+                Console.WriteLine("[E] Een extra club toelaten");
+                Console.WriteLine("[L] Een lagere divisie oprichten");
+                Console.WriteLine();
+                Console.Write("Maak een keuze: ");
+
+                var key = Console.ReadKey(true);
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.E:
+                        return false;
+
+                    case ConsoleKey.L:
+                        return true;
+
+                    default:
+                        Console.WriteLine();
+                        Console.WriteLine(
+                            "Ongeldige keuze. Kies E of L.");
+                        Console.WriteLine(
+                            "Druk op een toets om opnieuw te proberen...");
+                        Console.ReadKey(true);
+                        break;
+                }
+            }
+        }
+
+        public IList<string> AskStarterClubNames(int numberOfClubs)
+        {
+            var clubNames = new List<string>();
+            Console.WriteLine("Geef de namen van de starterclubs:");
+            Console.Write("Club 1: ");
+            clubNames.Add(Console.ReadLine());
+
+            Console.Write("Club 2: ");
+            clubNames.Add(Console.ReadLine());
+
+            Console.Write("Club 3: ");
+            clubNames.Add(Console.ReadLine());
+
+            Console.Write("Club 4: ");
+            clubNames.Add(Console.ReadLine());
+
+            Console.Write("Club 5: ");
+            clubNames.Add(Console.ReadLine());
+
+            Console.Write("Club 6: ");
+            clubNames.Add(Console.ReadLine());
+            
+            return clubNames;
+        }
+
+        public int AskPlayerToSelectCountry(IList<Country> countries)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Kies het land of kies 0 voor een compleet nieuw land:");
+                Console.WriteLine();
+
+                for (int i = 0; i < countries.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {countries[i].Name}");
+                }
+
+                Console.Write("\nGeef het nummer van het land: ");
+
+                if (int.TryParse(Console.ReadLine(), out var chosenIndex) &&
+                    chosenIndex >= 0 &&
+                    chosenIndex <= countries.Count)
+                {
+                    return chosenIndex;
+                }
+
+                Console.WriteLine("Ongeldige keuze. Druk op een toets om opnieuw te proberen.");
+                Console.ReadKey();
+            }
+        }
+
+        public string AskNewCountryName()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Je hebt gekozen voor een compleet nieuw land.");
+                Console.Write("Geef de naam van het nieuwe land: ");
+
+                var name = Console.ReadLine()?.Trim();
+
+                if (!string.IsNullOrWhiteSpace(name))
+                    return name;
+
+                Console.WriteLine("De naam mag niet leeg zijn.");
+                Console.ReadKey();
+            }
+        }
+
+        public void ShowNews(IList<NewsMessage> news)
+        {
+            using var enumerator = news.GetEnumerator();
+            if (!enumerator.MoveNext())
+                return; // geen nieuws -> meteen klaar (scheelt ook een ReadKey)
+
+            // eerste item is er al
+            do
+            {
+                Console.WriteLine(enumerator.Current.Message);
+            }
+            while (enumerator.MoveNext());
+
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey(true);
         }
     }
 }
