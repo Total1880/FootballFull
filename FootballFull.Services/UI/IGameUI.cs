@@ -11,4 +11,5 @@ public interface IGameUI
     void ShowMessage(string title, string message, bool waitForUser = false);
     void ShowResults(List<Fixture> fixtures, bool waitForUser = false);
     void ShowFixtures(List<Fixture> fixtures, bool waitForUser = false);
+    Competition ChooseCompetitions(List<Competition> competitions);
 }

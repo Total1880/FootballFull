@@ -130,6 +130,9 @@ namespace FootballFull.Services
                         if (gamesToShow != null && gamesToShow.InternationalCompetition)
                             _gameUI.ShowResults(GetResult(_competitions.First(_ => _.Type == CompetitionType.International).Id, _currentDate), true);
                         break;
+                    case MainMenuChoice.ShowOtherCompetitions:
+                        _gameUI.ShowTable(CreateTableDashBoard(_gameUI.ChooseCompetitions(_competitions.Where(_ => _.Id != _competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id).ToList()).Id), true);
+                        break;
 
                     case MainMenuChoice.Save:
                         _seasonService.SaveGame();

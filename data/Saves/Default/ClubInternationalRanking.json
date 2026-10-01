@@ -635,5 +635,23 @@
     "PointsPerYear": {
       "2044": 4
     }
+  },
+  {
+    "ClubId": "dbbe91cf-3562-4b60-b4a6-63cc83cfffb9",
+    "Club": {
+      "Name": "Brighton",
+      "Strength": 17,
+      "Id": "dbbe91cf-3562-4b60-b4a6-63cc83cfffb9",
+      "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "FeederClubId": null,
+      "Balance": 1553000,
+      "CompetitionSplitParameters": []
+    },
+    "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+    "Country": {
+      "Id": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
+      "Name": "Engeland"
+    },
+    "PointsPerYear": {}
   }
 ]

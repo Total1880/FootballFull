@@ -10,7 +10,7 @@ namespace FootballFull.ConsoleUI
         {
             if (fixtures == null || fixtures.Count == 0)
             {
-                Console.WriteLine("Geen volgende competitiewedstrijd gevonden."); 
+                Console.WriteLine("Geen volgende competitiewedstrijd gevonden.");
                 return;
             }
             Console.WriteLine(new string('-', 40));
@@ -54,6 +54,7 @@ namespace FootballFull.ConsoleUI
 
                 Console.WriteLine();
                 Console.WriteLine("[1] Verder naar volgende speeldag");
+                Console.WriteLine("[2] Andere competities");
                 Console.WriteLine("[S] Opslaan");
                 Console.WriteLine("[X] Opslaan en afsluiten");
                 Console.WriteLine();
@@ -64,6 +65,9 @@ namespace FootballFull.ConsoleUI
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
                         return MainMenuChoice.Continue;
+                    case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
+                        return MainMenuChoice.ShowOtherCompetitions;
                     case ConsoleKey.S:
                         return MainMenuChoice.Save;
                     case ConsoleKey.X:
@@ -84,6 +88,32 @@ namespace FootballFull.ConsoleUI
                 Console.WriteLine("Druk op een toets om verder te gaan...");
                 Console.ReadKey(true);
             }
+        }
+
+        public Competition ChooseCompetitions(List<Competition> competitions)
+        {
+            var counter = 0;
+            Console.Clear();
+            Console.WriteLine("=== Andere Competities ===");
+            Console.WriteLine();
+
+            foreach (var comp in competitions)
+            {
+                counter++;
+                Console.WriteLine($"{counter}. {comp.Name}");
+            }
+            Console.WriteLine();
+            Console.Write("Kies een competitie:");
+
+
+            Console.WriteLine();
+            var choice = Console.ReadLine();
+            if (int.TryParse(choice, out int selectedIndex) && selectedIndex >= 1 && selectedIndex <= competitions.Count)
+            {
+                return competitions[selectedIndex - 1];
+            }
+
+            return null;
         }
 
         public void ShowResults(List<Fixture> fixtures, bool waitForUser)
