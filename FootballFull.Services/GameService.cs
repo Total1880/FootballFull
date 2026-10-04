@@ -442,6 +442,8 @@ namespace FootballFull.Services
             if (!_cupFixtures.Any(_ => _.MatchDay == date))
                 return false;
 
+            var UserCountryCupPlayed = false;
+
             var cupCompetitions = _competitions
                 .Where(_ => _.Type == Competition.CompetitionType.Cup)
                 .ToList();
@@ -454,6 +456,9 @@ namespace FootballFull.Services
 
                 if (fixturesForCompetition.Count == 0)
                     continue;
+
+                if (fixturesForCompetition.Any(_ => _.HomeTeam?.CountryId == _userCountryId || _.AwayTeam?.CountryId == _userCountryId))
+                    UserCountryCupPlayed = true;
 
                 foreach (var fixture in fixturesForCompetition)
                 {
@@ -499,7 +504,7 @@ namespace FootballFull.Services
                     }
                 }
             }
-            return true;
+            return UserCountryCupPlayed;
         }
 
         private bool PlayInternationalGames(DateTime date)
