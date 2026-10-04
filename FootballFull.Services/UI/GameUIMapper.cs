@@ -41,6 +41,17 @@ internal static class GameUIMapper
             ClubsParticipatingPerYear = new Dictionary<int, int>(x.ClubsParticipatingPerYear),
             RawPointsPerYear = new Dictionary<int, int>(x.RawPointsPerYear)
         }).ToList();
+    public static List<ClubDevelopmentViewModel> ClubDevelopment(IEnumerable<Club> clubs) =>
+        clubs.Where(c => c.LastSeasonFinancialResult != null).OrderBy(c => c.Name)
+            .Select(c => new ClubDevelopmentViewModel
+            {
+                ClubName = c.Name, NetResult = c.LastSeasonFinancialResult!.NetResult,
+                Investment = c.LastSeasonFinancialResult.DevelopmentInvestment,
+                Balance = c.Balance, DevelopmentBudget = c.DevelopmentBudget,
+                StrengthBefore = c.LastSeasonFinancialResult.StrengthBefore,
+                StrengthAfter = c.LastSeasonFinancialResult.StrengthAfter,
+                Reason = c.LastSeasonFinancialResult.DevelopmentReason
+            }).ToList();
     public static List<NewsMessageViewModel> News(IEnumerable<NewsMessage> items) =>
         items.Select(x => new NewsMessageViewModel { Message = x.Message, Date = x.Date }).ToList();
 }

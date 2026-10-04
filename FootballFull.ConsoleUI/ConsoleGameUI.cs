@@ -494,6 +494,26 @@ namespace FootballFull.ConsoleUI
             }
         }
 
+        public void ShowClubDevelopment(IReadOnlyList<ClubDevelopmentViewModel> clubs, bool waitForUser = false)
+        {
+            Console.Clear();
+            Console.WriteLine("=== Clubfinanciën en ontwikkeling ===");
+            Console.WriteLine("Een deel van de winst wordt gereserveerd voor ontwikkeling; investeren kost geld.");
+            Console.WriteLine();
+            foreach (var club in clubs)
+            {
+                Console.WriteLine($"{club.ClubName}: strength {club.StrengthBefore} -> {club.StrengthAfter}");
+                Console.WriteLine($"  Resultaat: {club.NetResult:N0} | Investering: {club.Investment:N0} | Saldo: {club.Balance:N0}");
+                Console.WriteLine($"  Gereserveerd budget: {club.DevelopmentBudget:N0} | {club.Reason}");
+                Console.WriteLine();
+            }
+            if (waitForUser)
+            {
+                Console.WriteLine("Druk op een toets om verder te gaan.");
+                Console.ReadKey(true);
+            }
+        }
+
         public void ShowNews(IReadOnlyList<NewsMessageViewModel> news)
         {
             using var enumerator = news.GetEnumerator();

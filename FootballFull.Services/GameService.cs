@@ -271,7 +271,9 @@ namespace FootballFull.Services
             _gameUI.ShowSeasonFinancialResult(GameUIMapper.Finances(CalculateSeasonFinancialResult()), true);
             CalculateClubFinancialResults();
             _strengthService.RecalculateClubStrengths();
-            _strengthService.RecalculateCompetitionStrengths(_seasonService.Year);
+            var developedClubs = _clubService.GetClubs()
+                .Where(c => c.CountryId == _userCountryId && c.LastSeasonFinancialResult != null);
+            _gameUI.ShowClubDevelopment(GameUIMapper.ClubDevelopment(developedClubs), true);
             _gameUI.ShowSeasonEvent(GameUIMapper.Event(Events()), true);
             EndOfSeasonChoices();
 
@@ -280,6 +282,7 @@ namespace FootballFull.Services
             _currentDate = new DateTime(_year, 7, 1);
             _newSeasonDate = _currentDate.AddYears(1);
             _clubsPerCompetition = _seasonService.InitializeNewSeason(_year);
+            _strengthService.RecalculateCompetitionStrengths(_year);
             _competitions = _competitionService.GetCompetitions();
             _fixtures = _fixtureService.Generate(_clubsPerCompetition, _currentDate);
             _cupFixtures = _seasonService.InitializeNationalCups(_currentDate);

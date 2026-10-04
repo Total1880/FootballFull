@@ -1,4 +1,4 @@
-﻿using FootballFull.Models;
+using FootballFull.Models;
 using FootballFull.Services.Interfaces;
 using OlavFramework;
 using System;
@@ -307,12 +307,22 @@ namespace FootballFull.Services
                 _clubPerCompetitionService
                     .GetAllClubPerCompetitionForCountry(countryId);
 
-            foreach (var cpc in clubsPerCompetition)
+            // A club can also appear in cups or split phases: book one domestic league season.
+            var leagues = _competitionService.GetCompetitionsForCountry(countryId)
+                .Where(c => c.Type == Competition.CompetitionType.League)
+                .ToDictionary(c => c.Id);
+            var memberships = clubsPerCompetition
+                .Where(cpc => leagues.ContainsKey(cpc.CompetitionId))
+                .OrderBy(cpc => leagues[cpc.CompetitionId].Tier)
+                .GroupBy(cpc => cpc.ClubId)
+                .Select(group => group.First());
+
+            foreach (var cpc in memberships)
             {
                 var club = _clubService.GetClubById(cpc.ClubId);
-                var competition =
-                    _competitionService.GetCompetitionById(
-                        cpc.CompetitionId);
+                var competition = leagues[cpc.CompetitionId];
+                if (club == null)
+                    continue;
 
                 var result =
                     _clubFinancialService.CalculateSeasonResult(
@@ -320,6 +330,7 @@ namespace FootballFull.Services
                         competition);
 
                 club.Balance += result.NetResult;
+                club.LastSeasonFinancialResult = result;
 
                 _clubService.Update(club);
             }

@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace FootballFull.Models
 {
@@ -11,6 +11,9 @@ namespace FootballFull.Models
         public Guid CountryId { get; set; }
         public Guid? FeederClubId { get; set; }
         public decimal Balance { get; set; }
+        // Earmarked cash, included in Balance until it is actually invested.
+        public decimal DevelopmentBudget { get; set; }
+        public ClubFinancialResult? LastSeasonFinancialResult { get; set; }
         public List<CompetitionSplitParameters> CompetitionSplitParameters { get; set; } = new List<CompetitionSplitParameters>();
         [JsonIgnore]
         public string Last5Games { get; set; }

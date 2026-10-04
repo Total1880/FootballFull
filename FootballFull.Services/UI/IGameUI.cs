@@ -24,5 +24,6 @@ public interface IGameUI
     IList<string> AskStarterClubNames(int numberOfClubs);
     int AskPlayerToSelectCountry(IReadOnlyList<SelectionOptionViewModel> countries);
     string AskNewCountryName();
+    void ShowClubDevelopment(IReadOnlyList<ClubDevelopmentViewModel> clubs, bool waitForUser = false);
     void ShowNews(IReadOnlyList<NewsMessageViewModel> news);
 }

@@ -1,4 +1,4 @@
-﻿namespace OlavFramework
+namespace OlavFramework
 {
     public static class Configuration
     {
@@ -20,6 +20,12 @@
         public static decimal ClubRevenueMultiplier = 5_000m;
         public static decimal BasicClubSeasonExpenses = 40_000m;
         public static decimal ClubExpenseMultiplier = 12_000m;
+
+        public static decimal ClubDevelopmentProfitShare = 0.50m;
+        public static decimal ClubDevelopmentBaseCost = 20_000m;
+        public static decimal ClubDevelopmentStrengthCost = 5_000m;
+        public static decimal ClubSignificantLossRatio = 0.10m;
+        public static decimal ClubCriticalDebtThreshold = 100_000m;
 
         public static decimal LowerDivisionCost = 100000;
 

@@ -1,38 +1,33 @@
-﻿using FootballFull.Models;
-using FootballFull.Repositories;
+using FootballFull.Models;
 using FootballFull.Services.Interfaces;
 using OlavFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FootballFull.Services
 {
     public class StrengthService : IStrengthService
     {
-        private IClubService _clubService;
-        private ICompetitionService _competitionService;
-        private IClubLeagueCompetitionService _clubLeagueCompetitionService;
-        private IClubInternationalRankingService _clubInternationalRankingService;
+        private readonly IClubService _clubService;
+        private readonly ICompetitionService _competitionService;
+        private readonly IClubLeagueCompetitionService _clubLeagueCompetitionService;
+        private readonly IClubPerCompetitionService _clubPerCompetitionService;
 
         public StrengthService(
             IClubService clubService, 
             ICompetitionService competitionService, 
             IClubLeagueCompetitionService clubLeagueCompetitionService, 
-            IClubInternationalRankingService clubInternationalRankingService)
+            IClubPerCompetitionService clubPerCompetitionService)
         {
             _clubService = clubService;
             _competitionService = competitionService;
             _clubLeagueCompetitionService = clubLeagueCompetitionService;
-            _clubInternationalRankingService = clubInternationalRankingService;
+            _clubPerCompetitionService = clubPerCompetitionService;
         }
         public void RecalculateClubStrengths()
         {
             var competitions = _competitionService.GetCompetitions().Where(c => c.Type == Competition.CompetitionType.League).ToList();
 
-            foreach (var competition in competitions)
+            var processedClubs = new HashSet<Guid>();
+            foreach (var competition in competitions.OrderBy(c => c.Tier))
             {
                 var list = _clubLeagueCompetitionService.GetClubLeagueCompetitionsByCompetitionId(competition.Id);
                 var ranked = _clubLeagueCompetitionService.GetOrderedRanking(list.ToList()).ToList();
@@ -41,6 +36,8 @@ namespace FootballFull.Services
                 for (int i = 0; i < teamCount; i++)
                 {
                     var entry = ranked[i];
+                    if (!processedClubs.Add(entry.ClubId))
+                        continue;
                     int position = i + 1;
                     double percentile = position / (double)teamCount;
 
@@ -57,22 +54,14 @@ namespace FootballFull.Services
                     if (club == null)
                         continue;
 
-                    var competitionStrength = _competitionService.GetCompetitions()
-                        .First(c => c.Id == entry.CompetitionId).Strength;
+                    var competitionStrength = competition.Strength;
 
-                    if (delta < 0 && club.Strength + 3 <= competitionStrength)
-                        if (club.Strength + 5 <= competitionStrength)
-                            delta = 1;
+                    if (delta < 0 && club.Strength + 5 <= competitionStrength)
+                        delta = 1;
+                    else if (delta > 0 && club.Strength - 5 >= competitionStrength)
+                        delta = -1;
 
-                    if (delta > 0 && club.Strength - 3 >= competitionStrength)
-                        if (club.Strength - 5 >= competitionStrength)
-                            delta = -1;
-
-                    var newStrength = club.Strength + ApplyFinancialModifier(club, delta);
-                    if (newStrength < Configuration.MinStrength) newStrength = Configuration.MinStrength;
-                    if (newStrength > Configuration.MaxStrength) newStrength = Configuration.MaxStrength;
-
-                    club.Strength = newStrength;
+                    ClubDevelopment.Apply(club, delta);
                     _clubService.Update(club);
                 }
             }
@@ -80,44 +69,19 @@ namespace FootballFull.Services
 
         public void RecalculateCompetitionStrengths(int year)
         {
-            var initial = Configuration.MaxStrength - Configuration.MinStrength;
-            var countryRankings = _clubInternationalRankingService.GetAll()
-.GroupBy(c => c.CountryId)
-.Select(g => new
-{
-    CountryId = g.Key,
-    PointsPerClub = g.Average(c => c.TotalPoints(year)) // = totaal / aantal clubs
-})
-.OrderByDescending(x => x.PointsPerClub)
-.ToList();
-
-            var competitions = _competitionService.GetCompetitions().Where(_ => _.Type == Competition.CompetitionType.League);
-            foreach (var country in countryRankings)
+            // Strength follows the participating clubs; coefficients still determine international rankings.
+            foreach (var competition in _competitionService.GetCompetitions()
+                .Where(c => c.Type == Competition.CompetitionType.League))
             {
-                var current = initial;
-                var competitionsCountry = competitions.Where(_ => _.CountryId == country.CountryId).OrderBy(_ => _.Tier).ToList();
-                var step = current / (competitionsCountry.Count == 0 ? 1 : competitionsCountry.Count);
+                var clubs = _clubPerCompetitionService.GetClubsForCompetition(competition.Id);
+                if (clubs.Count == 0)
+                    continue;
 
-                foreach (var competition in competitionsCountry)
-                {
-                    competition.Strength = current;
-                    _competitionService.Update(competition);
-                    current -= step;
-
-                }
-                initial--;
+                competition.Strength = Math.Clamp(
+                    (int)Math.Round(clubs.Average(c => c.Strength), MidpointRounding.AwayFromZero),
+                    Configuration.MinStrength, Configuration.MaxStrength);
+                _competitionService.Update(competition);
             }
-        }
-
-        private int ApplyFinancialModifier(Club club, int sportingDelta)
-        {
-            if (club.Balance < 0 && sportingDelta > 0)
-                return 0;
-
-            if (club.Balance < -100_000)
-                return -1;
-
-            return sportingDelta;
         }
     }
 }
