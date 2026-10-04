@@ -1,4 +1,3 @@
-﻿using FootballFull.Models;
 using FootballFull.Services.UI;
 using FootballFull.Services.UI.ViewModels;
 using System.Text.RegularExpressions;
@@ -7,7 +6,7 @@ namespace FootballFull.ConsoleUI
 {
     public class ConsoleGameUI : IGameUI
     {
-        public void ShowFixtures(List<Fixture> fixtures, bool waitForUser)
+        public void ShowFixtures(IReadOnlyList<FixtureViewModel> fixtures, bool waitForUser)
         {
             if (fixtures == null || fixtures.Count == 0)
             {
@@ -19,7 +18,7 @@ namespace FootballFull.ConsoleUI
             Console.WriteLine();
             foreach (var f in fixtures)
             {
-                Console.WriteLine($"{f.HomeTeam.Name} vs {f.AwayTeam.Name}");
+                Console.WriteLine($"{f.HomeTeamName} vs {f.AwayTeamName}");
             }
             Console.WriteLine(new string('-', 40));
 
@@ -95,7 +94,7 @@ namespace FootballFull.ConsoleUI
             }
         }
 
-        public Competition ChooseCompetitions(List<Competition> competitions)
+        public Guid? ChooseCompetitions(IReadOnlyList<SelectionOptionViewModel> competitions)
         {
             var counter = 0;
             Console.Clear();
@@ -115,13 +114,13 @@ namespace FootballFull.ConsoleUI
             var choice = Console.ReadLine();
             if (int.TryParse(choice, out int selectedIndex) && selectedIndex >= 1 && selectedIndex <= competitions.Count)
             {
-                return competitions[selectedIndex - 1];
+                return competitions[selectedIndex - 1].Id;
             }
 
             return null;
         }
 
-        public void ShowResults(List<Fixture> fixtures, bool waitForUser)
+        public void ShowResults(IReadOnlyList<FixtureViewModel> fixtures, bool waitForUser)
         {
             if (fixtures == null || fixtures.Count == 0)
             {
@@ -129,8 +128,8 @@ namespace FootballFull.ConsoleUI
                 return;
             }
 
-            int homeWidth = fixtures.Max(f => f.HomeTeam.Name.Length) + 2;
-            int awayWidth = fixtures.Max(f => f.AwayTeam.Name.Length) + 2;
+            int homeWidth = fixtures.Max(f => f.HomeTeamName.Length) + 2;
+            int awayWidth = fixtures.Max(f => f.AwayTeamName.Length) + 2;
 
             Console.WriteLine(
                 $"{"Home Team".PadRight(homeWidth)}" +
@@ -145,9 +144,9 @@ namespace FootballFull.ConsoleUI
                 var score = $"{fixture.HomeScore} - {fixture.AwayScore}";
 
                 Console.WriteLine(
-                    $"{fixture.HomeTeam.Name.PadRight(homeWidth)}" +
+                    $"{fixture.HomeTeamName.PadRight(homeWidth)}" +
                     $"{score.PadRight(8)}" +
-                    $"{fixture.AwayTeam.Name.PadRight(awayWidth)}"
+                    $"{fixture.AwayTeamName.PadRight(awayWidth)}"
                 );
             }
 
@@ -190,11 +189,11 @@ namespace FootballFull.ConsoleUI
 
             var counter = 1;
 
-            foreach (var c in competitionTable.ClubLeagueCompetitions)
+            foreach (var c in competitionTable.Rows)
             {
                 Console.WriteLine(
                     $"{counter.ToString().PadRight(positionWidth)}" +
-                    $"{c.Club.Name.PadLeft(nameWidth)}" +
+                    $"{c.ClubName.PadLeft(nameWidth)}" +
                     $"{c.MatchesPlayed.ToString().PadLeft(gamesWidth)}" +
                     $"{c.Won.ToString().PadLeft(wonWidth)}" +
                     $"{c.Draw.ToString().PadLeft(drawWidth)}" +
@@ -213,7 +212,7 @@ namespace FootballFull.ConsoleUI
                 Console.ReadLine();
         }
 
-        public void ShowInternationRankings(List<CountryCoefficientRanking> rankings, int currentYear, bool waitForUser = false)
+        public void ShowInternationRankings(IReadOnlyList<CountryRankingViewModel> rankings, int currentYear, bool waitForUser = false)
         {
             if (rankings == null || !rankings.Any())
             {
@@ -234,7 +233,7 @@ namespace FootballFull.ConsoleUI
             int position = 1;
             foreach (var r in rankings)
             {
-                var countryName = r.Country?.Name ?? r.CountryId.ToString();
+                var countryName = r.CountryName;
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(
@@ -261,7 +260,7 @@ namespace FootballFull.ConsoleUI
             Console.ReadKey();
         }
 
-        public void ShowSeasonEvent(SeasonEvent seasonEvent, bool waitForUser = false)
+        public void ShowSeasonEvent(SeasonEventViewModel seasonEvent, bool waitForUser = false)
         {
             Console.Clear();
             Console.WriteLine(seasonEvent.Description);
@@ -271,10 +270,10 @@ namespace FootballFull.ConsoleUI
                 Console.ReadLine();
         }
 
-        public void ShowSeasonFinancialResult(SeasonFinancialResult seasonFinancialResult, bool waitForUser = false)
+        public void ShowSeasonFinancialResult(SeasonFinancialResultViewModel seasonFinancialResult, bool waitForUser = false)
         {
             Console.Clear();
-            Console.WriteLine($"=== Season Financial Result for {seasonFinancialResult.FootballAssociation.Name} ===");
+            Console.WriteLine($"=== Season Financial Result for {seasonFinancialResult.AssociationName} ===");
             Console.WriteLine($"Club Income: {seasonFinancialResult.ClubIncome:C}");
             Console.WriteLine($"Reputation Income: {seasonFinancialResult.ReputationIncome:C}");
             Console.WriteLine($"Bonus Income: {seasonFinancialResult.BonusIncome:C}");
@@ -284,15 +283,15 @@ namespace FootballFull.ConsoleUI
             Console.WriteLine($"Organisation Costs: {seasonFinancialResult.OrganisationCosts:C}");
             Console.WriteLine();
             Console.WriteLine($"Net Result: {seasonFinancialResult.NetResult:C}");
-            Console.WriteLine($" Balance: {seasonFinancialResult.FootballAssociation.Balance:C}");
+            Console.WriteLine($" Balance: {seasonFinancialResult.Balance:C}");
             Console.WriteLine();
             Console.WriteLine($"Reputation Change: {seasonFinancialResult.ReputationChange}");
-            Console.WriteLine($"Reputation: {seasonFinancialResult.FootballAssociation.Reputation} ({seasonFinancialResult.FootballAssociation.ReputationDescription})");
+            Console.WriteLine($"Reputation: {seasonFinancialResult.Reputation} ({seasonFinancialResult.ReputationDescription})");
             if( waitForUser ) Console.ReadLine();
             
         }
 
-        public Club AskPlayerToSelectClub(IList<Club> applicants)
+        public Guid AskPlayerToSelectClub(IReadOnlyList<SelectionOptionViewModel> applicants)
         {
             if (applicants == null || applicants.Count == 0)
                 throw new ArgumentException(
@@ -323,7 +322,7 @@ namespace FootballFull.ConsoleUI
                     selectedNumber >= 1 &&
                     selectedNumber <= applicants.Count)
                 {
-                    return applicants[selectedNumber - 1];
+                    return applicants[selectedNumber - 1].Id;
                 }
 
                 Console.WriteLine();
@@ -451,7 +450,7 @@ namespace FootballFull.ConsoleUI
             return clubNames;
         }
 
-        public int AskPlayerToSelectCountry(IList<Country> countries)
+        public int AskPlayerToSelectCountry(IReadOnlyList<SelectionOptionViewModel> countries)
         {
             while (true)
             {
@@ -496,7 +495,7 @@ namespace FootballFull.ConsoleUI
             }
         }
 
-        public void ShowNews(IList<NewsMessage> news)
+        public void ShowNews(IReadOnlyList<NewsMessageViewModel> news)
         {
             using var enumerator = news.GetEnumerator();
             if (!enumerator.MoveNext())

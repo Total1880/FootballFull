@@ -1,4 +1,4 @@
-﻿using FootballFull.Models;
+using FootballFull.Models;
 using FootballFull.Repositories;
 using FootballFull.Services.Interfaces;
 using FootballFull.Services.UI;
@@ -123,19 +123,23 @@ namespace FootballFull.Services
 
                         _gameUI.ShowTable(CreateTableDashBoard(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id));
                         if (gamesToShow != null && gamesToShow.LeagueCompetition)
-                            _gameUI.ShowResults(GetResult(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id, _currentDate));
-                        _gameUI.ShowFixtures(GetNextFixture(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id, _currentDate), true);
+                            _gameUI.ShowResults(GameUIMapper.Fixtures(GetResult(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id, _currentDate)));
+                        _gameUI.ShowFixtures(GameUIMapper.Fixtures(GetNextFixture(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id, _currentDate)), true);
 
                         if (gamesToShow != null && gamesToShow.CupCompetition)
-                            _gameUI.ShowResults(GetResult(_competitions.First(_ => _.CountryId == _userCountryId && _.Type == CompetitionType.Cup).Id, _currentDate), true);
+                            _gameUI.ShowResults(GameUIMapper.Fixtures(GetResult(_competitions.First(_ => _.CountryId == _userCountryId && _.Type == CompetitionType.Cup).Id, _currentDate)), true);
                         if (gamesToShow != null && gamesToShow.InternationalCompetition)
-                            _gameUI.ShowResults(GetResult(_competitions.First(_ => _.Type == CompetitionType.International).Id, _currentDate), true);
+                            _gameUI.ShowResults(GameUIMapper.Fixtures(GetResult(_competitions.First(_ => _.Type == CompetitionType.International).Id, _currentDate)), true);
                         break;
                     case MainMenuChoice.ShowOtherCompetitions:
-                        _gameUI.ShowTable(CreateTableDashBoard(_gameUI.ChooseCompetitions(_competitions.Where(_ => _.Id != _competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id).ToList()).Id), true);
+                        var selectedCompetitionId = _gameUI.ChooseCompetitions(GameUIMapper.Options(
+                            _competitions.Where(c => c.Type == CompetitionType.League &&
+                                !(c.CountryId == _userCountryId && c.Tier == 1))));
+                        if (selectedCompetitionId.HasValue)
+                            _gameUI.ShowTable(CreateTableDashBoard(selectedCompetitionId.Value), true);
                         break;
                     case MainMenuChoice.ShowInternationalRankings:
-                        _gameUI.ShowInternationRankings(DisplayInternationalRankingPerYear(), _year, true);
+                        _gameUI.ShowInternationRankings(GameUIMapper.Rankings(DisplayInternationalRankingPerYear()), _year, true);
                         break;
                     case MainMenuChoice.Save:
                         _seasonService.SaveGame();
@@ -159,7 +163,13 @@ namespace FootballFull.Services
             return new CompetitionTableViewModel
             {
                 CompetitionName = _competitions.First(_ => _.Id == competitionId).Name,
-                ClubLeagueCompetitions = ranking
+                Rows = ranking.Select(rank => new CompetitionTableRowViewModel
+                {
+                    ClubName = rank.Club?.Name ?? rank.ClubId.ToString(),
+                    MatchesPlayed = rank.MatchesPlayed, Won = rank.Won, Draw = rank.Draw, Lost = rank.Lost,
+                    GoalsFor = rank.GoalsFor, GoalsAgainst = rank.GoalsAgainst,
+                    GoalDifference = rank.GoalDifference, Points = rank.Points
+                }).ToList()
             };
         }
 
@@ -258,11 +268,11 @@ namespace FootballFull.Services
             _gameUI.ShowMessage("Seizoen afgelopen", $"Seizoen {_year}/{_year + 1} is afgelopen.");
 
             _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate);
-            _gameUI.ShowSeasonFinancialResult(CalculateSeasonFinancialResult(), true);
+            _gameUI.ShowSeasonFinancialResult(GameUIMapper.Finances(CalculateSeasonFinancialResult()), true);
             CalculateClubFinancialResults();
             _strengthService.RecalculateClubStrengths();
             _strengthService.RecalculateCompetitionStrengths(_seasonService.Year);
-            _gameUI.ShowSeasonEvent(Events(), true);
+            _gameUI.ShowSeasonEvent(GameUIMapper.Event(Events()), true);
             EndOfSeasonChoices();
 
             _year++;
@@ -398,11 +408,11 @@ namespace FootballFull.Services
                 applicants.Add(newClub);
             }
 
-            var selectedClub = _gameUI.AskPlayerToSelectClub(applicants);
+            var selectedClub = _gameUI.AskPlayerToSelectClub(GameUIMapper.Options(applicants));
 
             _endOfSeasonService.AdmitClub(
                 _userCountryId,
-                selectedClub.Id,
+                selectedClub,
                 footballAssociation);
         }
 
@@ -417,7 +427,7 @@ namespace FootballFull.Services
                 nm.CompetitionId == competitionId &&
                 nm.Date == date);
 
-            _gameUI.ShowNews(matches.ToList());
+            _gameUI.ShowNews(GameUIMapper.News(matches));
 
 
         }
@@ -555,7 +565,7 @@ namespace FootballFull.Services
         {
             var lastDate = _fixtures
                 .Concat(_cupFixtures)
-                .Concat(_internationalFixtures)
+                .Concat(_internationalFixtures ?? Array.Empty<Fixture>())
     .Where(fixture =>
         fixture.CompetitionId == competitionId &&
         fixture.MatchDay <= date)
@@ -565,7 +575,7 @@ namespace FootballFull.Services
 
             return _fixtures
                 .Concat(_cupFixtures)
-                .Concat(_internationalFixtures)
+                .Concat(_internationalFixtures ?? Array.Empty<Fixture>())
                 .Where(_ => _.MatchDay == lastDate && _.CompetitionId == competitionId)
                 .ToList();
         }
@@ -714,7 +724,7 @@ namespace FootballFull.Services
 
             while (true)
             {
-                var chosenIndex = _gameUI.AskPlayerToSelectCountry(countries);
+                var chosenIndex = _gameUI.AskPlayerToSelectCountry(GameUIMapper.Options(countries));
 
                 // Bestaand land
                 if (chosenIndex > 0 && chosenIndex <= countries.Count)
