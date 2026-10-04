@@ -110,15 +110,15 @@ namespace FootballFull.ConsoleUI
             Console.WriteLine();
             Console.Write("Kies een competitie:");
 
-
-            Console.WriteLine();
-            var choice = Console.ReadLine();
-            if (int.TryParse(choice, out int selectedIndex) && selectedIndex >= 1 && selectedIndex <= competitions.Count)
+            do
             {
-                return competitions[selectedIndex - 1];
-            }
-
-            return null;
+                Console.WriteLine();
+                var choice = Console.ReadLine();
+                if (int.TryParse(choice, out int selectedIndex) && selectedIndex >= 1 && selectedIndex <= competitions.Count)
+                {
+                    return competitions[selectedIndex - 1];
+                }
+            } while (true);
         }
 
         public void ShowResults(List<Fixture> fixtures, bool waitForUser)
@@ -429,25 +429,24 @@ namespace FootballFull.ConsoleUI
         public IList<string> AskStarterClubNames(int numberOfClubs)
         {
             var clubNames = new List<string>();
+
+            Console.Clear();
             Console.WriteLine("Geef de namen van de starterclubs:");
-            Console.Write("Club 1: ");
-            clubNames.Add(Console.ReadLine());
 
-            Console.Write("Club 2: ");
-            clubNames.Add(Console.ReadLine());
+            for (var i = 1; i <= numberOfClubs; i++)
+            {
+                string? clubName;
 
-            Console.Write("Club 3: ");
-            clubNames.Add(Console.ReadLine());
+                do
+                {
+                    Console.Write($"Club {i}: ");
+                    clubName = Console.ReadLine()?.Trim();
+                }
+                while (string.IsNullOrWhiteSpace(clubName));
 
-            Console.Write("Club 4: ");
-            clubNames.Add(Console.ReadLine());
+                clubNames.Add(clubName);
+            }
 
-            Console.Write("Club 5: ");
-            clubNames.Add(Console.ReadLine());
-
-            Console.Write("Club 6: ");
-            clubNames.Add(Console.ReadLine());
-            
             return clubNames;
         }
 

@@ -139,7 +139,7 @@ namespace FootballFull.Services
                         break;
                     case MainMenuChoice.Save:
                         _seasonService.SaveGame();
-                        _gameUI.ShowMessage("Spel opgeslagen", "Je spel werd succesvol opgeslagen.");
+                        _gameUI.ShowMessage("Spel opgeslagen", "Je spel werd succesvol opgeslagen.", true);
                         break;
 
                     case MainMenuChoice.SaveAndExit:
@@ -555,7 +555,7 @@ namespace FootballFull.Services
         {
             var lastDate = _fixtures
                 .Concat(_cupFixtures)
-                .Concat(_internationalFixtures)
+                .Concat(_internationalFixtures ?? Array.Empty<Fixture>())
     .Where(fixture =>
         fixture.CompetitionId == competitionId &&
         fixture.MatchDay <= date)
@@ -565,7 +565,7 @@ namespace FootballFull.Services
 
             return _fixtures
                 .Concat(_cupFixtures)
-                .Concat(_internationalFixtures)
+                .Concat(_internationalFixtures ?? Array.Empty<Fixture>())
                 .Where(_ => _.MatchDay == lastDate && _.CompetitionId == competitionId)
                 .ToList();
         }
