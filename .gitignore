@@ -362,4 +362,12 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-data/Saves/
+/data/Saves/
+/data/Saves/Default/ClubLeagueCompetition.json
+/data/Saves/Default/ClubPerCompetition.json
+/data/Saves/Default/Clubs.json
+/data/Saves/Default/CompetitionRules.json
+/data/Saves/Default/Competitions.json
+/data/Saves/Default/FootballAssociation.json
+/data/Saves/Default/SaveData.json
+/data/Saves/Default/Trainers.json
