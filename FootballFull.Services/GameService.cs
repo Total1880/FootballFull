@@ -133,8 +133,7 @@ namespace FootballFull.Services
                         break;
                     case MainMenuChoice.ShowOtherCompetitions:
                         var selectedCompetitionId = _gameUI.ChooseCompetitions(GameUIMapper.Options(
-                            _competitions.Where(c => c.Type == CompetitionType.League &&
-                                !(c.CountryId == _userCountryId && c.Tier == 1))));
+                            _competitions.Where(c => c.Type == CompetitionType.League)));
                         if (selectedCompetitionId.HasValue)
                             _gameUI.ShowTable(CreateTableDashBoard(selectedCompetitionId.Value), true);
                         break;

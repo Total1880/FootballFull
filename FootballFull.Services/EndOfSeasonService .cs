@@ -11,7 +11,7 @@ namespace FootballFull.Services
 {
     public class EndOfSeasonService : IEndOfSeasonService
     {
-        private const int MaximumNumberOfClubs = 12;
+        private const int MaximumNumberOfClubs = 18;
 
         private readonly ISeasonService _seasonService;
         private readonly IClubService _clubService;
@@ -213,35 +213,35 @@ namespace FootballFull.Services
 
             var competitions = _competitionService
                 .GetCompetitionsForCountry(countryId);
+            var lowestTier = competitions.Max(c => c.Tier);
 
-            var firstDivision = competitions.Single(c => c.Tier == 1);
+            var lowestDivision = competitions.Single(c => c.Tier == lowestTier);
 
-            var ranking = _seasonService.GetRanking(firstDivision.Id);
+            var ranking = _seasonService.GetRanking(lowestDivision.Id);
             var clubsToMove = ranking.TakeLast(numberOfClubs).ToList();
 
-            var secondDivision = new Competition
+            var newDivision = new Competition
             {
                 Id = Guid.NewGuid(),
-                Name = "Division 2",
+                Name = "Division " + (lowestTier + 1),
                 CountryId = countryId,
-                Tier = 2,
+                Tier = lowestTier + 1,
                 Type = Competition.CompetitionType.League,
                 Strength = Configuration.MinStrength
             };
 
-            _competitionService.Add(secondDivision);
+            _competitionService.Add(newDivision);
+
+            var oldLowestDivisionRules = _competitionRulesService.GetCompetitionRules(lowestDivision.Id);
+            oldLowestDivisionRules.CompetitionRelegationToId = newDivision.Id;
+            oldLowestDivisionRules.RelegationPlaces = 1;
+
+            _competitionRulesService.Save(oldLowestDivisionRules);
 
             _competitionRulesService.Save(new CompetitionRules
             {
-                CompetitionId = firstDivision.Id,
-                CompetitionRelegationToId = secondDivision.Id,
-                RelegationPlaces = 1
-            });
-
-            _competitionRulesService.Save(new CompetitionRules
-            {
-                CompetitionId = secondDivision.Id,
-                CompetitionPromotionToId = firstDivision.Id,
+                CompetitionId = newDivision.Id,
+                CompetitionPromotionToId = lowestDivision.Id,
                 PromotionPlaces = 1
             });
 
@@ -253,7 +253,7 @@ namespace FootballFull.Services
 
                 _clubPerCompetitionService.AddClubToCompetition(
                     club.ClubId,
-                    secondDivision.Id);
+                    newDivision.Id);
             }
 
             footballAssociation.Balance -= Configuration.LowerDivisionCost;

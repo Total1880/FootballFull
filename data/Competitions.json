@@ -202,5 +202,17 @@
     "SubCompetitionIds": [],
     "MatchDay": {},
     "SplitParameters": []
+  },
+  {
+    "Id": "c4f7e58a-60ce-4cbe-82f2-a202e2d87ae3",
+    "Name": "Ligue 1",
+    "Country": null,
+    "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
+    "Tier": 1,
+    "Strength": 0,
+    "Type": 0,
+    "SubCompetitionIds": [],
+    "MatchDay": {},
+    "SplitParameters": []
   }
 ]

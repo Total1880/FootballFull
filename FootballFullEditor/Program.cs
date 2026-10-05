@@ -38,6 +38,9 @@ services.AddSingleton<IRepository<CompetitionRules>>(
 services.AddSingleton<IRepository<CompetitionSplitParameters>>(
     _ => new CompetitionSplitParametersRepository(Path.Combine(dataRoot, "CompetitionSplitParameters.json")));
 
+services.AddSingleton<IRepository<ClubLeagueCompetition>>(
+    _ => new ClubLeagueCompetitionRepository(Path.Combine(dataRoot, "ClubLeagueCompetition.json")));
+
 // Editors
 services.AddSingleton<CountryEditor>();
 services.AddSingleton<ClubEditor>();
