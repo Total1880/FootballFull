@@ -22,6 +22,7 @@ namespace FootballFull.Services
         private readonly ISeasonEventService _seasonEventService;
         private readonly IStrengthService _strengthService;
         private readonly IFootballAssociationsService _footballAssociationsService;
+        private readonly IClubSubsidyService _clubSubsidyService;
         private readonly IGameUI _gameUI;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
@@ -50,6 +51,7 @@ namespace FootballFull.Services
             ISeasonEventService seasonEventService,
             IStrengthService strengthService,
             IFootballAssociationsService footballAssociationsService,
+            IClubSubsidyService clubSubsidyService,
             IGameUI gameUI)
         {
             _seasonService = seasonService;
@@ -64,6 +66,7 @@ namespace FootballFull.Services
             _strengthService = strengthService;
             _trainerService = trainerService;
             _footballAssociationsService = footballAssociationsService;
+            _clubSubsidyService = clubSubsidyService;
             _gameUI = gameUI;
 
             _trainers = _trainerService.Load();
@@ -165,9 +168,14 @@ namespace FootballFull.Services
                 Rows = ranking.Select(rank => new CompetitionTableRowViewModel
                 {
                     ClubName = rank.Club?.Name ?? rank.ClubId.ToString(),
-                    MatchesPlayed = rank.MatchesPlayed, Won = rank.Won, Draw = rank.Draw, Lost = rank.Lost,
-                    GoalsFor = rank.GoalsFor, GoalsAgainst = rank.GoalsAgainst,
-                    GoalDifference = rank.GoalDifference, Points = rank.Points
+                    MatchesPlayed = rank.MatchesPlayed,
+                    Won = rank.Won,
+                    Draw = rank.Draw,
+                    Lost = rank.Lost,
+                    GoalsFor = rank.GoalsFor,
+                    GoalsAgainst = rank.GoalsAgainst,
+                    GoalDifference = rank.GoalDifference,
+                    Points = rank.Points
                 }).ToList()
             };
         }
@@ -204,26 +212,48 @@ namespace FootballFull.Services
 
             if (!nextMatchday.HasValue || nextMatchday.Value >= _newSeasonDate)
             {
+                PlayRemainingSeasonGames();
+
                 FinishSeason();
                 return null;
             }
 
             while (_currentDate <= nextMatchday.Value)
             {
-                if (_seasonService.PlayMatchDay(_fixtures, _currentDate, false, _userCountryId))
-                    weekGamesToShow.LeagueCompetition = true;
 
-                if (PlayCupGames(_currentDate))
-                    weekGamesToShow.CupCompetition = true;
 
-                if (PlayInternationalGames(_currentDate))
-                    weekGamesToShow.InternationalCompetition = true;
-
-                _seasonService.UpdateWeekStats(_userCountryId, _currentDate);
+                PlayGamesForCurrentDate(weekGamesToShow);
                 _currentDate = _currentDate.AddDays(1);
             }
 
             return weekGamesToShow;
+        }
+
+        private void PlayGamesForCurrentDate(WeekGamesToShow weekGamesToShow)
+        {
+            if (_seasonService.PlayMatchDay(_fixtures, _currentDate, false, _userCountryId))
+                weekGamesToShow.LeagueCompetition = true;
+
+            if (PlayCupGames(_currentDate))
+                weekGamesToShow.CupCompetition = true;
+
+            if (PlayInternationalGames(_currentDate))
+                weekGamesToShow.InternationalCompetition = true;
+
+            _seasonService.UpdateWeekStats(_userCountryId, _currentDate);
+        }
+
+        private void PlayRemainingSeasonGames()
+        {
+            while (_currentDate < _newSeasonDate)
+            {
+                _seasonService.PlayMatchDay(_fixtures, _currentDate, false);
+
+                PlayCupGames(_currentDate);
+                PlayInternationalGames(_currentDate);
+
+                _currentDate = _currentDate.AddDays(1);
+            }
         }
 
         private DateTime? GetNextMatchday()
@@ -266,15 +296,24 @@ namespace FootballFull.Services
         {
             _gameUI.ShowMessage("Seizoen afgelopen", $"Seizoen {_year}/{_year + 1} is afgelopen.");
 
+            // Eerst alle definitieve eindstanden kunnen bekijken
+            if (_gameUI.AskYesNoQuestion(
+                "Wil je de eindstanden van de competities bekijken?",
+                defaultAnswer: true))
+            {
+                ShowEndOfSeasonTables();
+            }
+
             _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate);
             _gameUI.ShowSeasonFinancialResult(GameUIMapper.Finances(CalculateSeasonFinancialResult()), true);
             CalculateClubFinancialResults();
             _strengthService.RecalculateClubStrengths();
             var developedClubs = _clubService.GetClubs()
                 .Where(c => c.CountryId == _userCountryId && c.LastSeasonFinancialResult != null);
+            EndOfSeasonChoices();
             _gameUI.ShowClubDevelopment(GameUIMapper.ClubDevelopment(developedClubs), true);
             _gameUI.ShowSeasonEvent(GameUIMapper.Event(Events()), true);
-            EndOfSeasonChoices();
+
 
             _year++;
             _seasonService.Year = _year;
@@ -349,6 +388,25 @@ namespace FootballFull.Services
             var footballAssociation = _footballAssociations
                 .First(fa => fa.CountryId == _userCountryId);
 
+            AddClubsOrCompetition(footballAssociation);
+            SubsidyClubs(footballAssociation);
+        }
+
+        private void SubsidyClubs(FootballAssociation footballAssociation)
+        {
+            var amount = _gameUI.AskForSubsidyAmount(new SelectSubsidyClubViewModel
+            {
+                SubsidyAmountA = 0,
+                SubsidyAmountB = 5000,
+                SubsidyAmountC = 10000,
+                NumberOfClubs = _clubPerCompetitionService.GetAllClubPerCompetitionForCountry(_userCountryId).Count(),
+            });
+
+            _clubSubsidyService.AddSubsidy(footballAssociation, amount);
+        }
+
+        private void AddClubsOrCompetition(FootballAssociation footballAssociation)
+        {
             var options = _endOfSeasonService.GetOptions(
                 _userCountryId,
                 footballAssociation);
@@ -399,7 +457,7 @@ namespace FootballFull.Services
 
                 if (string.IsNullOrWhiteSpace(clubName))
                 {
-                    _gameUI.ShowMessage("ERROR","De naam van een club mag niet leeg zijn.");
+                    _gameUI.ShowMessage("ERROR", "De naam van een club mag niet leeg zijn.");
                     continue;
                 }
 
@@ -416,9 +474,8 @@ namespace FootballFull.Services
                 _userCountryId,
                 selectedClub,
                 footballAssociation);
+            return;
         }
-
-
 
         private void ShowNews(DateTime date, Guid competitionId)
         {
@@ -433,9 +490,6 @@ namespace FootballFull.Services
 
 
         }
-
-
-        #region Helpers
 
         private bool PlayCupGames(DateTime date)
         {
@@ -774,9 +828,31 @@ namespace FootballFull.Services
         private void CreateStarterClubs()
         {
             var starterClubNames = _gameUI.AskStarterClubNames(6);
-            foreach(var name in starterClubNames)
+            foreach (var name in starterClubNames)
                 _clubService.Add(new Club { Name = name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
         }
-        #endregion
+
+        private void ShowEndOfSeasonTables()
+        {
+            var leagueCompetitions = _competitions
+                .Where(c => c.Type == CompetitionType.League)
+                .OrderBy(c => c.CountryId == _userCountryId ? 0 : 1)
+                .ThenBy(c => c.CountryId)
+                .ThenBy(c => c.Tier)
+                .ToList();
+
+            while (true)
+            {
+                var selectedCompetitionId = _gameUI.ChooseCompetitions(
+                    GameUIMapper.Options(leagueCompetitions));
+
+                if (!selectedCompetitionId.HasValue)
+                    return;
+
+                _gameUI.ShowTable(
+                    CreateTableDashBoard(selectedCompetitionId.Value),
+                    true);
+            }
+        }
     }
 }

@@ -16,5 +16,6 @@ namespace FootballFull.Models
         public int StrengthBefore { get; set; }
         public int StrengthAfter { get; set; }
         public string DevelopmentReason { get; set; } = string.Empty;
+        public decimal SubsidyReceived { get; set; }
     }
 }

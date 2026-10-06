@@ -13,6 +13,7 @@ namespace FootballFull.Models
         public decimal ClubCosts { get; set; }
         public decimal CompetitionCosts { get; set; }
         public decimal OrganisationCosts { get; set; }
+        public decimal SubsidyCosts { get; set; }
 
         public int ReputationChange { get; set; }
 

@@ -30,7 +30,8 @@ internal static class GameUIMapper
         ReputationDescription = x.FootballAssociation.ReputationDescription,
         ClubIncome = x.ClubIncome, ReputationIncome = x.ReputationIncome, BonusIncome = x.BonusIncome,
         ClubCosts = x.ClubCosts, CompetitionCosts = x.CompetitionCosts, OrganisationCosts = x.OrganisationCosts,
-        ReputationChange = x.ReputationChange, NetResult = x.NetResult
+        ReputationChange = x.ReputationChange, NetResult = x.NetResult,
+        SubsidyCosts = x.SubsidyCosts
     };
     public static List<CountryRankingViewModel> Rankings(IEnumerable<CountryCoefficientRanking> items) =>
         items.Select(x => new CountryRankingViewModel
@@ -47,7 +48,8 @@ internal static class GameUIMapper
             {
                 ClubName = c.Name, NetResult = c.LastSeasonFinancialResult!.NetResult,
                 Investment = c.LastSeasonFinancialResult.DevelopmentInvestment,
-                Balance = c.Balance, DevelopmentBudget = c.DevelopmentBudget,
+                Balance = c.Balance, DevelopmentBudget = c.DevelopmentBudget, 
+                SubsidyReceived = c.LastSeasonFinancialResult.SubsidyReceived,
                 StrengthBefore = c.LastSeasonFinancialResult.StrengthBefore,
                 StrengthAfter = c.LastSeasonFinancialResult.StrengthAfter,
                 Reason = c.LastSeasonFinancialResult.DevelopmentReason

@@ -26,4 +26,5 @@ public interface IGameUI
     string AskNewCountryName();
     void ShowClubDevelopment(IReadOnlyList<ClubDevelopmentViewModel> clubs, bool waitForUser = false);
     void ShowNews(IReadOnlyList<NewsMessageViewModel> news);
+    decimal AskForSubsidyAmount(SelectSubsidyClubViewModel viewModel);
 }

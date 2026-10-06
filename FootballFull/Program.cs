@@ -41,6 +41,7 @@ services.AddSingleton<IEndOfSeasonService, EndOfSeasonService>();
 services.AddSingleton<ISeasonEventService, SeasonEventService>();
 services.AddSingleton<IClubFinancialService, ClubFinancialService>();
 services.AddSingleton<IFootballAssociationsService, FootballAssociationService>();
+services.AddSingleton<IClubSubsidyService, ClubSubsidyService>();
 services.AddSingleton<IGameUI, ConsoleGameUI>();
 
 

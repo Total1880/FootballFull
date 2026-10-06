@@ -94,25 +94,33 @@ namespace FootballFull.ConsoleUI
             }
         }
 
-        public Guid? ChooseCompetitions(IReadOnlyList<SelectionOptionViewModel> competitions)
+        public Guid? ChooseCompetitions(
+            IReadOnlyList<SelectionOptionViewModel> competitions)
         {
-            var counter = 0;
             Console.Clear();
-            Console.WriteLine("=== Andere Competities ===");
+            Console.WriteLine("=== Competities ===");
             Console.WriteLine();
 
-            foreach (var comp in competitions)
+            for (var i = 0; i < competitions.Count; i++)
             {
-                counter++;
-                Console.WriteLine($"{counter}. {comp.Name}");
+                Console.WriteLine($"{i + 1}. {competitions[i].Name}");
             }
-            Console.WriteLine();
-            Console.Write("Kies een competitie:");
-
 
             Console.WriteLine();
+            Console.WriteLine("0. Terug");
+            Console.WriteLine();
+            Console.Write("Kies een competitie: ");
+
             var choice = Console.ReadLine();
-            if (int.TryParse(choice, out int selectedIndex) && selectedIndex >= 1 && selectedIndex <= competitions.Count)
+
+            if (!int.TryParse(choice, out var selectedIndex))
+                return null;
+
+            if (selectedIndex == 0)
+                return null;
+
+            if (selectedIndex >= 1 &&
+                selectedIndex <= competitions.Count)
             {
                 return competitions[selectedIndex - 1].Id;
             }
@@ -281,6 +289,7 @@ namespace FootballFull.ConsoleUI
             Console.WriteLine($"Club Costs: {seasonFinancialResult.ClubCosts:C}");
             Console.WriteLine($"Competition Costs: {seasonFinancialResult.CompetitionCosts:C}");
             Console.WriteLine($"Organisation Costs: {seasonFinancialResult.OrganisationCosts:C}");
+            Console.WriteLine($"Subsidy Costs: {seasonFinancialResult.SubsidyCosts:C}");
             Console.WriteLine();
             Console.WriteLine($"Net Result: {seasonFinancialResult.NetResult:C}");
             Console.WriteLine($" Balance: {seasonFinancialResult.Balance:C}");
@@ -529,6 +538,25 @@ namespace FootballFull.ConsoleUI
 
             Console.WriteLine("Press any key to continue.");
             Console.ReadKey(true);
+        }
+
+        public decimal AskForSubsidyAmount(SelectSubsidyClubViewModel viewModel)
+        {
+            Console.Clear();
+            Console.WriteLine($"=== Subsidie ===");
+            Console.WriteLine($"1) {viewModel.SubsidyAmountA:N0}");
+            Console.WriteLine($"2) {viewModel.SubsidyAmountB:N0}");
+            Console.WriteLine($"3) {viewModel.SubsidyAmountC:N0}");
+            Console.Write("Kies een optie: ");
+
+            if (int.TryParse(Console.ReadLine(), out var choice) && choice >= 1 && choice <= 3)
+            {
+                return choice == 1 ? viewModel.SubsidyAmountA : choice == 2 ? viewModel.SubsidyAmountB : viewModel.SubsidyAmountC;
+            }
+
+            Console.WriteLine("Ongeldige keuze. Druk op een toets om opnieuw te proberen.");
+            Console.ReadKey();
+            return AskForSubsidyAmount(viewModel); // Retry
         }
     }
 }

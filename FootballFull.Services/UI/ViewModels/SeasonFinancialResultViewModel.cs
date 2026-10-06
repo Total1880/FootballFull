@@ -14,4 +14,5 @@ public class SeasonFinancialResultViewModel
     public decimal OrganisationCosts { get; init; }
     public int ReputationChange { get; init; }
     public decimal NetResult { get; init; }
+    public decimal SubsidyCosts { get; init; }
 }

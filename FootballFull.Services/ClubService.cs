@@ -108,5 +108,10 @@ namespace FootballFull.Services
             }
             return list;
         }
+
+        public IList<Club> GetClubsForCountry(Guid countryId)
+        {
+            return _clubRepository.Load().Where(c => c.CountryId == countryId).ToList();
+        }
     }
 }
