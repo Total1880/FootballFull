@@ -15,5 +15,6 @@ namespace FootballFull.Services.UI.ViewModels
         public decimal TotalSubsidyAmountA => SubsidyAmountA * NumberOfClubs;
         public decimal TotalSubsidyAmountB => SubsidyAmountB * NumberOfClubs;
         public decimal TotalSubsidyAmountC => SubsidyAmountC * NumberOfClubs;
+        public decimal AssociationBalance { get; init; }
     }
 }

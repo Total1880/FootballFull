@@ -544,9 +544,12 @@ namespace FootballFull.ConsoleUI
         {
             Console.Clear();
             Console.WriteLine($"=== Subsidie ===");
-            Console.WriteLine($"1) {viewModel.SubsidyAmountA:N0}");
-            Console.WriteLine($"2) {viewModel.SubsidyAmountB:N0}");
-            Console.WriteLine($"3) {viewModel.SubsidyAmountC:N0}");
+            Console.WriteLine();
+            Console.WriteLine($"Beschikbaar saldo: {viewModel.AssociationBalance:N0}");
+            Console.WriteLine();
+            Console.WriteLine($"1) {viewModel.SubsidyAmountA:N0} (Totale kost: {viewModel.TotalSubsidyAmountA:N0})");
+            Console.WriteLine($"2) {viewModel.SubsidyAmountB:N0} (Totale kost: {viewModel.TotalSubsidyAmountB:N0})");
+            Console.WriteLine($"3) {viewModel.SubsidyAmountC:N0} (Totale kost: {viewModel.TotalSubsidyAmountC:N0})");
             Console.Write("Kies een optie: ");
 
             if (int.TryParse(Console.ReadLine(), out var choice) && choice >= 1 && choice <= 3)

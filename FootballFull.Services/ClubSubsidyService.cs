@@ -18,11 +18,9 @@ namespace FootballFull.Services
 
         public void AddSubsidy(FootballAssociation footballAssociation, decimal amountPerClub)
         {
-            var clubs = _clubService.GetClubsForCountry(footballAssociation.CountryId);
+            var clubs = _clubService.GetClubsForCountry(footballAssociation.CountryId).Where(c => c.LastSeasonFinancialResult != null);
             foreach (var club in clubs)
             {
-                if (club.LastSeasonFinancialResult == null)
-                    continue;
                 club.LastSeasonFinancialResult.SubsidyReceived = amountPerClub;
                 club.Balance += amountPerClub;
                 club.DevelopmentBudget += amountPerClub;

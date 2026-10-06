@@ -400,6 +400,7 @@ namespace FootballFull.Services
                 SubsidyAmountB = 5000,
                 SubsidyAmountC = 10000,
                 NumberOfClubs = _clubPerCompetitionService.GetAllClubPerCompetitionForCountry(_userCountryId).Count(),
+                AssociationBalance = footballAssociation.Balance
             });
 
             _clubSubsidyService.AddSubsidy(footballAssociation, amount);
