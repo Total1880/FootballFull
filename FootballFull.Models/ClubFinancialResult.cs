@@ -11,7 +11,7 @@ namespace FootballFull.Models
         public decimal Revenue { get; set; }
         public decimal Expenses { get; set; }
 
-        public decimal NetResult => Revenue - Expenses;
+        public decimal NetResult => Revenue - Expenses + SubsidyReceived;
         public decimal DevelopmentInvestment { get; set; }
         public int StrengthBefore { get; set; }
         public int StrengthAfter { get; set; }
