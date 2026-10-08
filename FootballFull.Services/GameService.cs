@@ -18,7 +18,7 @@ namespace FootballFull.Services
         private readonly ICompetitionService _competitionService;
         private readonly IClubPerCompetitionService _clubPerCompetitionService;
         private readonly ISeasonEconomyService _seasonEconomyService;
-        private readonly IEndOfSeasonService _endOfSeasonService;
+        private readonly IEndOfSeasonChoicesService _endOfSeasonChoicesService;
         private readonly IStrengthService _strengthService;
         private readonly IGameUI _gameUI;
 
@@ -42,7 +42,7 @@ namespace FootballFull.Services
             IClubService clubService,
             ICompetitionService competitionService,
             IClubPerCompetitionService clubPerCompetitionService,
-            IEndOfSeasonService endOfSeasonService,
+            IEndOfSeasonChoicesService endOfSeasonChoicesService,
             ISeasonEconomyService seasonEconomyService,
             IStrengthService strengthService,
             IGameUI gameUI)
@@ -54,7 +54,7 @@ namespace FootballFull.Services
             _clubService = clubService;
             _competitionService = competitionService;
             _clubPerCompetitionService = clubPerCompetitionService;
-            _endOfSeasonService = endOfSeasonService;
+            _endOfSeasonChoicesService = endOfSeasonChoicesService;
             _seasonEconomyService = seasonEconomyService;
             _strengthService = strengthService;
             _gameUI = gameUI;
@@ -324,7 +324,8 @@ namespace FootballFull.Services
                 .Where(c => c.CountryId == _userCountryId &&
                             c.LastSeasonFinancialResult != null);
 
-            EndOfSeasonChoices();
+            if (_endOfSeasonChoicesService.HandleChoices(_userCountryId, GetUserAssociation()))
+                _competitions = _competitionService.GetCompetitions();
             _gameUI.ShowClubDevelopment(
                 GameUIMapper.ClubDevelopment(developedClubs), true);
             _gameUI.ShowSeasonEvent(GameUIMapper.Event(_seasonEconomyService.ApplyRandomEvent(GetUserAssociation())), true);
@@ -352,86 +353,6 @@ namespace FootballFull.Services
         private FootballAssociation GetUserAssociation()
         {
             return _footballAssociations.First(fa => fa.CountryId == _userCountryId);
-        }
-
-        private void EndOfSeasonChoices()
-        {
-            var footballAssociation = _footballAssociations
-                .First(fa => fa.CountryId == _userCountryId);
-
-            AddClubsOrCompetition(footballAssociation);
-        }
-
-        private void AddClubsOrCompetition(FootballAssociation footballAssociation)
-        {
-            var options = _endOfSeasonService.GetOptions(
-                _userCountryId,
-                footballAssociation);
-
-            if (!options.CanAddClub && !options.CanCreateLowerDivision)
-            {
-                _gameUI.ShowMessage("ERROR", options.CannotAddClubReason);
-                return;
-            }
-
-            if (options.CanCreateLowerDivision &&
-                _gameUI.AskToCreateLowerDivision())
-            {
-                var numberOfClubs = _gameUI.AskForClubsToMove(
-                    maximumClubsToMove: options.CurrentClubCount - 2,
-                    currentClubCount: options.CurrentClubCount,
-                    minimumClubsToMove: 2);
-
-                _endOfSeasonService.CreateLowerDivision(
-                    _userCountryId,
-                    numberOfClubs,
-                    footballAssociation);
-
-                _competitions = _competitionService.GetCompetitions();
-
-                return;
-            }
-
-            if (!options.CanAddClub)
-            {
-                _gameUI.ShowMessage("ERROR", options.CannotAddClubReason);
-                return;
-            }
-
-            if (!_gameUI.AskYesNoQuestion($"Wil je een nieuwe club toevoegen? Kostprijs {Configuration.NewClubCost} (y/n)", defaultAnswer: false))
-                return;
-
-            var applicants = _endOfSeasonService.GetApplicantClubs(
-                _userCountryId,
-                footballAssociation,
-                3);
-
-            while (applicants.Count < 3)
-            {
-                _gameUI.ShowMessage("Er zijn nog kandidaat-clubs nodig.", $"Er zijn nog {3 - applicants.Count} kandidaat-club(s) nodig.");
-
-                var clubName = _gameUI.AskForInput("Geef de naam van de nieuwe club: ", "");
-
-                if (string.IsNullOrWhiteSpace(clubName))
-                {
-                    _gameUI.ShowMessage("ERROR", "De naam van een club mag niet leeg zijn.");
-                    continue;
-                }
-
-                var newClub = _endOfSeasonService.CreateApplicantClub(
-                    _userCountryId,
-                    clubName);
-
-                applicants.Add(newClub);
-            }
-
-            var selectedClub = _gameUI.AskPlayerToSelectClub(GameUIMapper.Options(applicants));
-
-            _endOfSeasonService.AdmitClub(
-                _userCountryId,
-                selectedClub,
-                footballAssociation);
-            return;
         }
 
         private void ShowNews(DateTime date, Guid competitionId)
