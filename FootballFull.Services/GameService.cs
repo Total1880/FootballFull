@@ -122,17 +122,7 @@ namespace FootballFull.Services
                 switch (choice)
                 {
                     case MainMenuChoice.Continue:
-                        var gamesToShow = PlayUntilNextMatchday();
-
-                        _gameUI.ShowTable(CreateTableDashBoard(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id));
-                        if (gamesToShow != null && gamesToShow.LeagueCompetition)
-                            _gameUI.ShowResults(GameUIMapper.Fixtures(GetResult(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id, _currentDate)));
-                        _gameUI.ShowFixtures(GameUIMapper.Fixtures(GetNextFixture(_competitions.First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id, _currentDate)), true);
-
-                        if (gamesToShow != null && gamesToShow.CupCompetition)
-                            _gameUI.ShowResults(GameUIMapper.Fixtures(GetResult(_competitions.First(_ => _.CountryId == _userCountryId && _.Type == CompetitionType.Cup).Id, _currentDate)), true);
-                        if (gamesToShow != null && gamesToShow.InternationalCompetition)
-                            _gameUI.ShowResults(GameUIMapper.Fixtures(GetResult(_competitions.First(_ => _.Type == CompetitionType.International).Id, _currentDate)), true);
+                        ContinueGame();
                         break;
                     case MainMenuChoice.ShowOtherCompetitions:
                         var selectedCompetitionId = _gameUI.ChooseCompetitions(GameUIMapper.Options(
@@ -152,6 +142,40 @@ namespace FootballFull.Services
                         _seasonService.SaveGame();
                         return;
                 }
+            }
+        }
+
+        private void ContinueGame()
+        {
+            var gamesToShow = PlayUntilNextMatchday();
+            var league = _competitions.First(c =>
+                c.CountryId == _userCountryId &&
+                c.Type == CompetitionType.League &&
+                c.Tier == 1);
+
+            _gameUI.ShowTable(CreateTableDashBoard(league.Id));
+
+            if (gamesToShow?.LeagueCompetition == true)
+                _gameUI.ShowResults(GameUIMapper.Fixtures(GetResult(league.Id, _currentDate)));
+
+            _gameUI.ShowFixtures(
+                GameUIMapper.Fixtures(GetNextFixture(league.Id, _currentDate)), true);
+
+            if (gamesToShow?.CupCompetition == true)
+            {
+                var cup = _competitions.FirstOrDefault(c =>
+                    c.CountryId == _userCountryId && c.Type == CompetitionType.Cup);
+                if (cup != null)
+                    _gameUI.ShowResults(GameUIMapper.Fixtures(GetResult(cup.Id, _currentDate)), true);
+            }
+
+            if (gamesToShow?.InternationalCompetition == true)
+            {
+                var international = _competitions.FirstOrDefault(c =>
+                    c.Type == CompetitionType.International);
+                if (international != null)
+                    _gameUI.ShowResults(
+                        GameUIMapper.Fixtures(GetResult(international.Id, _currentDate)), true);
             }
         }
 
@@ -538,133 +562,86 @@ namespace FootballFull.Services
 
         private bool PlayCupGames(DateTime date)
         {
-            if (_cupFixtures == null || !_cupFixtures.Any())
-                return false;
-            if (!_cupFixtures.Any(_ => _.MatchDay == date))
-                return false;
-
-            var UserCountryCupPlayed = false;
-
-            var cupCompetitions = _competitions
-                .Where(_ => _.Type == Competition.CompetitionType.Cup)
-                .ToList();
-
-            foreach (var cupCompetition in cupCompetitions)
+            var playedForUser = false;
+            foreach (var competition in _competitions.Where(c => c.Type == CompetitionType.Cup))
             {
-                var fixturesForCompetition = _cupFixtures
-                    .Where(_ => _.CompetitionId == cupCompetition.Id && _.MatchDay == date)
+                var roundFixtures = _cupFixtures
+                    .Where(f => f.CompetitionId == competition.Id && f.MatchDay == date)
                     .ToList();
 
-                if (fixturesForCompetition.Count == 0)
+                if (roundFixtures.Count == 0)
                     continue;
 
-                if (fixturesForCompetition.Any(_ => _.HomeTeam?.CountryId == _userCountryId || _.AwayTeam?.CountryId == _userCountryId))
-                    UserCountryCupPlayed = true;
+                if (roundFixtures.Any(f => f.HomeTeam?.CountryId == _userCountryId ||
+                                           f.AwayTeam?.CountryId == _userCountryId))
+                    playedForUser = true;
 
-                foreach (var fixture in fixturesForCompetition)
-                {
-                    if (fixture.HomeTeamId == Guid.Empty || fixture.AwayTeamId == Guid.Empty)
-                        continue;
-
-
-                    var homeTier = GetClubTier(fixture.HomeTeamId);
-                    var awayTier = GetClubTier(fixture.AwayTeamId);
-                }
-
-                // Speel enkel deze ronde
-                _seasonService.PlayMatchDay(fixturesForCompetition, date, true, _userCountryId, true);
-
-                foreach (var fixture in fixturesForCompetition)
-                {
-                    if (fixture.HomeTeamId != Guid.Empty && fixture.AwayTeamId != Guid.Empty)
-                    {
-                        var homeTier = GetClubTier(fixture.HomeTeamId);
-                        var awayTier = GetClubTier(fixture.AwayTeamId);
-
-                    }
-                    // winners voor volgende ronde
-                    var winner = fixture.HomeScore > fixture.AwayScore ? fixture.HomeTeam : fixture.AwayTeam;
-                    var cupNextFixtures = _cupFixtures.FirstOrDefault(_ => _.CupPreviousFixtureHomeTeam == fixture);
-
-                    if (cupNextFixtures != null)
-                    {
-                        if (cupNextFixtures.HomeTeamId == Guid.Empty)
-                        {
-                            cupNextFixtures.HomeTeam = winner;
-                            cupNextFixtures.HomeTeamId = winner.Id;
-                        }
-                    }
-                    else
-                    {
-                        cupNextFixtures = _cupFixtures.FirstOrDefault(_ => _.CupPreviousFixtureAwayTeam == fixture);
-                        if (cupNextFixtures != null && cupNextFixtures.AwayTeamId == Guid.Empty)
-                        {
-                            cupNextFixtures.AwayTeam = winner;
-                            cupNextFixtures.AwayTeamId = winner.Id;
-                        }
-                    }
-                }
+                PlayKnockoutRound(roundFixtures, _cupFixtures, date);
             }
-            return UserCountryCupPlayed;
+
+            return playedForUser;
         }
 
         private bool PlayInternationalGames(DateTime date)
         {
-            if (_internationalFixtures == null || !_internationalFixtures.Any())
-                return false;
-            if (!_internationalFixtures.Any(_ => _.MatchDay == date))
+            if (_internationalFixtures == null)
                 return false;
 
-            var fixturesForRound = _internationalFixtures
-                .Where(_ => _.MatchDay == date)
+            var roundFixtures = _internationalFixtures
+                .Where(f => f.MatchDay == date)
                 .ToList();
 
-            if (fixturesForRound.Count == 0)
+            if (roundFixtures.Count == 0)
                 return false;
 
-            foreach (var fixture in fixturesForRound)
-            {
-                if (fixture.HomeTeamId == Guid.Empty || fixture.AwayTeamId == Guid.Empty)
-                    continue;
-
-                var homeName =
-                    fixture.HomeTeam != null ? fixture.HomeTeam.Name :
-                    fixture.CupPreviousFixtureHomeTeam != null ? "Winner previous match" :
-                    "TBD";
-
-                var awayName =
-                    fixture.AwayTeam != null ? fixture.AwayTeam.Name :
-                    fixture.CupPreviousFixtureAwayTeam != null ? "Winner previous match" :
-                    "TBD";
-            }
-
-            _seasonService.PlayMatchDay(fixturesForRound, date, true, _userCountryId, true);
-
-            foreach (var fixture in fixturesForRound)
-            {
-                var winner = fixture.HomeScore > fixture.AwayScore ? fixture.HomeTeam : fixture.AwayTeam;
-                var cupNextFixtures = _internationalFixtures.FirstOrDefault(_ => _.CupPreviousFixtureHomeTeam == fixture);
-
-                if (cupNextFixtures != null)
-                {
-                    if (cupNextFixtures.HomeTeamId == Guid.Empty)
-                    {
-                        cupNextFixtures.HomeTeam = winner;
-                        cupNextFixtures.HomeTeamId = winner.Id;
-                    }
-                }
-                else
-                {
-                    cupNextFixtures = _internationalFixtures.FirstOrDefault(_ => _.CupPreviousFixtureAwayTeam == fixture);
-                    if (cupNextFixtures != null && cupNextFixtures.AwayTeamId == Guid.Empty)
-                    {
-                        cupNextFixtures.AwayTeam = winner;
-                        cupNextFixtures.AwayTeamId = winner.Id;
-                    }
-                }
-            }
-
+            PlayKnockoutRound(roundFixtures, _internationalFixtures, date);
             return true;
+        }
+
+        private void PlayKnockoutRound(
+            IList<Fixture> roundFixtures,
+            IList<Fixture> competitionFixtures,
+            DateTime date)
+        {
+            _seasonService.PlayMatchDay(roundFixtures, date, true, _userCountryId, true);
+
+            foreach (var fixture in roundFixtures)
+                AdvanceKnockoutWinner(fixture, competitionFixtures);
+        }
+
+        private static void AdvanceKnockoutWinner(
+            Fixture fixture,
+            IList<Fixture> competitionFixtures)
+        {
+            var winner = fixture.HomeScore > fixture.AwayScore
+                ? fixture.HomeTeam
+                : fixture.AwayTeam;
+
+            if (winner == null)
+                return;
+
+            var nextHomeFixture = competitionFixtures.FirstOrDefault(
+                f => f.CupPreviousFixtureHomeTeam == fixture);
+
+            if (nextHomeFixture != null)
+            {
+                if (nextHomeFixture.HomeTeamId == Guid.Empty)
+                {
+                    nextHomeFixture.HomeTeam = winner;
+                    nextHomeFixture.HomeTeamId = winner.Id;
+                }
+
+                return;
+            }
+
+            var nextAwayFixture = competitionFixtures.FirstOrDefault(
+                f => f.CupPreviousFixtureAwayTeam == fixture);
+
+            if (nextAwayFixture != null && nextAwayFixture.AwayTeamId == Guid.Empty)
+            {
+                nextAwayFixture.AwayTeam = winner;
+                nextAwayFixture.AwayTeamId = winner.Id;
+            }
         }
 
         private List<Fixture> GetResult(Guid competitionId, DateTime date)
