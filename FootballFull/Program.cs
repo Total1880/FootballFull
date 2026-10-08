@@ -32,6 +32,7 @@ services.AddSingleton<ICompetitionService, CompetitionService>();
 services.AddSingleton<IClubPerCompetitionService, ClubPerCompetitionService>();
 services.AddSingleton<ICountryService, CountryService>();
 services.AddSingleton<IGameService, GameService>();
+services.AddSingleton<IGameInitializationService, GameInitializationService>();
 services.AddSingleton<ITrainerService, TrainerService>();
 services.AddSingleton<IClubInternationalRankingService, ClubInternationalRankingService>();
 services.AddSingleton<ISaveDataService, SaveDataService>();
