@@ -7,14 +7,30 @@ namespace FootballFull.Repositories
     public class TrainerRepository : IRepository<Trainer>
     {
         private readonly string _path;
+        private readonly JsonSerializerOptions _options;
 
         public TrainerRepository(string path)
         {
             _path = path;
+            _options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                PropertyNameCaseInsensitive = true
+            };
         }
         public void Add(Trainer item)
         {
-            throw new NotImplementedException();
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+
+            var trainers = Load();
+
+            // Als Id niet gevuld is, automatisch aanmaken
+            if (item.Id == Guid.Empty)
+                item.Id = Guid.NewGuid();
+
+            trainers.Add(item);
+            Save(trainers);
         }
 
         public IList<Trainer> Create(IList<Trainer> items, bool full)
@@ -45,6 +61,17 @@ namespace FootballFull.Repositories
         public void Update(Trainer updateItem)
         {
             throw new NotImplementedException();
+        }
+
+        private void Save(IList<Trainer> trainers)
+        {
+            var json = JsonSerializer.Serialize(trainers, _options);
+
+            var dir = Path.GetDirectoryName(_path);
+            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+                Directory.CreateDirectory(dir!);
+
+            File.WriteAllText(_path, json);
         }
     }
 }

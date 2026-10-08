@@ -47,7 +47,7 @@ namespace FootballFull.Services
 
         public Trainer CreateRandomTrainer(Guid clubId)
         {
-            return new Trainer
+            var newTrainer = new Trainer
             {
                 Id = Guid.NewGuid(),
                 PersonId = Guid.NewGuid(),
@@ -57,6 +57,10 @@ namespace FootballFull.Services
                 Name = _nameRepository.GetRandomFirstName(new Guid()),
                 LastName = _nameRepository.GetRandomLastName(new Guid())
             };
+
+            _trainerRepository.Add(newTrainer);
+
+            return newTrainer;
         }
 
         public void SaveAll(IList<Trainer> trainers)
