@@ -357,16 +357,14 @@ namespace FootballFull.Services
 
         private void ShowNews(DateTime date, Guid competitionId)
         {
-
             // Eén query, maar we vermijden dubbele enumeratie door te materializen als nodig
             var matches = _seasonService.NewsMessages.Where(nm =>
                 nm.CountryId == _userCountryId &&
                 nm.CompetitionId == competitionId &&
-                nm.Date == date);
+                nm.Date >= date.AddDays(-7) &&
+                nm.Date <= date);
 
             _gameUI.ShowNews(GameUIMapper.News(matches));
-
-
         }
 
         private List<Fixture> GetResult(Guid competitionId, DateTime date)
