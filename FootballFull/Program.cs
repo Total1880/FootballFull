@@ -41,6 +41,7 @@ services.AddSingleton<IClubLeagueCompetitionService, ClubLeagueCompetitionServic
 services.AddSingleton<ISeasonFinancialResultService, SeasonFinancialResultService>();
 services.AddSingleton<ISeasonEconomyService, SeasonEconomyService>();
 services.AddSingleton<IEndOfSeasonService, EndOfSeasonService>();
+services.AddSingleton<IEndOfSeasonChoicesService, EndOfSeasonChoicesService>();
 services.AddSingleton<ISeasonEventService, SeasonEventService>();
 services.AddSingleton<IClubFinancialService, ClubFinancialService>();
 services.AddSingleton<IFootballAssociationsService, FootballAssociationService>();
