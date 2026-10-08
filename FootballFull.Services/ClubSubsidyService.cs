@@ -11,23 +11,68 @@ namespace FootballFull.Services
     public class ClubSubsidyService : IClubSubsidyService
     {
         private readonly IClubService _clubService;
-        public ClubSubsidyService(IClubService clubService)
+        private readonly IClubPerCompetitionService _clubPerCompetitionService;
+        private readonly ICompetitionService _competitionService;
+        private readonly IFootballAssociationsService _footballAssociationsService;
+        public ClubSubsidyService(IClubService clubService, IClubPerCompetitionService clubPerCompetitionService, ICompetitionService competitionService, IFootballAssociationsService footballAssociationsService)
         {
             _clubService = clubService;
+            _clubPerCompetitionService = clubPerCompetitionService;
+            _competitionService = competitionService;
+            _footballAssociationsService = footballAssociationsService;
         }
 
-        public void AddSubsidy(FootballAssociation footballAssociation, decimal amountPerClub)
+        public void AddSubsidy(
+            FootballAssociation association,
+            decimal amountPerClub,
+            int seasonYear)
         {
-            var clubs = _clubService.GetClubsForCountry(footballAssociation.CountryId).Where(c => c.LastSeasonFinancialResult != null);
+            if (amountPerClub < 0)
+                throw new ArgumentOutOfRangeException(nameof(amountPerClub));
+
+            if (association.LastSubsidySeason == seasonYear)
+                return;
+
+            var clubs = GetEligibleClubs(association.CountryId);
+            var totalCost = amountPerClub * clubs.Count;
+
+            if (totalCost > Math.Max(0m, association.Balance))
+                throw new InvalidOperationException(
+                    "De voetbalbond heeft onvoldoende geld voor deze subsidie.");
+
             foreach (var club in clubs)
             {
-                club.LastSeasonFinancialResult.SubsidyReceived = amountPerClub;
                 club.Balance += amountPerClub;
-                club.DevelopmentBudget += amountPerClub;
+                club.SubsidySeason = seasonYear;
+                club.SeasonSubsidyReceived = amountPerClub;
+
                 _clubService.Update(club);
             }
 
-            footballAssociation.Balance -= (amountPerClub * clubs.Count());
+            association.Balance -= totalCost;
+            association.LastSubsidySeason = seasonYear;
+            association.LastSubsidyTotalCost = totalCost;
+
+            _footballAssociationsService.Update(association);
+        }
+
+        public IList<Club> GetEligibleClubs(Guid countryId)
+        {
+            var leagueIds = _competitionService
+                .GetCompetitionsForCountry(countryId)
+                .Where(c => c.Type == Competition.CompetitionType.League)
+                .Select(c => c.Id)
+                .ToHashSet();
+
+            var clubIds = _clubPerCompetitionService
+                .GetAllClubPerCompetitionForCountry(countryId)
+                .Where(link => leagueIds.Contains(link.CompetitionId))
+                .Select(link => link.ClubId)
+                .ToHashSet();
+
+            return _clubService.GetClubs()
+                .Where(c => c.CountryId == countryId && clubIds.Contains(c.Id))
+                .ToList();
         }
     }
 }

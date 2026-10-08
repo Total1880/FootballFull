@@ -23,6 +23,6 @@ namespace FootballFull.Models
             BonusIncome -
             ClubCosts -
             CompetitionCosts -
-            OrganisationCosts;
+            OrganisationCosts - SubsidyCosts;
     }
 }

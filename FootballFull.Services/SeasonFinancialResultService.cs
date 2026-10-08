@@ -11,7 +11,7 @@ namespace FootballFull.Services
 {
     public class SeasonFinancialResultService : ISeasonFinancialResultService
     {
-        public SeasonFinancialResult CalculateFinancialResults(int clubsCount, int competitionsCount, FootballAssociation association)
+        public SeasonFinancialResult CalculateFinancialResults(int clubsCount, int competitionsCount, FootballAssociation association, decimal subsidyCosts = 0m)
         {
             var seasonFinancialResult = new SeasonFinancialResult();
 
@@ -21,13 +21,18 @@ namespace FootballFull.Services
             seasonFinancialResult.ReputationIncome = association.Reputation * Configuration.ReputationRevenueMultiplier;
             seasonFinancialResult.BonusIncome = CalculateBonusIncome(association);
 
+            seasonFinancialResult.SubsidyCosts = subsidyCosts;
+
             seasonFinancialResult.ClubCosts = clubsCount * Configuration.BasicClubCost;
             seasonFinancialResult.CompetitionCosts = competitionsCount * Configuration.BasicCompetitionCost;
             seasonFinancialResult.OrganisationCosts = Configuration.BasicOrganisationCost;
 
             seasonFinancialResult.ReputationChange = +CalculateReputationChange(association);
 
-            association.Balance += seasonFinancialResult.NetResult;
+            // Subsidiekosten zitten in het resultaat,
+            // maar werden bij de seizoensstart al betaald.
+            association.Balance +=
+                seasonFinancialResult.NetResult + subsidyCosts;
             association.Reputation = association.Reputation >= Configuration.MaxReputation ?
                 Configuration.MaxReputation :
                 association.Reputation <= 1 ?

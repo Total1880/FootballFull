@@ -329,7 +329,13 @@ namespace FootballFull.Services
                         club,
                         competition);
 
-                club.Balance += result.NetResult;
+                result.SubsidyReceived =
+    club.SubsidySeason == _seasonService.Year
+        ? club.SeasonSubsidyReceived
+        : 0m;
+
+                // De subsidie werd bij de seizoensstart al betaald.
+                club.Balance += result.NetResult - result.SubsidyReceived;
                 club.LastSeasonFinancialResult = result;
 
                 _clubService.Update(club);

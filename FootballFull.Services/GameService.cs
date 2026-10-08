@@ -251,6 +251,7 @@ namespace FootballFull.Services
 
                 PlayCupGames(_currentDate);
                 PlayInternationalGames(_currentDate);
+                _seasonService.UpdateWeekStats(_userCountryId, _currentDate);
 
                 _currentDate = _currentDate.AddDays(1);
             }
@@ -317,6 +318,11 @@ namespace FootballFull.Services
 
             _year++;
             _seasonService.Year = _year;
+
+            var association = _footballAssociations
+    .First(fa => fa.CountryId == _userCountryId);
+
+            SubsidyClubs(association);
             _currentDate = new DateTime(_year, 7, 1);
             _newSeasonDate = _currentDate.AddYears(1);
             _clubsPerCompetition = _seasonService.InitializeNewSeason(_year);
@@ -367,8 +373,11 @@ namespace FootballFull.Services
         {
             var existingClubs = _clubPerCompetitionService.GetAllClubPerCompetitionForCountry(_userCountryId);
             var footballAssociation = _footballAssociations.First(fa => fa.CountryId == _userCountryId);
+            var subsidyCosts = footballAssociation.LastSubsidySeason == _year
+    ? footballAssociation.LastSubsidyTotalCost
+    : 0m;
 
-            var seasonFinancialResult = _seasonFinancialResultService.CalculateFinancialResults(existingClubs.Count, _competitions.Where(c => c.CountryId == _userCountryId).Count(), footballAssociation);
+            var seasonFinancialResult = _seasonFinancialResultService.CalculateFinancialResults(existingClubs.Count, _competitions.Where(c => c.CountryId == _userCountryId).Count(), footballAssociation, subsidyCosts);
 
             _footballAssociationsService.Update(footballAssociation);
 
@@ -389,7 +398,6 @@ namespace FootballFull.Services
                 .First(fa => fa.CountryId == _userCountryId);
 
             AddClubsOrCompetition(footballAssociation);
-            SubsidyClubs(footballAssociation);
         }
 
         private void SubsidyClubs(FootballAssociation footballAssociation)
@@ -399,11 +407,16 @@ namespace FootballFull.Services
                 SubsidyAmountA = 0,
                 SubsidyAmountB = 5000,
                 SubsidyAmountC = 10000,
-                NumberOfClubs = _clubPerCompetitionService.GetAllClubPerCompetitionForCountry(_userCountryId).Count(),
+                NumberOfClubs = _clubSubsidyService
+    .GetEligibleClubs(_userCountryId)
+    .Count,
                 AssociationBalance = footballAssociation.Balance
             });
 
-            _clubSubsidyService.AddSubsidy(footballAssociation, amount);
+            _clubSubsidyService.AddSubsidy(
+    footballAssociation,
+    amount,
+    _year);
         }
 
         private void AddClubsOrCompetition(FootballAssociation footballAssociation)

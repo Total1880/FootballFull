@@ -9,6 +9,7 @@ namespace FootballFull.Services.Interfaces
 {
     public interface IClubSubsidyService
     {
-        void AddSubsidy(FootballAssociation footballAssociation, decimal amountPerClub);
+        void AddSubsidy(FootballAssociation footballAssociation, decimal amountPerClub, int seasonYear);
+        IList<Club> GetEligibleClubs(Guid countryId);
     }
 }

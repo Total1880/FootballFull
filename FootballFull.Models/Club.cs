@@ -14,6 +14,8 @@ namespace FootballFull.Models
         // Earmarked cash, included in Balance until it is actually invested.
         public decimal DevelopmentBudget { get; set; }
         public ClubFinancialResult? LastSeasonFinancialResult { get; set; }
+        public int? SubsidySeason { get; set; }
+        public decimal SeasonSubsidyReceived { get; set; }
         public List<CompetitionSplitParameters> CompetitionSplitParameters { get; set; } = new List<CompetitionSplitParameters>();
         [JsonIgnore]
         public string Last5Games { get; set; }
@@ -45,6 +47,7 @@ namespace FootballFull.Models
         public DateTime HasFiredTrainerInWeek { get; set; }
         [JsonIgnore]
         public int NumberOfGamesWithTrainer { get; set; }
+
 
     }
 }

@@ -7,6 +7,8 @@ namespace FootballFull.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public decimal Balance { get; set; }
+        public int? LastSubsidySeason { get; set; }
+        public decimal LastSubsidyTotalCost { get; set; }
         public int Reputation { get; set; }
         public string ReputationDescription => Reputation switch
         {
