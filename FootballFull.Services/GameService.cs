@@ -229,16 +229,23 @@ namespace FootballFull.Services
             return weekGamesToShow;
         }
 
-        private void PlayGamesForCurrentDate(WeekGamesToShow weekGamesToShow)
+        private void PlayGamesForCurrentDate(WeekGamesToShow? weekGamesToShow)
         {
-            if (_seasonService.PlayMatchDay(_fixtures, _currentDate, false, _userCountryId))
-                weekGamesToShow.LeagueCompetition = true;
+            // Only filter league results by player country when presenting a matchday.
+            // During season completion all remaining domestic fixtures are simulated.
+            var leaguePlayed = weekGamesToShow == null
+                ? _seasonService.PlayMatchDay(_fixtures, _currentDate, false)
+                : _seasonService.PlayMatchDay(_fixtures, _currentDate, false, _userCountryId);
 
-            if (PlayCupGames(_currentDate))
-                weekGamesToShow.CupCompetition = true;
+            var cupPlayed = PlayCupGames(_currentDate);
+            var internationalPlayed = PlayInternationalGames(_currentDate);
 
-            if (PlayInternationalGames(_currentDate))
-                weekGamesToShow.InternationalCompetition = true;
+            if (weekGamesToShow != null)
+            {
+                weekGamesToShow.LeagueCompetition = leaguePlayed;
+                weekGamesToShow.CupCompetition = cupPlayed;
+                weekGamesToShow.InternationalCompetition = internationalPlayed;
+            }
 
             _seasonService.UpdateWeekStats(_userCountryId, _currentDate);
         }
@@ -247,14 +254,17 @@ namespace FootballFull.Services
         {
             while (_currentDate < _newSeasonDate)
             {
-                _seasonService.PlayMatchDay(_fixtures, _currentDate, false);
-
-                PlayCupGames(_currentDate);
-                PlayInternationalGames(_currentDate);
-                _seasonService.UpdateWeekStats(_userCountryId, _currentDate);
-
+                // The remaining fixtures must be played for every country.
+                PlayGamesForCurrentDate(null);
                 _currentDate = _currentDate.AddDays(1);
             }
+        }
+
+        private IEnumerable<Fixture> GetAllFixtures()
+        {
+            return _fixtures
+                .Concat(_cupFixtures)
+                .Concat(_internationalFixtures ?? Array.Empty<Fixture>());
         }
 
         private DateTime? GetNextMatchday()
@@ -264,9 +274,7 @@ namespace FootballFull.Services
                 .Select(c => c.Id)
                 .ToHashSet();
 
-            return _fixtures
-                .Concat(_cupFixtures)
-                .Concat(_internationalFixtures ?? Array.Empty<Fixture>())
+            return GetAllFixtures()
                 .Where(f => f.MatchDay >= _currentDate)
                 .Where(f => competitionIds.Contains(f.CompetitionId) ||
                             f.HomeTeam?.CountryId == _userCountryId ||
@@ -284,9 +292,7 @@ namespace FootballFull.Services
                 .Select(c => c.Id)
                 .ToHashSet();
 
-            return _fixtures
-                .Concat(_cupFixtures)
-                .Concat(_internationalFixtures ?? Array.Empty<Fixture>())
+            return GetAllFixtures()
                 .Count(f => f.MatchDay == date &&
                     (competitionIds.Contains(f.CompetitionId) ||
                      f.HomeTeam?.CountryId == _userCountryId ||
@@ -638,9 +644,7 @@ namespace FootballFull.Services
 
         private List<Fixture> GetResult(Guid competitionId, DateTime date)
         {
-            var lastDate = _fixtures
-                .Concat(_cupFixtures)
-                .Concat(_internationalFixtures ?? Array.Empty<Fixture>())
+            var lastDate = GetAllFixtures()
     .Where(fixture =>
         fixture.CompetitionId == competitionId &&
         fixture.MatchDay <= date)
@@ -648,9 +652,7 @@ namespace FootballFull.Services
     .OrderByDescending(date => date)
     .FirstOrDefault();
 
-            return _fixtures
-                .Concat(_cupFixtures)
-                .Concat(_internationalFixtures ?? Array.Empty<Fixture>())
+            return GetAllFixtures()
                 .Where(_ => _.MatchDay == lastDate && _.CompetitionId == competitionId)
                 .ToList();
         }
