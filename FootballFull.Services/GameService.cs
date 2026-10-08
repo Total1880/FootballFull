@@ -763,22 +763,6 @@ namespace FootballFull.Services
             return true;
         }
 
-        private int GetClubTier(Guid clubId)
-        {
-            // Zoek in welke league-competitie deze club speelt
-            var clubInCompetition = _clubsPerCompetition
-                .FirstOrDefault(c => c.ClubId == clubId &&
-                                     _competitions.Any(comp => comp.Id == c.CompetitionId && comp.Type == Competition.CompetitionType.League));
-            if (clubInCompetition == null)
-                return 0; // of een default/unknown waarde
-
-            var leagueCompetition = _competitions.FirstOrDefault(c => c.Id == clubInCompetition.CompetitionId);
-            if (leagueCompetition == null)
-                return 0;
-
-            return leagueCompetition.Tier;
-        }
-
         private void CreateTrainers()
         {
             var clubIds = _clubService.GetClubs().Select(c => c.Id).ToList();
