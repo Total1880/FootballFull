@@ -17,13 +17,9 @@ namespace FootballFull.Services
         private readonly IClubService _clubService;
         private readonly ICompetitionService _competitionService;
         private readonly IClubPerCompetitionService _clubPerCompetitionService;
-        private readonly ICountryService _countryService;
-        private readonly ISeasonFinancialResultService _seasonFinancialResultService;
+        private readonly ISeasonEconomyService _seasonEconomyService;
         private readonly IEndOfSeasonService _endOfSeasonService;
-        private readonly ISeasonEventService _seasonEventService;
         private readonly IStrengthService _strengthService;
-        private readonly IFootballAssociationsService _footballAssociationsService;
-        private readonly IClubSubsidyService _clubSubsidyService;
         private readonly IGameUI _gameUI;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
@@ -46,13 +42,9 @@ namespace FootballFull.Services
             IClubService clubService,
             ICompetitionService competitionService,
             IClubPerCompetitionService clubPerCompetitionService,
-            ICountryService countryService,
             IEndOfSeasonService endOfSeasonService,
-            ISeasonFinancialResultService seasonFinancialResultService,
-            ISeasonEventService seasonEventService,
+            ISeasonEconomyService seasonEconomyService,
             IStrengthService strengthService,
-            IFootballAssociationsService footballAssociationsService,
-            IClubSubsidyService clubSubsidyService,
             IGameUI gameUI)
         {
             _seasonService = seasonService;
@@ -62,13 +54,9 @@ namespace FootballFull.Services
             _clubService = clubService;
             _competitionService = competitionService;
             _clubPerCompetitionService = clubPerCompetitionService;
-            _countryService = countryService;
             _endOfSeasonService = endOfSeasonService;
-            _seasonFinancialResultService = seasonFinancialResultService;
-            _seasonEventService = seasonEventService;
+            _seasonEconomyService = seasonEconomyService;
             _strengthService = strengthService;
-            _footballAssociationsService = footballAssociationsService;
-            _clubSubsidyService = clubSubsidyService;
             _gameUI = gameUI;
 
         }
@@ -323,9 +311,10 @@ namespace FootballFull.Services
             // before season finances and club development are processed.
             _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate);
             _gameUI.ShowSeasonFinancialResult(
-                GameUIMapper.Finances(CalculateSeasonFinancialResult()), true);
+                GameUIMapper.Finances(_seasonEconomyService.CalculateAssociationResult(
+                    _userCountryId, _year, _competitions, GetUserAssociation())), true);
 
-            CalculateClubFinancialResults();
+            _seasonEconomyService.ProcessClubFinancialResults();
             _strengthService.RecalculateClubStrengths();
         }
 
@@ -338,7 +327,7 @@ namespace FootballFull.Services
             EndOfSeasonChoices();
             _gameUI.ShowClubDevelopment(
                 GameUIMapper.ClubDevelopment(developedClubs), true);
-            _gameUI.ShowSeasonEvent(GameUIMapper.Event(Events()), true);
+            _gameUI.ShowSeasonEvent(GameUIMapper.Event(_seasonEconomyService.ApplyRandomEvent(GetUserAssociation())), true);
         }
 
         private void StartNextSeason()
@@ -348,7 +337,7 @@ namespace FootballFull.Services
 
             var association = _footballAssociations
                 .First(fa => fa.CountryId == _userCountryId);
-            SubsidyClubs(association);
+            _seasonEconomyService.AllocateClubSubsidies(_userCountryId, _year, association);
 
             _currentDate = new DateTime(_year, 7, 1);
             _newSeasonDate = _currentDate.AddYears(1);
@@ -360,42 +349,9 @@ namespace FootballFull.Services
             _cupFixtures = _seasonService.InitializeNationalCups(_currentDate);
         }
 
-        private SeasonEvent Events()
+        private FootballAssociation GetUserAssociation()
         {
-            var footballAssociation = _footballAssociations.First(fa => fa.CountryId == _userCountryId);
-
-            var events = _seasonEventService.GetRandomSeasonEvents();
-
-
-            footballAssociation.Balance += events.BalanceChange;
-            footballAssociation.Reputation += events.ReputationChange;
-
-            _footballAssociationsService.Update(footballAssociation);
-
-            return events;
-        }
-
-        private SeasonFinancialResult CalculateSeasonFinancialResult()
-        {
-            var existingClubs = _clubPerCompetitionService.GetAllClubPerCompetitionForCountry(_userCountryId);
-            var footballAssociation = _footballAssociations.First(fa => fa.CountryId == _userCountryId);
-            var subsidyCosts = footballAssociation.LastSubsidySeason == _year
-    ? footballAssociation.LastSubsidyTotalCost
-    : 0m;
-
-            var seasonFinancialResult = _seasonFinancialResultService.CalculateFinancialResults(existingClubs.Count, _competitions.Where(c => c.CountryId == _userCountryId).Count(), footballAssociation, subsidyCosts);
-
-            _footballAssociationsService.Update(footballAssociation);
-
-            return seasonFinancialResult;
-        }
-
-        private void CalculateClubFinancialResults()
-        {
-            foreach (var country in _countryService.GetCountries())
-            {
-                _endOfSeasonService.ProcessClubFinances(country.Id);
-            }
+            return _footballAssociations.First(fa => fa.CountryId == _userCountryId);
         }
 
         private void EndOfSeasonChoices()
@@ -404,25 +360,6 @@ namespace FootballFull.Services
                 .First(fa => fa.CountryId == _userCountryId);
 
             AddClubsOrCompetition(footballAssociation);
-        }
-
-        private void SubsidyClubs(FootballAssociation footballAssociation)
-        {
-            var amount = _gameUI.AskForSubsidyAmount(new SelectSubsidyClubViewModel
-            {
-                SubsidyAmountA = 0,
-                SubsidyAmountB = 5000,
-                SubsidyAmountC = 10000,
-                NumberOfClubs = _clubSubsidyService
-    .GetEligibleClubs(_userCountryId)
-    .Count,
-                AssociationBalance = footballAssociation.Balance
-            });
-
-            _clubSubsidyService.AddSubsidy(
-    footballAssociation,
-    amount,
-    _year);
         }
 
         private void AddClubsOrCompetition(FootballAssociation footballAssociation)
