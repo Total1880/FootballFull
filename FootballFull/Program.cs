@@ -27,6 +27,7 @@ services.AddSingleton<IStrengthService, StrengthService>();
 services.AddSingleton<IClubService, ClubService>();
 services.AddSingleton<ISeasonService, SeasonService>();
 services.AddSingleton<IFixtureService, FixtureService>();
+services.AddSingleton<IMatchdayService, MatchdayService>();
 services.AddSingleton<ICompetitionService, CompetitionService>();
 services.AddSingleton<IClubPerCompetitionService, ClubPerCompetitionService>();
 services.AddSingleton<ICountryService, CountryService>();
