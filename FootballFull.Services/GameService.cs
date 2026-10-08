@@ -12,12 +12,12 @@ namespace FootballFull.Services
     {
         private readonly ISeasonService _seasonService;
         private readonly IMatchdayService _matchdayService;
+        private readonly IGameInitializationService _gameInitializationService;
         private readonly IFixtureService _fixtureService;
         private readonly IClubService _clubService;
         private readonly ICompetitionService _competitionService;
         private readonly IClubPerCompetitionService _clubPerCompetitionService;
         private readonly ICountryService _countryService;
-        private readonly ITrainerService _trainerService;
         private readonly ISeasonFinancialResultService _seasonFinancialResultService;
         private readonly IEndOfSeasonService _endOfSeasonService;
         private readonly ISeasonEventService _seasonEventService;
@@ -30,7 +30,6 @@ namespace FootballFull.Services
         private IList<Competition> _competitions = new List<Competition>();
         private IList<Fixture> _fixtures = new List<Fixture>();
         private IList<Fixture> _cupFixtures = new List<Fixture>();
-        private IList<Trainer> _trainers;
         private IList<Fixture>? _internationalFixtures;
         private IList<FootballAssociation> _footballAssociations = new List<FootballAssociation>();
 
@@ -43,11 +42,11 @@ namespace FootballFull.Services
             ISeasonService seasonService,
             IFixtureService fixtureService,
             IMatchdayService matchdayService,
+            IGameInitializationService gameInitializationService,
             IClubService clubService,
             ICompetitionService competitionService,
             IClubPerCompetitionService clubPerCompetitionService,
             ICountryService countryService,
-            ITrainerService trainerService,
             IEndOfSeasonService endOfSeasonService,
             ISeasonFinancialResultService seasonFinancialResultService,
             ISeasonEventService seasonEventService,
@@ -59,6 +58,7 @@ namespace FootballFull.Services
             _seasonService = seasonService;
             _fixtureService = fixtureService;
             _matchdayService = matchdayService;
+            _gameInitializationService = gameInitializationService;
             _clubService = clubService;
             _competitionService = competitionService;
             _clubPerCompetitionService = clubPerCompetitionService;
@@ -67,48 +67,26 @@ namespace FootballFull.Services
             _seasonFinancialResultService = seasonFinancialResultService;
             _seasonEventService = seasonEventService;
             _strengthService = strengthService;
-            _trainerService = trainerService;
             _footballAssociationsService = footballAssociationsService;
             _clubSubsidyService = clubSubsidyService;
             _gameUI = gameUI;
 
-            _trainers = _trainerService.Load();
         }
 
         public void Run(bool isNew)
         {
-            // User club kiezen
-            _userCountryId = ChoosePlayerCompetition();
+            var initial = _gameInitializationService.Initialize(isNew);
 
-            // Initialize data
-            if (isNew)
-            {
-                ResetStrength();
-                CreateTrainers();
-                _internationalFixtures = null;
-                _competitionService.InitializeStarterCompetition(_userCountryId);
-            }
-
-            // Data laden
-            _clubsPerCompetition = _clubPerCompetitionService.GetAllClubPerCompetitions();
-            _competitions = _competitionService.GetCompetitions();
-            CreateFootballAssocations();
-
-            // Eerste seizoen initialiseren
-            _seasonService.Initialize(_clubsPerCompetition);
-            _year = _seasonService.Year > 0
-                ? _seasonService.Year
-                : DateTime.Now.Year;
-            _seasonService.Year = _year;
-            _currentDate = new DateTime(_year, 7, 1);
-            _newSeasonDate = _currentDate.AddYears(1);
-            _fixtures = _fixtureService.Generate(_clubsPerCompetition, _currentDate);
-            _cupFixtures = _seasonService.InitializeNationalCups(_currentDate);
-
-            if (!isNew)
-            {
-                _internationalFixtures = _seasonService.InitializeInternationalGames(_currentDate, true);
-            }
+            _userCountryId = initial.UserCountryId;
+            _year = initial.Year;
+            _currentDate = initial.CurrentDate;
+            _newSeasonDate = initial.NewSeasonDate;
+            _clubsPerCompetition = initial.ClubsPerCompetition;
+            _competitions = initial.Competitions;
+            _fixtures = initial.LeagueFixtures;
+            _cupFixtures = initial.CupFixtures;
+            _internationalFixtures = initial.InternationalFixtures;
+            _footballAssociations = initial.FootballAssociations;
 
             GameLoop();
         }
@@ -382,27 +360,6 @@ namespace FootballFull.Services
             _cupFixtures = _seasonService.InitializeNationalCups(_currentDate);
         }
 
-        private void CreateFootballAssocations()
-        {
-            _footballAssociations = _footballAssociationsService.GetAll() ?? new List<FootballAssociation>();
-            var countries = _countryService.GetCountries();
-
-            foreach (var country in countries)
-            {
-                if (_footballAssociations.Any(_ => _.CountryId == country.Id)) continue;
-                var newFA = new FootballAssociation
-                {
-                    Id = Guid.NewGuid(),
-                    CountryId = country.Id,
-                    Name = country.Name + " FA",
-                    Balance = Configuration.StartBalance,
-                    Reputation = Configuration.StartReputation
-                };
-                _footballAssociationsService.Add(newFA);
-                _footballAssociations.Add(newFA);
-            }
-        }
-
         private SeasonEvent Events()
         {
             var footballAssociation = _footballAssociations.First(fa => fa.CountryId == _userCountryId);
@@ -636,112 +593,6 @@ namespace FootballFull.Services
                 (f.AwayTeam.CountryId == _userCountryId || f.HomeTeam.CountryId == _userCountryId));
 
             return fixtures.ToList();
-        }
-
-        private void ResetStrength()
-        {
-            var countries = _countryService.GetCountries();
-            var clubs = _clubService.GetClubs();
-
-            foreach (var country in countries)
-            {
-                //ResetClubStrength(clubs, country);
-                ResetCompetitionStrength(country);
-            }
-        }
-
-        private bool ResetCompetitionStrength(Country country)
-        {
-            var competitionsInCountry = _competitionService.GetCompetitions()
-                .Where(c => c.CountryId == country.Id && c.Type == Competition.CompetitionType.League)
-                .OrderBy(c => c.Tier)
-                .ToList();
-
-            if (!competitionsInCountry.Any())
-                return false;
-
-            var current = Configuration.MaxStrength - Configuration.MinStrength;
-            var counter = competitionsInCountry.Count / (current == 0 ? 1 : current);
-            var step = current / (competitionsInCountry.Count == 0 ? 1 : competitionsInCountry.Count);
-
-            foreach (var competition in competitionsInCountry)
-            {
-                competition.Strength = current;
-                _competitionService.Update(competition);
-                current -= step;
-            }
-            return true;
-        }
-
-        private void CreateTrainers()
-        {
-            var clubIds = _clubService.GetClubs().Select(c => c.Id).ToList();
-
-            foreach (var clubId in clubIds)
-            {
-                var existingTrainer = _trainerService.GetByClubId(clubId);
-                if (existingTrainer == null)
-                {
-                    var newTrainer = _trainerService.CreateRandomTrainer(clubId);
-                    _trainers.Add(newTrainer);
-
-                }
-            }
-
-            _trainerService.SaveAll(_trainers);
-        }
-
-        private Guid ChoosePlayerCompetition()
-        {
-            var countries = _countryService.GetCountries();
-
-            while (true)
-            {
-                var chosenIndex = _gameUI.AskPlayerToSelectCountry(GameUIMapper.Options(countries));
-
-                // Bestaand land
-                if (chosenIndex > 0 && chosenIndex <= countries.Count)
-                {
-                    var chosenCountry = countries[chosenIndex - 1];
-
-                    _gameUI.ShowMessage("Keuze", $"Je hebt gekozen: {chosenCountry.Name}");
-
-                    return chosenCountry.Id;
-                }
-
-                // Nieuw land
-                if (chosenIndex == 0)
-                {
-                    var newCountryName = _gameUI.AskNewCountryName();
-
-                    var newCountry = new Country
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = newCountryName
-                    };
-
-                    _countryService.Add(newCountry);
-
-                    _userCountryId = newCountry.Id;
-
-                    _gameUI.ShowMessage(
-                        "Nieuw land aangemaakt",
-                        $"Nieuw land '{newCountry.Name}' werd aangemaakt.");
-
-                    CreateStarterClubs();
-
-                    return newCountry.Id;
-                }
-
-                _gameUI.ShowMessage("Ongeldige keuze", "Ongeldige keuze. Probeer opnieuw.");
-            }
-        }
-
-        private void CreateStarterClubs()
-        {
-            var starterClubNames = _gameUI.AskStarterClubNames(6);
-            foreach (var name in starterClubNames)
-                _clubService.Add(new Club { Name = name, CountryId = _userCountryId, Strength = new Random().Next(OlavFramework.Configuration.MinStrength, 4) });
         }
 
         private void ShowEndOfSeasonTables()
