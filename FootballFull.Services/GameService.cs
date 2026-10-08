@@ -301,42 +301,67 @@ namespace FootballFull.Services
 
         private void FinishSeason()
         {
+            ShowSeasonClosing();
+            ProcessSeasonResults();
+            ApplyEndOfSeasonDecisions();
+            StartNextSeason();
+            _seasonService.SaveGame();
+        }
+
+        private void ShowSeasonClosing()
+        {
             _gameUI.ShowMessage("Seizoen afgelopen", $"Seizoen {_year}/{_year + 1} is afgelopen.");
 
-            // Eerst alle definitieve eindstanden kunnen bekijken
+            // Keep the final standings available before starting a new season.
             if (_gameUI.AskYesNoQuestion(
                 "Wil je de eindstanden van de competities bekijken?",
                 defaultAnswer: true))
             {
                 ShowEndOfSeasonTables();
             }
+        }
 
+        private void ProcessSeasonResults()
+        {
+            // Preserve the current ordering: international fixtures are initialized
+            // before season finances and club development are processed.
             _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate);
-            _gameUI.ShowSeasonFinancialResult(GameUIMapper.Finances(CalculateSeasonFinancialResult()), true);
+            _gameUI.ShowSeasonFinancialResult(
+                GameUIMapper.Finances(CalculateSeasonFinancialResult()), true);
+
             CalculateClubFinancialResults();
             _strengthService.RecalculateClubStrengths();
+        }
+
+        private void ApplyEndOfSeasonDecisions()
+        {
             var developedClubs = _clubService.GetClubs()
-                .Where(c => c.CountryId == _userCountryId && c.LastSeasonFinancialResult != null);
+                .Where(c => c.CountryId == _userCountryId &&
+                            c.LastSeasonFinancialResult != null);
+
             EndOfSeasonChoices();
-            _gameUI.ShowClubDevelopment(GameUIMapper.ClubDevelopment(developedClubs), true);
+            _gameUI.ShowClubDevelopment(
+                GameUIMapper.ClubDevelopment(developedClubs), true);
             _gameUI.ShowSeasonEvent(GameUIMapper.Event(Events()), true);
+        }
 
-
+        private void StartNextSeason()
+        {
             _year++;
             _seasonService.Year = _year;
 
             var association = _footballAssociations
-    .First(fa => fa.CountryId == _userCountryId);
-
+                .First(fa => fa.CountryId == _userCountryId);
             SubsidyClubs(association);
+
             _currentDate = new DateTime(_year, 7, 1);
             _newSeasonDate = _currentDate.AddYears(1);
+
             _clubsPerCompetition = _seasonService.InitializeNewSeason(_year);
             _strengthService.RecalculateCompetitionStrengths(_year);
             _competitions = _competitionService.GetCompetitions();
             _fixtures = _fixtureService.Generate(_clubsPerCompetition, _currentDate);
             _cupFixtures = _seasonService.InitializeNationalCups(_currentDate);
-            _seasonService.SaveGame();
         }
 
         private void CreateFootballAssocations()
