@@ -11,6 +11,7 @@ namespace FootballFull.Services
     public class GameService : IGameService
     {
         private readonly ISeasonService _seasonService;
+        private readonly IMatchdayService _matchdayService;
         private readonly IFixtureService _fixtureService;
         private readonly IClubService _clubService;
         private readonly ICompetitionService _competitionService;
@@ -41,6 +42,7 @@ namespace FootballFull.Services
         public GameService(
             ISeasonService seasonService,
             IFixtureService fixtureService,
+            IMatchdayService matchdayService,
             IClubService clubService,
             ICompetitionService competitionService,
             IClubPerCompetitionService clubPerCompetitionService,
@@ -56,6 +58,7 @@ namespace FootballFull.Services
         {
             _seasonService = seasonService;
             _fixtureService = fixtureService;
+            _matchdayService = matchdayService;
             _clubService = clubService;
             _competitionService = competitionService;
             _clubPerCompetitionService = clubPerCompetitionService;
@@ -255,23 +258,14 @@ namespace FootballFull.Services
 
         private void PlayGamesForCurrentDate(WeekGamesToShow? weekGamesToShow)
         {
-            // Only filter league results by player country when presenting a matchday.
-            // During season completion all remaining domestic fixtures are simulated.
-            var leaguePlayed = weekGamesToShow == null
-                ? _seasonService.PlayMatchDay(_fixtures, _currentDate, false)
-                : _seasonService.PlayMatchDay(_fixtures, _currentDate, false, _userCountryId);
-
-            var cupPlayed = PlayCupGames(_currentDate);
-            var internationalPlayed = PlayInternationalGames(_currentDate);
-
-            if (weekGamesToShow != null)
-            {
-                weekGamesToShow.LeagueCompetition = leaguePlayed;
-                weekGamesToShow.CupCompetition = cupPlayed;
-                weekGamesToShow.InternationalCompetition = internationalPlayed;
-            }
-
-            _seasonService.UpdateWeekStats(_userCountryId, _currentDate);
+            _matchdayService.PlayDate(new MatchdayRequest(
+                _currentDate,
+                _userCountryId,
+                _competitions,
+                _fixtures,
+                _cupFixtures,
+                _internationalFixtures,
+                weekGamesToShow));
         }
 
         private void PlayRemainingSeasonGames()
@@ -558,90 +552,6 @@ namespace FootballFull.Services
             _gameUI.ShowNews(GameUIMapper.News(matches));
 
 
-        }
-
-        private bool PlayCupGames(DateTime date)
-        {
-            var playedForUser = false;
-            foreach (var competition in _competitions.Where(c => c.Type == CompetitionType.Cup))
-            {
-                var roundFixtures = _cupFixtures
-                    .Where(f => f.CompetitionId == competition.Id && f.MatchDay == date)
-                    .ToList();
-
-                if (roundFixtures.Count == 0)
-                    continue;
-
-                if (roundFixtures.Any(f => f.HomeTeam?.CountryId == _userCountryId ||
-                                           f.AwayTeam?.CountryId == _userCountryId))
-                    playedForUser = true;
-
-                PlayKnockoutRound(roundFixtures, _cupFixtures, date);
-            }
-
-            return playedForUser;
-        }
-
-        private bool PlayInternationalGames(DateTime date)
-        {
-            if (_internationalFixtures == null)
-                return false;
-
-            var roundFixtures = _internationalFixtures
-                .Where(f => f.MatchDay == date)
-                .ToList();
-
-            if (roundFixtures.Count == 0)
-                return false;
-
-            PlayKnockoutRound(roundFixtures, _internationalFixtures, date);
-            return true;
-        }
-
-        private void PlayKnockoutRound(
-            IList<Fixture> roundFixtures,
-            IList<Fixture> competitionFixtures,
-            DateTime date)
-        {
-            _seasonService.PlayMatchDay(roundFixtures, date, true, _userCountryId, true);
-
-            foreach (var fixture in roundFixtures)
-                AdvanceKnockoutWinner(fixture, competitionFixtures);
-        }
-
-        private static void AdvanceKnockoutWinner(
-            Fixture fixture,
-            IList<Fixture> competitionFixtures)
-        {
-            var winner = fixture.HomeScore > fixture.AwayScore
-                ? fixture.HomeTeam
-                : fixture.AwayTeam;
-
-            if (winner == null)
-                return;
-
-            var nextHomeFixture = competitionFixtures.FirstOrDefault(
-                f => f.CupPreviousFixtureHomeTeam == fixture);
-
-            if (nextHomeFixture != null)
-            {
-                if (nextHomeFixture.HomeTeamId == Guid.Empty)
-                {
-                    nextHomeFixture.HomeTeam = winner;
-                    nextHomeFixture.HomeTeamId = winner.Id;
-                }
-
-                return;
-            }
-
-            var nextAwayFixture = competitionFixtures.FirstOrDefault(
-                f => f.CupPreviousFixtureAwayTeam == fixture);
-
-            if (nextAwayFixture != null && nextAwayFixture.AwayTeamId == Guid.Empty)
-            {
-                nextAwayFixture.AwayTeam = winner;
-                nextAwayFixture.AwayTeamId = winner.Id;
-            }
         }
 
         private List<Fixture> GetResult(Guid competitionId, DateTime date)
