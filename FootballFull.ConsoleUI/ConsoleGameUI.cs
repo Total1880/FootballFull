@@ -56,6 +56,8 @@ namespace FootballFull.ConsoleUI
                 Console.WriteLine("[1] Verder naar volgende speeldag");
                 Console.WriteLine("[2] Andere competities");
                 Console.WriteLine("[3] Internationale ranglijsten");
+                Console.WriteLine("[4] Competitiegeschiedeins");
+                Console.WriteLine("[5] Clubgeschiedenis");
                 Console.WriteLine("[S] Opslaan");
                 Console.WriteLine("[X] Opslaan en afsluiten");
                 Console.WriteLine();
@@ -72,6 +74,12 @@ namespace FootballFull.ConsoleUI
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
                         return MainMenuChoice.ShowInternationalRankings;
+                    case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
+                        return MainMenuChoice.ShowCompetitionHistory;
+                    case ConsoleKey.D5:
+                    case ConsoleKey.NumPad5:
+                        return MainMenuChoice.ShowClubHistory;
                     case ConsoleKey.S:
                         return MainMenuChoice.Save;
                     case ConsoleKey.X:
@@ -560,6 +568,49 @@ namespace FootballFull.ConsoleUI
             Console.WriteLine("Ongeldige keuze. Druk op een toets om opnieuw te proberen.");
             Console.ReadKey();
             return AskForSubsidyAmount(viewModel); // Retry
+        }
+
+        public void ShowCompetitionHistory(CompetitionHistoryViewModel history)
+        {
+            const int yearWidth = 10;
+            const int competitionWidth = 30;
+            const int championWidth = 30;
+            const int runnerUpWidth = 30;
+
+            Console.Clear();
+            Console.WriteLine("=== Competition History ===");
+            Console.WriteLine();
+
+            Console.WriteLine(
+                $"{"Year".PadRight(yearWidth)}" +
+                $"{"Competition".PadRight(competitionWidth)}" +
+                $"{"Champion".PadRight(championWidth)}" +
+                $"{"Runner-up".PadRight(runnerUpWidth)}");
+
+            Console.WriteLine(new string('-',
+                yearWidth + competitionWidth + championWidth + runnerUpWidth));
+
+            if (history.Rows == null || !history.Rows.Any())
+            {
+                Console.WriteLine("No competition history available.");
+            }
+            else
+            {
+                foreach (var row in history.Rows
+                    .OrderByDescending(x => x.Year)
+                    .ThenBy(x => x.CompetitionName))
+                {
+                    Console.WriteLine(
+                        $"{row.Year.ToString().PadRight(yearWidth)}" +
+                        $"{(row.CompetitionName ?? "-").PadRight(competitionWidth)}" +
+                        $"{(row.ChampionClubName ?? "-").PadRight(championWidth)}" +
+                        $"{(row.RunnerUpClubName ?? "-").PadRight(runnerUpWidth)}");
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey(true);
         }
     }
 }

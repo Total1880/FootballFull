@@ -27,4 +27,5 @@ public interface IGameUI
     void ShowClubDevelopment(IReadOnlyList<ClubDevelopmentViewModel> clubs, bool waitForUser = false);
     void ShowNews(IReadOnlyList<NewsMessageViewModel> news);
     decimal AskForSubsidyAmount(SelectSubsidyClubViewModel viewModel);
+    void ShowCompetitionHistory(CompetitionHistoryViewModel competitionHistoryViewModel);
 }

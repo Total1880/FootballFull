@@ -16,11 +16,15 @@ internal static class GameUIMapper
         {
             HomeTeamName = x.HomeTeam?.Name ?? "TBD",
             AwayTeamName = x.AwayTeam?.Name ?? "TBD",
-            HomeScore = x.HomeScore, AwayScore = x.AwayScore, MatchDay = x.MatchDay
+            HomeScore = x.HomeScore,
+            AwayScore = x.AwayScore,
+            MatchDay = x.MatchDay
         }).ToList();
     public static SeasonEventViewModel Event(SeasonEvent x) => new()
     {
-        Description = x.Description, BalanceChange = x.BalanceChange, ReputationChange = x.ReputationChange
+        Description = x.Description,
+        BalanceChange = x.BalanceChange,
+        ReputationChange = x.ReputationChange
     };
     public static SeasonFinancialResultViewModel Finances(SeasonFinancialResult x) => new()
     {
@@ -28,9 +32,14 @@ internal static class GameUIMapper
         Balance = x.FootballAssociation.Balance,
         Reputation = x.FootballAssociation.Reputation,
         ReputationDescription = x.FootballAssociation.ReputationDescription,
-        ClubIncome = x.ClubIncome, ReputationIncome = x.ReputationIncome, BonusIncome = x.BonusIncome,
-        ClubCosts = x.ClubCosts, CompetitionCosts = x.CompetitionCosts, OrganisationCosts = x.OrganisationCosts,
-        ReputationChange = x.ReputationChange, NetResult = x.NetResult,
+        ClubIncome = x.ClubIncome,
+        ReputationIncome = x.ReputationIncome,
+        BonusIncome = x.BonusIncome,
+        ClubCosts = x.ClubCosts,
+        CompetitionCosts = x.CompetitionCosts,
+        OrganisationCosts = x.OrganisationCosts,
+        ReputationChange = x.ReputationChange,
+        NetResult = x.NetResult,
         SubsidyCosts = x.SubsidyCosts
     };
     public static List<CountryRankingViewModel> Rankings(IEnumerable<CountryCoefficientRanking> items) =>
@@ -46,9 +55,11 @@ internal static class GameUIMapper
         clubs.Where(c => c.LastSeasonFinancialResult != null).OrderBy(c => c.Name)
             .Select(c => new ClubDevelopmentViewModel
             {
-                ClubName = c.Name, NetResult = c.LastSeasonFinancialResult!.NetResult,
+                ClubName = c.Name,
+                NetResult = c.LastSeasonFinancialResult!.NetResult,
                 Investment = c.LastSeasonFinancialResult.DevelopmentInvestment,
-                Balance = c.Balance, DevelopmentBudget = c.DevelopmentBudget, 
+                Balance = c.Balance,
+                DevelopmentBudget = c.DevelopmentBudget,
                 SubsidyReceived = c.LastSeasonFinancialResult.SubsidyReceived,
                 StrengthBefore = c.LastSeasonFinancialResult.StrengthBefore,
                 StrengthAfter = c.LastSeasonFinancialResult.StrengthAfter,
@@ -56,4 +67,18 @@ internal static class GameUIMapper
             }).ToList();
     public static List<NewsMessageViewModel> News(IEnumerable<NewsMessage> items) =>
         items.Select(x => new NewsMessageViewModel { Message = x.Message, Date = x.Date }).ToList();
+
+    public static CompetitionHistoryViewModel CompetitionHistory(IList<CompetitionSeasonHistory> competitionSeasonHistories)
+    {
+        var vm = new CompetitionHistoryViewModel { 
+            Rows = competitionSeasonHistories.Select(_=> new CompetitionHistoryRowViewModel
+            {
+                Year = _.Year,
+                CompetitionName = _.CompetitionName,
+                ChampionClubName = _.ChampionClubName,
+                RunnerUpClubName = _.RunnerUpClubName
+            }).ToList()};
+
+        return vm;
+    }
 }

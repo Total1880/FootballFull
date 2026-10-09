@@ -21,6 +21,7 @@ namespace FootballFull.Services
         private readonly IEndOfSeasonChoicesService _endOfSeasonChoicesService;
         private readonly IStrengthService _strengthService;
         private readonly IEndOfSeasonService _endOfSeasonService;
+        private readonly IHistoryService _historyService;
         private readonly IGameUI _gameUI;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
@@ -47,6 +48,7 @@ namespace FootballFull.Services
             ISeasonEconomyService seasonEconomyService,
             IStrengthService strengthService,
             IEndOfSeasonService endOfSeasonService,
+            IHistoryService historyService,
             IGameUI gameUI)
         {
             _seasonService = seasonService;
@@ -60,6 +62,7 @@ namespace FootballFull.Services
             _seasonEconomyService = seasonEconomyService;
             _strengthService = strengthService;
             _endOfSeasonService = endOfSeasonService;
+            _historyService = historyService;
             _gameUI = gameUI;
 
         }
@@ -105,6 +108,12 @@ namespace FootballFull.Services
                     case MainMenuChoice.ShowInternationalRankings:
                         _gameUI.ShowInternationRankings(GameUIMapper.Rankings(DisplayInternationalRankingPerYear()), _year, true);
                         break;
+                    case MainMenuChoice.ShowCompetitionHistory:
+                        selectedCompetitionId = _gameUI.ChooseCompetitions(GameUIMapper.Options(
+    _competitions.Where(c => c.Type == CompetitionType.League)));
+                        if (selectedCompetitionId.HasValue)
+                            _gameUI.ShowCompetitionHistory(GameUIMapper.CompetitionHistory(_historyService.GetHistoryForCompetitionId(selectedCompetitionId.Value)));
+                            break;
                     case MainMenuChoice.Save:
                         _seasonService.SaveGame();
                         _gameUI.ShowMessage("Spel opgeslagen", "Je spel werd succesvol opgeslagen.", true);
