@@ -102,6 +102,39 @@ namespace FootballFull.ConsoleUI
             }
         }
 
+        public Guid? ChooseClub(
+    IReadOnlyList<SelectionOptionViewModel> clubs)
+        {
+            Console.Clear();
+            Console.WriteLine("=== Clubs ===");
+            Console.WriteLine();
+
+            for (var i = 0; i < clubs.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {clubs[i].Name}");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("0. Terug");
+            Console.WriteLine();
+            Console.Write("Kies een competitie: ");
+
+            var choice = Console.ReadLine();
+
+            if (!int.TryParse(choice, out var selectedIndex))
+                return null;
+
+            if (selectedIndex == 0)
+                return null;
+
+            if (selectedIndex >= 1 &&
+                selectedIndex <= clubs.Count)
+            {
+                return clubs[selectedIndex - 1].Id;
+            }
+
+            return null;
+        }
         public Guid? ChooseCompetitions(
             IReadOnlyList<SelectionOptionViewModel> competitions)
         {
@@ -605,6 +638,78 @@ namespace FootballFull.ConsoleUI
                         $"{(row.CompetitionName ?? "-").PadRight(competitionWidth)}" +
                         $"{(row.ChampionClubName ?? "-").PadRight(championWidth)}" +
                         $"{(row.RunnerUpClubName ?? "-").PadRight(runnerUpWidth)}");
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey(true);
+        }
+
+        public void ShowClubHistory(ClubHistoryViewModel history)
+        {
+            const int yearWidth = 8;
+            const int clubWidth = 25;
+            const int competitionWidth = 30;
+            const int positionWidth = 6;
+            const int gamesWidth = 7;
+            const int wonWidth = 6;
+            const int drawnWidth = 6;
+            const int lostWidth = 6;
+            const int gfWidth = 6;
+            const int gaWidth = 6;
+            const int gdWidth = 6;
+            const int pointsWidth = 7;
+
+            Console.Clear();
+            Console.WriteLine("=== Club History ===");
+            Console.WriteLine();
+
+            Console.WriteLine(
+                $"{"Year".PadRight(yearWidth)}" +
+                $"{"Club".PadRight(clubWidth)}" +
+                $"{"Competition".PadRight(competitionWidth)}" +
+                $"{"Pos".PadLeft(positionWidth)}" +
+                $"{"P".PadLeft(gamesWidth)}" +
+                $"{"W".PadLeft(wonWidth)}" +
+                $"{"D".PadLeft(drawnWidth)}" +
+                $"{"L".PadLeft(lostWidth)}" +
+                $"{"GF".PadLeft(gfWidth)}" +
+                $"{"GA".PadLeft(gaWidth)}" +
+                $"{"GD".PadLeft(gdWidth)}" +
+                $"{"Pts".PadLeft(pointsWidth)}");
+
+            Console.WriteLine(new string('-',
+                yearWidth + clubWidth + competitionWidth +
+                positionWidth + gamesWidth + wonWidth +
+                drawnWidth + lostWidth + gfWidth +
+                gaWidth + gdWidth + pointsWidth));
+
+            if (history?.ClubHistory == null || !history.ClubHistory.Any())
+            {
+                Console.WriteLine("No club history available.");
+            }
+            else
+            {
+                foreach (var row in history.ClubHistory
+                    .OrderByDescending(x => x.Year)
+                    .ThenBy(x => x.ClubName))
+                {
+                    int goalDifference = row.GoalsFor - row.GoalsAgainst;
+
+                    Console.WriteLine(
+                        $"{(row.Year.ToString()).PadRight(yearWidth)}" +
+                        $"{(row.ClubName ?? "-").PadRight(clubWidth)}" +
+                        $"{(row.CompetitionName ?? "-").PadRight(competitionWidth)}" +
+                        $"{row.Position.ToString().PadLeft(positionWidth)}" +
+                        $"{row.Played.ToString().PadLeft(gamesWidth)}" +
+                        $"{row.Won.ToString().PadLeft(wonWidth)}" +
+                        $"{row.Drawn.ToString().PadLeft(drawnWidth)}" +
+                        $"{row.Lost.ToString().PadLeft(lostWidth)}" +
+                        $"{row.GoalsFor.ToString().PadLeft(gfWidth)}" +
+                        $"{row.GoalsAgainst.ToString().PadLeft(gaWidth)}" +
+                        $"{goalDifference.ToString().PadLeft(gdWidth)}" +
+                        $"{row.Points.ToString().PadLeft(pointsWidth)}");
                 }
             }
 

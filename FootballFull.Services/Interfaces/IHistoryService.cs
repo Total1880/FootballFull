@@ -11,5 +11,6 @@ namespace FootballFull.Services.Interfaces
     {
         void SaveSeasonHistory();
         IList<CompetitionSeasonHistory> GetHistoryForCompetitionId(Guid competitionId);
+        IList<ClubSeasonHistory> GetHistoryForClubId(Guid clubId);
     }
 }

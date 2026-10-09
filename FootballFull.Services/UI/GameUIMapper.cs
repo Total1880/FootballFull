@@ -81,4 +81,27 @@ internal static class GameUIMapper
 
         return vm;
     }
+
+    public static ClubHistoryViewModel ClubHistory(IList<ClubSeasonHistory> clubSeasonHistories)
+    {
+        var vm = new ClubHistoryViewModel
+        {
+            ClubHistory = clubSeasonHistories.Select(x => new ClubHistoryRowViewModel
+            {
+                ClubName = x.ClubName,
+                CompetitionName = x.CompetitionName,
+                Year = x.Year,
+                Position = x.Position,
+                Played = x.Played,
+                Points = x.Points,
+                Won = x.Won,
+                Drawn = x.Drawn,
+                GoalsAgainst = x.GoalsAgainst,
+                GoalsFor = x.GoalsFor,
+                Lost = x.Lost,
+            }).ToList()
+        };
+
+        return vm;
+    }
 }

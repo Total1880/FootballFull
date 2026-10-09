@@ -67,7 +67,9 @@ namespace FootballFull.Services
                     var newClubSeasonHistory = new ClubSeasonHistory
                     {
                         Id = Guid.NewGuid(),
+                        ClubName = _clubService.GetClubById(clubResult.ClubId).Name,
                         CompetitionId = competition.Id,
+                        CompetitionName = competition.Name,
                         ClubId = clubResult.ClubId,
                         Year = _seasonService.Year,
                         Position = counterRanking,
@@ -88,6 +90,11 @@ namespace FootballFull.Services
         public IList<CompetitionSeasonHistory> GetHistoryForCompetitionId(Guid competitionId)
         {
             return _competitionSeasonHistories.Where(_ => _.CompetitionId == competitionId).ToList();
+        }
+
+        public IList<ClubSeasonHistory> GetHistoryForClubId(Guid clubId)
+        {
+            return _clubSeasonHistories.Where(_ => _.ClubId == clubId).ToList();
         }
     }
 }

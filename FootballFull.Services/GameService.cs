@@ -113,7 +113,12 @@ namespace FootballFull.Services
     _competitions.Where(c => c.Type == CompetitionType.League)));
                         if (selectedCompetitionId.HasValue)
                             _gameUI.ShowCompetitionHistory(GameUIMapper.CompetitionHistory(_historyService.GetHistoryForCompetitionId(selectedCompetitionId.Value)));
-                            break;
+                        break;
+                    case MainMenuChoice.ShowClubHistory:
+                    var selectClubId = _gameUI.ChooseClub(GameUIMapper.Options(_clubService.GetClubs()));
+                        if(selectClubId.HasValue)
+                            _gameUI.ShowClubHistory(GameUIMapper.ClubHistory(_historyService.GetHistoryForClubId(selectClubId.Value)));
+                        break;
                     case MainMenuChoice.Save:
                         _seasonService.SaveGame();
                         _gameUI.ShowMessage("Spel opgeslagen", "Je spel werd succesvol opgeslagen.", true);

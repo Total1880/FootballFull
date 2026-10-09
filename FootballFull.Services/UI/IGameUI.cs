@@ -28,4 +28,6 @@ public interface IGameUI
     void ShowNews(IReadOnlyList<NewsMessageViewModel> news);
     decimal AskForSubsidyAmount(SelectSubsidyClubViewModel viewModel);
     void ShowCompetitionHistory(CompetitionHistoryViewModel competitionHistoryViewModel);
+    Guid? ChooseClub(IReadOnlyList<SelectionOptionViewModel> selectionOptionViewModels);
+    void ShowClubHistory(ClubHistoryViewModel history);
 }

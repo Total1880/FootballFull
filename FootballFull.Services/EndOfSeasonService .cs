@@ -11,7 +11,7 @@ namespace FootballFull.Services
 {
     public class EndOfSeasonService : IEndOfSeasonService
     {
-        private const int MaximumNumberOfClubs = 18;
+        private const int MaximumNumberOfClubs = 100;
 
         private readonly ISeasonService _seasonService;
         private readonly IClubService _clubService;

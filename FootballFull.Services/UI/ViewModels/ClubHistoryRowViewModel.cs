@@ -1,11 +1,14 @@
-namespace FootballFull.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FootballFull.Services.UI.ViewModels
 {
-    public class ClubSeasonHistory
+    public class ClubHistoryRowViewModel
     {
-        public Guid Id { get; set; }
-        public Guid ClubId { get; set; }
         public string ClubName { get; set; }
-        public Guid CompetitionId { get; set; }
         public string CompetitionName { get; set; }
         public int Year { get; set; }
 
