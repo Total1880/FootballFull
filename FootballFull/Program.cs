@@ -46,6 +46,7 @@ services.AddSingleton<ISeasonEventService, SeasonEventService>();
 services.AddSingleton<IClubFinancialService, ClubFinancialService>();
 services.AddSingleton<IFootballAssociationsService, FootballAssociationService>();
 services.AddSingleton<IClubSubsidyService, ClubSubsidyService>();
+services.AddSingleton<IHistoryService, HistoryService>();
 services.AddSingleton<IGameUI, ConsoleGameUI>();
 
 
@@ -79,6 +80,10 @@ services.AddSingleton<IRepository<ClubLeagueCompetition>>(
 
 services.AddSingleton<IRepository<FootballAssociation>>(
     _ => new FootballAssociationRepository(Path.Combine(Configuration.DataRoot, "FootballAssociation.json")));
+services.AddSingleton<IRepository<ClubSeasonHistory>>(
+    _ => new ClubSeasonHistoryRepository(Path.Combine(Configuration.DataRoot, "ClubSeasonHistory.json")));
+services.AddSingleton<IRepository<CompetitionSeasonHistory>>(
+    _ => new CompetitionSeasonHistoryRepository(Path.Combine(Configuration.DataRoot, "CompetitionSeasonHistory.json")));
 
 services.AddSingleton<INameRepository>(
     _ => new NameRepository());

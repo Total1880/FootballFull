@@ -20,6 +20,7 @@ namespace FootballFull.Services
         private readonly ICompetitionRulesService _competitionRulesService;
         private readonly IClubPerCompetitionService _clubPerCompetitionService;
         private readonly IClubFinancialService _clubFinancialService;
+        private readonly IHistoryService _historyService;
 
         public EndOfSeasonService(
             ISeasonService seasonService,
@@ -28,7 +29,8 @@ namespace FootballFull.Services
             ICompetitionService competitionService,
             ICompetitionRulesService competitionRulesService,
             IClubPerCompetitionService clubPerCompetitionService,
-            IClubFinancialService clubFinancialService)
+            IClubFinancialService clubFinancialService,
+            IHistoryService historyService)
         {
             _seasonService = seasonService;
             _clubService = clubService;
@@ -37,6 +39,7 @@ namespace FootballFull.Services
             _competitionRulesService = competitionRulesService;
             _clubPerCompetitionService = clubPerCompetitionService;
             _clubFinancialService = clubFinancialService;
+            _historyService = historyService;
         }
 
         public EndOfSeasonOptions GetOptions(
@@ -340,6 +343,11 @@ namespace FootballFull.Services
 
                 _clubService.Update(club);
             }
+        }
+
+        public void ProcessSeasonResults()
+        {
+            _historyService.SaveSeasonHistory();
         }
     }
 }

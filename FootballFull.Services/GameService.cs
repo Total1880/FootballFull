@@ -20,6 +20,7 @@ namespace FootballFull.Services
         private readonly ISeasonEconomyService _seasonEconomyService;
         private readonly IEndOfSeasonChoicesService _endOfSeasonChoicesService;
         private readonly IStrengthService _strengthService;
+        private readonly IEndOfSeasonService _endOfSeasonService;
         private readonly IGameUI _gameUI;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
@@ -45,6 +46,7 @@ namespace FootballFull.Services
             IEndOfSeasonChoicesService endOfSeasonChoicesService,
             ISeasonEconomyService seasonEconomyService,
             IStrengthService strengthService,
+            IEndOfSeasonService endOfSeasonService,
             IGameUI gameUI)
         {
             _seasonService = seasonService;
@@ -57,6 +59,7 @@ namespace FootballFull.Services
             _endOfSeasonChoicesService = endOfSeasonChoicesService;
             _seasonEconomyService = seasonEconomyService;
             _strengthService = strengthService;
+            _endOfSeasonService = endOfSeasonService;
             _gameUI = gameUI;
 
         }
@@ -309,6 +312,7 @@ namespace FootballFull.Services
         {
             // Preserve the current ordering: international fixtures are initialized
             // before season finances and club development are processed.
+            _endOfSeasonService.ProcessSeasonResults();
             _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate);
             _gameUI.ShowSeasonFinancialResult(
                 GameUIMapper.Finances(_seasonEconomyService.CalculateAssociationResult(
