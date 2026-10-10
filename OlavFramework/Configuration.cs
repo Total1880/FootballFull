@@ -15,6 +15,9 @@ namespace OlavFramework
         public static decimal BasicOrganisationCost = 10000;
 
         public static string DataRoot { get; private set; }
+        public static decimal StartNationalCupCost = 50_000m;
+        public static int ReputationForStartNationalCup = 20;
+
         public static decimal BasicClubSeasonRevenue = 50_000m;
         public static decimal CompetitionRevenueMultiplier = 10_000m;
         public static decimal ClubRevenueMultiplier = 5_000m;
@@ -26,9 +29,8 @@ namespace OlavFramework
         public static decimal ClubDevelopmentStrengthCost = 5_000m;
         public static decimal ClubSignificantLossRatio = 0.10m;
         public static decimal ClubCriticalDebtThreshold = 100_000m;
-
+        public static decimal AssociationMaxDebt = 100_000m;
         public static decimal LowerDivisionCost = 100000;
-
         public static decimal NewClubCost = 10000;
 
         // Je basisfolder (de standaard data)

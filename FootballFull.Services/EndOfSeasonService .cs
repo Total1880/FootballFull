@@ -76,11 +76,17 @@ namespace FootballFull.Services
                 footballAssociation.Balance >= Configuration.LowerDivisionCost &&
                 footballAssociation.Reputation >= requiredReputationForNextTier;
 
+            var canCreateNationalCup =
+                footballAssociation.Balance >= Configuration.StartNationalCupCost &&
+                footballAssociation.Reputation >= Configuration.ReputationForStartNationalCup &&
+                !competitions.Any(_ => _.Type == Competition.CompetitionType.Cup);
+
             return new EndOfSeasonOptions
             {
                 CurrentClubCount = clubCount,
                 CanAddClub = canAddClub,
                 CanCreateLowerDivision = canCreateLowerDivision,
+                CanCreateNationalCup = canCreateNationalCup,
                 CannotAddClubReason = canAddClub
                     ? null
                     : GetCannotAddClubReason(
@@ -89,7 +95,10 @@ namespace FootballFull.Services
                         footballAssociation),
                 CannotCreateLowerDivisionReason = canCreateLowerDivision
                     ? null
-                    : "Je voldoet nog niet aan de voorwaarden voor een lagere divisie divisie."
+                    : "Je voldoet nog niet aan de voorwaarden voor een lagere divisie divisie.",
+                CannotCreateNationalCupReason = canCreateNationalCup
+                    ? null
+                    : "Je voldoet niet aan de voorwaarden voor een nieuwe nationale beker."
             };
         }
 
@@ -348,6 +357,26 @@ namespace FootballFull.Services
         public void ProcessSeasonResults()
         {
             _historyService.SaveSeasonHistory();
+        }
+
+        public void CreateNationalCup(Guid countryId, FootballAssociation association)
+        {
+            var options = GetOptions(countryId, association);
+
+            if (!options.CanCreateNationalCup)
+                throw new InvalidOperationException(
+                    options.CannotCreateLowerDivisionReason);
+
+            var newCup = new Competition
+            {
+                CountryId = countryId,
+                Type = Competition.CompetitionType.Cup,
+                Name = "National Cup"
+            };
+
+            _competitionService.Add(newCup);
+
+            association.Balance -= Configuration.StartNationalCupCost;
         }
     }
 }

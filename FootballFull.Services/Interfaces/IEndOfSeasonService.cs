@@ -32,5 +32,6 @@ namespace FootballFull.Services.Interfaces
 
         void ProcessClubFinances(Guid countryId);
         void ProcessSeasonResults();
+        void CreateNationalCup(Guid countryId, FootballAssociation association);
     }
 }

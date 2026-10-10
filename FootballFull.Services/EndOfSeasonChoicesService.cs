@@ -28,6 +28,13 @@ namespace FootballFull.Services
         {
             var options = _endOfSeasonService.GetOptions(countryId, association);
 
+            if (options.CanCreateNationalCup && _gameUI.AskYesNoQuestion(
+                $"Wil je een nationale beker toevoegen? Kostprijs {Configuration.StartNationalCupCost} (y/n)",
+                defaultAnswer: false))
+            {
+                _endOfSeasonService.CreateNationalCup(countryId, association);
+            }
+
             if (!options.CanAddClub && !options.CanCreateLowerDivision)
             {
                 _gameUI.ShowMessage("ERROR", options.CannotAddClubReason);

@@ -1,5 +1,6 @@
 ﻿using FootballFull.Models;
 using FootballFull.Services.Interfaces;
+using OlavFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace FootballFull.Services
             var clubs = GetEligibleClubs(association.CountryId);
             var totalCost = amountPerClub * clubs.Count;
 
-            if (totalCost > Math.Max(0m, association.Balance))
+            if (totalCost > Math.Max(-Configuration.AssociationMaxDebt, association.Balance))
                 throw new InvalidOperationException(
                     "De voetbalbond heeft onvoldoende geld voor deze subsidie.");
 

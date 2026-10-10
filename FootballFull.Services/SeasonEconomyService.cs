@@ -87,7 +87,19 @@ namespace FootballFull.Services
                 AssociationBalance = association.Balance
             });
 
-            _subsidies.AddSubsidy(association, amount, year);
+            try
+            {
+                _subsidies.AddSubsidy(association, amount, year);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _gameUI.ShowMessage("Error", ex.Message);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
