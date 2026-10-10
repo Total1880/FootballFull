@@ -110,7 +110,7 @@ namespace FootballFull.Services
                         break;
                     case MainMenuChoice.ShowCompetitionHistory:
                         selectedCompetitionId = _gameUI.ChooseCompetitions(GameUIMapper.Options(
-    _competitions.Where(c => c.Type == CompetitionType.League)));
+    _competitions.Where(c => c.Type != CompetitionType.ParentCompetition)));
                         if (selectedCompetitionId.HasValue)
                             _gameUI.ShowCompetitionHistory(GameUIMapper.CompetitionHistory(_historyService.GetHistoryForCompetitionId(selectedCompetitionId.Value)));
                         break;
@@ -326,7 +326,9 @@ namespace FootballFull.Services
         {
             // Preserve the current ordering: international fixtures are initialized
             // before season finances and club development are processed.
-            _endOfSeasonService.ProcessSeasonResults();
+            _endOfSeasonService.ProcessSeasonResults(
+    _cupFixtures,
+    _internationalFixtures);
             _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate);
             _gameUI.ShowSeasonFinancialResult(
                 GameUIMapper.Finances(_seasonEconomyService.CalculateAssociationResult(

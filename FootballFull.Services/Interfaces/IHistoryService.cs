@@ -9,7 +9,9 @@ namespace FootballFull.Services.Interfaces
 {
     public interface IHistoryService
     {
-        void SaveSeasonHistory();
+        void SaveSeasonHistory(
+            IList<Fixture> cupFixtures,
+            IList<Fixture>? internationalFixtures);
         IList<CompetitionSeasonHistory> GetHistoryForCompetitionId(Guid competitionId);
         IList<ClubSeasonHistory> GetHistoryForClubId(Guid clubId);
     }

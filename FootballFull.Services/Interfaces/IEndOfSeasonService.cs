@@ -31,7 +31,9 @@ namespace FootballFull.Services.Interfaces
         Club CreateApplicantClub(Guid countryId, string clubName);
 
         void ProcessClubFinances(Guid countryId);
-        void ProcessSeasonResults();
+        void ProcessSeasonResults(
+            IList<Fixture> cupFixtures,
+            IList<Fixture>? internationalFixtures);
         void CreateNationalCup(Guid countryId, FootballAssociation association);
     }
 }

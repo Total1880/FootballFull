@@ -354,9 +354,13 @@ namespace FootballFull.Services
             }
         }
 
-        public void ProcessSeasonResults()
+        public void ProcessSeasonResults(
+            IList<Fixture> cupFixtures,
+            IList<Fixture>? internationalFixtures)
         {
-            _historyService.SaveSeasonHistory();
+            _historyService.SaveSeasonHistory(
+                cupFixtures,
+                internationalFixtures);
         }
 
         public void CreateNationalCup(Guid countryId, FootballAssociation association)
