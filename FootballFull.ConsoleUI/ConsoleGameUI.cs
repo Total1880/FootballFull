@@ -333,6 +333,7 @@ namespace FootballFull.ConsoleUI
             Console.WriteLine($"Competition Costs: {seasonFinancialResult.CompetitionCosts:C}");
             Console.WriteLine($"Organisation Costs: {seasonFinancialResult.OrganisationCosts:C}");
             Console.WriteLine($"Subsidy Costs: {seasonFinancialResult.SubsidyCosts:C}");
+            Console.WriteLine($"Prize Money Costs: {seasonFinancialResult.PrizeMoneyCosts:C}");
             Console.WriteLine();
             Console.WriteLine($"Net Result: {seasonFinancialResult.NetResult:C}");
             Console.WriteLine($" Balance: {seasonFinancialResult.Balance:C}");
@@ -556,6 +557,7 @@ namespace FootballFull.ConsoleUI
             {
                 Console.WriteLine($"{club.ClubName}: strength {club.StrengthBefore} -> {club.StrengthAfter}");
                 Console.WriteLine($"  Resultaat: {club.NetResult:N0} | Investering: {club.Investment:N0} | Saldo: {club.Balance:N0}");
+                Console.WriteLine($"  Ontvangen prijzengeld: {club.PrizeMoneyReceived:N0}");
                 Console.WriteLine($"  Gereserveerd budget: {club.DevelopmentBudget:N0} | {club.Reason}");
                 Console.WriteLine();
             }

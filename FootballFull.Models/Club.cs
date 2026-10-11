@@ -11,6 +11,7 @@ namespace FootballFull.Models
         public Guid CountryId { get; set; }
         public Guid? FeederClubId { get; set; }
         public decimal Balance { get; set; }
+        public List<ClubPrizeMoneyPayment> PrizeMoneyPayments { get; set; } = new();
         // Earmarked cash, included in Balance until it is actually invested.
         public decimal DevelopmentBudget { get; set; }
         public ClubFinancialResult? LastSeasonFinancialResult { get; set; }

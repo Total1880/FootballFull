@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace FootballFull.Models
 {
@@ -27,5 +27,6 @@ namespace FootballFull.Models
         public IDictionary<int, DateTime> MatchDay { get; set; }
         public List<CompetitionSplitParameters> SplitParameters { get; set; } = new List<CompetitionSplitParameters>();
         public CompetitionPrizeMoneySettings PrizeMoneySettings { get; set; } = new();
+        public List<CompetitionPrizeMoneySeason> PrizeMoneySeasons { get; set; } = new();
     }
 }

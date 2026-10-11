@@ -22,6 +22,7 @@ namespace FootballFull.Services
         private readonly IClubFinancialService _clubFinancialService;
         private readonly IHistoryService _historyService;
         private readonly IPrizeMoneyService _prizeMoneyService;
+        private readonly IFootballAssociationsService _associations;
 
         public EndOfSeasonService(
             ISeasonService seasonService,
@@ -32,7 +33,8 @@ namespace FootballFull.Services
             IClubPerCompetitionService clubPerCompetitionService,
             IClubFinancialService clubFinancialService,
             IHistoryService historyService,
-            IPrizeMoneyService prizeMoneyService)
+            IPrizeMoneyService prizeMoneyService,
+            IFootballAssociationsService associations)
         {
             _seasonService = seasonService;
             _clubService = clubService;
@@ -43,6 +45,7 @@ namespace FootballFull.Services
             _clubFinancialService = clubFinancialService;
             _historyService = historyService;
             _prizeMoneyService = prizeMoneyService;
+            _associations = associations;
         }
 
         public EndOfSeasonOptions GetOptions(Guid countryId, FootballAssociation footballAssociation)
@@ -338,11 +341,131 @@ namespace FootballFull.Services
         ? club.SeasonSubsidyReceived
         : 0m;
 
-                // De subsidie werd bij de seizoensstart al betaald.
-                club.Balance += result.NetResult - result.SubsidyReceived;
+                result.PrizeMoneyReceived = _competitionService.GetCompetitions()
+                    .SelectMany(c => c.PrizeMoneySeasons)
+                    .Where(s => s.Year == _seasonService.Year)
+                    .SelectMany(s => s.Payments)
+                    .Where(p => p.ClubId == club.Id)
+                    .Sum(p => p.Amount);
+
+                // Subsidies and prizes have already been credited to the balance.
+                club.Balance += result.NetResult - result.SubsidyReceived - result.PrizeMoneyReceived;
                 club.LastSeasonFinancialResult = result;
 
                 _clubService.Update(club);
+            }
+        }
+
+        public void ReservePrizeMoney(Competition competition, CompetitionPrizeMoneySettings settings,
+            FootballAssociation association, int year)
+        {
+            if (competition.CountryId != association.CountryId)
+                throw new ArgumentException("De competitie behoort niet tot deze voetbalbond.");
+            if (competition.PrizeMoneySeasons.Any(s => s.Year == year))
+                throw new InvalidOperationException("De prijzenpot is al vastgelegd voor dit seizoen.");
+
+            _prizeMoneyService.ValidateSettings(settings, competition.Type);
+            if (settings.TotalBudget > 0 && competition.Type == Competition.CompetitionType.Cup &&
+                settings.Distribution == PrizeMoneyDistribution.SemiFinalists)
+            {
+                var leagueIds = _competitionService.GetCompetitionsForCountry(association.CountryId)
+                    .Where(c => c.Type == Competition.CompetitionType.League).Select(c => c.Id).ToHashSet();
+                var clubCount = _clubPerCompetitionService.GetAllClubPerCompetitionForCountry(association.CountryId)
+                    .Where(c => leagueIds.Contains(c.CompetitionId)).Select(c => c.ClubId).Distinct().Count();
+                if (clubCount < 4)
+                    throw new InvalidOperationException("Voor halvefinalepremies zijn minstens vier clubs nodig.");
+            }
+
+
+            if (settings.TotalBudget > 0 && settings.TotalBudget > association.Balance)
+                throw new InvalidOperationException("Je hebt onvoldoende bondsbudget voor deze prijzenpot.");
+
+            competition.PrizeMoneySettings = settings;
+            competition.PrizeMoneySeasons.Add(new CompetitionPrizeMoneySeason
+            {
+                Year = year,
+                Settings = new CompetitionPrizeMoneySettings
+                {
+                    TotalBudget = settings.TotalBudget,
+                    Distribution = settings.Distribution
+                }
+            });
+            association.Balance -= settings.TotalBudget;
+            _associations.Update(association);
+            _competitionService.Update(competition);
+        }
+
+        public void ProcessPrizeMoney(IList<Fixture> cupFixtures, IList<Fixture>? internationalFixtures)
+        {
+            foreach (var competition in _competitionService.GetCompetitions().ToList())
+            {
+                var season = competition.PrizeMoneySeasons
+                    .SingleOrDefault(s => s.Year == _seasonService.Year);
+                if (season == null || season.IsPaid)
+                    continue;
+
+                IReadOnlyList<ClubPrizeMoney> prizes;
+                if (season.Settings.TotalBudget == 0)
+                    prizes = Array.Empty<ClubPrizeMoney>();
+                else if (competition.Type == Competition.CompetitionType.League)
+                {
+                    var ranking = _seasonService.GetRanking(competition.Id);
+                    if (ranking.Count == 0)
+                        throw new InvalidOperationException($"Geen eindstand voor {competition.Name}.");
+                    prizes = _prizeMoneyService.CalculateLeaguePrizes(
+                        season.Settings, ranking.Select(r => r.ClubId).ToList());
+                }
+                else
+                {
+                    var fixtures = competition.Type == Competition.CompetitionType.Cup
+                        ? cupFixtures : internationalFixtures ?? new List<Fixture>();
+                    var games = fixtures.Where(f => f.CompetitionId == competition.Id).ToList();
+                    if (games.Count == 0)
+                        throw new InvalidOperationException($"Geen bekerresultaten voor {competition.Name}.");
+                    var finalRound = games.Max(f => f.RoundNo);
+                    var finals = games.Where(f => f.RoundNo == finalRound).ToList();
+                    if (finals.Count != 1 || finals[0].HomeScore == finals[0].AwayScore)
+                        throw new InvalidOperationException($"Geen eenduidige bekerwinnaar voor {competition.Name}.");
+                    var final = finals[0];
+                    var winner = final.HomeScore > final.AwayScore ? final.HomeTeamId : final.AwayTeamId;
+                    var runnerUp = final.HomeScore > final.AwayScore ? final.AwayTeamId : final.HomeTeamId;
+                    var losers = new List<Guid>();
+                    if (season.Settings.Distribution == PrizeMoneyDistribution.SemiFinalists)
+                    {
+                        var semis = games.Where(f => f.RoundNo == finalRound - 1).ToList();
+                        if (semis.Count != 2 || semis.Any(f => f.HomeScore == f.AwayScore))
+                            throw new InvalidOperationException($"Geen twee besliste halve finales voor {competition.Name}.");
+                        losers = semis.Select(f => f.HomeScore > f.AwayScore ? f.AwayTeamId : f.HomeTeamId).ToList();
+                        if (losers.Contains(winner) || losers.Contains(runnerUp))
+                            throw new InvalidOperationException("Ongeldige halvefinaleresultaten.");
+                    }
+                    prizes = _prizeMoneyService.CalculateCupPrizes(season.Settings, winner, runnerUp, losers);
+                }
+
+                // Resolve every recipient before changing any balance.
+                var recipients = prizes.Select(p => (Prize: p, Club: _clubService.GetClubById(p.ClubId)
+                    ?? throw new InvalidOperationException($"Club {p.ClubId} ontbreekt."))).ToList();
+                foreach (var recipient in recipients)
+                {
+                    // Payments are recorded per club so a retry does not book it twice.
+                    if (!recipient.Club.PrizeMoneyPayments.Any(p =>
+                        p.CompetitionId == competition.Id && p.Year == season.Year))
+                    {
+                        recipient.Club.Balance += recipient.Prize.Amount;
+                        recipient.Club.PrizeMoneyPayments.Add(new ClubPrizeMoneyPayment
+                        {
+                            CompetitionId = competition.Id,
+                            Year = season.Year,
+                            Amount = recipient.Prize.Amount
+                        });
+                        _clubService.Update(recipient.Club);
+                    }
+                    if (!season.Payments.Any(p => p.ClubId == recipient.Prize.ClubId))
+                        season.Payments.Add(recipient.Prize);
+                    _competitionService.Update(competition);
+                }
+                season.IsPaid = true;
+                _competitionService.Update(competition);
             }
         }
 

@@ -22,7 +22,6 @@ namespace FootballFull.Services
         private readonly IStrengthService _strengthService;
         private readonly IEndOfSeasonService _endOfSeasonService;
         private readonly IHistoryService _historyService;
-        private readonly IPrizeMoneyService _prizeMoneyService;
         private readonly IGameUI _gameUI;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
@@ -49,7 +48,6 @@ namespace FootballFull.Services
             IStrengthService strengthService,
             IEndOfSeasonService endOfSeasonService,
             IHistoryService historyService,
-            IPrizeMoneyService prizeMoneyService,
             IGameUI gameUI)
         {
             _seasonService = seasonService;
@@ -64,7 +62,6 @@ namespace FootballFull.Services
             _strengthService = strengthService;
             _endOfSeasonService = endOfSeasonService;
             _historyService = historyService;
-            _prizeMoneyService = prizeMoneyService;
             _gameUI = gameUI;
 
         }
@@ -83,6 +80,7 @@ namespace FootballFull.Services
             _internationalFixtures = initial.InternationalFixtures;
             _footballAssociations = initial.FootballAssociations;
 
+            ConfigureSeasonPrizeMoney();
             GameLoop();
         }
 
@@ -328,7 +326,7 @@ namespace FootballFull.Services
             // Preserve the current ordering: international fixtures are initialized
             // before season finances and club development are processed.
             _endOfSeasonService.ProcessSeasonResults(_cupFixtures, _internationalFixtures);
-            _endOfSeasonService.ProcessPrizeMoney()
+            _endOfSeasonService.ProcessPrizeMoney(_cupFixtures, _internationalFixtures);
             _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate);
             _gameUI.ShowSeasonFinancialResult(GameUIMapper.Finances(_seasonEconomyService.CalculateAssociationResult(
                     _userCountryId, _year, _competitionService.GetCompetitions(), GetUserAssociation())), true);
@@ -358,7 +356,7 @@ namespace FootballFull.Services
             var association = _footballAssociations
                 .First(fa => fa.CountryId == _userCountryId);
             _seasonEconomyService.AllocateClubSubsidies(_userCountryId, _year, association);
-            ConfigurePrizeMoney(_competitionService.GetCompetitionsForCountry(_userCountryId).First(_ => _.Tier == 1));
+            ConfigureSeasonPrizeMoney();
 
             _currentDate = new DateTime(_year, 7, 1);
             _newSeasonDate = _currentDate.AddYears(1);
@@ -369,19 +367,45 @@ namespace FootballFull.Services
             _cupFixtures = _seasonService.InitializeNationalCups(_currentDate);
         }
 
-        private void ConfigurePrizeMoney(Competition competition)
+        private void ConfigureSeasonPrizeMoney()
         {
-            var budget = _gameUI.AskPrizeMoneyBudget(competition.Name);
-
-            competition.PrizeMoneySettings = new CompetitionPrizeMoneySettings
+            var competitions = _competitionService.GetCompetitions()
+                .Where(c => c.CountryId == _userCountryId &&
+                    (c.Type == CompetitionType.League || c.Type == CompetitionType.Cup))
+                .OrderBy(c => c.Type).ThenBy(c => c.Tier).ToList();
+            foreach (var competition in competitions)
             {
-                TotalBudget = budget,
-                Distribution = budget > 0
-                    ? _gameUI.AskPrizeMoneyDistribution(competition.Type)
-                    : competition.Type == Competition.CompetitionType.League
-                        ? PrizeMoneyDistribution.Equal
-                        : PrizeMoneyDistribution.WinnerOnly
-            };
+                if (competition.PrizeMoneySeasons.Any(s => s.Year == _year))
+                    continue;
+                while (true)
+                {
+                    var association = GetUserAssociation();
+                    _gameUI.ShowMessage("Prijzengeld", $"Beschikbaar bondsbudget: {association.Balance:C2}", true);
+                    var budget = _gameUI.AskPrizeMoneyBudget(competition.Name);
+                    if (budget > 0 && budget > association.Balance)
+                    {
+                        _gameUI.ShowMessage("Onvoldoende budget", "Kies een lagere prijzenpot.", true);
+                        continue;
+                    }
+                    var settings = new CompetitionPrizeMoneySettings
+                    {
+                        TotalBudget = budget,
+                        Distribution = budget > 0
+                            ? _gameUI.AskPrizeMoneyDistribution(competition.Type)
+                            : competition.Type == CompetitionType.League
+                                ? PrizeMoneyDistribution.Equal : PrizeMoneyDistribution.WinnerOnly
+                    };
+                    try
+                    {
+                        _endOfSeasonService.ReservePrizeMoney(competition, settings, association, _year);
+                        break;
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        _gameUI.ShowMessage("Prijzengeld", ex.Message, true);
+                    }
+                }
+            }
         }
 
         private FootballAssociation GetUserAssociation()

@@ -1,4 +1,4 @@
-﻿using FootballFull.Models;
+using FootballFull.Models;
 using FootballFull.Repositories.Interfaces;
 using FootballFull.Services.Interfaces;
 using static FootballFull.Models.Competition;
@@ -48,6 +48,9 @@ namespace FootballFull.Services
                 competition.MatchDay = new Dictionary<int, DateTime>();
 
             _competitionRepository.Update(competition);
+            var index = _competitions.ToList().FindIndex(c => c.Id == competition.Id);
+            if (index >= 0)
+                _competitions[index] = competition;
         }
 
         public void Delete(Guid id)
@@ -173,6 +176,8 @@ namespace FootballFull.Services
                 club.Strength = new Random().Next(OlavFramework.Configuration.MinStrength, OlavFramework.Configuration.MinStrength + 3);
                 _clubRepository.Update(club);
             }
+
+            _competitions = _competitionRepository.Load();
         }
 
         public IList<Competition> GetCompetitionsForCountry(Guid userCountryId)
