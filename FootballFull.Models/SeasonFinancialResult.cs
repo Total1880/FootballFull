@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace FootballFull.Models
 {
@@ -13,6 +13,7 @@ namespace FootballFull.Models
         public decimal ClubCosts { get; set; }
         public decimal CompetitionCosts { get; set; }
         public decimal OrganisationCosts { get; set; }
+        public decimal PrizeMoneyCosts { get; set; }
         public decimal SubsidyCosts { get; set; }
 
         public int ReputationChange { get; set; }
@@ -23,6 +24,6 @@ namespace FootballFull.Models
             BonusIncome -
             ClubCosts -
             CompetitionCosts -
-            OrganisationCosts - SubsidyCosts;
+            OrganisationCosts - SubsidyCosts - PrizeMoneyCosts;
     }
 }

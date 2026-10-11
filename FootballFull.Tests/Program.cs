@@ -107,8 +107,8 @@ try
         _ => throw new NotSupportedException(name)
     });
     var finance = new ClubFinancialService();
-    new EndOfSeasonService(null!, clubService, null!, competitionService, null!,
-        membershipService, finance).ProcessClubFinances(countryId);
+    new EndOfSeasonService(Stub<ISeasonService>.Create((name, args) => name == "get_Year" ? 2026 : throw new NotSupportedException(name)), clubService, null!, competitionService, null!,
+        membershipService, finance, null!, new PrizeMoneyService(), null!).ProcessClubFinances(countryId);
     club = clubService.GetClubById(club.Id)!;
     Equal(53_000m, club.Balance, "Only one league season is booked, cups and splits excluded");
     Equal(105_000m, club.LastSeasonFinancialResult!.Revenue, "Uses primary league revenue");
@@ -128,6 +128,106 @@ try
     Equal(20, cup.Strength, "Domestic cups are unaffected");
 }
 finally { if (File.Exists(path)) File.Delete(path); }
+// Prize money: exercise reservation, league/cup payouts and reload through JSON repositories.
+var prizePath = Path.Combine(Path.GetTempPath(), "footballfull-prizes-" + Guid.NewGuid());
+Directory.CreateDirectory(prizePath);
+try
+{
+    var countryId = Guid.NewGuid();
+    var clubsRepository = new ClubRepositoryV2(Path.Combine(prizePath, "clubs.json"));
+    var competitionsRepository = new CompetitionRepositoryV2(Path.Combine(prizePath, "competitions.json"));
+    var prizeClubs = Enumerable.Range(0, 4).Select(_ => Create(balance: 0)).ToList();
+    clubsRepository.Create(prizeClubs, true);
+    var league = new Competition { Id = Guid.NewGuid(), Name = "League", CountryId = countryId };
+    var cup = new Competition { Id = Guid.NewGuid(), Name = "Cup", CountryId = countryId,
+        Type = Competition.CompetitionType.Cup };
+    competitionsRepository.Create(new List<Competition> { league, cup }, true);
+    var competitionCatalogue = competitionsRepository.Load();
+    var competitions = Stub<ICompetitionService>.Create((name, args) => name switch
+    {
+        "GetCompetitions" or "GetCompetitionsForCountry" => competitionCatalogue,
+        "Update" => SaveCompetition((Competition)args[0]!),
+        _ => throw new NotSupportedException(name)
+    });
+    object? SaveCompetition(Competition value)
+    {
+        competitionsRepository.Update(value);
+        competitionCatalogue[competitionCatalogue.ToList().FindIndex(c => c.Id == value.Id)] = value;
+        return null;
+    }
+    var season = Stub<ISeasonService>.Create((name, args) => name switch
+    {
+        "get_Year" => 2026,
+        "GetRanking" => prizeClubs.Select(c => new ClubLeagueCompetition { ClubId = c.Id }).ToList(),
+        _ => throw new NotSupportedException(name)
+    });
+    var memberships = Stub<IClubPerCompetitionService>.Create((name, args) => name switch
+    {
+        "GetAllClubPerCompetitionForCountry" => prizeClubs.Select(c => new ClubPerCompetition
+            { ClubId = c.Id, CompetitionId = league.Id }).ToList(),
+        _ => throw new NotSupportedException(name)
+    });
+    var association = new FootballAssociation { CountryId = countryId, Balance = 1_000m };
+    var associations = Stub<IFootballAssociationsService>.Create((name, args) =>
+        name == "Update" ? null : throw new NotSupportedException(name));
+    var calculator = new PrizeMoneyService();
+    var closing = new EndOfSeasonService(season, new ClubService(clubsRepository), null!, competitions,
+        null!, memberships, new ClubFinancialService(), null!, calculator, associations);
+    var settings = new CompetitionPrizeMoneySettings { TotalBudget = 100m,
+        Distribution = PrizeMoneyDistribution.Balanced };
+    closing.ReservePrizeMoney(league, settings, association, 2026);
+    Equal(900m, association.Balance, "League pot is reserved once");
+    settings.TotalBudget = 999m;
+    Equal(100m, league.PrizeMoneySeasons[0].Settings.TotalBudget, "Season settings are a snapshot");
+    try { closing.ReservePrizeMoney(league, settings, association, 2026); throw new Exception("Duplicate reservation accepted"); }
+    catch (InvalidOperationException) { checks++; }
+    try { closing.ReservePrizeMoney(cup, new() { TotalBudget = 901m,
+        Distribution = PrizeMoneyDistribution.WinnerOnly }, association, 2026); throw new Exception("Unaffordable pot accepted"); }
+    catch (InvalidOperationException) { checks++; }
+    Equal(900m, association.Balance, "Rejected reservation leaves balance unchanged");
+    closing.ReservePrizeMoney(cup, new() { TotalBudget = 200m,
+        Distribution = PrizeMoneyDistribution.SemiFinalists }, association, 2026);
+    var fixtures = new List<Fixture>
+    {
+        new() { CompetitionId = cup.Id, RoundNo = 1, HomeTeamId = prizeClubs[0].Id,
+            AwayTeamId = prizeClubs[2].Id, HomeScore = 1 },
+        new() { CompetitionId = cup.Id, RoundNo = 1, HomeTeamId = prizeClubs[1].Id,
+            AwayTeamId = prizeClubs[3].Id, HomeScore = 1 },
+        new() { CompetitionId = cup.Id, RoundNo = 2, HomeTeamId = prizeClubs[0].Id,
+            AwayTeamId = prizeClubs[1].Id, HomeScore = 1 }
+    };
+    closing.ProcessPrizeMoney(fixtures, null);
+    Equal(140m, clubsRepository.Load()[0].Balance, "Champion receives league and cup prizes");
+    Equal(80m, clubsRepository.Load()[1].Balance, "Runner-up receives both prizes");
+    Equal(300m, clubsRepository.Load().Sum(c => c.Balance), "All reserved money is distributed");
+    Equal(700m, association.Balance, "Payout does not charge the association twice");
+    competitionCatalogue = competitionsRepository.Load();
+    closing.ProcessPrizeMoney(fixtures, null);
+    Equal(300m, clubsRepository.Load().Sum(c => c.Balance), "Reload and repeat do not pay twice");
+    // Simulate retry after club balances were written but completion was not recorded.
+    foreach (var c in competitionCatalogue)
+    {
+        c.PrizeMoneySeasons[0].IsPaid = false;
+        c.PrizeMoneySeasons[0].Payments.Clear();
+    }
+    closing.ProcessPrizeMoney(fixtures, null);
+    Equal(300m, clubsRepository.Load().Sum(c => c.Balance), "Club payment records prevent duplicate credits on retry");
+    closing.ProcessClubFinances(countryId);
+    Equal(140m, clubsRepository.Load()[0].LastSeasonFinancialResult!.PrizeMoneyReceived,
+        "Prize money is included in the financial result");
+    Equal(clubsRepository.Load()[0].LastSeasonFinancialResult!.NetResult, clubsRepository.Load()[0].Balance,
+        "Financial close does not credit prizes twice");
+    foreach (var distribution in new[] { PrizeMoneyDistribution.Equal, PrizeMoneyDistribution.Balanced,
+        PrizeMoneyDistribution.TopHeavy })
+    {
+        var prizes = calculator.CalculateLeaguePrizes(new() { TotalBudget = 0.01m,
+            Distribution = distribution }, prizeClubs.Select(c => c.Id).ToList());
+        Equal(0.01m, prizes.Sum(p => p.Amount), "Rounding preserves the full pot");
+    }
+    Equal(0, JsonSerializer.Deserialize<Competition>("{}")!.PrizeMoneySeasons.Count,
+        "Older saves default to no reservations");
+}
+finally { Directory.Delete(prizePath, true); }
 Console.WriteLine($"PASS: {checks} regression checks.");
 
 public class Stub<T> : DispatchProxy where T : class

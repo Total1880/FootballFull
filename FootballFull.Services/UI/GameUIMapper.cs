@@ -40,6 +40,7 @@ internal static class GameUIMapper
         OrganisationCosts = x.OrganisationCosts,
         ReputationChange = x.ReputationChange,
         NetResult = x.NetResult,
+        PrizeMoneyCosts = x.PrizeMoneyCosts,
         SubsidyCosts = x.SubsidyCosts
     };
     public static List<CountryRankingViewModel> Rankings(IEnumerable<CountryCoefficientRanking> items) =>
@@ -61,6 +62,7 @@ internal static class GameUIMapper
                 Balance = c.Balance,
                 DevelopmentBudget = c.DevelopmentBudget,
                 SubsidyReceived = c.LastSeasonFinancialResult.SubsidyReceived,
+                PrizeMoneyReceived = c.LastSeasonFinancialResult.PrizeMoneyReceived,
                 StrengthBefore = c.LastSeasonFinancialResult.StrengthBefore,
                 StrengthAfter = c.LastSeasonFinancialResult.StrengthAfter,
                 Reason = c.LastSeasonFinancialResult.DevelopmentReason

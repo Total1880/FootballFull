@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +8,7 @@ namespace FootballFull.Models
 {
     public class CompetitionPrizeMoneySettings
     {
-        public decimal TotalBudget;
+        public decimal TotalBudget { get; set; }
         public PrizeMoneyDistribution Distribution { get; set; }
     }
 }

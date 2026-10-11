@@ -1,4 +1,4 @@
-﻿using FootballFull.Models;
+using FootballFull.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +31,9 @@ namespace FootballFull.Services.Interfaces
         Club CreateApplicantClub(Guid countryId, string clubName);
 
         void ProcessClubFinances(Guid countryId);
+        void ReservePrizeMoney(Competition competition, CompetitionPrizeMoneySettings settings,
+            FootballAssociation association, int year);
+        void ProcessPrizeMoney(IList<Fixture> cupFixtures, IList<Fixture>? internationalFixtures);
         void ProcessSeasonResults(
             IList<Fixture> cupFixtures,
             IList<Fixture>? internationalFixtures);

@@ -11,11 +11,12 @@ namespace FootballFull.Models
         public decimal Revenue { get; set; }
         public decimal Expenses { get; set; }
 
-        public decimal NetResult => Revenue - Expenses + SubsidyReceived;
+        public decimal NetResult => Revenue - Expenses + SubsidyReceived + PrizeMoneyReceived;
         public decimal DevelopmentInvestment { get; set; }
         public int StrengthBefore { get; set; }
         public int StrengthAfter { get; set; }
         public string DevelopmentReason { get; set; } = string.Empty;
+        public decimal PrizeMoneyReceived { get; set; }
         public decimal SubsidyReceived { get; set; }
     }
 }

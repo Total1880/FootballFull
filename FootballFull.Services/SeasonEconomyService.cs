@@ -57,6 +57,10 @@ namespace FootballFull.Services
             var result = _financialResults.CalculateFinancialResults(
                 clubCount, competitionCount, association, subsidyCosts);
 
+            // These pots were already deducted when reserved, so report them without booking again.
+            result.PrizeMoneyCosts = competitions.Where(c => c.CountryId == countryId)
+                .SelectMany(c => c.PrizeMoneySeasons).Where(s => s.Year == year)
+                .Sum(s => s.Settings.TotalBudget);
             _associations.Update(association);
             return result;
         }

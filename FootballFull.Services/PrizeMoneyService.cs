@@ -1,4 +1,4 @@
-﻿using FootballFull.Models;
+using FootballFull.Models;
 using FootballFull.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,11 +11,27 @@ namespace FootballFull.Services
 
     public class PrizeMoneyService : IPrizeMoneyService
     {
+        public void ValidateSettings(CompetitionPrizeMoneySettings settings, Competition.CompetitionType type)
+        {
+            ArgumentNullException.ThrowIfNull(settings);
+            ValidateBudget(settings.TotalBudget);
+            var valid = type switch
+            {
+                Competition.CompetitionType.League => settings.Distribution is
+                    PrizeMoneyDistribution.Equal or PrizeMoneyDistribution.Balanced or PrizeMoneyDistribution.TopHeavy,
+                Competition.CompetitionType.Cup or Competition.CompetitionType.International => settings.Distribution is
+                    PrizeMoneyDistribution.WinnerOnly or PrizeMoneyDistribution.Finalists or PrizeMoneyDistribution.SemiFinalists,
+                _ => false
+            };
+            if (!valid)
+                throw new ArgumentException("Ongeldige verdeelsleutel voor dit competitietype.");
+        }
+
         public IReadOnlyList<ClubPrizeMoney> CalculateLeaguePrizes(
             CompetitionPrizeMoneySettings settings,
             IReadOnlyList<Guid> rankedClubIds)
         {
-            ValidateBudget(settings.TotalBudget);
+            ValidateSettings(settings, Competition.CompetitionType.League);
 
             var numberOfClubs = rankedClubIds.Count;
 
@@ -49,7 +65,7 @@ namespace FootballFull.Services
             Guid runnerUpId,
             IReadOnlyList<Guid> losingSemiFinalistIds)
         {
-            ValidateBudget(settings.TotalBudget);
+            ValidateSettings(settings, Competition.CompetitionType.Cup);
 
             switch (settings.Distribution)
             {
@@ -96,6 +112,9 @@ namespace FootballFull.Services
         {
             if (clubIds.Count != weights.Count)
                 throw new ArgumentException("Iedere club moet een gewicht hebben.");
+
+            if (clubIds.Any(id => id == Guid.Empty))
+                throw new ArgumentException("Een prijs vereist een geldige club.");
 
             if (clubIds.Distinct().Count() != clubIds.Count)
                 throw new ArgumentException("Een club mag maar één prijs ontvangen.");
