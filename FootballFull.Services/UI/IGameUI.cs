@@ -1,3 +1,4 @@
+using FootballFull.Models;
 using FootballFull.Services.UI.ViewModels;
 
 namespace FootballFull.Services.UI;
@@ -30,4 +31,6 @@ public interface IGameUI
     void ShowCompetitionHistory(CompetitionHistoryViewModel competitionHistoryViewModel);
     Guid? ChooseClub(IReadOnlyList<SelectionOptionViewModel> selectionOptionViewModels);
     void ShowClubHistory(ClubHistoryViewModel history);
+    decimal AskPrizeMoneyBudget(string name);
+    PrizeMoneyDistribution AskPrizeMoneyDistribution(Competition.CompetitionType type);
 }

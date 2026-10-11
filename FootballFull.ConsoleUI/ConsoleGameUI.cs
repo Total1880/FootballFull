@@ -1,5 +1,7 @@
+using FootballFull.Models;
 using FootballFull.Services.UI;
 using FootballFull.Services.UI.ViewModels;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace FootballFull.ConsoleUI
@@ -716,6 +718,119 @@ namespace FootballFull.ConsoleUI
             Console.WriteLine();
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey(true);
+        }
+
+        public decimal AskPrizeMoneyBudget(string name)
+        {
+            var culture = CultureInfo.GetCultureInfo("nl-BE");
+
+            Console.Clear();
+            Console.WriteLine($"=== Prijzengeld: {name} ===");
+            Console.WriteLine("Geef de totale prijzenpot op.");
+            Console.WriteLine("Gebruik een komma voor decimalen, bijvoorbeeld 10000,50.");
+            Console.WriteLine("Kies 0 om geen prijzengeld uit te keren.");
+            Console.WriteLine();
+
+            while (true)
+            {
+                Console.Write("Prijzenpot (€): ");
+                var input = Console.ReadLine();
+
+                if (input == null)
+                    throw new InvalidOperationException("Console-invoer is afgesloten.");
+
+                if (decimal.TryParse(
+                        input,
+                        NumberStyles.AllowLeadingWhite |
+                        NumberStyles.AllowTrailingWhite |
+                        NumberStyles.AllowLeadingSign |
+                        NumberStyles.AllowDecimalPoint,
+                        culture,
+                        out var budget)
+                    && budget >= 0
+                    && decimal.Round(budget, 2) == budget)
+                {
+                    return budget;
+                }
+
+                Console.WriteLine(
+                    "Geef een geldig bedrag vanaf 0 met maximaal twee decimalen.");
+            }
+        }
+
+        public PrizeMoneyDistribution AskPrizeMoneyDistribution(
+            Competition.CompetitionType type)
+        {
+            var options = type switch
+            {
+                Competition.CompetitionType.League => new[]
+                {
+            (
+                Distribution: PrizeMoneyDistribution.Equal,
+                Description: "Gelijk verdeeld — iedere club krijgt evenveel."
+            ),
+            (
+                Distribution: PrizeMoneyDistribution.Balanced,
+                Description: "Evenwichtig — hogere posities krijgen meer."
+            ),
+            (
+                Distribution: PrizeMoneyDistribution.TopHeavy,
+                Description: "Topgericht — het grootste deel gaat naar de top."
+            )
+        },
+
+                Competition.CompetitionType.Cup
+                    or Competition.CompetitionType.International => new[]
+                {
+            (
+                Distribution: PrizeMoneyDistribution.WinnerOnly,
+                Description: "Alleen winnaar — 100% voor de winnaar."
+            ),
+            (
+                Distribution: PrizeMoneyDistribution.Finalists,
+                Description: "Finalisten — winnaar 70%, finalist 30%."
+            ),
+            (
+                Distribution: PrizeMoneyDistribution.SemiFinalists,
+                Description:
+                    "Vanaf halve finale — winnaar 50%, finalist 25%, " +
+                    "verliezende halvefinalisten elk 12,5%."
+            )
+                },
+
+                _ => throw new ArgumentException(
+                    $"Prijzengeld wordt niet ondersteund voor competitietype {type}.",
+                    nameof(type))
+            };
+
+            Console.Clear();
+            Console.WriteLine("=== Verdeling prijzengeld ===");
+            Console.WriteLine();
+
+            for (var i = 0; i < options.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {options[i].Description}");
+            }
+
+            Console.WriteLine();
+
+            while (true)
+            {
+                Console.Write($"Kies een verdeling (1-{options.Length}): ");
+                var input = Console.ReadLine();
+
+                if (input == null)
+                    throw new InvalidOperationException("Console-invoer is afgesloten.");
+
+                if (int.TryParse(input, out var choice)
+                    && choice >= 1
+                    && choice <= options.Length)
+                {
+                    return options[choice - 1].Distribution;
+                }
+
+                Console.WriteLine($"Geef een nummer tussen 1 en {options.Length}.");
+            }
         }
     }
 }

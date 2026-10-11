@@ -26,5 +26,6 @@ namespace FootballFull.Models
         }
         public IDictionary<int, DateTime> MatchDay { get; set; }
         public List<CompetitionSplitParameters> SplitParameters { get; set; } = new List<CompetitionSplitParameters>();
+        public CompetitionPrizeMoneySettings PrizeMoneySettings { get; set; } = new();
     }
 }

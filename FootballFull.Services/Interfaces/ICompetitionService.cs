@@ -9,7 +9,7 @@ namespace FootballFull.Services.Interfaces
         void Delete(Guid id);
         IList<Competition> GetCompetitions();
         Competition? GetCompetitionById(Guid id);
-        void SaveAll(IList<Competition> competitions);
+        void SaveAll();
         IDictionary<int, DateTime> UpdateMatchDays(Guid competitionId, IDictionary<int, DateTime> matchDaysPerWeek);
 
         List<Competition> GetSubCompetitions(

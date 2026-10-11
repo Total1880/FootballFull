@@ -11,6 +11,7 @@ namespace FootballFull.Services
         private readonly IClubPerCompetitionRepository _clubPerCompetitionRepository;
         private readonly IRepository<CompetitionRules> _competitionRulesRepository;
         private readonly IRepository<Club> _clubRepository;
+        private IList<Competition> _competitions;
 
         public CompetitionService(IRepository<Competition> competitionRepository, IClubPerCompetitionRepository clubPerCompetitionRepository, IRepository<CompetitionRules> competitionRulesRepository, IRepository<Club> clubRepository)
         {
@@ -22,6 +23,8 @@ namespace FootballFull.Services
                 ?? throw new ArgumentNullException(nameof(competitionRulesRepository));
             _clubRepository = clubRepository
                 ?? throw new ArgumentNullException(nameof(clubRepository));
+
+            _competitions = _competitionRepository.Load();
         }
 
         public void Add(Competition competition)
@@ -32,6 +35,7 @@ namespace FootballFull.Services
                 competition.MatchDay = new Dictionary<int, DateTime>();
 
             _competitionRepository.Add(competition);
+            _competitions.Add(competition);
         }
 
         public void Update(Competition competition)
@@ -52,11 +56,12 @@ namespace FootballFull.Services
                 throw new ArgumentException("Id cannot be empty.");
 
             _competitionRepository.Delete(id);
+            _competitions.Remove(_competitions.First(_ => _.Id == id));
         }
 
         public IList<Competition> GetCompetitions()
         {
-            return _competitionRepository.Load();
+            return _competitions;
         }
 
         public Competition? GetCompetitionById(Guid id)
@@ -64,14 +69,12 @@ namespace FootballFull.Services
             if (id == Guid.Empty)
                 return null;
 
-            return _competitionRepository
-                .Load()
-                .FirstOrDefault(c => c.Id == id);
+            return _competitions.First(_ => _.Id == id);
         }
 
-        public void SaveAll(IList<Competition> competitions)
+        public void SaveAll()
         {
-            _competitionRepository.Create(competitions, true);
+            _competitionRepository.Create(_competitions, true);
         }
 
         public IDictionary<int, DateTime> UpdateMatchDays(Guid competitionId, IDictionary<int, DateTime> matchDaysPerWeek)

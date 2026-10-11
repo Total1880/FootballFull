@@ -21,6 +21,7 @@ namespace FootballFull.Services
         private readonly IClubPerCompetitionService _clubPerCompetitionService;
         private readonly IClubFinancialService _clubFinancialService;
         private readonly IHistoryService _historyService;
+        private readonly IPrizeMoneyService _prizeMoneyService;
 
         public EndOfSeasonService(
             ISeasonService seasonService,
@@ -30,7 +31,8 @@ namespace FootballFull.Services
             ICompetitionRulesService competitionRulesService,
             IClubPerCompetitionService clubPerCompetitionService,
             IClubFinancialService clubFinancialService,
-            IHistoryService historyService)
+            IHistoryService historyService,
+            IPrizeMoneyService prizeMoneyService)
         {
             _seasonService = seasonService;
             _clubService = clubService;
@@ -40,11 +42,10 @@ namespace FootballFull.Services
             _clubPerCompetitionService = clubPerCompetitionService;
             _clubFinancialService = clubFinancialService;
             _historyService = historyService;
+            _prizeMoneyService = prizeMoneyService;
         }
 
-        public EndOfSeasonOptions GetOptions(
-            Guid countryId,
-            FootballAssociation footballAssociation)
+        public EndOfSeasonOptions GetOptions(Guid countryId, FootballAssociation footballAssociation)
         {
             var clubCount = _clubPerCompetitionService
                 .GetAllClubPerCompetitionForCountry(countryId)
@@ -124,10 +125,7 @@ namespace FootballFull.Services
             };
         }
 
-        private static string GetCannotAddClubReason(
-            int clubCount,
-            int requiredReputation,
-            FootballAssociation footballAssociation)
+        private static string GetCannotAddClubReason(int clubCount, int requiredReputation, FootballAssociation footballAssociation)
         {
             if (clubCount >= MaximumNumberOfClubs)
                 return $"Er zijn al {MaximumNumberOfClubs} clubs.";
@@ -185,10 +183,7 @@ namespace FootballFull.Services
                 .ToList();
         }
 
-        public void AdmitClub(
-            Guid countryId,
-            Guid clubId,
-            FootballAssociation footballAssociation)
+        public void AdmitClub(Guid countryId, Guid clubId, FootballAssociation footballAssociation)
         {
             var options = GetOptions(countryId, footballAssociation);
 
@@ -209,10 +204,7 @@ namespace FootballFull.Services
             footballAssociation.Balance -= Configuration.NewClubCost;
         }
 
-        public void CreateLowerDivision(
-            Guid countryId,
-            int numberOfClubs,
-            FootballAssociation footballAssociation)
+        public void CreateLowerDivision(Guid countryId, int numberOfClubs, FootballAssociation footballAssociation)
         {
             var options = GetOptions(countryId, footballAssociation);
 
