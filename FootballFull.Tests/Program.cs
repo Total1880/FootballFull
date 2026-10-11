@@ -97,9 +97,15 @@ try
     {
         "GetCompetitions" or "GetCompetitionsForCountry" => competitions,
         "GetCompetitionById" => competitions.Single(c => c.Id == (Guid)args[0]!),
-        "Update" => null,
+        "Update" => ReplaceCompetition((Competition)args[0]!),
         _ => throw new NotSupportedException(name)
     });
+    object? ReplaceCompetition(Competition updated)
+    {
+        // Reproduce catalogue updates that invalidate a List enumerator.
+        competitions[competitions.ToList().FindIndex(c => c.Id == updated.Id)] = updated;
+        return null;
+    }
     var membershipService = Stub<IClubPerCompetitionService>.Create((name, args) => name switch
     {
         "GetAllClubPerCompetitionForCountry" => memberships,
@@ -125,6 +131,7 @@ try
     Equal(26_500m, club.DevelopmentBudget, "Duplicate league memberships allocate profit only once");
     strength.RecalculateCompetitionStrengths(2026);
     Equal(club.Strength, league.Strength, "League strength follows member clubs");
+    Equal(club.Strength, secondLeague.Strength, "Every league is processed despite catalogue updates");
     Equal(20, cup.Strength, "Domestic cups are unaffected");
 }
 finally { if (File.Exists(path)) File.Delete(path); }

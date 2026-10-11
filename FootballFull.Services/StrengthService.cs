@@ -71,7 +71,7 @@ namespace FootballFull.Services
         {
             // Strength follows the participating clubs; coefficients still determine international rankings.
             foreach (var competition in _competitionService.GetCompetitions()
-                .Where(c => c.Type == Competition.CompetitionType.League))
+                .Where(c => c.Type == Competition.CompetitionType.League).ToList())
             {
                 var clubs = _clubPerCompetitionService.GetClubsForCompetition(competition.Id);
                 if (clubs.Count == 0)
