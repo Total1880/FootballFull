@@ -6,7 +6,7 @@ namespace FootballFull.Services;
 /// <summary>Applies one season of development after the club's financial result is booked.</summary>
 internal static class ClubDevelopment
 {
-    public static void Apply(Club club, int sportingDelta)
+    public static void Apply(Club club, int sportingDelta, int? feederTier)
     {
         var result = club.LastSeasonFinancialResult;
         if (result == null)
@@ -18,7 +18,8 @@ internal static class ClubDevelopment
         var allocation = Math.Max(0m, result.NetResult) * Configuration.ClubDevelopmentProfitShare;
         club.DevelopmentBudget = Math.Clamp(club.DevelopmentBudget + allocation, 0m, availableCash);
 
-        var investmentCost = Configuration.ClubDevelopmentBaseCost
+        var developmentFromFeeder = club.FeederClubId.HasValue && feederTier.HasValue ? Configuration.ClubDevelopmentFeederBonus / feederTier.Value : 0;
+        var investmentCost = Configuration.ClubDevelopmentBaseCost - developmentFromFeeder
             + club.Strength * Configuration.ClubDevelopmentStrengthCost;
         var significantLoss = result.NetResult < 0
             && -result.NetResult >= result.Expenses * Configuration.ClubSignificantLossRatio;

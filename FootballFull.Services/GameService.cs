@@ -337,11 +337,11 @@ namespace FootballFull.Services
 
         private void ApplyEndOfSeasonDecisions()
         {
+            _endOfSeasonChoicesService.HandleChoices(_userCountryId, GetUserAssociation());
+
             var developedClubs = _clubService.GetClubs()
                 .Where(c => c.CountryId == _userCountryId &&
                             c.LastSeasonFinancialResult != null);
-
-            _endOfSeasonChoicesService.HandleChoices(_userCountryId, GetUserAssociation());
 
             _gameUI.ShowClubDevelopment(
                 GameUIMapper.ClubDevelopment(developedClubs), true);

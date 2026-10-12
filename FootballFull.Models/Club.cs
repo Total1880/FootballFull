@@ -48,5 +48,8 @@ namespace FootballFull.Models
         public DateTime HasFiredTrainerInWeek { get; set; }
         [JsonIgnore]
         public int NumberOfGamesWithTrainer { get; set; }
+        public int ConsecutiveProfitSeasons { get; set; }
+        public int ConsecutiveLossSeasons { get; set; }
+        public int? LastFinancialTrackingSeason { get; set; }
     }
 }

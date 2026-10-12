@@ -28,7 +28,7 @@ namespace FootballFull.Services
         {
             var baseCosts = Configuration.BasicClubSeasonExpenses;
             var strengthCosts = club.Strength * Configuration.ClubExpenseMultiplier;
-            var feederClubCosts = club.FeederClubId.HasValue ? Configuration.CostCreateFeederClub : 0;
+            var feederClubCosts = club.FeederClubId.HasValue ? Configuration.YearlyCostFeederClub : 0;
 
             return baseCosts + strengthCosts + feederClubCosts;
         }
@@ -47,8 +47,7 @@ namespace FootballFull.Services
             return new ClubFinancialResult
             {
                 Revenue = revenue,
-                Expenses = expenses,
-                CreateFeederClubCost = club.FeederClubId.HasValue ? Configuration.CostCreateFeederClub : 0,
+                Expenses = expenses
             };
         }
     }

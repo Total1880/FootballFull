@@ -213,7 +213,8 @@ namespace FootballFull.Services
                     Strength = Configuration.MinStrength,
                 };
                 parent.FeederClubId = feederClub.Id;
-    
+                parent.LastSeasonFinancialResult.CreateFeederClubCost = Configuration.CostCreateFeederClub;
+
                 _clubService.Add(feederClub);
                 _clubService.Update(parent);
                 _trainerService.CreateRandomTrainer(feederClub.Id);
@@ -231,8 +232,6 @@ namespace FootballFull.Services
 
                 footballAssociation.Balance -= Configuration.NewClubCost;
             }
-
-
         }
 
         public void CreateLowerDivision(Guid countryId, int numberOfClubs, FootballAssociation footballAssociation)
@@ -375,13 +374,54 @@ namespace FootballFull.Services
                     .SelectMany(s => s.Payments)
                     .Where(p => p.ClubId == club.Id)
                     .Sum(p => p.Amount);
+                
+                result.YearlyFeederClubCost = club.FeederClubId.HasValue ? Configuration.YearlyCostFeederClub : 0;
 
                 // Subsidies and prizes have already been credited to the balance.
                 club.Balance += result.NetResult - result.SubsidyReceived - result.PrizeMoneyReceived;
                 club.LastSeasonFinancialResult = result;
 
+                UpdateFinancialStreak(
+    club,
+    _seasonService.Year,
+    result.NetResult);
+
                 _clubService.Update(club);
             }
+        }
+
+        private static void UpdateFinancialStreak(
+    Club club,
+    int season,
+    decimal netResult)
+        {
+            if (club.LastFinancialTrackingSeason == season)
+                return;
+
+            // Bij een ontbrekend seizoen is de reeks niet meer opeenvolgend.
+            if (club.LastFinancialTrackingSeason != season - 1)
+            {
+                club.ConsecutiveProfitSeasons = 0;
+                club.ConsecutiveLossSeasons = 0;
+            }
+
+            if (netResult > 0)
+            {
+                club.ConsecutiveProfitSeasons++;
+                club.ConsecutiveLossSeasons = 0;
+            }
+            else if (netResult < 0)
+            {
+                club.ConsecutiveLossSeasons++;
+                club.ConsecutiveProfitSeasons = 0;
+            }
+            else
+            {
+                club.ConsecutiveProfitSeasons = 0;
+                club.ConsecutiveLossSeasons = 0;
+            }
+
+            club.LastFinancialTrackingSeason = season;
         }
 
         public void ReservePrizeMoney(Competition competition, CompetitionPrizeMoneySettings settings,
@@ -539,6 +579,7 @@ namespace FootballFull.Services
                 .FirstOrDefault(_ =>
                     _.FeederClubId == null &&
                     _.Balance >= Configuration.CostCreateFeederClub &&
+                    _.ConsecutiveProfitSeasons >= 2 &&
                     _.LastSeasonFinancialResult?.NetResult > 0);
             return clubsInTopCompetition;
         }

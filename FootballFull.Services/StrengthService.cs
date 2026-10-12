@@ -54,6 +54,9 @@ namespace FootballFull.Services
                     if (club == null)
                         continue;
 
+                    var feederTier = club.FeederClubId.HasValue
+                        ? _clubPerCompetitionService.GetCompetitionsForClub(club.FeederClubId.Value)?.FirstOrDefault(c => c.Type == Competition.CompetitionType.League)?.Tier
+                        : null;
                     var competitionStrength = competition.Strength;
 
                     if (delta < 0 && club.Strength + 5 <= competitionStrength)
@@ -61,7 +64,7 @@ namespace FootballFull.Services
                     else if (delta > 0 && club.Strength - 5 >= competitionStrength)
                         delta = -1;
 
-                    ClubDevelopment.Apply(club, delta);
+                    ClubDevelopment.Apply(club, delta, feederTier);
                     _clubService.Update(club);
                 }
             }
