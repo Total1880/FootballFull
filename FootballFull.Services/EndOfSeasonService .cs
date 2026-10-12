@@ -85,12 +85,15 @@ namespace FootballFull.Services
                 footballAssociation.Reputation >= Configuration.ReputationForStartNationalCup &&
                 !competitions.Any(_ => _.Type == Competition.CompetitionType.Cup);
 
+            var canCreateFeederClub = lowestTier > 2;
+
             return new EndOfSeasonOptions
             {
                 CurrentClubCount = clubCount,
                 CanAddClub = canAddClub,
                 CanCreateLowerDivision = canCreateLowerDivision,
                 CanCreateNationalCup = canCreateNationalCup,
+                CanCreateFeederClub = canCreateFeederClub,
                 CannotAddClubReason = canAddClub
                     ? null
                     : GetCannotAddClubReason(
@@ -186,11 +189,11 @@ namespace FootballFull.Services
                 .ToList();
         }
 
-        public void AdmitClub(Guid countryId, Guid clubId, FootballAssociation footballAssociation)
+        public void AdmitClub(Guid countryId, Guid clubId, FootballAssociation footballAssociation, bool isFeederClub = false)
         {
             var options = GetOptions(countryId, footballAssociation);
 
-            if (!options.CanAddClub)
+            if (!options.CanAddClub && !isFeederClub)
                 throw new InvalidOperationException(options.CannotAddClubReason);
 
             var lowestCompetition = _competitionService
@@ -198,13 +201,38 @@ namespace FootballFull.Services
                 .OrderByDescending(c => c.Tier)
                 .First();
 
-            _trainerService.CreateRandomTrainer(clubId);
+            if (isFeederClub)
+            {
+                var parent = _clubService.GetClubById(clubId);
+                var feederClub = new Club
+                {
+                    Id = Guid.NewGuid(),
+                    CountryId = countryId,
 
-            _clubPerCompetitionService.AddClubToCompetition(
-                clubId,
-                lowestCompetition.Id);
+                    Name = parent.Name + " B",
+                    Strength = Configuration.MinStrength,
+                };
+                parent.FeederClubId = feederClub.Id;
+    
+                _clubService.Add(feederClub);
+                _clubService.Update(parent);
+                _trainerService.CreateRandomTrainer(feederClub.Id);
+                _clubPerCompetitionService.AddClubToCompetition(
+                    feederClub.Id,
+                    lowestCompetition.Id);
+            }
+            else
+            {
+                _trainerService.CreateRandomTrainer(clubId);
 
-            footballAssociation.Balance -= Configuration.NewClubCost;
+                _clubPerCompetitionService.AddClubToCompetition(
+                    clubId,
+                    lowestCompetition.Id);
+
+                footballAssociation.Balance -= Configuration.NewClubCost;
+            }
+
+
         }
 
         public void CreateLowerDivision(Guid countryId, int numberOfClubs, FootballAssociation footballAssociation)
@@ -496,6 +524,23 @@ namespace FootballFull.Services
             _competitionService.Add(newCup);
 
             association.Balance -= Configuration.StartNationalCupCost;
+        }
+
+        public Club? CandidateForFeederClub(Guid countryId, FootballAssociation association)
+        {
+            var topCompetitionId = _competitionService.GetCompetitionsForCountry(countryId)
+                .Where(c => c.Type == Competition.CompetitionType.League)
+                .OrderBy(c => c.Tier)
+                .First().Id;
+
+            var clubsInTopCompetition = _clubPerCompetitionService
+                .GetClubsForCompetition(topCompetitionId)
+                .OrderByDescending(_ => _.Balance)
+                .FirstOrDefault(_ =>
+                    _.FeederClubId == null &&
+                    _.Balance >= Configuration.CostCreateFeederClub &&
+                    _.LastSeasonFinancialResult?.NetResult > 0);
+            return clubsInTopCompetition;
         }
     }
 }

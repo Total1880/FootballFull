@@ -15,6 +15,8 @@ namespace OlavFramework
         public static decimal BasicOrganisationCost = 10000;
 
         public static string DataRoot { get; private set; }
+        public static decimal CostCreateFeederClub = 10000;
+
         public static decimal StartNationalCupCost = 50_000m;
         public static int ReputationForStartNationalCup = 20;
 

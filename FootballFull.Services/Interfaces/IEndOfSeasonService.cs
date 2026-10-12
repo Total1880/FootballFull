@@ -21,7 +21,8 @@ namespace FootballFull.Services.Interfaces
         void AdmitClub(
             Guid countryId,
             Guid clubId,
-            FootballAssociation footballAssociation);
+            FootballAssociation footballAssociation,
+            bool isFeederClub = false);
 
         void CreateLowerDivision(
             Guid countryId,
@@ -38,5 +39,6 @@ namespace FootballFull.Services.Interfaces
             IList<Fixture> cupFixtures,
             IList<Fixture>? internationalFixtures);
         void CreateNationalCup(Guid countryId, FootballAssociation association);
+        Club CandidateForFeederClub(Guid countryId, FootballAssociation association);
     }
 }

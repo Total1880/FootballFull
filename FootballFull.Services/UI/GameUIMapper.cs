@@ -65,7 +65,8 @@ internal static class GameUIMapper
                 PrizeMoneyReceived = c.LastSeasonFinancialResult.PrizeMoneyReceived,
                 StrengthBefore = c.LastSeasonFinancialResult.StrengthBefore,
                 StrengthAfter = c.LastSeasonFinancialResult.StrengthAfter,
-                Reason = c.LastSeasonFinancialResult.DevelopmentReason
+                Reason = c.LastSeasonFinancialResult.DevelopmentReason,
+                CreateFeederClubCost = c.LastSeasonFinancialResult.CreateFeederClubCost
             }).ToList();
     public static List<NewsMessageViewModel> News(IEnumerable<NewsMessage> items) =>
         items.Select(x => new NewsMessageViewModel { Message = x.Message, Date = x.Date }).ToList();

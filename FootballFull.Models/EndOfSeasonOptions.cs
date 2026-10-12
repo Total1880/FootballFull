@@ -11,6 +11,7 @@ namespace FootballFull.Models
         public bool CanAddClub { get; init; }
         public bool CanCreateLowerDivision { get; init; }
         public bool CanCreateNationalCup { get; init; }
+        public bool CanCreateFeederClub { get; init; }
 
         public string? CannotAddClubReason { get; init; }
         public string? CannotCreateLowerDivisionReason { get; init; }

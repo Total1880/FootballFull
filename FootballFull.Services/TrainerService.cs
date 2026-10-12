@@ -59,7 +59,7 @@ namespace FootballFull.Services
             };
 
             _trainerRepository.Add(newTrainer);
-
+            _trainers.Add(newTrainer);
             return newTrainer;
         }
 

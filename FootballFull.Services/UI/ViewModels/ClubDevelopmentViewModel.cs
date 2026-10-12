@@ -9,6 +9,7 @@ public class ClubDevelopmentViewModel
     public decimal DevelopmentBudget { get; set; }
     public decimal PrizeMoneyReceived { get; set; }
     public decimal SubsidyReceived { get; set; }
+    public decimal CreateFeederClubCost { get; set; }
     public int StrengthBefore { get; set; }
     public int StrengthAfter { get; set; }
     public string Reason { get; set; } = string.Empty;

@@ -559,6 +559,8 @@ namespace FootballFull.ConsoleUI
                 Console.WriteLine($"  Resultaat: {club.NetResult:N0} | Investering: {club.Investment:N0} | Saldo: {club.Balance:N0}");
                 Console.WriteLine($"  Ontvangen prijzengeld: {club.PrizeMoneyReceived:N0}");
                 Console.WriteLine($"  Gereserveerd budget: {club.DevelopmentBudget:N0} | {club.Reason}");
+                if(club.CreateFeederClubCost > 0)
+                    Console.WriteLine($"  Kosten voor aanleggen feederclub: {club.CreateFeederClubCost:N0}");
                 Console.WriteLine();
             }
             if (waitForUser)

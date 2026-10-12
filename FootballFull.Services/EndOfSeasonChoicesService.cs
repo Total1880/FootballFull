@@ -53,6 +53,25 @@ namespace FootballFull.Services
                 return true;
             }
 
+            if (options.CanCreateFeederClub && _gameUI.AskYesNoQuestion(
+    $"Wil je dat clubs een feeder club kunnen krijgen? (y/n)",
+    defaultAnswer: true))
+            {
+                var candidateClub = _endOfSeasonService.CandidateForFeederClub(countryId, association);
+                if (candidateClub != null)
+                {
+                    var question = _gameUI.AskYesNoQuestion($"Wil je dat {candidateClub.Name} een feeder club kan krijgen? (y/n))", defaultAnswer: false);
+                    if (question)
+                    {
+                        _endOfSeasonService.AdmitClub(countryId, candidateClub.Id, association, isFeederClub: true);
+                    }
+                }
+                else
+                {
+                    _gameUI.ShowMessage("Geen club gevonden", "Geen kandidaat-club gevonden voor feeder club.");
+                }
+            }
+
             if (!options.CanAddClub)
             {
                 _gameUI.ShowMessage("ERROR", options.CannotAddClubReason);
