@@ -28,5 +28,7 @@ namespace FootballFull.Models
         public List<CompetitionSplitParameters> SplitParameters { get; set; } = new List<CompetitionSplitParameters>();
         public CompetitionPrizeMoneySettings PrizeMoneySettings { get; set; } = new();
         public List<CompetitionPrizeMoneySeason> PrizeMoneySeasons { get; set; } = new();
+        public bool IsActive { get; set; } = true;
+        public bool IsNew { get; set; } = false;
     }
 }

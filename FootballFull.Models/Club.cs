@@ -51,5 +51,6 @@ namespace FootballFull.Models
         public int ConsecutiveProfitSeasons { get; set; }
         public int ConsecutiveLossSeasons { get; set; }
         public int? LastFinancialTrackingSeason { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }

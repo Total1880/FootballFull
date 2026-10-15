@@ -105,7 +105,6 @@ namespace FootballFull.Services
             _competitionRulesService.ApplyPromotionAndRelegations(_clubLeagueCompetitions);
         }
 
-
         public bool PlayMatchDay(IList<Fixture> fixtures, DateTime day, bool isSuddenDeath = false, Guid? playerClubId = null, bool neutralField = false)
         {
             if (_clubLeagueCompetitions == null)

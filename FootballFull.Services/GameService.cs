@@ -327,12 +327,13 @@ namespace FootballFull.Services
             // before season finances and club development are processed.
             _endOfSeasonService.ProcessSeasonResults(_cupFixtures, _internationalFixtures);
             _endOfSeasonService.ProcessPrizeMoney(_cupFixtures, _internationalFixtures);
-            _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate);
+            _endOfSeasonService.ProcessFeederClubAnalyse();
             _gameUI.ShowSeasonFinancialResult(GameUIMapper.Finances(_seasonEconomyService.CalculateAssociationResult(
                     _userCountryId, _year, _competitionService.GetCompetitions(), GetUserAssociation())), true);
 
             _seasonEconomyService.ProcessClubFinancialResults();
             _strengthService.RecalculateClubStrengths();
+            _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate);
         }
 
         private void ApplyEndOfSeasonDecisions()

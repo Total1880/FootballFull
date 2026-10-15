@@ -13,5 +13,6 @@ namespace FootballFull.Services.Interfaces
         public CompetitionRules GetCompetitionRules(Guid id);
         public bool Save(CompetitionRules competitionRules);
         bool DeleteEverythingForCompetition(Guid competitionId);
+        public void AddExtraPromotionPlace(Guid competitionId, Guid removedClubId);
     }
 }

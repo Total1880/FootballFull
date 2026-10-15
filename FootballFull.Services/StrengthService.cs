@@ -83,6 +83,9 @@ namespace FootballFull.Services
                 competition.Strength = Math.Clamp(
                     (int)Math.Round(clubs.Average(c => c.Strength), MidpointRounding.AwayFromZero),
                     Configuration.MinStrength, Configuration.MaxStrength);
+
+                competition.IsNew = false;
+
                 _competitionService.Update(competition);
             }
         }

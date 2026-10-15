@@ -7,7 +7,7 @@ namespace FootballFull.Services.Interfaces
         void Add(Competition competition);
         void Update(Competition competition);
         void Delete(Guid id);
-        IList<Competition> GetCompetitions();
+        IList<Competition> GetCompetitions(bool onlyActive = true);
         Competition? GetCompetitionById(Guid id);
         void SaveAll();
         IDictionary<int, DateTime> UpdateMatchDays(Guid competitionId, IDictionary<int, DateTime> matchDaysPerWeek);
@@ -15,7 +15,6 @@ namespace FootballFull.Services.Interfaces
         List<Competition> GetSubCompetitions(
 Competition competition);
 
-        void InitializeStarterCompetition(Guid countryId);
-        IList<Competition> GetCompetitionsForCountry(Guid userCountryId);
+        IList<Competition> GetCompetitionsForCountry(Guid userCountryId, bool onlyActive = true);
     }
 }

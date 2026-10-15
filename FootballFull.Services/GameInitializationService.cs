@@ -1,7 +1,9 @@
 using FootballFull.Models;
+using FootballFull.Repositories;
 using FootballFull.Services.Interfaces;
 using FootballFull.Services.UI;
 using OlavFramework;
+using static FootballFull.Models.Competition;
 
 namespace FootballFull.Services
 {
@@ -26,6 +28,7 @@ namespace FootballFull.Services
         private readonly ICountryService _countryService;
         private readonly ITrainerService _trainerService;
         private readonly IFootballAssociationsService _footballAssociationsService;
+        private readonly ICompetitionRulesService _competitionRulesService;
         private readonly IGameUI _gameUI;
 
         public GameInitializationService(
@@ -37,6 +40,7 @@ namespace FootballFull.Services
             ICountryService countryService,
             ITrainerService trainerService,
             IFootballAssociationsService footballAssociationsService,
+            ICompetitionRulesService competitionRulesService,
             IGameUI gameUI)
         {
             _seasonService = seasonService;
@@ -47,6 +51,7 @@ namespace FootballFull.Services
             _countryService = countryService;
             _trainerService = trainerService;
             _footballAssociationsService = footballAssociationsService;
+            _competitionRulesService = competitionRulesService;
             _gameUI = gameUI;
         }
 
@@ -58,7 +63,7 @@ namespace FootballFull.Services
             {
                 ResetStrength();
                 CreateTrainers();
-                _competitionService.InitializeStarterCompetition(userCountryId);
+                InitializeStarterCompetition(userCountryId);
             }
 
             var clubsPerCompetition = _clubPerCompetitionService.GetAllClubPerCompetitions();
@@ -80,6 +85,48 @@ namespace FootballFull.Services
                 userCountryId, year, currentDate, nextSeasonDate,
                 clubsPerCompetition, fixtures, cupFixtures,
                 internationalFixtures, associations);
+        }
+
+        private void InitializeStarterCompetition(Guid userCountryId)
+        {
+            var competitions = _competitionService.GetCompetitionsForCountry(userCountryId, false);
+            for (int i = 0; i < competitions.Count(); i++)
+            {
+                _clubPerCompetitionService.DeleteEverythingForCompetition(competitions[i].Id);
+                _competitionRulesService.DeleteEverythingForCompetition(competitions[i].Id);
+                _competitionService.Delete(competitions[i].Id);
+            }
+
+            var clubsWithFeeders = _clubService.GetClubs().Where(r => r.CountryId == userCountryId && r.FeederClubId != null && r.FeederClubId != Guid.Empty).ToList();
+            foreach (var club in clubsWithFeeders)
+            {
+#pragma warning disable CS8629 // Nullable value type may be null.
+                _clubService.Delete((Guid)club.FeederClubId);
+#pragma warning restore CS8629 // Nullable value type may be null.
+                club.FeederClubId = null;
+                _clubService.Update(club);
+            }
+
+            var newCompetition = new Competition
+            {
+                Id = Guid.NewGuid(),
+                Name = "Division 1",
+                CountryId = userCountryId,
+                Tier = 1,
+                Type = CompetitionType.League,
+                Strength = new Random().Next(Configuration.MinStrength, Configuration.MinStrength + 3),
+            };
+            _competitionService.Add(newCompetition);
+
+            var clubs = _clubService.GetClubs().Where(c => c.CountryId == userCountryId).OrderByDescending(_ => _.Strength).Take(6).ToList();
+
+            foreach (var club in clubs)
+            {
+                _clubPerCompetitionService.AddClubToCompetition(club.Id, newCompetition.Id);
+
+                club.Strength = new Random().Next(Configuration.MinStrength, Configuration.MinStrength + 3);
+                _clubService.Update(club);
+            }
         }
 
         private IList<FootballAssociation> EnsureFootballAssociations()

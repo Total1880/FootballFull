@@ -13,7 +13,7 @@ namespace FootballFull.Services.Interfaces
         IList<ClubPerCompetition> GetAllClubPerSpecificCompetitions(Guid competitionId);
         IList<ClubPerCompetition> GetAllClubPerCompetitionForCountry(Guid countryId);
         void SaveAll(IList<ClubPerCompetition> clubPerCompetition);
-        void UpdateInternationalCompetition(IList<ClubPerCompetition> clubPerCompetitions);
         bool DeleteEverythingForCompetition(Guid competitionId);
+        bool DeleteEverythingForClub(Guid clubId);
     }
 }

@@ -23,6 +23,7 @@ namespace FootballFull.Services
         private readonly IHistoryService _historyService;
         private readonly IPrizeMoneyService _prizeMoneyService;
         private readonly IFootballAssociationsService _associations;
+        private readonly IFeederClubService _feederClubService;
 
         public EndOfSeasonService(
             ISeasonService seasonService,
@@ -34,7 +35,8 @@ namespace FootballFull.Services
             IClubFinancialService clubFinancialService,
             IHistoryService historyService,
             IPrizeMoneyService prizeMoneyService,
-            IFootballAssociationsService associations)
+            IFootballAssociationsService associations,
+            IFeederClubService feederClubService)
         {
             _seasonService = seasonService;
             _clubService = clubService;
@@ -46,6 +48,7 @@ namespace FootballFull.Services
             _historyService = historyService;
             _prizeMoneyService = prizeMoneyService;
             _associations = associations;
+            _feederClubService = feederClubService;
         }
 
         public EndOfSeasonOptions GetOptions(Guid countryId, FootballAssociation footballAssociation)
@@ -212,10 +215,20 @@ namespace FootballFull.Services
                     Name = parent.Name + " B",
                     Strength = Configuration.MinStrength,
                 };
+                if (parent.FeederClubId != null && parent.FeederClubId != Guid.Empty)
+                {
+                    feederClub = _clubService.GetClubById(parent.FeederClubId.Value);
+                    feederClub.IsActive = true;
+                    _clubService.Update(feederClub);
+                }
+                else
+                {
+                    _clubService.Add(feederClub);
+                }
+
                 parent.FeederClubId = feederClub.Id;
                 parent.LastSeasonFinancialResult.CreateFeederClubCost = Configuration.CostCreateFeederClub;
 
-                _clubService.Add(feederClub);
                 _clubService.Update(parent);
                 _trainerService.CreateRandomTrainer(feederClub.Id);
                 _clubPerCompetitionService.AddClubToCompetition(
@@ -246,7 +259,7 @@ namespace FootballFull.Services
                 throw new ArgumentOutOfRangeException(nameof(numberOfClubs));
 
             var competitions = _competitionService
-                .GetCompetitionsForCountry(countryId);
+                .GetCompetitionsForCountry(countryId).Where(c => c.IsActive);
             var lowestTier = competitions.Max(c => c.Tier);
 
             var lowestDivision = competitions.Single(c => c.Tier == lowestTier);
@@ -254,30 +267,54 @@ namespace FootballFull.Services
             var ranking = _seasonService.GetRanking(lowestDivision.Id);
             var clubsToMove = ranking.TakeLast(numberOfClubs).ToList();
 
-            var newDivision = new Competition
+            var inactiveCompetitions = _competitionService.GetCompetitionsForCountry(countryId, onlyActive: false)
+                .Where(c => !c.IsActive && c.Tier == lowestTier + 1)
+                .ToList();
+
+            if (inactiveCompetitions.Any() && inactiveCompetitions.Count > 1)
+                throw new InvalidOperationException("Er is meer dan één inactieve competitie in de laagste divisie.");
+
+            Guid competitionId;
+
+            if (inactiveCompetitions.Any())
             {
-                Id = Guid.NewGuid(),
-                Name = "Division " + (lowestTier + 1),
-                CountryId = countryId,
-                Tier = lowestTier + 1,
-                Type = Competition.CompetitionType.League,
-                Strength = Configuration.MinStrength
-            };
+                var updateDivision = inactiveCompetitions.Single();
+                updateDivision.IsActive = true;
+                _competitionService.Update(updateDivision);
 
-            _competitionService.Add(newDivision);
-
-            var oldLowestDivisionRules = _competitionRulesService.GetCompetitionRules(lowestDivision.Id);
-            oldLowestDivisionRules.CompetitionRelegationToId = newDivision.Id;
-            oldLowestDivisionRules.RelegationPlaces = 1;
-
-            _competitionRulesService.Save(oldLowestDivisionRules);
-
-            _competitionRulesService.Save(new CompetitionRules
+                competitionId = updateDivision.Id;
+            }
+            else
             {
-                CompetitionId = newDivision.Id,
-                CompetitionPromotionToId = lowestDivision.Id,
-                PromotionPlaces = 1
-            });
+                var newDivision = new Competition
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Division " + (lowestTier + 1),
+                    CountryId = countryId,
+                    Tier = lowestTier + 1,
+                    Type = Competition.CompetitionType.League,
+                    Strength = Configuration.MinStrength,
+                    IsActive = true,
+                    IsNew = true,
+                };
+
+                _competitionService.Add(newDivision);
+
+                var oldLowestDivisionRules = _competitionRulesService.GetCompetitionRules(lowestDivision.Id);
+                oldLowestDivisionRules.CompetitionRelegationToId = newDivision.Id;
+                oldLowestDivisionRules.RelegationPlaces = 1;
+
+                _competitionRulesService.Save(oldLowestDivisionRules);
+
+                _competitionRulesService.Save(new CompetitionRules
+                {
+                    CompetitionId = newDivision.Id,
+                    CompetitionPromotionToId = lowestDivision.Id,
+                    PromotionPlaces = 1
+                });
+
+                competitionId = newDivision.Id;
+            }
 
             foreach (var club in clubsToMove)
             {
@@ -287,7 +324,7 @@ namespace FootballFull.Services
 
                 _clubPerCompetitionService.AddClubToCompetition(
                     club.ClubId,
-                    newDivision.Id);
+                    competitionId);
             }
 
             footballAssociation.Balance -= Configuration.LowerDivisionCost;
@@ -374,7 +411,7 @@ namespace FootballFull.Services
                     .SelectMany(s => s.Payments)
                     .Where(p => p.ClubId == club.Id)
                     .Sum(p => p.Amount);
-                
+
                 result.YearlyFeederClubCost = club.FeederClubId.HasValue ? Configuration.YearlyCostFeederClub : 0;
 
                 // Subsidies and prizes have already been credited to the balance.
@@ -390,10 +427,7 @@ namespace FootballFull.Services
             }
         }
 
-        private static void UpdateFinancialStreak(
-    Club club,
-    int season,
-    decimal netResult)
+        private static void UpdateFinancialStreak(Club club, int season, decimal netResult)
         {
             if (club.LastFinancialTrackingSeason == season)
                 return;
@@ -582,6 +616,11 @@ namespace FootballFull.Services
                     _.ConsecutiveProfitSeasons >= 2 &&
                     _.LastSeasonFinancialResult?.NetResult > 0);
             return clubsInTopCompetition;
+        }
+
+        public void ProcessFeederClubAnalyse()
+        {
+            _feederClubService.AnalyzeFeederClubs();
         }
     }
 }

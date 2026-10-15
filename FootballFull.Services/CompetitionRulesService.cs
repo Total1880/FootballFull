@@ -12,6 +12,7 @@ namespace FootballFull.Services
         private readonly IClubLeagueCompetitionService _clubLeagueCompetitionService;
         private readonly IClubService _clubService;
         private readonly IRepository<CompetitionRules> _repository;
+        private IList<ExtraPromotionPlace> _extraPromotionPlaces = new List<ExtraPromotionPlace>();
 
         public CompetitionRulesService(
             ICompetitionService competitionService,
@@ -42,11 +43,10 @@ namespace FootballFull.Services
             return rules;
         }
 
-        public void ApplyPromotionAndRelegations(
-            IList<ClubLeagueCompetition> clubLeagueCompetitions)
+        public void ApplyPromotionAndRelegations(IList<ClubLeagueCompetition> clubLeagueCompetitions)
         {
             var competitions = _competitionService.GetCompetitions()
-                .Where(competition => competition.Type == CompetitionType.League)
+                .Where(competition => competition.Type == CompetitionType.League && competition.IsNew != true)
                 .OrderBy(competition => competition.Tier)
                 .ThenBy(competition => competition.Name)
                 .ToList();
@@ -54,6 +54,7 @@ namespace FootballFull.Services
             var allClubs = _clubService.GetClubs().ToList();
             var allClubsPerCompetition = _clubPerCompetitionService
                 .GetAllClubPerCompetitions()
+
                 .ToList();
 
             var rankings = competitions.ToDictionary(
@@ -126,6 +127,31 @@ namespace FootballFull.Services
             }
 
             ApplyMoves(state.Moves);
+            CleanUpEmptyCompetitions();
+        }
+
+        private void CleanUpEmptyCompetitions()
+        {
+            var cleanupList = _clubPerCompetitionService.GetAllClubPerCompetitions()
+               .GroupBy(row => row.CompetitionId)
+               .Where(group => group.Count() < 2)
+               .Select(group => group.Key)
+               .ToList();
+
+            foreach (var competitionId in cleanupList)
+            {
+                var clubsInCompetition = _clubPerCompetitionService.GetClubsForCompetition(competitionId);
+                var promotionTo = GetCompetitionRules(competitionId).CompetitionPromotionToId;
+                var competition = _competitionService.GetCompetitionById(competitionId);
+                foreach (var club in clubsInCompetition)
+                {
+                    _clubPerCompetitionService.RemoveClubFromCompetition(club.Id, competitionId);
+
+                    _clubPerCompetitionService.AddClubToCompetition(club.Id, promotionTo);
+                }
+                competition.IsActive = false;
+                _competitionService.Update(competition);
+            }
         }
 
         private void ApplyPromotions(
@@ -140,15 +166,19 @@ namespace FootballFull.Services
                 return;
 
             var promoted = 0;
+            var extraPromotionPlaces = _extraPromotionPlaces
+                .Where(_ => _.CompetitionId == competition.Id)
+                .ToList();
+            var promotionPlaces = rules.PromotionPlaces + extraPromotionPlaces.Count;
 
             // First apply the normal promotion places.
             foreach (var rankingRow in ranking)
             {
-                if (promoted >= rules.PromotionPlaces)
+                if (promoted >= promotionPlaces)
                     break;
 
                 var club = allClubs.FirstOrDefault(c => c.Id == rankingRow.ClubId);
-                if (club == null || ClubAlreadyMoved(club.Id, state.Moves))
+                if (club == null || ClubAlreadyMoved(club.Id, state.Moves) || !club.IsActive)
                     continue;
 
                 var target = ResolveTargetCompetition(club, rules.PromotionTo, 0);
@@ -162,6 +192,18 @@ namespace FootballFull.Services
 
                 AddMove(club, competition, target, ClubMoveReason.Promotion, state);
                 promoted++;
+            }
+
+            _extraPromotionPlaces = _extraPromotionPlaces
+                .Where(_ => _.CompetitionId != competition.Id)
+                .ToList();
+
+            for (var index = 0; index < extraPromotionPlaces.Count; index++)
+            {
+                _extraPromotionPlaces.Add(new ExtraPromotionPlace
+                {
+                    CompetitionId = rules.CompetitionRelegationToId,
+                });
             }
 
             // Then consume bonuses meant for this exact competition or for one
@@ -201,7 +243,7 @@ namespace FootballFull.Services
             IList<ClubPerCompetition> allClubsPerCompetition,
             MovementState state)
         {
-            if (rules.RelegationTo == null || numberOfRelegations <= 0)
+            if (rules.RelegationTo == null || numberOfRelegations <= 0 || rules.RelegationTo.IsNew == true)
                 return;
 
             var relegated = 0;
@@ -212,7 +254,7 @@ namespace FootballFull.Services
                  index--)
             {
                 var club = allClubs.FirstOrDefault(c => c.Id == ranking[index].ClubId);
-                if (club == null || ClubAlreadyMoved(club.Id, state.Moves))
+                if (club == null || ClubAlreadyMoved(club.Id, state.Moves) || !club.IsActive)
                     continue;
 
                 var target = ResolveTargetCompetition(
@@ -287,12 +329,7 @@ namespace FootballFull.Services
             return true;
         }
 
-        private void AddMove(
-            Club club,
-            Competition from,
-            Competition to,
-            ClubMoveReason reason,
-            MovementState state)
+        private void AddMove(Club club, Competition from, Competition to, ClubMoveReason reason, MovementState state)
         {
             state.Moves.Add(ClubMove.Remove(club.Id, from.Id, reason));
             state.Moves.Add(ClubMove.Add(club.Id, to.Id, reason));
@@ -501,10 +538,40 @@ namespace FootballFull.Services
 
         public bool DeleteEverythingForCompetition(Guid competitionId)
         {
-            var rule = GetCompetitionRules(competitionId);
+            var rule = _repository.Load().FirstOrDefault(rule => rule.CompetitionId == competitionId);
+            if (rule != null)
+                _repository.Delete(rule.Id);
 
-            _repository.Delete(rule.Id);
+            var promotionRule = _repository.Load().FirstOrDefault(rule => rule.CompetitionPromotionToId == competitionId);
+            if (promotionRule != null)
+            {
+                promotionRule.CompetitionPromotionToId = Guid.Empty;
+                promotionRule.PromotionPlaces = 0;
+                _repository.Update(promotionRule);
+            }
+
+            var relegationRule = _repository.Load().FirstOrDefault(rule => rule.CompetitionRelegationToId == competitionId);
+            if (relegationRule != null)
+            {
+                relegationRule.CompetitionRelegationToId = Guid.Empty;
+                relegationRule.RelegationPlaces = 0;
+                _repository.Update(relegationRule);
+            }
             return true;
+        }
+
+        public void AddExtraPromotionPlace(Guid competitionId, Guid removedClubId)
+        {
+            var rules = GetCompetitionRules(competitionId);
+
+            if (rules.CompetitionRelegationToId == Guid.Empty)
+                return;
+
+            _extraPromotionPlaces.Add(new ExtraPromotionPlace
+            {
+                CompetitionId = rules.CompetitionRelegationToId,
+                RemovedClubId = removedClubId
+            });
         }
 
         private sealed class MovementState

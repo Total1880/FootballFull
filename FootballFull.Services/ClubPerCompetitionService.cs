@@ -9,6 +9,7 @@ namespace FootballFull.Services
         private readonly IClubPerCompetitionRepository _linkRepository;
         private readonly IClubService _clubService;
         private readonly ICompetitionService _competitionService;
+        private IList<ClubPerCompetition> _clubPerCompetitions;
 
         public ClubPerCompetitionService(
             IClubPerCompetitionRepository linkRepository,
@@ -18,6 +19,7 @@ namespace FootballFull.Services
             _linkRepository = linkRepository ?? throw new ArgumentNullException(nameof(linkRepository));
             _clubService = clubService ?? throw new ArgumentNullException(nameof(clubService));
             _competitionService = competitionService ?? throw new ArgumentNullException(nameof(competitionService));
+            _clubPerCompetitions = _linkRepository.Load();
         }
 
         public void AddClubToCompetition(Guid clubId, Guid competitionId)
@@ -31,23 +33,27 @@ namespace FootballFull.Services
             if (_competitionService.GetCompetitionById(competitionId) == null)
                 throw new InvalidOperationException($"Competition {competitionId} not found.");
 
-            _linkRepository.Add(new ClubPerCompetition
+            var newLink = new ClubPerCompetition
             {
                 ClubId = clubId,
                 CompetitionId = competitionId
-            });
+            };
+
+            _linkRepository.Add(newLink);
+            _clubPerCompetitions.Add(newLink);
         }
 
         public void RemoveClubFromCompetition(Guid clubId, Guid competitionId)
         {
-
             _linkRepository.Delete(clubId, competitionId);
-
+            foreach(var link in _clubPerCompetitions.Where(l => l.ClubId == clubId && l.CompetitionId == competitionId).ToList() ) {
+                _clubPerCompetitions.Remove(link);
+            }
         }
 
         public IList<Club> GetClubsForCompetition(Guid competitionId)
         {
-            var links = _linkRepository.Load()
+            var links = _clubPerCompetitions
                 .Where(x => x.CompetitionId == competitionId)
                 .ToList();
 
@@ -60,7 +66,7 @@ namespace FootballFull.Services
 
         public IList<Competition> GetCompetitionsForClub(Guid clubId)
         {
-            var links = _linkRepository.Load()
+            var links = _clubPerCompetitions
                 .Where(x => x.ClubId == clubId)
                 .ToList();
 
@@ -73,24 +79,13 @@ namespace FootballFull.Services
 
         public IList<ClubPerCompetition> GetAllClubPerCompetitions()
         {
-            return _linkRepository.Load();
+            return _clubPerCompetitions;
         }
 
         public void SaveAll(IList<ClubPerCompetition> clubPerCompetition)
         {
             _linkRepository.Create(clubPerCompetition, true);
-        }
-
-        public void UpdateInternationalCompetition(IList<ClubPerCompetition> clubPerCompetitions)
-        {
-            var competitions = clubPerCompetitions.Select(cpc => cpc.CompetitionId).Distinct().ToList();
-
-            foreach (var competition in competitions)
-                foreach (var club in GetAllClubPerSpecificCompetitions(competition))
-                    RemoveClubFromCompetition(club.ClubId, club.CompetitionId);
-
-            foreach (var clubPerCompetition in clubPerCompetitions)
-                AddClubToCompetition(clubPerCompetition.ClubId, clubPerCompetition.CompetitionId);
+            _clubPerCompetitions = clubPerCompetition;
         }
 
         public IList<ClubPerCompetition> GetAllClubPerSpecificCompetitions(Guid competitionId)
@@ -112,6 +107,14 @@ namespace FootballFull.Services
         {
             var competitions = _competitionService.GetCompetitions().Where(c => c.CountryId == countryId).Select(c => c.Id).ToList();
             return GetAllClubPerCompetitions().Where(cpc => competitions.Contains(cpc.CompetitionId)).ToList();
+        }
+
+        public bool DeleteEverythingForClub(Guid clubId)
+        {
+            foreach(var item in GetAllClubPerCompetitions().Where(cpc => cpc.ClubId == clubId).ToList())
+            {
+                RemoveClubFromCompetition(item.ClubId, item.CompetitionId);
+            } return true;  
         }
     }
 }

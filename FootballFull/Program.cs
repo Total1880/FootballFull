@@ -48,6 +48,7 @@ services.AddSingleton<IFootballAssociationsService, FootballAssociationService>(
 services.AddSingleton<IClubSubsidyService, ClubSubsidyService>();
 services.AddSingleton<IHistoryService, HistoryService>();
 services.AddSingleton<IPrizeMoneyService, PrizeMoneyService>();
+services.AddSingleton<IFeederClubService, FeederClubService>();
 services.AddSingleton<IGameUI, ConsoleGameUI>();
 
 

@@ -40,5 +40,6 @@ namespace FootballFull.Services.Interfaces
             IList<Fixture>? internationalFixtures);
         void CreateNationalCup(Guid countryId, FootballAssociation association);
         Club CandidateForFeederClub(Guid countryId, FootballAssociation association);
+        void ProcessFeederClubAnalyse();
     }
 }

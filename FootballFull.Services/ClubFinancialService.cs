@@ -28,9 +28,8 @@ namespace FootballFull.Services
         {
             var baseCosts = Configuration.BasicClubSeasonExpenses;
             var strengthCosts = club.Strength * Configuration.ClubExpenseMultiplier;
-            var feederClubCosts = club.FeederClubId.HasValue ? Configuration.YearlyCostFeederClub : 0;
 
-            return baseCosts + strengthCosts + feederClubCosts;
+            return baseCosts + strengthCosts;
         }
 
         public ClubFinancialResult CalculateSeasonResult(
