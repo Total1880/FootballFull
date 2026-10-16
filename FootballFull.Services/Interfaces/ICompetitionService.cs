@@ -16,5 +16,6 @@ namespace FootballFull.Services.Interfaces
 Competition competition);
 
         IList<Competition> GetCompetitionsForCountry(Guid userCountryId, bool onlyActive = true);
+        IList<Competition> GetInternationalCompetitions(bool onlyActive = true);
     }
 }

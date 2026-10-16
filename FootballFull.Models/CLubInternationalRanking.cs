@@ -12,21 +12,5 @@ namespace FootballFull.Models
         [JsonInclude]
         public IDictionary<int, int> PointsPerYear { get; private set; }
         = new Dictionary<int, int>();
-        public int TotalPoints(int year)
-        {
-            var totalPoints = 0;
-            foreach (var point in PointsPerYear.Where(_ => _.Key >= year - 5))
-            {
-                totalPoints += point.Value;
-            }
-            return totalPoints;
-        }
-        public void UpdatePoints(int year, int point)
-        {
-            if (PointsPerYear.ContainsKey(year))
-                PointsPerYear[year] += point;
-            else
-                PointsPerYear.Add(year, point);
-        }
     }
 }

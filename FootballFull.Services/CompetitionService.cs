@@ -126,5 +126,10 @@ namespace FootballFull.Services
         {
             return GetCompetitions(onlyActive).Where(c => c.CountryId == userCountryId).ToList();
         }
+
+        public IList<Competition> GetInternationalCompetitions(bool onlyActive = true)
+        {
+            return GetCompetitions(onlyActive).Where(c => c.Type == CompetitionType.International).ToList();
+        }
     }
 }

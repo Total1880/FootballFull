@@ -41,8 +41,10 @@ namespace OlavFramework
 
         // Je basisfolder (de standaard data)
         private static readonly string BaseDataPath =
-            @"C:\Users\olavh\source\repos\FootballFull\data";
+            @"C:\Users\olavh\source\repos\Total1880\FootballFull\data";
 
+    //    private static readonly string BaseDataPath =
+    //@"C:\Users\olavh\source\repos\FootballFull\data";
         public static bool Initialize(string? saveName = null)
         {
             // Bepaal save-path
