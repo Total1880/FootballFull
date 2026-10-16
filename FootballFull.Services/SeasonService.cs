@@ -991,6 +991,7 @@ chosenCompetitionIndex <= competitions.Count)
 
             _saveData.Year = _year;
             _saveDataService.Save(_saveData);
+            Configuration.PeriodicSave(_year);
         }
 
         public Trainer NewTrainer(Guid clubId, DateTime date)

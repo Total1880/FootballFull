@@ -75,6 +75,42 @@ namespace OlavFramework
                 File.Copy(file, destFile, overwrite: false);
             }
         }
+
+        public static bool PeriodicSave( int year)
+        {
+            if (string.IsNullOrWhiteSpace(DataRoot))
+                return false;
+
+            if (string.IsNullOrWhiteSpace(DataRoot) || !Directory.Exists(DataRoot))
+                return false;
+
+            var periodicSaveName = $"{year}";
+            var destinationPath = Path.Combine(
+                DataRoot + "_" + periodicSaveName
+            );
+
+            // Voorkom dat de huidige save zichzelf overschrijft
+            if (Path.GetFullPath(DataRoot)
+                .Equals(Path.GetFullPath(destinationPath),
+                    StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            // Maak de folder aan indien nodig
+            Directory.CreateDirectory(destinationPath);
+
+            // Kopieer alle JSON-bestanden uit de actieve save
+            foreach (var file in Directory.GetFiles(DataRoot, "*.json"))
+            {
+                var destinationFile = Path.Combine(
+                    destinationPath,
+                    Path.GetFileName(file)
+                );
+
+                File.Copy(file, destinationFile, overwrite: true);
+            }
+
+            return true;
+        }
     }
 
 }
