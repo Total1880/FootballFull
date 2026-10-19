@@ -43,7 +43,7 @@ internal static class GameUIMapper
         PrizeMoneyCosts = x.PrizeMoneyCosts,
         SubsidyCosts = x.SubsidyCosts
     };
-    public static List<CountryRankingViewModel> Rankings(IEnumerable<CountryCoefficientRanking> items) =>
+    public static List<CountryRankingViewModel> Rankings(IEnumerable<CountryInternationalCompetitionRanking> items) =>
         items.Select(x => new CountryRankingViewModel
         {
             CountryName = x.Country?.Name ?? x.CountryId.ToString(),

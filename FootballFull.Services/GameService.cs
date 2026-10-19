@@ -22,6 +22,7 @@ namespace FootballFull.Services
         private readonly IStrengthService _strengthService;
         private readonly IEndOfSeasonService _endOfSeasonService;
         private readonly IHistoryService _historyService;
+        private readonly IInternationalQualificationPlacesService _internationalQualificationPlacesService;
         private readonly IGameUI _gameUI;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
@@ -48,6 +49,7 @@ namespace FootballFull.Services
             IStrengthService strengthService,
             IEndOfSeasonService endOfSeasonService,
             IHistoryService historyService,
+            IInternationalQualificationPlacesService internationalQualificationPlacesService,
             IGameUI gameUI)
         {
             _seasonService = seasonService;
@@ -62,6 +64,7 @@ namespace FootballFull.Services
             _strengthService = strengthService;
             _endOfSeasonService = endOfSeasonService;
             _historyService = historyService;
+            _internationalQualificationPlacesService = internationalQualificationPlacesService;
             _gameUI = gameUI;
 
         }
@@ -333,7 +336,7 @@ namespace FootballFull.Services
 
             _seasonEconomyService.ProcessClubFinancialResults();
             _strengthService.RecalculateClubStrengths();
-            _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate);
+            _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate.Year);
         }
 
         private void ApplyEndOfSeasonDecisions()
@@ -441,51 +444,9 @@ namespace FootballFull.Services
                 .ToList();
         }
 
-        private List<CountryCoefficientRanking> DisplayInternationalRankingPerYear()
+        private List<CountryInternationalCompetitionRanking> DisplayInternationalRankingPerYear()
         {
-            var years = Enumerable.Range(_year - 4, 5);
 
-            var rankings = _seasonService.ClubInternationalRankings
-                .GroupBy(c => c.CountryId)
-                .Select(g =>
-                {
-                    var ranking = new CountryCoefficientRanking
-                    {
-                        CountryId = g.Key,
-                        Country = g.First().Country
-                    };
-
-                    foreach (var y in years)
-                    {
-                        // Ruwe punten per jaar
-                        var totalPointsThisYear = g.Sum(c =>
-                            c.PointsPerYear.TryGetValue(y, out var pts) ? pts : 0);
-
-                        ranking.RawPointsPerYear[y] = totalPointsThisYear;
-
-                        // Clubs die punten hebben in dat jaar
-                        var clubsThisYear = g.Count(c =>
-                            c.PointsPerYear.ContainsKey(y));
-
-                        ranking.ClubsParticipatingPerYear[y] = clubsThisYear;
-
-                        // Coefficient voor dit jaar
-                        var yearlyCoefficient =
-                            clubsThisYear == 0 ? 0.0 :
-                            (double)totalPointsThisYear / clubsThisYear;
-
-                        ranking.CoefficientPerYear[y] = yearlyCoefficient;
-                    }
-
-                    ranking.FiveYearCoefficient =
-                        ranking.CoefficientPerYear.Values.Sum();
-
-                    return ranking;
-                })
-                .OrderByDescending(r => r.FiveYearCoefficient)
-                .ToList();
-
-            return rankings;
         }
 
         private List<Fixture> GetNextFixture(Guid competitionId, DateTime fromDate)

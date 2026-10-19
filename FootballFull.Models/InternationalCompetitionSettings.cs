@@ -10,5 +10,6 @@ namespace FootballFull.Models
     {
         public Guid CompetitionId { get; set; }
         public int PointsForWin { get; set; }
+        public int[] QualificationPlaces { get; set; }
     }
 }

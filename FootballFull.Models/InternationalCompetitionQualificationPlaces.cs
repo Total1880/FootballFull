@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FootballFull.Models
 {
-    public class InternationalQualificationPlaces
+    public class InternationalCompetitionQualificationPlaces
     {
         public Guid CompetitionId { get; set; }
-        public IDictionary<Guid, int> QualificationPlacesPerCountry { get; set; } = new Dictionary<Guid, int>();
+        public IList<InternationalCompetitionQualificationPlacesRow> Rows { get; set; } = new List<InternationalCompetitionQualificationPlacesRow>();
     }
 }

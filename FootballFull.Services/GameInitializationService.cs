@@ -29,6 +29,7 @@ namespace FootballFull.Services
         private readonly ITrainerService _trainerService;
         private readonly IFootballAssociationsService _footballAssociationsService;
         private readonly ICompetitionRulesService _competitionRulesService;
+        private readonly IInternationalCompetitionSettingsService _internationalCompetitionSettingsService;
         private readonly IGameUI _gameUI;
 
         public GameInitializationService(
@@ -41,6 +42,7 @@ namespace FootballFull.Services
             ITrainerService trainerService,
             IFootballAssociationsService footballAssociationsService,
             ICompetitionRulesService competitionRulesService,
+            IInternationalCompetitionSettingsService internationalCompetitionSettingsService,
             IGameUI gameUI)
         {
             _seasonService = seasonService;
@@ -52,6 +54,7 @@ namespace FootballFull.Services
             _trainerService = trainerService;
             _footballAssociationsService = footballAssociationsService;
             _competitionRulesService = competitionRulesService;
+            _internationalCompetitionSettingsService = internationalCompetitionSettingsService;
             _gameUI = gameUI;
         }
 
@@ -64,6 +67,7 @@ namespace FootballFull.Services
                 ResetStrength();
                 CreateTrainers();
                 InitializeStarterCompetition(userCountryId);
+                InitializeInternationalCompetitionSettings();
             }
 
             var clubsPerCompetition = _clubPerCompetitionService.GetAllClubPerCompetitions();
@@ -79,12 +83,29 @@ namespace FootballFull.Services
             var cupFixtures = _seasonService.InitializeNationalCups(currentDate);
             var internationalFixtures = isNew
                 ? null
-                : _seasonService.InitializeInternationalGames(currentDate, true);
+                : _seasonService.InitializeInternationalGames(currentDate.Year, true);
 
             return new GameInitializationResult(
                 userCountryId, year, currentDate, nextSeasonDate,
                 clubsPerCompetition, fixtures, cupFixtures,
                 internationalFixtures, associations);
+        }
+
+        private void InitializeInternationalCompetitionSettings()
+        {
+            var competitions = _competitionService.GetCompetitions()
+                .Where(c => c.Type == CompetitionType.International)
+                .ToList();
+
+            foreach (var competition in competitions)
+            {
+                _internationalCompetitionSettingsService.SaveSettings(new InternationalCompetitionSettings
+                {
+                    CompetitionId = competition.Id,
+                    PointsForWin = 2,
+                    QualificationPlaces = new int[] { 3, 2 }
+                });
+            }
         }
 
         private void InitializeStarterCompetition(Guid userCountryId)

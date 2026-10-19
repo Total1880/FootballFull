@@ -113,5 +113,14 @@ namespace FootballFull.Services
         {
             return _clubRepository.Load().Where(c => c.CountryId == countryId).ToList();
         }
+
+        public Guid GetCountryId(Guid clubId)
+        {
+            var club = GetClubById(clubId);
+            if (club == null)
+                throw new ArgumentException("Club not found.", nameof(clubId));
+
+            return club.CountryId;
+        }
     }
 }

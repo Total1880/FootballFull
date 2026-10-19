@@ -14,16 +14,16 @@ namespace FootballFull.Services
         private ICountryService _countryService;
         private ICompetitionService _competitionService;
         private IClubPerCompetitionService _clubPerCompetitionService;
-        private IClubInternationalRankingService _clubInternationalRankingService;
+        private IInternationalRankingService _clubInternationalRankingService;
         private ISaveDataService _saveDataService;
         private readonly ICompetitionRulesService _competitionRulesService;
         private readonly IClubLeagueCompetitionService _clubLeagueCompetitionService;
+        private readonly IInternationalQualificationPlacesService _internationalQualificationPlacesService;
         private IList<ClubLeagueCompetition> _clubLeagueCompetitions;
         private IList<ClubPerCompetition> _clubsPerCompetition;
         private IList<Club> _clubs;
         private IList<Trainer> _trainers;
         private IList<NewsMessage> _newsMessages;
-        private IList<ClubInternationalRanking> _clubInternationalRankings;
         private IList<Competition> _competitions;
         private IList<Country> _countries;
         private int _year;
@@ -31,9 +31,10 @@ namespace FootballFull.Services
 
         public IList<ClubLeagueCompetition> ClubLeagueCompetitions => _clubLeagueCompetitions;
         public IList<NewsMessage> NewsMessages { get { UpdateNewsMessages(); return _newsMessages; } }
-        public IList<ClubInternationalRanking> ClubInternationalRankings => _clubInternationalRankings;
 
         public int Year { get => _year; set => _year = value; }
+
+        public ClubInternationalRanking ClubInternationalRankings => _clubInternationalRankingService.GetAll();
 
         public SeasonService(
             IRepository<Competition> competitionRepository,
@@ -43,10 +44,11 @@ namespace FootballFull.Services
             ICountryService countryService,
             ICompetitionService competitionService,
             IClubPerCompetitionService clubPerCompetitionService,
-            IClubInternationalRankingService clubInternationalRankingService,
+            IInternationalRankingService clubInternationalRankingService,
             ISaveDataService saveDataService,
             ICompetitionRulesService competitionRulesService,
-            IClubLeagueCompetitionService clubLeagueCompetitionService)
+            IClubLeagueCompetitionService clubLeagueCompetitionService,
+            IInternationalQualificationPlacesService internationalQualificationPlacesService)
         {
             _competitionRepository = competitionRepository;
             _clubService = clubService;
@@ -59,9 +61,9 @@ namespace FootballFull.Services
             _saveDataService = saveDataService;
             _competitionRulesService = competitionRulesService;
             _clubLeagueCompetitionService = clubLeagueCompetitionService;
+            _internationalQualificationPlacesService = internationalQualificationPlacesService;
 
             _newsMessages = new List<NewsMessage>();
-            _clubInternationalRankings = _clubInternationalRankingService.GetAll();
             _competitions = _competitionService.GetCompetitions();
             _saveData = _saveDataService.Load();
             Year = _saveData.Year;
@@ -146,7 +148,7 @@ namespace FootballFull.Services
                 if (!isSuddenDeath)
                     ApplyResultToTable(fixture);
                 if (_competitions.Where(_ => _.Type == Competition.CompetitionType.International && _.Id == fixture.CompetitionId).Count() > 0)
-                    ApplyResultToInternationalRanking(fixture);
+                    _clubInternationalRankingService.ProcessFixture(fixture, _year);
 
                 UpdateClubMomentumAndMorale(fixture.HomeTeamId, fixture.HomeScore, fixture.AwayScore);
                 UpdateClubMomentumAndMorale(fixture.AwayTeamId, fixture.AwayScore, fixture.HomeScore);
@@ -155,25 +157,6 @@ namespace FootballFull.Services
             }
 
             return gamesPlayed;
-        }
-
-        private void ApplyResultToInternationalRanking(Fixture fixture)
-        {
-            if (fixture.HomeScore > fixture.AwayScore)
-            {
-                _clubInternationalRankings.First(_ => _.ClubId == fixture.HomeTeamId).UpdatePoints(_year, 2);
-                _clubInternationalRankings.First(_ => _.ClubId == fixture.AwayTeamId).UpdatePoints(_year, 0);
-            }
-            else if (fixture.HomeScore < fixture.AwayScore)
-            {
-                _clubInternationalRankings.First(_ => _.ClubId == fixture.AwayTeamId).UpdatePoints(_year, 2);
-                _clubInternationalRankings.First(_ => _.ClubId == fixture.HomeTeamId).UpdatePoints(_year, 0);
-            }
-            else
-            {
-                _clubInternationalRankings.First(_ => _.ClubId == fixture.HomeTeamId).UpdatePoints(_year, 1);
-                _clubInternationalRankings.First(_ => _.ClubId == fixture.AwayTeamId).UpdatePoints(_year, 1);
-            }
         }
 
         private void SimulateFixtureAutomatically(Fixture fixture, bool isSuddenDeath, bool neutralField)
@@ -673,7 +656,7 @@ chosenCompetitionIndex <= competitions.Count)
                 Console.Write("\nGeef het nummer van het land: ");
                 var input = Console.ReadLine();
 
-                if(int.TryParse(input,out int chosenIndex) && chosenIndex > 0 && chosenIndex <= countries.Count)
+                if (int.TryParse(input, out int chosenIndex) && chosenIndex > 0 && chosenIndex <= countries.Count)
                 {
                     var chosenCountry = countries[chosenIndex - 1].Id;
                     do
@@ -702,9 +685,11 @@ chosenCompetitionIndex <= competitions.Count)
             return count > 1 && (count & (count - 1)) == 0;
         }
 
-        public IList<Fixture> InitializeInternationalGames(DateTime date, bool loadFromSavedGames = false)
+        public IList<Fixture> InitializeInternationalGames(int year, bool loadFromSavedGames = false)
         {
             // Competities inladen (1x)
+            _internationalQualificationPlacesService.CalculateQualificationPlaces();
+
             var allCompetitions = _competitionRepository.Load().ToList();
 
             var competitions = allCompetitions
@@ -715,163 +700,13 @@ chosenCompetitionIndex <= competitions.Count)
                 .FirstOrDefault(_ => _.Type == Competition.CompetitionType.International);
 
             if (internationalCompetition == null)
-            {
-                return new List<Fixture>();
-            }
+                throw new Exception("No competition found");
 
-            if (!loadFromSavedGames)
-            {
-                _clubsPerCompetition = _clubsPerCompetition.Where(_ => _.CompetitionId != internationalCompetition.Id).ToList();
+            //Update _clubsPerCompetition met de places
 
-                var clubCounter = 0;
-                // 🔥 Nieuwe country-ranking op basis van coëfficiënten
-                var countryRankings = CalculateCountryRankings(_year);
-
-                var orderCountries = countryRankings.Any()
-                    ? countryRankings.Select(_ => _.CountryId).ToList()
-                    : _countries.Select(_ => _.Id).ToList(); // fallback als er nog geen ranking is
-
-                // 1. Eerst alle kampioenen toevoegen
-                foreach (var competition in competitions)
-                {
-                    var leagueWinner = _clubLeagueCompetitions
-                        .Where(_ => _.CompetitionId == competition.Id)
-                        .OrderByDescending(_ => _.Points)
-                        .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst)
-                        .ThenByDescending(_ => _.GoalsFor)
-                        .First();
-
-                    _clubsPerCompetition.Add(new ClubPerCompetition
-                    {
-                        ClubId = leagueWinner.ClubId,
-                        CompetitionId = internationalCompetition.Id
-                    });
-
-                    if (!_clubInternationalRankings.Any(_ => _.ClubId == leagueWinner.ClubId))
-                    {
-                        _clubInternationalRankings.Add(new ClubInternationalRanking
-                        {
-                            ClubId = leagueWinner.ClubId,
-                            Club = _clubs.First(_ => _.Id == leagueWinner.ClubId),
-                            CountryId = competition.CountryId,
-                            Country = _countries.First(_ => _.Id == competition.CountryId)
-                        });
-                    }
-                    clubCounter++;
-                }
-
-                // 2. Extra clubs toevoegen tot het aantal "cup worthy" is
-                var counterCountry = 0;
-                var counterPosition = 1;
-
-                while (!IsCupWorthy(clubCounter))
-                {
-                    clubCounter++;
-                    var countryId = orderCountries[counterCountry];
-
-                    var competition = competitions.FirstOrDefault(_ => _.CountryId == countryId);
-
-                    if(competition == null)
-                    {
-                        counterCountry++;
-                        if (counterCountry >= orderCountries.Count)
-                        {
-                            counterCountry = 0;
-                            counterPosition++;
-                        }
-                        continue;
-                    }
-
-                    var extra = _clubLeagueCompetitions
-                        .Where(_ => _.CompetitionId == competition.Id)
-                        .OrderByDescending(_ => _.Points)
-                        .ThenByDescending(_ => _.GoalsFor - _.GoalsAgainst)
-                        .ThenByDescending(_ => _.GoalsFor)
-                        .Skip(counterPosition)
-                        .First();
-
-                    _clubsPerCompetition.Add(new ClubPerCompetition
-                    {
-                        ClubId = extra.ClubId,
-                        CompetitionId = internationalCompetition.Id
-                    });
-
-                    if (!_clubInternationalRankings.Any(_ => _.ClubId == extra.ClubId))
-                    {
-                        _clubInternationalRankings.Add(new ClubInternationalRanking
-                        {
-                            ClubId = extra.ClubId,
-                            Club = _clubs.First(_ => _.Id == extra.ClubId),
-                            CountryId = countryId,
-                            Country = _countries.First(_ => _.Id == countryId)
-                        });
-                    }
-
-                    // ✅ Fix off-by-one: >= in plaats van >
-                    counterCountry++;
-                    if (counterCountry >= orderCountries.Count)
-                    {
-                        counterCountry = 0;
-                        counterPosition++;
-                    }
-                }
-            }
-
-            // 3. Cup aanmaken voor alle deelnemende clubs
             var fixtures = _fixtureService.GenerateCupFixtures(_clubsPerCompetition.Where(_ => _.CompetitionId == internationalCompetition.Id).ToList(), internationalCompetition, date);
 
-            //// Zorg dat MatchDay gezet is (bv. gelijk aan RoundNo)
-            //foreach (var f in fixtures)
-            //{
-            //    if (f.MatchDay == 0)
-            //        f.MatchDay = f.RoundNo;
-            //}
-
             return fixtures;
-        }
-
-        private IList<CountryCoefficientRanking> CalculateCountryRankings(int currentYear)
-        {
-            var years = Enumerable.Range(currentYear - 4, 5); // laatste 5 seizoenen
-
-            var rankings = _clubInternationalRankings
-                .GroupBy(c => c.CountryId)
-                .Select(g =>
-                {
-                    var ranking = new CountryCoefficientRanking
-                    {
-                        CountryId = g.Key,
-                        Country = g.First().Country
-                    };
-
-                    foreach (var y in years)
-                    {
-                        // Ruwe punten van clubs uit dit land in jaar y
-                        var totalPointsThisYear = g.Sum(c =>
-                            c.PointsPerYear.TryGetValue(y, out var pts) ? pts : 0);
-
-                        ranking.RawPointsPerYear[y] = totalPointsThisYear;
-
-                        // Aantal clubs met punten in dat jaar
-                        var clubsThisYear = g.Count(c => c.PointsPerYear.ContainsKey(y));
-                        ranking.ClubsParticipatingPerYear[y] = clubsThisYear;
-
-                        // Coëfficiënt voor dit jaar
-                        var yearlyCoefficient = clubsThisYear == 0
-                            ? 0.0
-                            : (double)totalPointsThisYear / clubsThisYear;
-
-                        ranking.CoefficientPerYear[y] = yearlyCoefficient;
-                    }
-
-                    ranking.FiveYearCoefficient = ranking.CoefficientPerYear.Values.Sum();
-
-                    return ranking;
-                })
-                .OrderByDescending(r => r.FiveYearCoefficient)
-                .ToList();
-
-            return rankings;
         }
 
         public IList<Fixture> InitializeNationalCups(DateTime date)
@@ -987,7 +822,7 @@ chosenCompetitionIndex <= competitions.Count)
             _clubService.SaveAll(_clubs);
             _clubPerCompetitionService.SaveAll(_clubsPerCompetition);
             _trainerService.SaveAll(_trainers);
-            _clubInternationalRankingService.SaveAll(_clubInternationalRankings);
+            _clubInternationalRankingService.SaveAll();
 
             _saveData.Year = _year;
             _saveDataService.Save(_saveData);
