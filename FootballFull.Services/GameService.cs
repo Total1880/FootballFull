@@ -336,7 +336,7 @@ namespace FootballFull.Services
 
             _seasonEconomyService.ProcessClubFinancialResults();
             _strengthService.RecalculateClubStrengths();
-            _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate.Year);
+            _internationalFixtures = _seasonService.InitializeInternationalGames(_newSeasonDate.Year, _newSeasonDate);
         }
 
         private void ApplyEndOfSeasonDecisions()
@@ -446,7 +446,7 @@ namespace FootballFull.Services
 
         private List<CountryInternationalCompetitionRanking> DisplayInternationalRankingPerYear()
         {
-
+            return null;
         }
 
         private List<Fixture> GetNextFixture(Guid competitionId, DateTime fromDate)

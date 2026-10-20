@@ -685,7 +685,7 @@ chosenCompetitionIndex <= competitions.Count)
             return count > 1 && (count & (count - 1)) == 0;
         }
 
-        public IList<Fixture> InitializeInternationalGames(int year, bool loadFromSavedGames = false)
+        public IList<Fixture> InitializeInternationalGames(int year, DateTime date, bool loadFromSavedGames = false)
         {
             // Competities inladen (1x)
             _internationalQualificationPlacesService.CalculateQualificationPlaces();
@@ -702,7 +702,21 @@ chosenCompetitionIndex <= competitions.Count)
             if (internationalCompetition == null)
                 throw new Exception("No competition found");
 
-            //Update _clubsPerCompetition met de places
+            _clubsPerCompetition = _clubsPerCompetition.Where(_ => _.CompetitionId != internationalCompetition.Id).ToList();
+
+            foreach(var competition in competitions)
+            {
+                var places = _internationalQualificationPlacesService.GetQualificationPlacesForCountryAndCompetition(competition.CountryId, internationalCompetition.Id);
+                var ranking = GetRanking(competition.Id);
+
+                if (places == 0)
+                    places = 1;
+
+                for (int i = 0; i < places; i++)
+                {
+                    _clubsPerCompetition.Add(new ClubPerCompetition { ClubId = ranking[i].ClubId, CompetitionId = competition.Id });
+                }
+            }
 
             var fixtures = _fixtureService.GenerateCupFixtures(_clubsPerCompetition.Where(_ => _.CompetitionId == internationalCompetition.Id).ToList(), internationalCompetition, date);
 

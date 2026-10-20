@@ -83,7 +83,7 @@ namespace FootballFull.Services
             var cupFixtures = _seasonService.InitializeNationalCups(currentDate);
             var internationalFixtures = isNew
                 ? null
-                : _seasonService.InitializeInternationalGames(currentDate.Year, true);
+                : _seasonService.InitializeInternationalGames(currentDate.Year,currentDate, true);
 
             return new GameInitializationResult(
                 userCountryId, year, currentDate, nextSeasonDate,

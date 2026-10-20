@@ -39,7 +39,7 @@ namespace FootballFull.Repositories
 
                 foreach (var item in itemList)
                 {
-                    if (item.ClubId == Guid.Empty)
+                    if (item.Id == Guid.Empty)
                         throw new ArgumentException("ClubInternationalRanking must have a valid ClubId");
 
                     clubInternationRanking.Add(item);
@@ -52,7 +52,7 @@ namespace FootballFull.Repositories
                 // Volledig overschrijven
                 foreach (var item in itemList)
                 {
-                    if (item.ClubId == Guid.Empty)
+                    if (item.Id == Guid.Empty)
                         throw new ArgumentException("ClubInternationalRanking must have a valid ClubId");
                 }
                 Save(itemList);

@@ -11,7 +11,7 @@ namespace FootballFull.Services.Interfaces
         bool PlayMatchDay(IList<Fixture> fixtures, DateTime matchDay, bool isSuddenDeath = false, Guid? playerClubId = null, bool neutralField = false);
         Guid ChoosePlayerClub();
         Guid ChoosePlayerCompetition();
-        IList<Fixture> InitializeInternationalGames(int year, bool loadFromSavedGames = false);
+        IList<Fixture> InitializeInternationalGames(int year, DateTime date, bool loadFromSavedGames = false);
         IList<Fixture> InitializeNationalCups(DateTime date);
         Trainer NewTrainer(Guid clubId, DateTime date);
         void UpdateWeekStats(Guid userClubId, DateTime date);

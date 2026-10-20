@@ -55,5 +55,13 @@ namespace FootballFull.Services
                 }
             }
         }
+
+        public int GetQualificationPlacesForCountryAndCompetition(Guid countryId, Guid competitionId)
+        {
+            if (_qualificationPlaces.CompetitionId != competitionId)
+                throw new NotImplementedException("Competition is not implemented yet");
+
+            return _qualificationPlaces.Rows.FirstOrDefault(_ => _.CountryId == countryId).Places;
+        }
     }
 }
