@@ -714,7 +714,7 @@ chosenCompetitionIndex <= competitions.Count)
 
                 for (int i = 0; i < places; i++)
                 {
-                    _clubsPerCompetition.Add(new ClubPerCompetition { ClubId = ranking[i].ClubId, CompetitionId = competition.Id });
+                    _clubsPerCompetition.Add(new ClubPerCompetition { ClubId = ranking[i].ClubId, CompetitionId = internationalCompetition.Id });
                 }
             }
 

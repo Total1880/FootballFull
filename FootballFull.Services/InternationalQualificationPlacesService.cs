@@ -15,7 +15,7 @@ namespace FootballFull.Services
         private readonly ICountryService _countryService;
         private readonly IInternationalRankingService _clubInternationalRankingService;
         private readonly IInternationalCompetitionSettingsService _internationalCompetitionSettingsService;
-        private InternationalCompetitionQualificationPlaces _qualificationPlaces;
+        private IList<InternationalCompetitionQualificationPlaces> _qualificationPlaces;
 
         public InternationalQualificationPlacesService(
             ICompetitionService competitionService, 
@@ -27,6 +27,7 @@ namespace FootballFull.Services
             _countryService = countryService;
             _clubInternationalRankingService = clubInternationalRankingService;
             _internationalCompetitionSettingsService = internationalCompetitionSettingsService;
+
         }
         public void CalculateQualificationPlaces()
         {
@@ -34,10 +35,15 @@ namespace FootballFull.Services
             var ranking = _clubInternationalRankingService.GetAll();
             var internationalCompetitions = _competitionService.GetInternationalCompetitions();
             var tempRanking = new Dictionary<Guid, int>();
-            _qualificationPlaces = new InternationalCompetitionQualificationPlaces();
+
+            if (_qualificationPlaces == null)
+                _qualificationPlaces = new List<InternationalCompetitionQualificationPlaces>();
 
             foreach (var competition in internationalCompetitions)
             {
+                if (!_qualificationPlaces.Any(_ => _.CompetitionId == competition.Id))
+                    _qualificationPlaces.Add(new InternationalCompetitionQualificationPlaces { CompetitionId = competition.Id });
+
                 var settings = _internationalCompetitionSettingsService.GetSettings(competition.Id);
                 var counter = 0;
 
@@ -47,21 +53,23 @@ namespace FootballFull.Services
                 foreach(var country in tempRanking.OrderByDescending(_ => _.Value))
                 {
                     var places = settings.QualificationPlaces.Count() > counter ? settings.QualificationPlaces[counter] : 1;
-                    _qualificationPlaces.Rows.Add(new InternationalCompetitionQualificationPlacesRow
+                    _qualificationPlaces.First(_ => _.CompetitionId == competition.Id).Rows.Add(new InternationalCompetitionQualificationPlacesRow
                     {
                         CountryId = country.Key,
                         Places = places
                     });
+
+                    counter++;
                 }
             }
         }
 
         public int GetQualificationPlacesForCountryAndCompetition(Guid countryId, Guid competitionId)
         {
-            if (_qualificationPlaces.CompetitionId != competitionId)
+            if (!_qualificationPlaces.Any(_ => _.CompetitionId == competitionId))
                 throw new NotImplementedException("Competition is not implemented yet");
 
-            return _qualificationPlaces.Rows.FirstOrDefault(_ => _.CountryId == countryId).Places;
+            return _qualificationPlaces.First(_ => _.CompetitionId == competitionId).Rows.First(_ => _.CountryId == countryId).Places;
         }
     }
 }

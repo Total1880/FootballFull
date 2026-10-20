@@ -1,0 +1,552 @@
+[
+  {
+    "Id": "ef4e40f0-9de8-4b30-a7c7-d0a1e41fb999",
+    "CompetitionId": "78392db7-1664-4b1f-982c-459f9a4fcc16",
+    "CompetitionName": "Premier League",
+    "Year": 2026,
+    "ChampionClubId": "0d8c6345-f7ce-413d-905c-cbcf799133a9",
+    "ChampionClubName": "Chelsea",
+    "RunnerUpClubId": "5f3c0e37-734e-40f5-88a5-9a897e66926b",
+    "RunnerUpClubName": "Arsenal"
+  },
+  {
+    "Id": "d8767729-82cb-4df1-bfb4-633b651690ea",
+    "CompetitionId": "e5209840-7c9a-4dc0-bf49-147698edeb06",
+    "CompetitionName": "Serie A",
+    "Year": 2026,
+    "ChampionClubId": "d909f3ec-3e44-4156-88e4-02d0c1fa98ec",
+    "ChampionClubName": "Inter",
+    "RunnerUpClubId": "2c6f7c05-da79-4fed-b401-a2ae4adb5f8e",
+    "RunnerUpClubName": "Cagliari"
+  },
+  {
+    "Id": "decda9b3-6ecd-4cc6-a74b-43ce6625ae52",
+    "CompetitionId": "0a57f4ee-8b2f-4b9a-ba05-1448266fede4",
+    "CompetitionName": "La Liga",
+    "Year": 2026,
+    "ChampionClubId": "d7f20b6f-c31a-4125-b5d1-fd3509b26662",
+    "ChampionClubName": "Real Madrid",
+    "RunnerUpClubId": "876840b4-4e05-44ef-bc0e-fdf11916944f",
+    "RunnerUpClubName": "Real Betis"
+  },
+  {
+    "Id": "5264f592-de1c-42fd-859b-ccb4806c0a5d",
+    "CompetitionId": "c4f7e58a-60ce-4cbe-82f2-a202e2d87ae3",
+    "CompetitionName": "Ligue 1",
+    "Year": 2026,
+    "ChampionClubId": "e6c05652-4f53-4948-b831-4cca17da472a",
+    "ChampionClubName": "PSG",
+    "RunnerUpClubId": "f1401690-d884-4d55-a5aa-7bab2a46733c",
+    "RunnerUpClubName": "Lyon"
+  },
+  {
+    "Id": "6924357c-ada9-4aba-a10a-89cc94d2e976",
+    "CompetitionId": "5cc3fa6a-3cc7-43a2-a948-16572869cbc0",
+    "CompetitionName": "Division 1",
+    "Year": 2026,
+    "ChampionClubId": "298ba8a5-e4a5-491d-bdde-2e9676926dc1",
+    "ChampionClubName": "Club Brugge",
+    "RunnerUpClubId": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
+    "RunnerUpClubName": "KV Mechelen"
+  },
+  {
+    "Id": "d0ede87d-30c5-474c-81e0-bae0c3058a44",
+    "CompetitionId": "78392db7-1664-4b1f-982c-459f9a4fcc16",
+    "CompetitionName": "Premier League",
+    "Year": 2027,
+    "ChampionClubId": "0d8c6345-f7ce-413d-905c-cbcf799133a9",
+    "ChampionClubName": "Chelsea",
+    "RunnerUpClubId": "5f3c0e37-734e-40f5-88a5-9a897e66926b",
+    "RunnerUpClubName": "Arsenal"
+  },
+  {
+    "Id": "ad8613ba-f1c8-4763-b2e9-9a7ef5f4427c",
+    "CompetitionId": "553dd1b1-2bc1-48c0-addf-ddf46d296024",
+    "CompetitionName": "Champions League",
+    "Year": 2027,
+    "ChampionClubId": "d7f20b6f-c31a-4125-b5d1-fd3509b26662",
+    "ChampionClubName": "Real Madrid",
+    "RunnerUpClubId": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
+    "RunnerUpClubName": "KV Mechelen"
+  },
+  {
+    "Id": "79b25690-5a00-4f35-a3ae-f051de757528",
+    "CompetitionId": "e5209840-7c9a-4dc0-bf49-147698edeb06",
+    "CompetitionName": "Serie A",
+    "Year": 2027,
+    "ChampionClubId": "072c2b26-07ab-4c96-a999-5951b7973e30",
+    "ChampionClubName": "Roma",
+    "RunnerUpClubId": "d909f3ec-3e44-4156-88e4-02d0c1fa98ec",
+    "RunnerUpClubName": "Inter"
+  },
+  {
+    "Id": "f9a0c278-5fef-4761-9133-69fbcefbecda",
+    "CompetitionId": "0a57f4ee-8b2f-4b9a-ba05-1448266fede4",
+    "CompetitionName": "La Liga",
+    "Year": 2027,
+    "ChampionClubId": "d7f20b6f-c31a-4125-b5d1-fd3509b26662",
+    "ChampionClubName": "Real Madrid",
+    "RunnerUpClubId": "d9149508-4ba5-4b85-8e17-44448884880e",
+    "RunnerUpClubName": "Barcelona"
+  },
+  {
+    "Id": "f2710e08-0e1c-4386-917f-430e24abe54f",
+    "CompetitionId": "c4f7e58a-60ce-4cbe-82f2-a202e2d87ae3",
+    "CompetitionName": "Ligue 1",
+    "Year": 2027,
+    "ChampionClubId": "e6c05652-4f53-4948-b831-4cca17da472a",
+    "ChampionClubName": "PSG",
+    "RunnerUpClubId": "f1401690-d884-4d55-a5aa-7bab2a46733c",
+    "RunnerUpClubName": "Lyon"
+  },
+  {
+    "Id": "1a7e2c5f-11d5-44c9-b7b8-2f7621e26f0b",
+    "CompetitionId": "5cc3fa6a-3cc7-43a2-a948-16572869cbc0",
+    "CompetitionName": "Division 1",
+    "Year": 2027,
+    "ChampionClubId": "f1a5e0d2-ff70-43d7-b11f-8af974893622",
+    "ChampionClubName": "Francs Borains",
+    "RunnerUpClubId": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
+    "RunnerUpClubName": "KV Mechelen"
+  },
+  {
+    "Id": "82a18032-0fad-4b4d-b414-35e47933eb3e",
+    "CompetitionId": "78392db7-1664-4b1f-982c-459f9a4fcc16",
+    "CompetitionName": "Premier League",
+    "Year": 2028,
+    "ChampionClubId": "008e5eea-1847-4208-9368-7b01fb70a442",
+    "ChampionClubName": "Leeds United",
+    "RunnerUpClubId": "9a4b8314-0342-49d8-8657-a8f12e56878c",
+    "RunnerUpClubName": "Manchester United"
+  },
+  {
+    "Id": "07c4b916-1592-40b9-9285-402fb4b7219d",
+    "CompetitionId": "553dd1b1-2bc1-48c0-addf-ddf46d296024",
+    "CompetitionName": "Champions League",
+    "Year": 2028,
+    "ChampionClubId": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
+    "ChampionClubName": "KV Mechelen",
+    "RunnerUpClubId": "d7f20b6f-c31a-4125-b5d1-fd3509b26662",
+    "RunnerUpClubName": "Real Madrid"
+  },
+  {
+    "Id": "516f5f8e-c238-408b-a204-2778f26ef8eb",
+    "CompetitionId": "e5209840-7c9a-4dc0-bf49-147698edeb06",
+    "CompetitionName": "Serie A",
+    "Year": 2028,
+    "ChampionClubId": "2c6f7c05-da79-4fed-b401-a2ae4adb5f8e",
+    "ChampionClubName": "Cagliari",
+    "RunnerUpClubId": "8371f16f-77f8-47ab-ba85-0691c0698d9e",
+    "RunnerUpClubName": "Como"
+  },
+  {
+    "Id": "8d5c434e-6f2c-4f09-ba4c-dadbd248f20e",
+    "CompetitionId": "0a57f4ee-8b2f-4b9a-ba05-1448266fede4",
+    "CompetitionName": "La Liga",
+    "Year": 2028,
+    "ChampionClubId": "d9149508-4ba5-4b85-8e17-44448884880e",
+    "ChampionClubName": "Barcelona",
+    "RunnerUpClubId": "876840b4-4e05-44ef-bc0e-fdf11916944f",
+    "RunnerUpClubName": "Real Betis"
+  },
+  {
+    "Id": "5a3ea61b-236a-49ff-8c39-19759447ecc5",
+    "CompetitionId": "c4f7e58a-60ce-4cbe-82f2-a202e2d87ae3",
+    "CompetitionName": "Ligue 1",
+    "Year": 2028,
+    "ChampionClubId": "e6c05652-4f53-4948-b831-4cca17da472a",
+    "ChampionClubName": "PSG",
+    "RunnerUpClubId": "3df33f0c-4564-4b79-8e1a-b0e37295164e",
+    "RunnerUpClubName": "Paris FC"
+  },
+  {
+    "Id": "e0067e52-d4f4-4758-8fff-dd551a006504",
+    "CompetitionId": "5cc3fa6a-3cc7-43a2-a948-16572869cbc0",
+    "CompetitionName": "Division 1",
+    "Year": 2028,
+    "ChampionClubId": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
+    "ChampionClubName": "AA Gent",
+    "RunnerUpClubId": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
+    "RunnerUpClubName": "STVV"
+  },
+  {
+    "Id": "7bc3bff6-8e0e-4110-a4fd-951698b5036f",
+    "CompetitionId": "78392db7-1664-4b1f-982c-459f9a4fcc16",
+    "CompetitionName": "Premier League",
+    "Year": 2029,
+    "ChampionClubId": "9a4b8314-0342-49d8-8657-a8f12e56878c",
+    "ChampionClubName": "Manchester United",
+    "RunnerUpClubId": "5f3c0e37-734e-40f5-88a5-9a897e66926b",
+    "RunnerUpClubName": "Arsenal"
+  },
+  {
+    "Id": "940eb8d5-5d7d-4b0e-aede-1a444151ee19",
+    "CompetitionId": "e5209840-7c9a-4dc0-bf49-147698edeb06",
+    "CompetitionName": "Serie A",
+    "Year": 2029,
+    "ChampionClubId": "2c6f7c05-da79-4fed-b401-a2ae4adb5f8e",
+    "ChampionClubName": "Cagliari",
+    "RunnerUpClubId": "8371f16f-77f8-47ab-ba85-0691c0698d9e",
+    "RunnerUpClubName": "Como"
+  },
+  {
+    "Id": "d8ac4304-2a1b-41cb-866a-9031707b665f",
+    "CompetitionId": "0a57f4ee-8b2f-4b9a-ba05-1448266fede4",
+    "CompetitionName": "La Liga",
+    "Year": 2029,
+    "ChampionClubId": "d9149508-4ba5-4b85-8e17-44448884880e",
+    "ChampionClubName": "Barcelona",
+    "RunnerUpClubId": "24a4f252-3428-4e5b-b198-feda1e455501",
+    "RunnerUpClubName": "Atl\u00E9tico Madrid"
+  },
+  {
+    "Id": "b53545ab-6c29-4fe9-ac43-e6f51d955781",
+    "CompetitionId": "c4f7e58a-60ce-4cbe-82f2-a202e2d87ae3",
+    "CompetitionName": "Ligue 1",
+    "Year": 2029,
+    "ChampionClubId": "f1401690-d884-4d55-a5aa-7bab2a46733c",
+    "ChampionClubName": "Lyon",
+    "RunnerUpClubId": "5e3a59c4-357e-4df0-88f0-54e790f5ae5f",
+    "RunnerUpClubName": "Marseille"
+  },
+  {
+    "Id": "93dfc7d8-1f7f-4962-819d-3eed8c99b590",
+    "CompetitionId": "5cc3fa6a-3cc7-43a2-a948-16572869cbc0",
+    "CompetitionName": "Division 1",
+    "Year": 2029,
+    "ChampionClubId": "298ba8a5-e4a5-491d-bdde-2e9676926dc1",
+    "ChampionClubName": "Club Brugge",
+    "RunnerUpClubId": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
+    "RunnerUpClubName": "AA Gent"
+  },
+  {
+    "Id": "b9d6fe99-3d73-4f1a-8557-d0b64f5fa272",
+    "CompetitionId": "78392db7-1664-4b1f-982c-459f9a4fcc16",
+    "CompetitionName": "Premier League",
+    "Year": 2030,
+    "ChampionClubId": "5f3c0e37-734e-40f5-88a5-9a897e66926b",
+    "ChampionClubName": "Arsenal",
+    "RunnerUpClubId": "9a4b8314-0342-49d8-8657-a8f12e56878c",
+    "RunnerUpClubName": "Manchester United"
+  },
+  {
+    "Id": "0e494d59-28b7-479e-a6d0-fe8b36903c23",
+    "CompetitionId": "553dd1b1-2bc1-48c0-addf-ddf46d296024",
+    "CompetitionName": "Champions League",
+    "Year": 2030,
+    "ChampionClubId": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
+    "ChampionClubName": "AA Gent",
+    "RunnerUpClubId": "298ba8a5-e4a5-491d-bdde-2e9676926dc1",
+    "RunnerUpClubName": "Club Brugge"
+  },
+  {
+    "Id": "c630fac7-77d0-47bd-b903-d8cb95c8b2e6",
+    "CompetitionId": "e5209840-7c9a-4dc0-bf49-147698edeb06",
+    "CompetitionName": "Serie A",
+    "Year": 2030,
+    "ChampionClubId": "072c2b26-07ab-4c96-a999-5951b7973e30",
+    "ChampionClubName": "Roma",
+    "RunnerUpClubId": "d909f3ec-3e44-4156-88e4-02d0c1fa98ec",
+    "RunnerUpClubName": "Inter"
+  },
+  {
+    "Id": "b3272d09-b026-4082-976b-e8fc93de9642",
+    "CompetitionId": "0a57f4ee-8b2f-4b9a-ba05-1448266fede4",
+    "CompetitionName": "La Liga",
+    "Year": 2030,
+    "ChampionClubId": "876840b4-4e05-44ef-bc0e-fdf11916944f",
+    "ChampionClubName": "Real Betis",
+    "RunnerUpClubId": "d7f20b6f-c31a-4125-b5d1-fd3509b26662",
+    "RunnerUpClubName": "Real Madrid"
+  },
+  {
+    "Id": "25bd7d3e-e9bf-4078-8270-4263ad567612",
+    "CompetitionId": "c4f7e58a-60ce-4cbe-82f2-a202e2d87ae3",
+    "CompetitionName": "Ligue 1",
+    "Year": 2030,
+    "ChampionClubId": "2901815d-d75f-410d-953d-d78c61331519",
+    "ChampionClubName": "Monaco",
+    "RunnerUpClubId": "03a0b6ac-3902-4dc8-b860-07d574abb679",
+    "RunnerUpClubName": "Rennes"
+  },
+  {
+    "Id": "dec3ca26-023f-455b-8e86-5aef25541c2b",
+    "CompetitionId": "5cc3fa6a-3cc7-43a2-a948-16572869cbc0",
+    "CompetitionName": "Division 1",
+    "Year": 2030,
+    "ChampionClubId": "5cea17d8-9aa5-4a24-ac30-bcd73143da6e",
+    "ChampionClubName": "AA Gent",
+    "RunnerUpClubId": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
+    "RunnerUpClubName": "KV Mechelen"
+  },
+  {
+    "Id": "cbdb1f19-9b6c-473c-a009-47d23ad62b50",
+    "CompetitionId": "78392db7-1664-4b1f-982c-459f9a4fcc16",
+    "CompetitionName": "Premier League",
+    "Year": 2031,
+    "ChampionClubId": "9a4b8314-0342-49d8-8657-a8f12e56878c",
+    "ChampionClubName": "Manchester United",
+    "RunnerUpClubId": "7e8588ee-24d9-4c82-9e80-75ae2b2c700c",
+    "RunnerUpClubName": "Aston Villa"
+  },
+  {
+    "Id": "8ccff631-5515-4efd-8325-a0ab94dd5a2a",
+    "CompetitionId": "553dd1b1-2bc1-48c0-addf-ddf46d296024",
+    "CompetitionName": "Champions League",
+    "Year": 2031,
+    "ChampionClubId": "876840b4-4e05-44ef-bc0e-fdf11916944f",
+    "ChampionClubName": "Real Betis",
+    "RunnerUpClubId": "072c2b26-07ab-4c96-a999-5951b7973e30",
+    "RunnerUpClubName": "Roma"
+  },
+  {
+    "Id": "e40921b6-b072-4682-8d83-5da07ae31239",
+    "CompetitionId": "e5209840-7c9a-4dc0-bf49-147698edeb06",
+    "CompetitionName": "Serie A",
+    "Year": 2031,
+    "ChampionClubId": "072c2b26-07ab-4c96-a999-5951b7973e30",
+    "ChampionClubName": "Roma",
+    "RunnerUpClubId": "c64874ca-f742-417b-9116-601ea30d1320",
+    "RunnerUpClubName": "Frosinone"
+  },
+  {
+    "Id": "2b9f905c-bb7e-4b43-9e6d-7475702f94b2",
+    "CompetitionId": "0a57f4ee-8b2f-4b9a-ba05-1448266fede4",
+    "CompetitionName": "La Liga",
+    "Year": 2031,
+    "ChampionClubId": "d7f20b6f-c31a-4125-b5d1-fd3509b26662",
+    "ChampionClubName": "Real Madrid",
+    "RunnerUpClubId": "9f23d409-34d4-45f9-9c35-2a5e8b91e660",
+    "RunnerUpClubName": "Athletic Bilbao"
+  },
+  {
+    "Id": "250318fa-1aa9-4f8e-acab-bcc8a097354e",
+    "CompetitionId": "c4f7e58a-60ce-4cbe-82f2-a202e2d87ae3",
+    "CompetitionName": "Ligue 1",
+    "Year": 2031,
+    "ChampionClubId": "3df33f0c-4564-4b79-8e1a-b0e37295164e",
+    "ChampionClubName": "Paris FC",
+    "RunnerUpClubId": "2901815d-d75f-410d-953d-d78c61331519",
+    "RunnerUpClubName": "Monaco"
+  },
+  {
+    "Id": "14956236-b28e-47eb-a3f0-f0fcd48e5219",
+    "CompetitionId": "5cc3fa6a-3cc7-43a2-a948-16572869cbc0",
+    "CompetitionName": "Division 1",
+    "Year": 2031,
+    "ChampionClubId": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
+    "ChampionClubName": "KV Mechelen",
+    "RunnerUpClubId": "f1a5e0d2-ff70-43d7-b11f-8af974893622",
+    "RunnerUpClubName": "Francs Borains"
+  },
+  {
+    "Id": "40f82504-7d29-4d08-addd-64f9956d4a9a",
+    "CompetitionId": "bd177e2b-8b24-402d-b8b2-672621e3bba2",
+    "CompetitionName": "National Cup",
+    "Year": 2031,
+    "ChampionClubId": "f1a5e0d2-ff70-43d7-b11f-8af974893622",
+    "ChampionClubName": "Francs Borains",
+    "RunnerUpClubId": "0b92f026-3e99-404c-8705-f9777232bcc5",
+    "RunnerUpClubName": "Union Namur"
+  },
+  {
+    "Id": "de7dc5a0-0883-4174-8704-4f1409714aa4",
+    "CompetitionId": "78392db7-1664-4b1f-982c-459f9a4fcc16",
+    "CompetitionName": "Premier League",
+    "Year": 2032,
+    "ChampionClubId": "cda596bc-25ec-448f-b03a-293fee5b225a",
+    "ChampionClubName": "Hull City",
+    "RunnerUpClubId": "987a7737-2fdc-4f19-999a-483cfe37c121",
+    "RunnerUpClubName": "Brentford"
+  },
+  {
+    "Id": "3cce60a5-ef9f-48f4-8902-7447dcc00d4a",
+    "CompetitionId": "e5209840-7c9a-4dc0-bf49-147698edeb06",
+    "CompetitionName": "Serie A",
+    "Year": 2032,
+    "ChampionClubId": "a05729be-e1ac-42e7-80c2-21add73cb39d",
+    "ChampionClubName": "Juventus",
+    "RunnerUpClubId": "8371f16f-77f8-47ab-ba85-0691c0698d9e",
+    "RunnerUpClubName": "Como"
+  },
+  {
+    "Id": "f81a3c4d-d787-4865-97ab-3180c2833bf9",
+    "CompetitionId": "0a57f4ee-8b2f-4b9a-ba05-1448266fede4",
+    "CompetitionName": "La Liga",
+    "Year": 2032,
+    "ChampionClubId": "876840b4-4e05-44ef-bc0e-fdf11916944f",
+    "ChampionClubName": "Real Betis",
+    "RunnerUpClubId": "d9149508-4ba5-4b85-8e17-44448884880e",
+    "RunnerUpClubName": "Barcelona"
+  },
+  {
+    "Id": "651815c1-3d11-4c74-8208-74b02e5bb897",
+    "CompetitionId": "c4f7e58a-60ce-4cbe-82f2-a202e2d87ae3",
+    "CompetitionName": "Ligue 1",
+    "Year": 2032,
+    "ChampionClubId": "004c2853-95fd-4457-8396-27334f9d4ad8",
+    "ChampionClubName": "LOSC",
+    "RunnerUpClubId": "e6c05652-4f53-4948-b831-4cca17da472a",
+    "RunnerUpClubName": "PSG"
+  },
+  {
+    "Id": "addcd37d-5742-48ae-90e1-1645557ba315",
+    "CompetitionId": "5cc3fa6a-3cc7-43a2-a948-16572869cbc0",
+    "CompetitionName": "Division 1",
+    "Year": 2032,
+    "ChampionClubId": "23f38c29-7e72-4509-beb6-4ee9b6298ee6",
+    "ChampionClubName": "Anderlecht",
+    "RunnerUpClubId": "3c3c4abf-54c2-4b46-87a0-93313ee5f9ae",
+    "RunnerUpClubName": "KV Mechelen"
+  },
+  {
+    "Id": "fdaea7ea-58b8-4a05-ad09-494048085869",
+    "CompetitionId": "bd177e2b-8b24-402d-b8b2-672621e3bba2",
+    "CompetitionName": "National Cup",
+    "Year": 2032,
+    "ChampionClubId": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
+    "ChampionClubName": "STVV",
+    "RunnerUpClubId": "23f38c29-7e72-4509-beb6-4ee9b6298ee6",
+    "RunnerUpClubName": "Anderlecht"
+  },
+  {
+    "Id": "ae32a349-c61f-4ae8-b7d5-dd37deb56a76",
+    "CompetitionId": "78392db7-1664-4b1f-982c-459f9a4fcc16",
+    "CompetitionName": "Premier League",
+    "Year": 2033,
+    "ChampionClubId": "a058d0e0-e7eb-4e92-8191-cf8c04d0d111",
+    "ChampionClubName": "Manchester City",
+    "RunnerUpClubId": "0d8c6345-f7ce-413d-905c-cbcf799133a9",
+    "RunnerUpClubName": "Chelsea"
+  },
+  {
+    "Id": "22e045a2-2b6d-497d-b493-46ade74c541c",
+    "CompetitionId": "553dd1b1-2bc1-48c0-addf-ddf46d296024",
+    "CompetitionName": "Champions League",
+    "Year": 2033,
+    "ChampionClubId": "8371f16f-77f8-47ab-ba85-0691c0698d9e",
+    "ChampionClubName": "Como",
+    "RunnerUpClubId": "a05729be-e1ac-42e7-80c2-21add73cb39d",
+    "RunnerUpClubName": "Juventus"
+  },
+  {
+    "Id": "cbe2a1c6-f9a1-4e34-adf5-761248376419",
+    "CompetitionId": "e5209840-7c9a-4dc0-bf49-147698edeb06",
+    "CompetitionName": "Serie A",
+    "Year": 2033,
+    "ChampionClubId": "3d7c256a-740e-4f97-a8b7-6edeb0e016a6",
+    "ChampionClubName": "Milan",
+    "RunnerUpClubId": "2e54b003-7ff0-4146-85ad-c21f1dc8ab38",
+    "RunnerUpClubName": "Lazio"
+  },
+  {
+    "Id": "f5ef43d4-1ff3-4b79-a985-210a191c018b",
+    "CompetitionId": "0a57f4ee-8b2f-4b9a-ba05-1448266fede4",
+    "CompetitionName": "La Liga",
+    "Year": 2033,
+    "ChampionClubId": "24a4f252-3428-4e5b-b198-feda1e455501",
+    "ChampionClubName": "Atl\u00E9tico Madrid",
+    "RunnerUpClubId": "d7f20b6f-c31a-4125-b5d1-fd3509b26662",
+    "RunnerUpClubName": "Real Madrid"
+  },
+  {
+    "Id": "02c20fc2-6555-4e95-8cf0-991d93bb3037",
+    "CompetitionId": "c4f7e58a-60ce-4cbe-82f2-a202e2d87ae3",
+    "CompetitionName": "Ligue 1",
+    "Year": 2033,
+    "ChampionClubId": "2901815d-d75f-410d-953d-d78c61331519",
+    "ChampionClubName": "Monaco",
+    "RunnerUpClubId": "f1401690-d884-4d55-a5aa-7bab2a46733c",
+    "RunnerUpClubName": "Lyon"
+  },
+  {
+    "Id": "f0fd4a7f-d8c5-4edc-af2d-001979ac4957",
+    "CompetitionId": "5cc3fa6a-3cc7-43a2-a948-16572869cbc0",
+    "CompetitionName": "Division 1",
+    "Year": 2033,
+    "ChampionClubId": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
+    "ChampionClubName": "STVV",
+    "RunnerUpClubId": "23f38c29-7e72-4509-beb6-4ee9b6298ee6",
+    "RunnerUpClubName": "Anderlecht"
+  },
+  {
+    "Id": "3188328d-7865-4e9c-a951-f9f8b7be15e1",
+    "CompetitionId": "bd177e2b-8b24-402d-b8b2-672621e3bba2",
+    "CompetitionName": "National Cup",
+    "Year": 2033,
+    "ChampionClubId": "e09529a1-232a-4343-bc4a-e5d5c594bce0",
+    "ChampionClubName": "STVV",
+    "RunnerUpClubId": "f1a5e0d2-ff70-43d7-b11f-8af974893622",
+    "RunnerUpClubName": "Francs Borains"
+  },
+  {
+    "Id": "fcd968a5-2805-4cf5-b386-7f1f4fccab98",
+    "CompetitionId": "78392db7-1664-4b1f-982c-459f9a4fcc16",
+    "CompetitionName": "Premier League",
+    "Year": 2034,
+    "ChampionClubId": "a058d0e0-e7eb-4e92-8191-cf8c04d0d111",
+    "ChampionClubName": "Manchester City",
+    "RunnerUpClubId": "0d8c6345-f7ce-413d-905c-cbcf799133a9",
+    "RunnerUpClubName": "Chelsea"
+  },
+  {
+    "Id": "14690247-bc6b-4beb-b246-b548eb3f246b",
+    "CompetitionId": "553dd1b1-2bc1-48c0-addf-ddf46d296024",
+    "CompetitionName": "Champions League",
+    "Year": 2034,
+    "ChampionClubId": "24a4f252-3428-4e5b-b198-feda1e455501",
+    "ChampionClubName": "Atl\u00E9tico Madrid",
+    "RunnerUpClubId": "2e54b003-7ff0-4146-85ad-c21f1dc8ab38",
+    "RunnerUpClubName": "Lazio"
+  },
+  {
+    "Id": "624f4967-dc7f-4422-ad28-123e5d2e8922",
+    "CompetitionId": "e5209840-7c9a-4dc0-bf49-147698edeb06",
+    "CompetitionName": "Serie A",
+    "Year": 2034,
+    "ChampionClubId": "8371f16f-77f8-47ab-ba85-0691c0698d9e",
+    "ChampionClubName": "Como",
+    "RunnerUpClubId": "2e54b003-7ff0-4146-85ad-c21f1dc8ab38",
+    "RunnerUpClubName": "Lazio"
+  },
+  {
+    "Id": "020ec5eb-dd1c-4f06-b87b-9fab29f86461",
+    "CompetitionId": "0a57f4ee-8b2f-4b9a-ba05-1448266fede4",
+    "CompetitionName": "La Liga",
+    "Year": 2034,
+    "ChampionClubId": "d7f20b6f-c31a-4125-b5d1-fd3509b26662",
+    "ChampionClubName": "Real Madrid",
+    "RunnerUpClubId": "c1b537cc-8678-433e-ac27-40d84f661a96",
+    "RunnerUpClubName": "Alav\u00E9s"
+  },
+  {
+    "Id": "10f82455-4169-43df-8a5f-7856d8fbe167",
+    "CompetitionId": "c4f7e58a-60ce-4cbe-82f2-a202e2d87ae3",
+    "CompetitionName": "Ligue 1",
+    "Year": 2034,
+    "ChampionClubId": "2901815d-d75f-410d-953d-d78c61331519",
+    "ChampionClubName": "Monaco",
+    "RunnerUpClubId": "896fa94c-aaba-4e1e-83d3-d5b45c4b75ec",
+    "RunnerUpClubName": "Strasbourg"
+  },
+  {
+    "Id": "32423b5b-5d40-4159-a629-7dba26eb46e1",
+    "CompetitionId": "5cc3fa6a-3cc7-43a2-a948-16572869cbc0",
+    "CompetitionName": "Division 1",
+    "Year": 2034,
+    "ChampionClubId": "23f38c29-7e72-4509-beb6-4ee9b6298ee6",
+    "ChampionClubName": "Anderlecht",
+    "RunnerUpClubId": "298ba8a5-e4a5-491d-bdde-2e9676926dc1",
+    "RunnerUpClubName": "Club Brugge"
+  },
+  {
+    "Id": "345c9fd5-4aa5-482b-96d1-602fd4daf555",
+    "CompetitionId": "bd177e2b-8b24-402d-b8b2-672621e3bba2",
+    "CompetitionName": "National Cup",
+    "Year": 2034,
+    "ChampionClubId": "23f38c29-7e72-4509-beb6-4ee9b6298ee6",
+    "ChampionClubName": "Anderlecht",
+    "RunnerUpClubId": "c10d7a40-1258-42bf-8f30-18283d7ba5a4",
+    "RunnerUpClubName": "Mons"
+  }
+]

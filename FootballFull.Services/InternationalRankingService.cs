@@ -21,6 +21,8 @@ namespace FootballFull.Services
             _clubService = clubService;
 
             _ranking = _repository.Load().FirstOrDefault();
+            if (_ranking == null)
+                _ranking = new ClubInternationalRanking();
         }
         public ClubInternationalRanking GetAll()
         {
@@ -69,6 +71,8 @@ namespace FootballFull.Services
 
         public int GetCountryPointsForXYears(Guid countryId, int years)
         {
+            if (_ranking == null)
+                return 0;
             return _ranking.Rows
                 .SelectMany(row => row.YearDetails)
                 .Where(detail => detail.CountryId == countryId)
