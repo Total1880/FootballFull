@@ -109,7 +109,7 @@ namespace FootballFull.Services
                             _gameUI.ShowTable(CreateTableDashBoard(selectedCompetitionId.Value), true);
                         break;
                     case MainMenuChoice.ShowInternationalRankings:
-                        _gameUI.ShowInternationRankings(GameUIMapper.Rankings(DisplayInternationalRankingPerYear()), _year, true);
+                        _gameUI.ShowInternationRankings(GameUIMapper.Rankings(new List<CountryInternationalCompetitionRanking> { DisplayInternationalRankingPerYear() }), _year, true, true);
                         break;
                     case MainMenuChoice.ShowCompetitionHistory:
                         selectedCompetitionId = _gameUI.ChooseCompetitions(GameUIMapper.Options(
@@ -447,7 +447,7 @@ namespace FootballFull.Services
 
         private CountryInternationalCompetitionRanking DisplayInternationalRankingPerYear()
         {
-            var ranking = _internationalRankingService.GetRanking(Configuration.InternationalRankingYears);
+            var ranking = _internationalRankingService.GetRanking(_year, Configuration.InternationalRankingYears);
 
             return ranking;
         }

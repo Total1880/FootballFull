@@ -12,7 +12,7 @@ public interface IGameUI
     void ShowResults(IReadOnlyList<FixtureViewModel> fixtures, bool waitForUser = false);
     void ShowFixtures(IReadOnlyList<FixtureViewModel> fixtures, bool waitForUser = false);
     Guid? ChooseCompetitions(IReadOnlyList<SelectionOptionViewModel> competitions);
-    void ShowInternationRankings(IReadOnlyList<CountryRankingViewModel> rankings, int currentYear, bool waitForUser = false);
+    void ShowInternationRankings(IReadOnlyList<CountryRankingViewModel> rankings, int currentYear, bool showDetails, bool waitForUser = false);
     void ShowSeasonEvent(SeasonEventViewModel seasonEvent, bool waitForUser = false);
     void ShowSeasonFinancialResult(SeasonFinancialResultViewModel seasonFinancialResult, bool waitForUser = false);
 

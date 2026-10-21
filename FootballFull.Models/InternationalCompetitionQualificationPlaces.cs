@@ -9,6 +9,7 @@ namespace FootballFull.Models
     public class InternationalCompetitionQualificationPlaces
     {
         public Guid CompetitionId { get; set; }
+        public int Year { get; set; }
         public IList<InternationalCompetitionQualificationPlacesRow> Rows { get; set; } = new List<InternationalCompetitionQualificationPlacesRow>();
     }
 }

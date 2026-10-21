@@ -8,7 +8,7 @@ namespace FootballFull.Services.Interfaces
 {
     public interface IInternationalQualificationPlacesService
     {
-        void CalculateQualificationPlaces();
+        void CalculateQualificationPlaces(int year);
         public int GetQualificationPlacesForCountryAndCompetition(Guid countryId, Guid competitionId);
     }
 }

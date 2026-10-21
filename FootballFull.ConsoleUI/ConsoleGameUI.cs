@@ -267,7 +267,8 @@ namespace FootballFull.ConsoleUI
         public void ShowInternationRankings(
             IReadOnlyList<CountryRankingViewModel> rankings,
             int currentYear,
-            bool showDetails)
+            bool showDetails,
+             bool waitForUser)
         {
             if (rankings == null || rankings.Count == 0)
             {
@@ -340,6 +341,8 @@ namespace FootballFull.ConsoleUI
             }
 
             Console.WriteLine();
+            if (waitForUser)
+                Console.ReadLine();
         }
 
         public void ShowSeasonEvent(SeasonEventViewModel seasonEvent, bool waitForUser = false)
@@ -371,8 +374,8 @@ namespace FootballFull.ConsoleUI
             Console.WriteLine();
             Console.WriteLine($"Reputation Change: {seasonFinancialResult.ReputationChange}");
             Console.WriteLine($"Reputation: {seasonFinancialResult.Reputation} ({seasonFinancialResult.ReputationDescription})");
-            if( waitForUser ) Console.ReadLine();
-            
+            if (waitForUser) Console.ReadLine();
+
         }
 
         public Guid AskPlayerToSelectClub(IReadOnlyList<SelectionOptionViewModel> applicants)
@@ -590,7 +593,7 @@ namespace FootballFull.ConsoleUI
                 Console.WriteLine($"  Resultaat: {club.NetResult:N0} | Investering: {club.Investment:N0} | Saldo: {club.Balance:N0}");
                 Console.WriteLine($"  Ontvangen prijzengeld: {club.PrizeMoneyReceived:N0}");
                 Console.WriteLine($"  Gereserveerd budget: {club.DevelopmentBudget:N0} | {club.Reason}");
-                if(club.CreateFeederClubCost > 0)
+                if (club.CreateFeederClubCost > 0)
                     Console.WriteLine($"  Kosten voor aanleggen feederclub: {club.CreateFeederClubCost:N0}");
                 Console.WriteLine();
             }

@@ -7,7 +7,7 @@ namespace FootballFull.Services.Interfaces
         ClubInternationalRanking GetAll();
         void SaveAll();
         bool ProcessFixture(Fixture fixture, int year);
-        decimal GetCountryPointsForXYears(Guid countryId, int years);
-        CountryInternationalCompetitionRanking GetRanking(int years);
+        decimal GetCountryPointsForXYears(Guid countryId, int currentYear, int years);
+        CountryInternationalCompetitionRanking GetRanking(int currentYear, int years);
     }
 }

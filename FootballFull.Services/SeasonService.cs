@@ -688,7 +688,7 @@ chosenCompetitionIndex <= competitions.Count)
         public IList<Fixture> InitializeInternationalGames(int year, DateTime date, bool loadFromSavedGames = false)
         {
             // Competities inladen (1x)
-            _internationalQualificationPlacesService.CalculateQualificationPlaces();
+            _internationalQualificationPlacesService.CalculateQualificationPlaces(_year);
 
             var allCompetitions = _competitionRepository.Load().ToList();
 

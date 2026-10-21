@@ -26,8 +26,18 @@ namespace FootballFull.Services
 
         public void SaveSettings(InternationalCompetitionSettings settings)
         {
-            _repository.Add(settings);
-            _settings.Add(settings);
+            if (!_settings.Any(_ => _.CompetitionId == settings.CompetitionId))
+            {
+                _repository.Add(settings);
+                _settings.Add(settings);
+            }
+            else
+            {
+                _repository.Update(settings);
+                _settings = _settings.Where(_ => _.CompetitionId != settings.CompetitionId).ToList();
+                _settings.Add(settings);
+            }
+
         }
     }
 }

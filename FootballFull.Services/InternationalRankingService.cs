@@ -48,7 +48,8 @@ namespace FootballFull.Services
                throw new NotImplementedException("Draws are not supported in international competitions.");
 
             var winner = fixture.HomeScore > fixture.AwayScore ? fixture.HomeTeamId : fixture.AwayTeamId;
-            if(_ranking.Rows.Any(_ => _.YearDetails.Any(_ => _.ClubId == winner && _.Year == year)))
+            var loser = fixture.HomeScore > fixture.AwayScore ? fixture.AwayTeamId : fixture.HomeTeamId;
+            if (_ranking.Rows.Any(_ => _.YearDetails.Any(_ => _.ClubId == winner && _.Year == year)))
             {
                 _ranking.Rows.First(_ => _.YearDetails.Any(_ => _.ClubId == winner && _.Year == year)).YearDetails.First(_ => _.ClubId == winner && _.Year == year).Points += settings.PointsForWin;
             }
@@ -70,16 +71,34 @@ namespace FootballFull.Services
                 _ranking.Rows.Add(newRow);
             }
 
+            if(!_ranking.Rows.Any(_ => _.YearDetails.Any(_ => _.ClubId == loser && _.Year == year)))
+            {
+                var newRow = new ClubInternationalRankingRow
+                {
+                    YearDetails = new List<ClubInternationalRankingRowYearDetail>
+                    {
+                        new ClubInternationalRankingRowYearDetail
+                        {
+                            ClubId = loser,
+                            CountryId = _clubService.GetCountryId(loser),
+                            Year = year,
+                            Points = 0
+                        }
+                    }
+                };
+                _ranking.Rows.Add(newRow);
+            }
+
             return true;
         }
 
-        public decimal GetCountryPointsForXYears(Guid countryId, int years)
+        public decimal GetCountryPointsForXYears(Guid countryId, int currentYear, int years)
         {
-            return GetRanking(years).Rows
+            return GetRanking(currentYear, years).Rows
                 .FirstOrDefault(r => r.CountryId == countryId)?.Points ?? 0m;
         }
 
-        public CountryInternationalCompetitionRanking GetRanking(int years)
+        public CountryInternationalCompetitionRanking GetRanking(int currentYear, int years)
         {
             var ranking = new CountryInternationalCompetitionRanking();
 
@@ -91,11 +110,6 @@ namespace FootballFull.Services
             var allDetails = _ranking.Rows
                 .SelectMany(r => r.YearDetails)
                 .ToList();
-
-            int currentYear = allDetails
-                .Select(d => d.Year)
-                .DefaultIfEmpty(0)
-                .Max();
 
             int startYear = currentYear - years + 1;
 

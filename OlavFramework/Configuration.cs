@@ -8,6 +8,7 @@ namespace OlavFramework
         public static int StartReputation = 10;
         public static int ReputationBalanceThreshold = 100000;
         public static int InternationalRankingYears = 5;
+        public static int DefaultQualificationPlaces = 1;
         public static decimal StartBalance = 100000;
         public static decimal BasicClubRevenue = 10000;
         public static decimal ReputationRevenueMultiplier = 1000;

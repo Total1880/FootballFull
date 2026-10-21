@@ -19,8 +19,8 @@ namespace FootballFull.Services
         private IList<InternationalCompetitionQualificationPlaces> _qualificationPlaces;
 
         public InternationalQualificationPlacesService(
-            ICompetitionService competitionService, 
-            ICountryService countryService, 
+            ICompetitionService competitionService,
+            ICountryService countryService,
             IInternationalRankingService clubInternationalRankingService,
             IInternationalCompetitionSettingsService internationalCompetitionSettingsService)
         {
@@ -30,30 +30,30 @@ namespace FootballFull.Services
             _internationalCompetitionSettingsService = internationalCompetitionSettingsService;
 
         }
-        public void CalculateQualificationPlaces()
+        public void CalculateQualificationPlaces(int year)
         {
             var countries = _countryService.GetCountries();
             var ranking = _clubInternationalRankingService.GetAll();
             var internationalCompetitions = _competitionService.GetInternationalCompetitions();
-            var tempRanking = new Dictionary<Guid, decimal>();
 
-            if (_qualificationPlaces == null)
-                _qualificationPlaces = new List<InternationalCompetitionQualificationPlaces>();
+            _qualificationPlaces = new List<InternationalCompetitionQualificationPlaces>();
 
             foreach (var competition in internationalCompetitions)
             {
+                var tempRanking = new Dictionary<Guid, decimal>();
+
                 if (!_qualificationPlaces.Any(_ => _.CompetitionId == competition.Id))
-                    _qualificationPlaces.Add(new InternationalCompetitionQualificationPlaces { CompetitionId = competition.Id });
+                    _qualificationPlaces.Add(new InternationalCompetitionQualificationPlaces { CompetitionId = competition.Id, Year = year });
 
                 var settings = _internationalCompetitionSettingsService.GetSettings(competition.Id);
                 var counter = 0;
 
                 foreach (var country in countries)
-                    tempRanking.Add(country.Id, _clubInternationalRankingService.GetCountryPointsForXYears(country.Id, Configuration.InternationalRankingYears));
+                    tempRanking.Add(country.Id, _clubInternationalRankingService.GetCountryPointsForXYears(country.Id, year, Configuration.InternationalRankingYears));
 
-                foreach(var country in tempRanking.OrderByDescending(_ => _.Value))
+                foreach (var country in tempRanking.OrderByDescending(_ => _.Value))
                 {
-                    var places = settings.QualificationPlaces.Count() > counter ? settings.QualificationPlaces[counter] : 1;
+                    var places = settings.QualificationPlaces.Count() > counter ? settings.QualificationPlaces[counter] : Configuration.DefaultQualificationPlaces;
                     _qualificationPlaces.First(_ => _.CompetitionId == competition.Id).Rows.Add(new InternationalCompetitionQualificationPlacesRow
                     {
                         CountryId = country.Key,
