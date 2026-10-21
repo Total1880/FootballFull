@@ -1,6 +1,7 @@
 using FootballFull.Models;
 using FootballFull.Services.UI;
 using FootballFull.Services.UI.ViewModels;
+using OlavFramework;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -263,52 +264,82 @@ namespace FootballFull.ConsoleUI
                 Console.ReadLine();
         }
 
-        public void ShowInternationRankings(IReadOnlyList<CountryRankingViewModel> rankings, int currentYear, bool waitForUser = false)
+        public void ShowInternationRankings(
+            IReadOnlyList<CountryRankingViewModel> rankings,
+            int currentYear,
+            bool showDetails)
         {
-            if (rankings == null || !rankings.Any())
+            if (rankings == null || rankings.Count == 0)
             {
-                Console.WriteLine("Geen landencoëfficiënten beschikbaar.");
+                Console.WriteLine("No international rankings available.");
                 return;
             }
 
-            // Zorg dat de lijst gesorteerd is (hoogste eerst)
-            rankings = rankings
-                .OrderByDescending(r => r.FiveYearCoefficient)
-                .ToList();
+            int years = Configuration.InternationalRankingYears;
+            int startYear = currentYear - years + 1;
 
-            var years = Enumerable.Range(currentYear - 4, 5).ToList();
+            var yearRange = Enumerable.Range(startYear, years).ToList();
 
-            Console.WriteLine("=== Country Coefficient Ranking (5-jaars) ===");
+            Console.WriteLine();
+            Console.WriteLine($"INTERNATIONAL COUNTRY RANKING - {currentYear}");
             Console.WriteLine();
 
+            Console.Write($"{"Pos",-5} {"Country",-20}");
+
+            foreach (int year in yearRange)
+                Console.Write($"{year,10}");
+
+            Console.WriteLine($"{"Total",12}");
+
+            Console.WriteLine(new string('-', 5 + 20 + years * 10 + 12));
+
             int position = 1;
-            foreach (var r in rankings)
+
+            foreach (var ranking in rankings.OrderByDescending(r => r.FiveYearCoefficient))
             {
-                var countryName = r.CountryName;
+                Console.Write($"{position,-5} {ranking.CountryName,-20}");
 
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(
-                    $"{position,2}. {countryName} – {r.FiveYearCoefficient:F2} punten");
-                Console.ResetColor();
-
-                // Detail per jaar
-                foreach (var year in years.OrderByDescending(y => y))
+                foreach (int year in yearRange)
                 {
-                    r.CoefficientPerYear.TryGetValue(year, out var coeff);
-                    r.ClubsParticipatingPerYear.TryGetValue(year, out var clubs);
-                    r.RawPointsPerYear.TryGetValue(year, out var rawPoints);
+                    double coefficient = ranking.CoefficientPerYear
+                        .GetValueOrDefault(year);
 
-                    // bv: 2025: 7.50 (3 clubs, 22 punten)
-                    Console.WriteLine(
-                        $"    {year}: {coeff,6:F2} " +
-                        $"({clubs} clubs, {rawPoints} punten)");
+                    Console.Write($"{coefficient,10:F3}");
                 }
 
-                Console.WriteLine();
+                Console.WriteLine($"{ranking.FiveYearCoefficient,12:F3}");
+
+                if (showDetails)
+                {
+                    Console.Write($"{"",-5} {"Clubs",-20}");
+
+                    foreach (int year in yearRange)
+                    {
+                        int clubs = ranking.ClubsParticipatingPerYear
+                            .GetValueOrDefault(year);
+
+                        Console.Write($"{clubs,10}");
+                    }
+
+                    Console.WriteLine();
+
+                    Console.Write($"{"",-5} {"Raw Points",-20}");
+
+                    foreach (int year in yearRange)
+                    {
+                        int points = ranking.RawPointsPerYear
+                            .GetValueOrDefault(year);
+
+                        Console.Write($"{points,10}");
+                    }
+
+                    Console.WriteLine();
+                }
+
                 position++;
             }
 
-            Console.ReadKey();
+            Console.WriteLine();
         }
 
         public void ShowSeasonEvent(SeasonEventViewModel seasonEvent, bool waitForUser = false)

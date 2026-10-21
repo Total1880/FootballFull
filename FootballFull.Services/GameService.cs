@@ -22,7 +22,7 @@ namespace FootballFull.Services
         private readonly IStrengthService _strengthService;
         private readonly IEndOfSeasonService _endOfSeasonService;
         private readonly IHistoryService _historyService;
-        private readonly IInternationalQualificationPlacesService _internationalQualificationPlacesService;
+        private readonly IInternationalRankingService _internationalRankingService;
         private readonly IGameUI _gameUI;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
@@ -50,6 +50,7 @@ namespace FootballFull.Services
             IEndOfSeasonService endOfSeasonService,
             IHistoryService historyService,
             IInternationalQualificationPlacesService internationalQualificationPlacesService,
+            IInternationalRankingService internationalRankingService,
             IGameUI gameUI)
         {
             _seasonService = seasonService;
@@ -64,7 +65,7 @@ namespace FootballFull.Services
             _strengthService = strengthService;
             _endOfSeasonService = endOfSeasonService;
             _historyService = historyService;
-            _internationalQualificationPlacesService = internationalQualificationPlacesService;
+            _internationalRankingService = internationalRankingService;
             _gameUI = gameUI;
 
         }
@@ -444,9 +445,11 @@ namespace FootballFull.Services
                 .ToList();
         }
 
-        private List<CountryInternationalCompetitionRanking> DisplayInternationalRankingPerYear()
+        private CountryInternationalCompetitionRanking DisplayInternationalRankingPerYear()
         {
-            return null;
+            var ranking = _internationalRankingService.GetRanking(Configuration.InternationalRankingYears);
+
+            return ranking;
         }
 
         private List<Fixture> GetNextFixture(Guid competitionId, DateTime fromDate)

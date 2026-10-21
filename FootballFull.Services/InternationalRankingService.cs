@@ -1,6 +1,7 @@
 ﻿using FootballFull.Models;
 using FootballFull.Repositories.Interfaces;
 using FootballFull.Services.Interfaces;
+using OlavFramework;
 
 namespace FootballFull.Services
 {
@@ -10,15 +11,18 @@ namespace FootballFull.Services
         private readonly IRepository<ClubInternationalRanking> _repository;
         private readonly IInternationalCompetitionSettingsService _internationalCompetitionSettingsService;
         private readonly IClubService _clubService;
+        private readonly ICountryService _countryService;
 
         public InternationalRankingService(
             IRepository<ClubInternationalRanking> repository,
             IInternationalCompetitionSettingsService internationalCompetitionSettingsService,
-            IClubService clubService)
+            IClubService clubService,
+            ICountryService countryService)
         {
             _repository = repository;
             _internationalCompetitionSettingsService = internationalCompetitionSettingsService;
             _clubService = clubService;
+            _countryService = countryService;
 
             _ranking = _repository.Load().FirstOrDefault();
             if (_ranking == null)
@@ -69,16 +73,84 @@ namespace FootballFull.Services
             return true;
         }
 
-        public int GetCountryPointsForXYears(Guid countryId, int years)
+        public decimal GetCountryPointsForXYears(Guid countryId, int years)
         {
-            if (_ranking == null)
-                return 0;
-            return _ranking.Rows
-                .SelectMany(row => row.YearDetails)
-                .Where(detail => detail.CountryId == countryId)
-                .OrderByDescending(detail => detail.Year)
-                .Take(years)
-                .Sum(detail => detail.Points);
+            return GetRanking(years).Rows
+                .FirstOrDefault(r => r.CountryId == countryId)?.Points ?? 0m;
+        }
+
+        public CountryInternationalCompetitionRanking GetRanking(int years)
+        {
+            var ranking = new CountryInternationalCompetitionRanking();
+
+            if (_ranking == null || years <= 0)
+                return ranking;
+
+            var countries = _countryService.GetCountries();
+
+            var allDetails = _ranking.Rows
+                .SelectMany(r => r.YearDetails)
+                .ToList();
+
+            int currentYear = allDetails
+                .Select(d => d.Year)
+                .DefaultIfEmpty(0)
+                .Max();
+
+            int startYear = currentYear - years + 1;
+
+            foreach (var country in countries)
+            {
+                var countryDetails = allDetails
+                    .Where(d => d.CountryId == country.Id
+                             && d.Year >= startYear
+                             && d.Year <= currentYear)
+                    .ToList();
+
+                var yearDetails = Enumerable.Range(startYear, years)
+                    .Select(year =>
+                    {
+                        var details = countryDetails
+                            .Where(d => d.Year == year)
+                            .ToList();
+
+                        int totalPoints = details.Sum(d => d.Points);
+
+                        int participatingClubs = details
+                            .Select(d => d.ClubId)
+                            .Distinct()
+                            .Count();
+
+                        decimal points = participatingClubs > 0
+                            ? (decimal)totalPoints / participatingClubs
+                            : 0m;
+
+                        return new CountryInternationalCompetitionRankingYearDetail
+                        {
+                            Year = year,
+                            TotalPoints = totalPoints,
+                            ParticipatingClubs = participatingClubs,
+                            Points = points
+                        };
+                    })
+                    .OrderByDescending(d => d.Year)
+                    .ToList();
+
+                ranking.Rows.Add(new CountryInternationalCompetitionRankingRow
+                {
+                    CountryId = country.Id,
+                    CountryName = country.Name,
+                    Points = yearDetails.Sum(d => d.Points),
+                    YearDetails = yearDetails
+                });
+            }
+
+            ranking.Rows = ranking.Rows
+                .OrderByDescending(r => r.Points)
+                .ThenBy(r => r.CountryName)
+                .ToList();
+
+            return ranking;
         }
     }
 }

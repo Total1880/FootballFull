@@ -43,7 +43,34 @@ internal static class GameUIMapper
         PrizeMoneyCosts = x.PrizeMoneyCosts,
         SubsidyCosts = x.SubsidyCosts
     };
-    public static List<CountryRankingViewModel> Rankings(IEnumerable<CountryInternationalCompetitionRanking> items) => null;
+    public static List<CountryRankingViewModel> Rankings(
+        IEnumerable<CountryInternationalCompetitionRanking> items)
+    {
+        return items
+            .SelectMany(ranking => ranking.Rows)
+            .OrderByDescending(row => row.Points)
+            .Select(row => new CountryRankingViewModel
+            {
+                CountryName = row.CountryName,
+                FiveYearCoefficient = (double)row.Points,
+
+                CoefficientPerYear = row.YearDetails
+                    .ToDictionary(
+                        detail => detail.Year,
+                        detail => (double)detail.Points),
+
+                ClubsParticipatingPerYear = row.YearDetails
+                    .ToDictionary(
+                        detail => detail.Year,
+                        detail => detail.ParticipatingClubs),
+
+                RawPointsPerYear = row.YearDetails
+                    .ToDictionary(
+                        detail => detail.Year,
+                        detail => detail.TotalPoints)
+            })
+            .ToList();
+    }
     public static List<ClubDevelopmentViewModel> ClubDevelopment(IEnumerable<Club> clubs) =>
         clubs.Where(c => c.LastSeasonFinancialResult != null).OrderBy(c => c.Name)
             .Select(c => new ClubDevelopmentViewModel

@@ -1,5 +1,6 @@
 ﻿using FootballFull.Models;
 using FootballFull.Services.Interfaces;
+using OlavFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace FootballFull.Services
             var countries = _countryService.GetCountries();
             var ranking = _clubInternationalRankingService.GetAll();
             var internationalCompetitions = _competitionService.GetInternationalCompetitions();
-            var tempRanking = new Dictionary<Guid, int>();
+            var tempRanking = new Dictionary<Guid, decimal>();
 
             if (_qualificationPlaces == null)
                 _qualificationPlaces = new List<InternationalCompetitionQualificationPlaces>();
@@ -48,7 +49,7 @@ namespace FootballFull.Services
                 var counter = 0;
 
                 foreach (var country in countries)
-                    tempRanking.Add(country.Id, _clubInternationalRankingService.GetCountryPointsForXYears(country.Id, 5));
+                    tempRanking.Add(country.Id, _clubInternationalRankingService.GetCountryPointsForXYears(country.Id, Configuration.InternationalRankingYears));
 
                 foreach(var country in tempRanking.OrderByDescending(_ => _.Value))
                 {
