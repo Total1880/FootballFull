@@ -6,14 +6,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Club Brugge",
@@ -22,14 +29,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "f1119bf3-2183-49cf-ac8b-c9b8b7a0093f",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Union SG B",
@@ -38,14 +52,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Union SG",
@@ -54,14 +75,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "6070a121-304e-4665-b730-bd742fc7d2fa",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "STVV",
@@ -70,14 +98,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "df6a5ade-3c09-4f8b-b01e-9afda99876fb",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "AA Gent B",
@@ -86,14 +121,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "AA Gent",
@@ -102,14 +144,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "bd882c78-2ce1-4ae7-94f1-656821b382d9",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "KV Mechelen",
@@ -118,14 +167,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "e8563b33-6477-42db-9a73-3b11e6d9edab",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Anderlecht B",
@@ -134,14 +190,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Anderlecht",
@@ -150,14 +213,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "425e309f-5973-47f7-a2f8-6bd62b6509f7",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "RC Genk B",
@@ -166,14 +236,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "RC Genk",
@@ -182,14 +259,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "1d12164d-1cbb-4eca-9f34-18ec428f813b",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Standard B",
@@ -198,14 +282,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Standard",
@@ -214,14 +305,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "d478825a-fcf1-4366-8b73-e5abbe08cb1a",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Westerlo",
@@ -230,14 +328,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Antwerp",
@@ -246,14 +351,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "78f15e01-48ca-4445-931b-ff6fdce98c21",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Sporting Charleroi B",
@@ -262,14 +374,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Sporting Charleroi",
@@ -278,14 +397,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "b2df7cca-5185-40fa-972c-64fdf7ddaee3",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "OH Leuven B",
@@ -294,14 +420,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "OH Leuven",
@@ -310,14 +443,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "ec52e6fd-f6aa-40e7-8e97-d3c683da309a",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Zulte Waregem",
@@ -326,14 +466,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "31601baa-8a3c-419f-815a-2cc022a9f140",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Cercle Brugge B",
@@ -342,14 +489,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Cercle Brugge",
@@ -358,14 +512,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "0adda25b-a905-44d5-8596-93fc402dd291",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "RAAL La Louvi\u00E8re",
@@ -374,14 +535,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "SK Beveren",
@@ -390,14 +558,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "KV Kortrijk",
@@ -406,14 +581,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "SK Lommel",
@@ -422,14 +604,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Beerschot",
@@ -438,14 +627,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Francs Borains",
@@ -454,14 +650,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Dender",
@@ -470,14 +673,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Eupen",
@@ -486,14 +696,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": "6f7cbb66-772a-4d56-9a8e-1589ac52960b",
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Virton",
@@ -502,14 +719,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Lokeren",
@@ -518,14 +742,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Sporting Hasselt",
@@ -534,14 +765,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Lierse",
@@ -550,14 +788,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "FC Li\u00E8ge",
@@ -566,14 +811,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Patro Eisden",
@@ -582,14 +834,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Seraing",
@@ -598,14 +857,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Rochefort",
@@ -614,14 +880,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "RWDM",
@@ -630,14 +903,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Meux",
@@ -646,14 +926,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Tubize-Braine",
@@ -662,14 +949,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Mons",
@@ -678,14 +972,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Olympic Charleroi",
@@ -694,14 +995,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Onhaye",
@@ -710,14 +1018,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Fl\u00E9nu",
@@ -726,14 +1041,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Habay-La-Neuve",
@@ -742,14 +1064,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Houtvenne",
@@ -758,14 +1087,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Merelbeke",
@@ -774,14 +1110,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Roeselare",
@@ -790,14 +1133,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Mandel United",
@@ -806,14 +1156,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Thes Sport",
@@ -822,14 +1179,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Dessel Sport",
@@ -838,14 +1202,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Knokke",
@@ -854,14 +1225,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "KSK Heist",
@@ -870,14 +1248,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Lyra-Lierse",
@@ -886,14 +1271,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Belisia Bilzen",
@@ -902,14 +1294,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Hoogstraten",
@@ -918,14 +1317,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Zelzate",
@@ -934,14 +1340,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "KVK Tienen",
@@ -950,14 +1363,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "RC Harelbeke",
@@ -966,14 +1386,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Aalst-Lede",
@@ -982,14 +1409,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Wetteren",
@@ -998,14 +1432,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Torhout",
@@ -1014,14 +1455,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Oostkamp",
@@ -1030,14 +1478,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Voorde-Appelterre",
@@ -1046,14 +1501,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Londerzeel",
@@ -1062,14 +1524,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "KVDO",
@@ -1078,14 +1547,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Oudenaarde",
@@ -1094,14 +1570,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "VW Hamme",
@@ -1110,14 +1593,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "RC Gent",
@@ -1126,14 +1616,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Petegem-Deinze",
@@ -1142,14 +1639,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "HO Kalken",
@@ -1158,14 +1662,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Lebbeke",
@@ -1174,14 +1685,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Ninove",
@@ -1190,14 +1708,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Zulte Waregem B",
@@ -1206,14 +1731,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "KV Mechelen B",
@@ -1222,14 +1754,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Tempo Overijse",
@@ -1238,14 +1777,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "KVK Wellen",
@@ -1254,14 +1800,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Diegem Sport",
@@ -1270,14 +1823,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "VC Wilrijk",
@@ -1286,14 +1846,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Termien",
@@ -1302,14 +1869,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Rotselaar",
@@ -1318,14 +1892,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Hades Kiewit",
@@ -1334,14 +1915,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "De Kempen",
@@ -1350,14 +1938,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Cappellen",
@@ -1366,14 +1961,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Tongeren",
@@ -1382,14 +1984,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "RC Mechelen",
@@ -1398,14 +2007,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Bocholter",
@@ -1414,14 +2030,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Rupel-Boom",
@@ -1430,14 +2053,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Nijlen",
@@ -1446,14 +2076,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Antwerp B",
@@ -1462,14 +2099,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "STVV B",
@@ -1478,14 +2122,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Crossing Schaerbeek",
@@ -1494,14 +2145,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Saint Ghislain",
@@ -1510,14 +2168,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "RSD Jette",
@@ -1526,14 +2191,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Ostiches-Ath",
@@ -1542,14 +2214,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Stade Verviers",
@@ -1558,14 +2237,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "RCS Braine",
@@ -1574,14 +2260,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Union Hutoise",
@@ -1590,14 +2283,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Ganshoren",
@@ -1606,14 +2306,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Stockay-Saint-Georges",
@@ -1622,14 +2329,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "RUS Binche",
@@ -1638,14 +2352,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Union Richelle",
@@ -1654,14 +2375,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Mouscron",
@@ -1670,14 +2398,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Acren-Lessines",
@@ -1686,14 +2421,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Union La Calamine",
@@ -1702,14 +2444,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Entit\u00E9 Manageoise",
@@ -1718,14 +2467,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Aywaille",
@@ -1734,14 +2490,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Union Namur",
@@ -1750,14 +2513,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Eupen B",
@@ -1766,14 +2536,21 @@
     "CountryId": "c89c5d64-3e1e-435d-8b5f-442e7ea4935b",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
     "CompetitionSplitParameters": [
       {
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Arsenal",
@@ -1782,9 +2559,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Manchester City",
@@ -1793,9 +2577,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Liverpool",
@@ -1804,9 +2595,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Chelsea",
@@ -1815,9 +2613,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Manchester United",
@@ -1826,9 +2631,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Leeds United",
@@ -1837,9 +2649,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Hull City",
@@ -1848,9 +2667,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Brighton",
@@ -1859,9 +2685,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Brentford",
@@ -1870,9 +2703,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Everton",
@@ -1881,9 +2721,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Ipswich",
@@ -1892,9 +2739,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Forest",
@@ -1903,9 +2757,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Newcastle",
@@ -1914,9 +2775,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Sunderland",
@@ -1925,9 +2793,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Bournemouth",
@@ -1936,9 +2811,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Crystal Palace",
@@ -1947,9 +2829,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Tottenham",
@@ -1958,9 +2847,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Fulham",
@@ -1969,9 +2865,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Aston Villa",
@@ -1980,9 +2883,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Coventry",
@@ -1991,9 +2901,16 @@
     "CountryId": "7dc74dda-e9a8-421f-a964-5fed8e5867ef",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Roma",
@@ -2002,9 +2919,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Inter",
@@ -2013,9 +2937,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Como",
@@ -2024,9 +2955,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Lazio",
@@ -2035,9 +2973,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Cagliari",
@@ -2046,9 +2991,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Milan",
@@ -2057,9 +3009,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Frosinone",
@@ -2068,9 +3027,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Juventus",
@@ -2079,9 +3045,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Sassuolo",
@@ -2090,9 +3063,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Napoli",
@@ -2101,9 +3081,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Atalanta",
@@ -2112,9 +3099,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Lecce",
@@ -2123,9 +3117,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Udinese",
@@ -2134,9 +3135,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Torino",
@@ -2145,9 +3153,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Fiorentina",
@@ -2156,9 +3171,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Bologna",
@@ -2167,9 +3189,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Parma",
@@ -2178,9 +3207,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Monza",
@@ -2189,9 +3225,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Genoa",
@@ -2200,9 +3243,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Venezia",
@@ -2211,9 +3261,16 @@
     "CountryId": "c9b9544b-bf71-4a43-ac90-23efcdb41e83",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Barcelona",
@@ -2222,9 +3279,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Atl\u00E9tico Madrid",
@@ -2233,9 +3297,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Real Betis",
@@ -2244,9 +3315,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Real Madrid",
@@ -2255,9 +3333,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Sevilla",
@@ -2266,9 +3351,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Alav\u00E9s",
@@ -2277,9 +3369,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Deportivo",
@@ -2288,9 +3387,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Real Sociedad",
@@ -2299,9 +3405,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Villareal",
@@ -2310,9 +3423,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Athletic Bilbao",
@@ -2321,9 +3441,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Getafe",
@@ -2332,9 +3459,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Rayo",
@@ -2343,9 +3477,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Osasuna",
@@ -2354,9 +3495,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Celta",
@@ -2365,9 +3513,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Espanyol",
@@ -2376,9 +3531,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Santandar",
@@ -2387,9 +3549,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Levante",
@@ -2398,9 +3567,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Elche",
@@ -2409,9 +3585,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Valencia",
@@ -2420,9 +3603,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Malaga",
@@ -2431,9 +3621,16 @@
     "CountryId": "b0ba699d-4201-4e70-ab89-382bcfc95a37",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "PSG",
@@ -2442,9 +3639,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Monaco",
@@ -2453,9 +3657,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Lyon",
@@ -2464,9 +3675,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Paris FC",
@@ -2475,9 +3693,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "LOSC",
@@ -2486,9 +3711,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Rennes",
@@ -2497,9 +3729,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Angers",
@@ -2508,9 +3747,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Strasbourg",
@@ -2519,9 +3765,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Le Mans FC",
@@ -2530,9 +3783,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Auxerre",
@@ -2541,9 +3801,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Brest",
@@ -2552,9 +3819,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Lorient",
@@ -2563,9 +3837,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Toulouse",
@@ -2574,9 +3855,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Nice",
@@ -2585,9 +3873,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Lens",
@@ -2596,9 +3891,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Troyes",
@@ -2607,9 +3909,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Marseille",
@@ -2618,9 +3927,16 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   },
   {
     "Name": "Le Havre",
@@ -2629,8 +3945,339 @@
     "CountryId": "c31edef5-7f3a-4730-b511-dd0ade662d69",
     "FeederClubId": null,
     "Balance": 0,
+    "PrizeMoneyPayments": [],
     "DevelopmentBudget": 0,
     "LastSeasonFinancialResult": null,
-    "CompetitionSplitParameters": []
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Bayern Munchen",
+    "Strength": 20,
+    "Id": "cfeba783-373f-4844-88b0-7f9e8124804e",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Borussia Dortmund",
+    "Strength": 19,
+    "Id": "80277a36-3bed-4a86-894f-39324ffc48d1",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Freiburg",
+    "Strength": 18,
+    "Id": "75be019a-1aff-4510-9d0c-6b4cc2ea32e6",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Bayer Leverkusen",
+    "Strength": 18,
+    "Id": "6b5dcdba-6bd4-41f1-80b3-f91ebe8d4a8c",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Mainz 05",
+    "Strength": 17,
+    "Id": "cc3a5762-a8f0-4e56-8525-e845265a9917",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Elversberg",
+    "Strength": 17,
+    "Id": "d0e01ea8-982b-456c-af31-9d8e09a68ee8",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "RB Leipzig",
+    "Strength": 16,
+    "Id": "af53c8b2-8f00-4f0e-b15d-dcdd62f4e542",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Werder Bremen",
+    "Strength": 16,
+    "Id": "e33fcaa0-819f-4e0e-9570-e36c677e3b75",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Hamburg SV",
+    "Strength": 15,
+    "Id": "763faaaf-c286-479d-8dde-15cb55bc071c",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Augsburg",
+    "Strength": 15,
+    "Id": "c8ee3ab6-6b89-4f5e-9f4f-d56538bf4a44",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Eintracht Frankfurt",
+    "Strength": 14,
+    "Id": "9cd92ccd-7c50-4c97-ac1d-191ad0668e7a",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "1.FC K\u00F6ln",
+    "Strength": 14,
+    "Id": "7e3a90b3-3a39-42d7-b729-4e1311e23a17",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Stuttgart",
+    "Strength": 13,
+    "Id": "c801ccdc-2283-4a3d-be7c-89752fe93557",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Hoffenheim",
+    "Strength": 13,
+    "Id": "e228cfca-feda-4b67-935e-9742f66c0ff3",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Schalke 04",
+    "Strength": 12,
+    "Id": "f116c9d3-c1b1-4183-8355-7b01504385ec",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Paderborn",
+    "Strength": 12,
+    "Id": "3b292ba8-a954-4c57-a77a-f491b40f2dab",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Union Berlin",
+    "Strength": 11,
+    "Id": "9afe930d-d594-4d5c-a0b8-4eadc23f3c33",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Borussia M\u00F6nchengladbach",
+    "Strength": 11,
+    "Id": "ab7da867-4b23-48df-90cb-f4562d4a9804",
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "FeederClubId": null,
+    "Balance": 0,
+    "PrizeMoneyPayments": [],
+    "DevelopmentBudget": 0,
+    "LastSeasonFinancialResult": null,
+    "SubsidySeason": null,
+    "SeasonSubsidyReceived": 0,
+    "CompetitionSplitParameters": [],
+    "ConsecutiveProfitSeasons": 0,
+    "ConsecutiveLossSeasons": 0,
+    "LastFinancialTrackingSeason": null,
+    "IsActive": true
   }
 ]

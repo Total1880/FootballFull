@@ -9,7 +9,14 @@
     "Type": 0,
     "SubCompetitionIds": [],
     "MatchDay": {},
-    "SplitParameters": []
+    "SplitParameters": [],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "cfb561ed-478e-48eb-9a52-50ff1adacc83",
@@ -21,7 +28,14 @@
     "Type": 0,
     "SubCompetitionIds": [],
     "MatchDay": {},
-    "SplitParameters": []
+    "SplitParameters": [],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "bd573f1c-7806-422c-85ac-596fb0ede075",
@@ -38,7 +52,14 @@
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "6bf6c0d0-a545-4bf1-aab3-da67f8b525b7",
@@ -55,7 +76,14 @@
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "fe97e8b1-13b3-4465-a18d-053cf23c302c",
@@ -70,7 +98,14 @@
       "6bf6c0d0-a545-4bf1-aab3-da67f8b525b7"
     ],
     "MatchDay": {},
-    "SplitParameters": []
+    "SplitParameters": [],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "bab86518-9768-480b-bcff-32c6a1bc61d9",
@@ -90,7 +125,14 @@
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "d1f77e01-4b4b-42af-9600-9f512ac12ccd",
@@ -107,7 +149,14 @@
         "Name": "ACFF",
         "Id": "995868e3-b9ca-4415-8a1f-00e3636afb15"
       }
-    ]
+    ],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "9f15e46e-acfb-4bdd-b5d1-cc4d28e46933",
@@ -124,7 +173,14 @@
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "a98cfb04-6cde-4451-b3d2-91fd5d089e70",
@@ -141,7 +197,14 @@
         "Name": "VV",
         "Id": "3ae227ae-f295-402e-98ed-7f1ab4f9bbbe"
       }
-    ]
+    ],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "78392db7-1664-4b1f-982c-459f9a4fcc16",
@@ -153,7 +216,14 @@
     "Type": 0,
     "SubCompetitionIds": [],
     "MatchDay": {},
-    "SplitParameters": []
+    "SplitParameters": [],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "553dd1b1-2bc1-48c0-addf-ddf46d296024",
@@ -165,7 +235,14 @@
     "Type": 2,
     "SubCompetitionIds": [],
     "MatchDay": {},
-    "SplitParameters": []
+    "SplitParameters": [],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "e5209840-7c9a-4dc0-bf49-147698edeb06",
@@ -177,7 +254,14 @@
     "Type": 0,
     "SubCompetitionIds": [],
     "MatchDay": {},
-    "SplitParameters": []
+    "SplitParameters": [],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "0a57f4ee-8b2f-4b9a-ba05-1448266fede4",
@@ -189,7 +273,14 @@
     "Type": 0,
     "SubCompetitionIds": [],
     "MatchDay": {},
-    "SplitParameters": []
+    "SplitParameters": [],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "5bc3f3e1-b74c-4acb-a4a0-911473699dee",
@@ -201,7 +292,14 @@
     "Type": 1,
     "SubCompetitionIds": [],
     "MatchDay": {},
-    "SplitParameters": []
+    "SplitParameters": [],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   },
   {
     "Id": "c4f7e58a-60ce-4cbe-82f2-a202e2d87ae3",
@@ -213,6 +311,32 @@
     "Type": 0,
     "SubCompetitionIds": [],
     "MatchDay": {},
-    "SplitParameters": []
+    "SplitParameters": [],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
+  },
+  {
+    "Id": "509db61a-fc15-41c8-a559-0714b485b923",
+    "Name": "Bundesliga",
+    "Country": null,
+    "CountryId": "9824cea6-d19f-4718-a29e-9e1dec71762d",
+    "Tier": 1,
+    "Strength": 0,
+    "Type": 0,
+    "SubCompetitionIds": [],
+    "MatchDay": {},
+    "SplitParameters": [],
+    "PrizeMoneySettings": {
+      "TotalBudget": 0,
+      "Distribution": 0
+    },
+    "PrizeMoneySeasons": [],
+    "IsActive": true,
+    "IsNew": false
   }
 ]
