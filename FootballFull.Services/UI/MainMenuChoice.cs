@@ -7,6 +7,7 @@ public enum MainMenuChoice
     ShowInternationalRankings,
     ShowCompetitionHistory,
     ShowClubHistory,
+    Settings,
     Save,
     SaveAndExit
 }

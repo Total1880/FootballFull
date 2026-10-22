@@ -61,6 +61,7 @@ namespace FootballFull.ConsoleUI
                 Console.WriteLine("[3] Internationale ranglijsten");
                 Console.WriteLine("[4] Competitiegeschiedeins");
                 Console.WriteLine("[5] Clubgeschiedenis");
+                Console.WriteLine("[6] Settings");
                 Console.WriteLine("[S] Opslaan");
                 Console.WriteLine("[X] Opslaan en afsluiten");
                 Console.WriteLine();
@@ -83,6 +84,9 @@ namespace FootballFull.ConsoleUI
                     case ConsoleKey.D5:
                     case ConsoleKey.NumPad5:
                         return MainMenuChoice.ShowClubHistory;
+                    case ConsoleKey.D6:
+                    case ConsoleKey.NumPad6:
+                        return MainMenuChoice.Settings;
                     case ConsoleKey.S:
                         return MainMenuChoice.Save;
                     case ConsoleKey.X:
@@ -868,6 +872,50 @@ namespace FootballFull.ConsoleUI
                 }
 
                 Console.WriteLine($"Geef een nummer tussen 1 en {options.Length}.");
+            }
+        }
+
+        public SettingsChoice ShowSettings(PlayerCompetitionSettingsViewModel viewModel)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("=== Settings ===");
+                Console.WriteLine();
+                Console.WriteLine($"1) Automatisch clubs toevoegen: {viewModel.AutoAddClub}");
+                Console.WriteLine($"2) Automatisch competitie toevoegen: {viewModel.AutoAddCompetition}");
+                Console.WriteLine($"3) Minimum clubs in laagste divisie: {viewModel.AutoAddCompetitionThreshold}");
+                Console.WriteLine($"4) Automatisch feeder clubs toevoegen: {viewModel.AutoAddFeederClub}");
+                Console.WriteLine($"5) Prijzengeld aanpassen");
+                Console.WriteLine();
+                foreach (var comp in viewModel.PrizeMoneyPerCompetition)
+                    Console.WriteLine($"{comp.Key}: {comp.Value}");
+
+                Console.WriteLine();
+                Console.WriteLine("6) Terug");
+                Console.Write("Maak een keuze: ");
+
+                switch (Console.ReadKey(true).Key)
+                {
+                    case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
+                        return SettingsChoice.AutoAddClub;
+                    case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
+                        return SettingsChoice.AutoAddCompetition;
+                    case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
+                        return SettingsChoice.AutoAddCompetitionThreshold;
+                    case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
+                        return SettingsChoice.AutoAddFeederClub;
+                    case ConsoleKey.D5:
+                    case ConsoleKey.NumPad5:
+                        return SettingsChoice.PrizeMoneyPerCompetition;
+                    case ConsoleKey.D6:
+                    case ConsoleKey.NumPad6:
+                        return SettingsChoice.Back;
+                }
             }
         }
     }

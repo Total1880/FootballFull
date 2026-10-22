@@ -93,6 +93,7 @@ namespace FootballFull.Services
             return new EndOfSeasonOptions
             {
                 CurrentClubCount = clubCount,
+                CurrentLowestTierClubCount = lowestTierClubCount,
                 CanAddClub = canAddClub,
                 CanCreateLowerDivision = canCreateLowerDivision,
                 CanCreateNationalCup = canCreateNationalCup,

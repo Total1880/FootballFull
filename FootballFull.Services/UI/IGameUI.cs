@@ -33,4 +33,5 @@ public interface IGameUI
     void ShowClubHistory(ClubHistoryViewModel history);
     decimal AskPrizeMoneyBudget(string name);
     PrizeMoneyDistribution AskPrizeMoneyDistribution(Competition.CompetitionType type);
+    SettingsChoice ShowSettings(PlayerCompetitionSettingsViewModel viewModel);
 }

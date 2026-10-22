@@ -14,19 +14,23 @@ namespace FootballFull.Services
         private const int NumberOfApplicants = 3;
 
         private readonly IEndOfSeasonService _endOfSeasonService;
+        private readonly IPlayerCompetitionSettingsService _playerCompetitionSettingsService;
         private readonly IGameUI _gameUI;
 
         public EndOfSeasonChoicesService(
             IEndOfSeasonService endOfSeasonService,
+            IPlayerCompetitionSettingsService playerCompetitionSettingsService,
             IGameUI gameUI)
         {
             _endOfSeasonService = endOfSeasonService;
+            _playerCompetitionSettingsService = playerCompetitionSettingsService;
             _gameUI = gameUI;
         }
 
         public bool HandleChoices(Guid countryId, FootballAssociation association)
         {
             var options = _endOfSeasonService.GetOptions(countryId, association);
+            var playerSettings = _playerCompetitionSettingsService.GetSettings();
 
             if (options.CanCreateNationalCup && _gameUI.AskYesNoQuestion(
                 $"Wil je een nationale beker toevoegen? Kostprijs {Configuration.StartNationalCupCost} (y/n)",
@@ -41,44 +45,55 @@ namespace FootballFull.Services
                 return false;
             }
 
-            if (options.CanCreateLowerDivision && _gameUI.AskToCreateLowerDivision())
+            if (options.CanCreateLowerDivision && (playerSettings.AutoAddCompetition || _gameUI.AskToCreateLowerDivision()))
             {
-                var numberOfClubs = _gameUI.AskForClubsToMove(
-                    maximumClubsToMove: options.CurrentClubCount - 2,
-                    currentClubCount: options.CurrentClubCount,
-                    minimumClubsToMove: 2);
-
-                _endOfSeasonService.CreateLowerDivision(
-                    countryId, numberOfClubs, association);
-                return true;
-            }
-
-            if (options.CanCreateFeederClub && _gameUI.AskYesNoQuestion(
-    $"Wil je dat clubs een feeder club kunnen krijgen? (y/n)",
-    defaultAnswer: true))
-            {
-                var candidateClub = _endOfSeasonService.CandidateForFeederClub(countryId, association);
-                if (candidateClub != null)
+                if (playerSettings.AutoAddCompetition)
                 {
-                    var question = _gameUI.AskYesNoQuestion($"Wil je dat {candidateClub.Name} een feeder club kan krijgen? (y/n))", defaultAnswer: false);
-                    if (question)
+                    if (playerSettings.AutoAddCompetitionThreshold < options.CurrentLowestTierClubCount + 2)
                     {
-                        _endOfSeasonService.AdmitClub(countryId, candidateClub.Id, association, isFeederClub: true);
+                        var numberOfClubs = options.CurrentLowestTierClubCount - playerSettings.AutoAddCompetitionThreshold;
+                        _endOfSeasonService.CreateLowerDivision(
+                            countryId, numberOfClubs, association);
+
+                        return true;
                     }
                 }
                 else
                 {
-                    _gameUI.ShowMessage("Geen club gevonden", "Geen kandidaat-club gevonden voor feeder club.");
+                    var numberOfClubs = _gameUI.AskForClubsToMove(
+                        maximumClubsToMove: options.CurrentLowestTierClubCount - 2,
+                        currentClubCount: options.CurrentLowestTierClubCount,
+                        minimumClubsToMove: 2);
+
+                    _endOfSeasonService.CreateLowerDivision(
+                        countryId, numberOfClubs, association);
+                    return true;
+                }
+            }
+
+            if (options.CanCreateFeederClub && (playerSettings.AutoAddFeederClub || _gameUI.AskYesNoQuestion(
+    $"Wil je dat clubs een feeder club kunnen krijgen? (y/n)",
+    defaultAnswer: true)))
+            {
+                var candidateClub = _endOfSeasonService.CandidateForFeederClub(countryId, association);
+                if (candidateClub != null)
+                {
+                    _endOfSeasonService.AdmitClub(countryId, candidateClub.Id, association, isFeederClub: true);
+                    _gameUI.ShowMessage("Feeder club aangemaakt", $"{candidateClub.Name} heeft een feeder club opgericht", true);
+                }
+                else
+                {
+                    _gameUI.ShowMessage("Geen club gevonden", "Geen kandidaat-club gevonden voor feeder club.", true);
                 }
             }
 
             if (!options.CanAddClub)
             {
-                _gameUI.ShowMessage("ERROR", options.CannotAddClubReason);
+                _gameUI.ShowMessage("ERROR", options.CannotAddClubReason, true);
                 return false;
             }
 
-            if (!_gameUI.AskYesNoQuestion(
+            if (!playerSettings.AutoAddClub && !_gameUI.AskYesNoQuestion(
                 $"Wil je een nieuwe club toevoegen? Kostprijs {Configuration.NewClubCost} (y/n)",
                 defaultAnswer: false))
             {
@@ -105,8 +120,18 @@ namespace FootballFull.Services
                 applicants.Add(newClub);
             }
 
-            var selectedClub = _gameUI.AskPlayerToSelectClub(GameUIMapper.Options(applicants));
+            Guid selectedClub;
+            if (!playerSettings.AutoAddClub)
+                selectedClub = _gameUI.AskPlayerToSelectClub(GameUIMapper.Options(applicants));
+            else
+            {
+                var newClub = applicants[Configuration.random.Next(0, applicants.Count())];
+                selectedClub = newClub.Id;
+                _gameUI.ShowMessage("Nieuwe club", $"{newClub.Name} is toegelaten in de competitie.", true);
+            }
+
             _endOfSeasonService.AdmitClub(countryId, selectedClub, association);
+
             return false;
         }
     }

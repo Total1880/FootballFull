@@ -51,6 +51,7 @@ services.AddSingleton<IPrizeMoneyService, PrizeMoneyService>();
 services.AddSingleton<IFeederClubService, FeederClubService>();
 services.AddSingleton<IInternationalCompetitionSettingsService, InternationalCompetitionSettingsService>();
 services.AddSingleton<IInternationalQualificationPlacesService, InternationalQualificationPlacesService>();
+services.AddSingleton<IPlayerCompetitionSettingsService, PlayerCompetitionSettingsService>();
 services.AddSingleton<IGameUI, ConsoleGameUI>();
 
 
@@ -90,6 +91,8 @@ services.AddSingleton<IRepository<CompetitionSeasonHistory>>(
     _ => new CompetitionSeasonHistoryRepository(Path.Combine(Configuration.DataRoot, "CompetitionSeasonHistory.json")));
 services.AddSingleton<IRepository<InternationalCompetitionSettings>>(
     _ => new InternationalCompetitionSettingsRepository(Path.Combine(Configuration.DataRoot, "InternationalCompetitionSettings.json")));
+services.AddSingleton<IRepository<PlayerCompetitionSettings>>(
+    _ => new PlayerCompetitionSettingsRepository(Path.Combine(Configuration.DataRoot, "PlayerCompetitionSettings.json")));
 
 services.AddSingleton<INameRepository>(
     _ => new NameRepository());

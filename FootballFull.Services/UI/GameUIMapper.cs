@@ -126,4 +126,20 @@ internal static class GameUIMapper
 
         return vm;
     }
+
+    public static PlayerCompetitionSettingsViewModel PlayerCompetitionSettings(PlayerCompetitionSettings settings, IList<Competition> competitions)
+    {
+        var vm = new PlayerCompetitionSettingsViewModel();
+        vm.AutoAddCompetitionThreshold = settings.AutoAddCompetitionThreshold;
+        vm.AutoAddClub = settings.AutoAddClub;
+        vm.AutoAddCompetition = settings.AutoAddCompetition;
+        vm.AutoAddFeederClub = settings.AutoAddFeederClub;
+        
+        foreach( var competition in competitions)
+        {
+            vm.PrizeMoneyPerCompetition.Add(competition.Name, settings.PrizeMoneyPerCompetition.FirstOrDefault(_ => _.Key == competition.Id).Value);
+        }
+
+        return vm;
+    }
 }

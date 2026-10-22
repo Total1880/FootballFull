@@ -18,5 +18,6 @@ namespace FootballFull.Models
         public string? CannotCreateNationalCupReason { get; init; }
 
         public int CurrentClubCount { get; init; }
+        public int CurrentLowestTierClubCount { get; init; }
     }
 }

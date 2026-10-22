@@ -23,6 +23,7 @@ namespace FootballFull.Services
         private readonly IEndOfSeasonService _endOfSeasonService;
         private readonly IHistoryService _historyService;
         private readonly IInternationalRankingService _internationalRankingService;
+        private readonly IPlayerCompetitionSettingsService _playerCompetitionSettingsService;
         private readonly IGameUI _gameUI;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
@@ -51,6 +52,7 @@ namespace FootballFull.Services
             IHistoryService historyService,
             IInternationalQualificationPlacesService internationalQualificationPlacesService,
             IInternationalRankingService internationalRankingService,
+            IPlayerCompetitionSettingsService playerCompetitionSettingsService,
             IGameUI gameUI)
         {
             _seasonService = seasonService;
@@ -66,8 +68,8 @@ namespace FootballFull.Services
             _endOfSeasonService = endOfSeasonService;
             _historyService = historyService;
             _internationalRankingService = internationalRankingService;
+            _playerCompetitionSettingsService = playerCompetitionSettingsService;
             _gameUI = gameUI;
-
         }
 
         public void Run(bool isNew)
@@ -122,6 +124,9 @@ namespace FootballFull.Services
                         if (selectClubId.HasValue)
                             _gameUI.ShowClubHistory(GameUIMapper.ClubHistory(_historyService.GetHistoryForClubId(selectClubId.Value)));
                         break;
+                    case MainMenuChoice.Settings:
+                        UpdateSettings();
+                        break;
                     case MainMenuChoice.Save:
                         _seasonService.SaveGame();
                         _gameUI.ShowMessage("Spel opgeslagen", "Je spel werd succesvol opgeslagen.", true);
@@ -132,6 +137,38 @@ namespace FootballFull.Services
                         return;
                 }
             }
+        }
+
+        private void UpdateSettings()
+        {
+            var settings = _playerCompetitionSettingsService.GetSettings();
+            var viewModel = GameUIMapper.PlayerCompetitionSettings(settings, _competitionService.GetCompetitionsForCountry(_userCountryId));
+            var choice = _gameUI.ShowSettings(viewModel);
+
+            switch (choice)
+            {
+                case SettingsChoice.AutoAddClub:
+                    settings.AutoAddClub = _gameUI.AskYesNoQuestion("Wil je automatisch clubs laten toevoegen? (y/n)");
+                    break;
+                case SettingsChoice.AutoAddCompetition:
+                    settings.AutoAddCompetition = _gameUI.AskYesNoQuestion("Wil je automatisch competities laten toevoegen? (y/n)");
+                    break;
+                case SettingsChoice.AutoAddCompetitionThreshold:
+                    int result;
+                    if (int.TryParse(_gameUI.AskForInput("Wat is het minimum aantal clubs dat in de laagste divisie moet zitten vooraleer een nieuwe competitie wordt opgericht?"), out result))
+                        settings.AutoAddCompetitionThreshold = result;
+                    break;
+                case SettingsChoice.AutoAddFeederClub:
+                    settings.AutoAddFeederClub = _gameUI.AskYesNoQuestion("Wil je automatisch feeder clubs laten toevoegen? (y/n)");
+                    break;
+                case SettingsChoice.PrizeMoneyPerCompetition:
+                    break;
+                case SettingsChoice.Back:
+                    break;
+            }
+
+            _playerCompetitionSettingsService.UpdateSetting(settings);
+
         }
 
         private void ContinueGame()
