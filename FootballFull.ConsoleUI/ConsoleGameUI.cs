@@ -34,7 +34,8 @@ namespace FootballFull.ConsoleUI
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine($"=== {dashboard.AssociationName} ===");
+                Console.WriteLine("============== FOOTBALL FULL ==============");
+                Console.WriteLine($"Verbond: {dashboard.AssociationName}");
                 Console.WriteLine($"Seizoen {dashboard.SeasonStartYear}/{dashboard.SeasonStartYear + 1}");
                 Console.WriteLine($"Datum: {dashboard.CurrentDate:dd/MM/yyyy}");
                 Console.WriteLine();
@@ -56,12 +57,17 @@ namespace FootballFull.ConsoleUI
                 }
 
                 Console.WriteLine();
+                Console.WriteLine("SPELEN");
                 Console.WriteLine("[1] Verder naar volgende speeldag");
+                Console.WriteLine();
+                Console.WriteLine("COMPETITIES & STATISTIEKEN");
                 Console.WriteLine("[2] Andere competities");
                 Console.WriteLine("[3] Internationale ranglijsten");
-                Console.WriteLine("[4] Competitiegeschiedeins");
+                Console.WriteLine("[4] Competitiegeschiedenis");
                 Console.WriteLine("[5] Clubgeschiedenis");
-                Console.WriteLine("[6] Settings");
+                Console.WriteLine();
+                Console.WriteLine("BEHEER");
+                Console.WriteLine("[6] Instellingen");
                 Console.WriteLine("[S] Opslaan");
                 Console.WriteLine("[X] Opslaan en afsluiten");
                 Console.WriteLine();
@@ -109,72 +115,43 @@ namespace FootballFull.ConsoleUI
             }
         }
 
-        public Guid? ChooseClub(
-    IReadOnlyList<SelectionOptionViewModel> clubs)
+        private static Guid? ChooseOption(string title, IReadOnlyList<SelectionOptionViewModel> options)
         {
-            Console.Clear();
-            Console.WriteLine("=== Clubs ===");
-            Console.WriteLine();
-
-            for (var i = 0; i < clubs.Count; i++)
+            while (true)
             {
-                Console.WriteLine($"{i + 1}. {clubs[i].Name}");
+                Console.Clear();
+                Console.WriteLine($"=== {title} ===");
+                Console.WriteLine();
+                if (options == null || options.Count == 0)
+                {
+                    Console.WriteLine("Geen opties beschikbaar.");
+                    Console.WriteLine("Druk op een toets om terug te gaan...");
+                    Console.ReadKey(true);
+                    return null;
+                }
+
+                for (int i = 0; i < options.Count; i++)
+                    Console.WriteLine($"[{i + 1}] {options[i].Name}");
+
+                Console.WriteLine();
+                Console.WriteLine("[0] Terug");
+                Console.Write("Maak een keuze: ");
+                var input = Console.ReadLine();
+                if (input == null || input.Trim() == "0")
+                    return null;
+                if (int.TryParse(input, out var number) && number >= 1 && number <= options.Count)
+                    return options[number - 1].Id;
+
+                Console.WriteLine("Ongeldige keuze. Druk op een toets om opnieuw te proberen...");
+                Console.ReadKey(true);
             }
-
-            Console.WriteLine();
-            Console.WriteLine("0. Terug");
-            Console.WriteLine();
-            Console.Write("Kies een competitie: ");
-
-            var choice = Console.ReadLine();
-
-            if (!int.TryParse(choice, out var selectedIndex))
-                return null;
-
-            if (selectedIndex == 0)
-                return null;
-
-            if (selectedIndex >= 1 &&
-                selectedIndex <= clubs.Count)
-            {
-                return clubs[selectedIndex - 1].Id;
-            }
-
-            return null;
         }
-        public Guid? ChooseCompetitions(
-            IReadOnlyList<SelectionOptionViewModel> competitions)
-        {
-            Console.Clear();
-            Console.WriteLine("=== Competities ===");
-            Console.WriteLine();
 
-            for (var i = 0; i < competitions.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {competitions[i].Name}");
-            }
+        public Guid? ChooseClub(IReadOnlyList<SelectionOptionViewModel> clubs)
+            => ChooseOption("Clubs", clubs);
 
-            Console.WriteLine();
-            Console.WriteLine("0. Terug");
-            Console.WriteLine();
-            Console.Write("Kies een competitie: ");
-
-            var choice = Console.ReadLine();
-
-            if (!int.TryParse(choice, out var selectedIndex))
-                return null;
-
-            if (selectedIndex == 0)
-                return null;
-
-            if (selectedIndex >= 1 &&
-                selectedIndex <= competitions.Count)
-            {
-                return competitions[selectedIndex - 1].Id;
-            }
-
-            return null;
-        }
+        public Guid? ChooseCompetitions(IReadOnlyList<SelectionOptionViewModel> competitions)
+            => ChooseOption("Competities", competitions);
 
         public void ShowResults(IReadOnlyList<FixtureViewModel> fixtures, bool waitForUser)
         {
@@ -188,9 +165,9 @@ namespace FootballFull.ConsoleUI
             int awayWidth = fixtures.Max(f => f.AwayTeamName.Length) + 2;
 
             Console.WriteLine(
-                $"{"Home Team".PadRight(homeWidth)}" +
+                $"{"Thuisploeg".PadRight(homeWidth)}" +
                 $"{"Score".PadRight(8)}" +
-                $"{"Away Team".PadRight(awayWidth)}"
+                $"{"Uitploeg".PadRight(awayWidth)}"
             );
 
             Console.WriteLine(new string('-', homeWidth + 8 + awayWidth));
@@ -226,7 +203,7 @@ namespace FootballFull.ConsoleUI
             const int pointsWidth = 8;
 
             Console.Clear();
-            Console.WriteLine($"=== League Table: {competitionTable.CompetitionName} ===");
+            Console.WriteLine($"=== Klassement: {competitionTable.CompetitionName} ===");
             Console.WriteLine();
 
             Console.WriteLine(
@@ -249,7 +226,7 @@ namespace FootballFull.ConsoleUI
             {
                 Console.WriteLine(
                     $"{counter.ToString().PadRight(positionWidth)}" +
-                    $"{c.ClubName.PadLeft(nameWidth)}" +
+                    $"{c.ClubName.PadRight(nameWidth)}" +
                     $"{c.MatchesPlayed.ToString().PadLeft(gamesWidth)}" +
                     $"{c.Won.ToString().PadLeft(wonWidth)}" +
                     $"{c.Draw.ToString().PadLeft(drawWidth)}" +
@@ -882,10 +859,10 @@ namespace FootballFull.ConsoleUI
                 Console.Clear();
                 Console.WriteLine("=== Settings ===");
                 Console.WriteLine();
-                Console.WriteLine($"1) Automatisch clubs toevoegen: {viewModel.AutoAddClub}");
-                Console.WriteLine($"2) Automatisch competitie toevoegen: {viewModel.AutoAddCompetition}");
+                Console.WriteLine($"1) Automatisch clubs toevoegen: {(viewModel.AutoAddClub ? "Aan" : "Uit")}");
+                Console.WriteLine($"2) Automatisch competitie toevoegen: {(viewModel.AutoAddCompetition ? "Aan" : "Uit")}");
                 Console.WriteLine($"3) Minimum clubs in laagste divisie: {viewModel.AutoAddCompetitionThreshold}");
-                Console.WriteLine($"4) Automatisch feeder clubs toevoegen: {viewModel.AutoAddFeederClub}");
+                Console.WriteLine($"4) Automatisch feeder clubs toevoegen: {(viewModel.AutoAddFeederClub ? "Aan" : "Uit")}");
                 Console.WriteLine($"5) Prijzengeld aanpassen");
                 Console.WriteLine();
                 foreach (var comp in viewModel.PrizeMoneyPerCompetition)
