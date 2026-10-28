@@ -191,58 +191,15 @@ namespace FootballFull.ConsoleUI
 
         public void ShowTable(CompetitionTableViewModel competitionTable, bool waitForUser)
         {
-            const int positionWidth = 4;
-            const int nameWidth = 25;
-            const int gamesWidth = 8;
-            const int wonWidth = 8;
-            const int drawWidth = 8;
-            const int lostWidth = 8;
-            const int gfWidth = 6;
-            const int gaWidth = 6;
-            const int gdWidth = 6;
-            const int pointsWidth = 8;
-
-            Console.Clear();
-            Console.WriteLine($"=== Klassement: {competitionTable.CompetitionName} ===");
-            Console.WriteLine();
-
-            Console.WriteLine(
-    $"{"P".PadRight(positionWidth)}" +
-    $"{"Club".PadRight(nameWidth)}" +
-    $"{"Games".PadLeft(gamesWidth)}" +
-    $"{"Won".PadLeft(wonWidth)}" +
-    $"{"Draw".PadLeft(drawWidth)}" +
-    $"{"Lost".PadLeft(lostWidth)}" +
-    $"{"GF".PadLeft(gfWidth)}" +
-    $"{"GA".PadLeft(gaWidth)}" +
-    $"{"GD".PadLeft(gdWidth)}" +
-    $"{"Points".PadLeft(pointsWidth)}"
-);
-            Console.WriteLine(new string('-', positionWidth + nameWidth + gamesWidth + wonWidth + drawWidth + lostWidth + pointsWidth + gfWidth + gaWidth + gdWidth));
-
-            var counter = 1;
-
-            foreach (var c in competitionTable.Rows)
+            var rows = competitionTable.Rows.Select((c, index) => (IReadOnlyList<string>)new[]
             {
-                Console.WriteLine(
-                    $"{counter.ToString().PadRight(positionWidth)}" +
-                    $"{c.ClubName.PadRight(nameWidth)}" +
-                    $"{c.MatchesPlayed.ToString().PadLeft(gamesWidth)}" +
-                    $"{c.Won.ToString().PadLeft(wonWidth)}" +
-                    $"{c.Draw.ToString().PadLeft(drawWidth)}" +
-                    $"{c.Lost.ToString().PadLeft(lostWidth)}" +
-                    $"{c.GoalsFor.ToString().PadLeft(gfWidth)}" +
-                    $"{c.GoalsAgainst.ToString().PadLeft(gaWidth)}" +
-                    $"{c.GoalDifference.ToString().PadLeft(gdWidth)}" +
-                    $"{c.Points.ToString().PadLeft(pointsWidth)}"
-                );
-
-                Console.ResetColor();
-                counter++;
-            }
-
-            if (waitForUser)
-                Console.ReadLine();
+                (index + 1).ToString(), c.ClubName, c.MatchesPlayed.ToString(),
+                c.Won.ToString(), c.Draw.ToString(), c.Lost.ToString(),
+                c.GoalsFor.ToString(), c.GoalsAgainst.ToString(), c.GoalDifference.ToString(),
+                c.Points.ToString()
+            }).ToList();
+            ConsoleUIHelper.Table($"Klassement - {competitionTable.CompetitionName}",
+                new[] { "#", "Club", "M", "W", "G", "V", "DV", "DT", "DS", "Ptn" }, rows, waitForUser);
         }
 
         public void ShowInternationRankings(
@@ -598,145 +555,46 @@ namespace FootballFull.ConsoleUI
             }
             while (enumerator.MoveNext());
 
-            Console.WriteLine("Press any key to continue.");
-            Console.ReadKey(true);
+            ConsoleUIHelper.Pause();
         }
 
         public decimal AskForSubsidyAmount(SelectSubsidyClubViewModel viewModel)
         {
-            Console.Clear();
-            Console.WriteLine($"=== Subsidie ===");
-            Console.WriteLine();
+            ConsoleUIHelper.Header("Subsidie");
             Console.WriteLine($"Beschikbaar saldo: {viewModel.AssociationBalance:N0}");
-            Console.WriteLine();
-            Console.WriteLine($"1) {viewModel.SubsidyAmountA:N0} (Totale kost: {viewModel.TotalSubsidyAmountA:N0})");
-            Console.WriteLine($"2) {viewModel.SubsidyAmountB:N0} (Totale kost: {viewModel.TotalSubsidyAmountB:N0})");
-            Console.WriteLine($"3) {viewModel.SubsidyAmountC:N0} (Totale kost: {viewModel.TotalSubsidyAmountC:N0})");
-            Console.Write("Kies een optie: ");
-
-            if (int.TryParse(Console.ReadLine(), out var choice) && choice >= 1 && choice <= 3)
+            Console.WriteLine($"[1] {viewModel.SubsidyAmountA:N0} (totale kost: {viewModel.TotalSubsidyAmountA:N0})");
+            Console.WriteLine($"[2] {viewModel.SubsidyAmountB:N0} (totale kost: {viewModel.TotalSubsidyAmountB:N0})");
+            Console.WriteLine($"[3] {viewModel.SubsidyAmountC:N0} (totale kost: {viewModel.TotalSubsidyAmountC:N0})");
+            return ConsoleUIHelper.ReadInt("Kies een subsidie", 1, 3) switch
             {
-                return choice == 1 ? viewModel.SubsidyAmountA : choice == 2 ? viewModel.SubsidyAmountB : viewModel.SubsidyAmountC;
-            }
-
-            Console.WriteLine("Ongeldige keuze. Druk op een toets om opnieuw te proberen.");
-            Console.ReadKey();
-            return AskForSubsidyAmount(viewModel); // Retry
+                1 => viewModel.SubsidyAmountA,
+                2 => viewModel.SubsidyAmountB,
+                _ => viewModel.SubsidyAmountC
+            };
         }
 
         public void ShowCompetitionHistory(CompetitionHistoryViewModel history)
         {
-            const int yearWidth = 10;
-            const int competitionWidth = 30;
-            const int championWidth = 30;
-            const int runnerUpWidth = 30;
-
-            Console.Clear();
-            Console.WriteLine("=== Competition History ===");
-            Console.WriteLine();
-
-            Console.WriteLine(
-                $"{"Year".PadRight(yearWidth)}" +
-                $"{"Competition".PadRight(competitionWidth)}" +
-                $"{"Champion".PadRight(championWidth)}" +
-                $"{"Runner-up".PadRight(runnerUpWidth)}");
-
-            Console.WriteLine(new string('-',
-                yearWidth + competitionWidth + championWidth + runnerUpWidth));
-
-            if (history.Rows == null || !history.Rows.Any())
-            {
-                Console.WriteLine("No competition history available.");
-            }
-            else
-            {
-                foreach (var row in history.Rows
-                    .OrderByDescending(x => x.Year)
-                    .ThenBy(x => x.CompetitionName))
+            var rows = history.Rows.OrderByDescending(x => x.Year).ThenBy(x => x.CompetitionName)
+                .Select(x => (IReadOnlyList<string>)new[]
                 {
-                    Console.WriteLine(
-                        $"{row.Year.ToString().PadRight(yearWidth)}" +
-                        $"{(row.CompetitionName ?? "-").PadRight(competitionWidth)}" +
-                        $"{(row.ChampionClubName ?? "-").PadRight(championWidth)}" +
-                        $"{(row.RunnerUpClubName ?? "-").PadRight(runnerUpWidth)}");
-                }
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey(true);
+                    x.Year.ToString(), x.CompetitionName ?? "-", x.ChampionClubName ?? "-", x.RunnerUpClubName ?? "-"
+                }).ToList();
+            ConsoleUIHelper.Table("Competitiegeschiedenis",
+                new[] { "Seizoen", "Competitie", "Kampioen", "Tweede" }, rows);
         }
 
         public void ShowClubHistory(ClubHistoryViewModel history)
         {
-            const int yearWidth = 8;
-            const int clubWidth = 25;
-            const int competitionWidth = 30;
-            const int positionWidth = 6;
-            const int gamesWidth = 7;
-            const int wonWidth = 6;
-            const int drawnWidth = 6;
-            const int lostWidth = 6;
-            const int gfWidth = 6;
-            const int gaWidth = 6;
-            const int gdWidth = 6;
-            const int pointsWidth = 7;
-
-            Console.Clear();
-            Console.WriteLine("=== Club History ===");
-            Console.WriteLine();
-
-            Console.WriteLine(
-                $"{"Year".PadRight(yearWidth)}" +
-                $"{"Club".PadRight(clubWidth)}" +
-                $"{"Competition".PadRight(competitionWidth)}" +
-                $"{"Pos".PadLeft(positionWidth)}" +
-                $"{"P".PadLeft(gamesWidth)}" +
-                $"{"W".PadLeft(wonWidth)}" +
-                $"{"D".PadLeft(drawnWidth)}" +
-                $"{"L".PadLeft(lostWidth)}" +
-                $"{"GF".PadLeft(gfWidth)}" +
-                $"{"GA".PadLeft(gaWidth)}" +
-                $"{"GD".PadLeft(gdWidth)}" +
-                $"{"Pts".PadLeft(pointsWidth)}");
-
-            Console.WriteLine(new string('-',
-                yearWidth + clubWidth + competitionWidth +
-                positionWidth + gamesWidth + wonWidth +
-                drawnWidth + lostWidth + gfWidth +
-                gaWidth + gdWidth + pointsWidth));
-
-            if (history?.ClubHistory == null || !history.ClubHistory.Any())
-            {
-                Console.WriteLine("No club history available.");
-            }
-            else
-            {
-                foreach (var row in history.ClubHistory
-                    .OrderByDescending(x => x.Year)
-                    .ThenBy(x => x.ClubName))
+            var rows = history.ClubHistory.OrderByDescending(x => x.Year).ThenBy(x => x.ClubName)
+                .Select(x => (IReadOnlyList<string>)new[]
                 {
-                    int goalDifference = row.GoalsFor - row.GoalsAgainst;
-
-                    Console.WriteLine(
-                        $"{(row.Year.ToString()).PadRight(yearWidth)}" +
-                        $"{(row.ClubName ?? "-").PadRight(clubWidth)}" +
-                        $"{(row.CompetitionName ?? "-").PadRight(competitionWidth)}" +
-                        $"{row.Position.ToString().PadLeft(positionWidth)}" +
-                        $"{row.Played.ToString().PadLeft(gamesWidth)}" +
-                        $"{row.Won.ToString().PadLeft(wonWidth)}" +
-                        $"{row.Drawn.ToString().PadLeft(drawnWidth)}" +
-                        $"{row.Lost.ToString().PadLeft(lostWidth)}" +
-                        $"{row.GoalsFor.ToString().PadLeft(gfWidth)}" +
-                        $"{row.GoalsAgainst.ToString().PadLeft(gaWidth)}" +
-                        $"{goalDifference.ToString().PadLeft(gdWidth)}" +
-                        $"{row.Points.ToString().PadLeft(pointsWidth)}");
-                }
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey(true);
+                    x.Year.ToString(), x.ClubName ?? "-", x.CompetitionName ?? "-",
+                    x.Position.ToString(), x.Played.ToString(), x.Won.ToString(), x.Drawn.ToString(),
+                    x.Lost.ToString(), (x.GoalsFor - x.GoalsAgainst).ToString(), x.Points.ToString()
+                }).ToList();
+            ConsoleUIHelper.Table("Clubgeschiedenis",
+                new[] { "Jaar", "Club", "Competitie", "Pos", "M", "W", "G", "V", "DS", "Ptn" }, rows);
         }
 
         public decimal AskPrizeMoneyBudget(string name)
