@@ -183,12 +183,28 @@ namespace FootballFull.Services
 
             if (settings.AutoPrizeMoney)
             {
-                var competition = _gameUI.ChooseCompetitions(GameUIMapper.Options(_competitionService.GetCompetitions().Where(c => c.CountryId == _saveDataService.SaveData.UserCountryId)));
-                var prizeMoney = _gameUI.AskPrizeMoneyBudget(_competitionService.GetCompetitionById((Guid)competition).Name);
-                var distribution = _gameUI.AskPrizeMoneyDistribution(_competitionService.GetCompetitionById((Guid)competition).Type);
+                var competitionId = _gameUI.ChooseCompetitions(GameUIMapper.Options(
+                    _competitionService.GetCompetitions().Where(c =>
+                        c.CountryId == _saveDataService.SaveData.UserCountryId &&
+                        (c.Type == CompetitionType.League || c.Type == CompetitionType.Cup))));
+                if (!competitionId.HasValue)
+                    return;
 
-                settings.PrizeMoneyPerCompetition[(Guid)competition] = prizeMoney;
-                settings.PrizeMoneyDistributionPerCompetition[(Guid)competition] = distribution;
+                var competition = _competitionService.GetCompetitionById(competitionId.Value);
+                var prizeMoney = _gameUI.AskPrizeMoneyBudget(competition.Name);
+                if (prizeMoney < 0 || decimal.Round(prizeMoney, 2) != prizeMoney)
+                {
+                    _gameUI.ShowMessage("Prijzengeld", "Het budget moet positief of nul zijn, met maximaal twee decimalen.", true);
+                    return;
+                }
+
+                var distribution = prizeMoney > 0
+                    ? _gameUI.AskPrizeMoneyDistribution(competition.Type)
+                    : competition.Type == CompetitionType.League
+                        ? PrizeMoneyDistribution.Equal : PrizeMoneyDistribution.WinnerOnly;
+
+                settings.PrizeMoneyPerCompetition[competitionId.Value] = prizeMoney;
+                settings.PrizeMoneyDistributionPerCompetition[competitionId.Value] = distribution;
             }
         }
 
@@ -461,6 +477,13 @@ namespace FootballFull.Services
                         ? PrizeMoneyDistribution.Equal : PrizeMoneyDistribution.WinnerOnly;
                     var distribution = playerSettings.PrizeMoneyDistributionPerCompetition.TryGetValue(competition.Id, out var configuredDistribution)
                         ? configuredDistribution : defaultDistribution;
+
+                    // Older saves may contain an invalid default (Equal) for a cup.
+                    var validDistribution = competition.Type == CompetitionType.League
+                        ? distribution is PrizeMoneyDistribution.Equal or PrizeMoneyDistribution.Balanced or PrizeMoneyDistribution.TopHeavy
+                        : distribution is PrizeMoneyDistribution.WinnerOnly or PrizeMoneyDistribution.Finalists or PrizeMoneyDistribution.SemiFinalists;
+                    if (!validDistribution)
+                        distribution = defaultDistribution;
 
                     var automaticSettings = new CompetitionPrizeMoneySettings
                     {
