@@ -22,6 +22,12 @@ namespace FootballFull.ConsoleUI
             Console.WriteLine(new string('-', 48));
         }
 
+        public static void Value(string label, string? value)
+        {
+            // Ruime labelkolom, zonder lange toelichtingen af te kappen.
+            Console.WriteLine($"  {label,-25} : {value ?? "-"}");
+        }
+
         public static void Pause()
         {
             Console.WriteLine();
