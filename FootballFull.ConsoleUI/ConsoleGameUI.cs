@@ -33,50 +33,48 @@ namespace FootballFull.ConsoleUI
         {
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine("============== FOOTBALL FULL ==============");
-                Console.WriteLine($"Verbond: {dashboard.AssociationName}");
-                Console.WriteLine($"Seizoen {dashboard.SeasonStartYear}/{dashboard.SeasonStartYear + 1}");
-                Console.WriteLine($"Datum: {dashboard.CurrentDate:dd/MM/yyyy}");
-                Console.WriteLine();
-                Console.WriteLine($"Saldo: {dashboard.Balance:C}");
-                Console.WriteLine($"Reputatie: {dashboard.Reputation} - {dashboard.ReputationDescription}");
-                Console.WriteLine($"Clubs: {dashboard.ClubCount}");
-                Console.WriteLine($"Competities: {dashboard.CompetitionCount}");
-                Console.WriteLine();
+                ConsoleUIHelper.Header("FOOTBALL FULL");
+                Console.WriteLine($"  {dashboard.AssociationName}  |  Seizoen {dashboard.SeasonStartYear}/{dashboard.SeasonStartYear + 1}");
+                Console.WriteLine($"  {dashboard.CurrentDate:dddd d MMMM yyyy}");
 
+                ConsoleUIHelper.Section("Verbond");
+                ConsoleUIHelper.Value("Saldo", $"{dashboard.Balance:C}");
+                ConsoleUIHelper.Value("Reputatie", $"{dashboard.Reputation} - {dashboard.ReputationDescription}");
+                ConsoleUIHelper.Value("Clubs", dashboard.ClubCount.ToString());
+                ConsoleUIHelper.Value("Competities", dashboard.CompetitionCount.ToString());
+
+                ConsoleUIHelper.Section("Volgende speeldag");
                 if (dashboard.NextMatchday.HasValue)
                 {
-                    Console.WriteLine(
-                        $"Volgende speeldag: {dashboard.NextMatchday:dd/MM/yyyy} " +
-                        $"({dashboard.NextMatchCount} wedstrijden)");
+                    ConsoleUIHelper.Value("Datum", dashboard.NextMatchday.Value.ToString("dd/MM/yyyy"));
+                    ConsoleUIHelper.Value("Wedstrijden", dashboard.NextMatchCount.ToString());
                 }
                 else
                 {
-                    Console.WriteLine("Geen volgende speeldag gepland.");
+                    Console.WriteLine("  Geen volgende speeldag gepland.");
                 }
 
+                ConsoleUIHelper.Section("Spelen");
+                Console.WriteLine("  [1] Verder naar volgende speeldag");
+
+                ConsoleUIHelper.Section("Competities en statistieken");
+                Console.WriteLine("  [2] Competities bekijken");
+                Console.WriteLine("  [3] Internationale ranglijsten");
+                Console.WriteLine("  [4] Competitiegeschiedenis");
+                Console.WriteLine("  [5] Clubgeschiedenis");
+
+                ConsoleUIHelper.Section("Beheer");
+                Console.WriteLine("  [6] Instellingen");
+                Console.WriteLine("  [S] Spel opslaan");
+                Console.WriteLine("  [X] Opslaan en afsluiten");
                 Console.WriteLine();
-                Console.WriteLine("SPELEN");
-                Console.WriteLine("[1] Verder naar volgende speeldag");
-                Console.WriteLine();
-                Console.WriteLine("COMPETITIES & STATISTIEKEN");
-                Console.WriteLine("[2] Andere competities");
-                Console.WriteLine("[3] Internationale ranglijsten");
-                Console.WriteLine("[4] Competitiegeschiedenis");
-                Console.WriteLine("[5] Clubgeschiedenis");
-                Console.WriteLine();
-                Console.WriteLine("BEHEER");
-                Console.WriteLine("[6] Instellingen");
-                Console.WriteLine("[S] Opslaan");
-                Console.WriteLine("[X] Opslaan en afsluiten");
-                Console.WriteLine();
-                Console.Write("Maak een keuze: ");
+                Console.Write("Kies een optie: ");
 
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
+                    case ConsoleKey.Enter:
                         return MainMenuChoice.Continue;
                     case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
@@ -97,6 +95,9 @@ namespace FootballFull.ConsoleUI
                         return MainMenuChoice.Save;
                     case ConsoleKey.X:
                         return MainMenuChoice.SaveAndExit;
+                    default:
+                        ConsoleUIHelper.InvalidChoice();
+                        break;
                 }
             }
         }
@@ -701,21 +702,29 @@ namespace FootballFull.ConsoleUI
         {
             while (true)
             {
-                Console.Clear();
-                ConsoleUIHelper.Header("Instellingen", false);
-                Console.WriteLine();
-                Console.WriteLine($"1) Automatisch clubs toevoegen: {(viewModel.AutoAddClub ? "Aan" : "Uit")}");
-                Console.WriteLine($"2) Automatisch competitie toevoegen: {(viewModel.AutoAddCompetition ? "Aan" : "Uit")}");
-                Console.WriteLine($"3) Minimum clubs in laagste divisie: {viewModel.AutoAddCompetitionThreshold}");
-                Console.WriteLine($"4) Automatisch feeder clubs toevoegen: {(viewModel.AutoAddFeederClub ? "Aan" : "Uit")}");
-                Console.WriteLine($"5) Prijzengeld aanpassen");
-                Console.WriteLine();
-                foreach (var comp in viewModel.PrizeMoneyPerCompetition)
-                    Console.WriteLine($"{comp.Key}: {comp.Value}");
+                ConsoleUIHelper.Header("Instellingen");
+                ConsoleUIHelper.Section("Automatisering");
+                Console.WriteLine($"  [1] Clubs automatisch toevoegen       {ConsoleUIHelper.Toggle(viewModel.AutoAddClub)}");
+                Console.WriteLine($"  [2] Competities automatisch toevoegen {ConsoleUIHelper.Toggle(viewModel.AutoAddCompetition)}");
+                Console.WriteLine($"  [3] Minimum clubs laagste divisie      {viewModel.AutoAddCompetitionThreshold}");
+                Console.WriteLine($"  [4] B-ploegen automatisch toevoegen    {ConsoleUIHelper.Toggle(viewModel.AutoAddFeederClub)}");
 
+                ConsoleUIHelper.Section("Financiën");
+                Console.WriteLine("  [5] Prijzengeld aanpassen");
+                if (viewModel.PrizeMoneyPerCompetition != null && viewModel.PrizeMoneyPerCompetition.Any())
+                {
+                    foreach (var competition in viewModel.PrizeMoneyPerCompetition)
+                        ConsoleUIHelper.Value(competition.Key.ToString(), competition.Value.ToString());
+                }
+                else
+                {
+                    Console.WriteLine("  Nog geen prijzengeld ingesteld.");
+                }
+
+                ConsoleUIHelper.Section("Navigatie");
+                Console.WriteLine("  [6] Terug naar hoofdmenu");
                 Console.WriteLine();
-                Console.WriteLine("6) Terug");
-                Console.Write("Maak een keuze: ");
+                Console.Write("Kies een instelling: ");
 
                 switch (Console.ReadKey(true).Key)
                 {
@@ -736,7 +745,12 @@ namespace FootballFull.ConsoleUI
                         return SettingsChoice.PrizeMoneyPerCompetition;
                     case ConsoleKey.D6:
                     case ConsoleKey.NumPad6:
+                    case ConsoleKey.Escape:
+                    case ConsoleKey.Backspace:
                         return SettingsChoice.Back;
+                    default:
+                        ConsoleUIHelper.InvalidChoice();
+                        break;
                 }
             }
         }
