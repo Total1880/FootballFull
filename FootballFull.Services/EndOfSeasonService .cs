@@ -248,7 +248,7 @@ namespace FootballFull.Services
             }
         }
 
-        public void CreateLowerDivision(Guid countryId, int numberOfClubs, FootballAssociation footballAssociation)
+        public Guid CreateLowerDivision(Guid countryId, int numberOfClubs, FootballAssociation footballAssociation)
         {
             var options = GetOptions(countryId, footballAssociation);
 
@@ -329,6 +329,8 @@ namespace FootballFull.Services
             }
 
             footballAssociation.Balance -= Configuration.LowerDivisionCost;
+
+            return competitionId;
         }
 
         public Club CreateApplicantClub(Guid countryId, string clubName)

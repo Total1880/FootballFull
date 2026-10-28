@@ -24,7 +24,7 @@ namespace FootballFull.Services.Interfaces
             FootballAssociation footballAssociation,
             bool isFeederClub = false);
 
-        void CreateLowerDivision(
+        Guid CreateLowerDivision(
             Guid countryId,
             int numberOfClubs,
             FootballAssociation footballAssociation);

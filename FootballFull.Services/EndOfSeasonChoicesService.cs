@@ -15,15 +15,18 @@ namespace FootballFull.Services
 
         private readonly IEndOfSeasonService _endOfSeasonService;
         private readonly IPlayerCompetitionSettingsService _playerCompetitionSettingsService;
+        private readonly ICompetitionService _competitionService;
         private readonly IGameUI _gameUI;
 
         public EndOfSeasonChoicesService(
             IEndOfSeasonService endOfSeasonService,
             IPlayerCompetitionSettingsService playerCompetitionSettingsService,
+            ICompetitionService competitionService,
             IGameUI gameUI)
         {
             _endOfSeasonService = endOfSeasonService;
             _playerCompetitionSettingsService = playerCompetitionSettingsService;
+            _competitionService = competitionService;
             _gameUI = gameUI;
         }
 
@@ -49,11 +52,10 @@ namespace FootballFull.Services
             {
                 if (playerSettings.AutoAddCompetition)
                 {
-                    if (playerSettings.AutoAddCompetitionThreshold < options.CurrentLowestTierClubCount + 2)
+                    if (playerSettings.AutoAddCompetitionThreshold < options.CurrentLowestTierClubCount - 2)
                     {
                         var numberOfClubs = options.CurrentLowestTierClubCount - playerSettings.AutoAddCompetitionThreshold;
-                        _endOfSeasonService.CreateLowerDivision(
-                            countryId, numberOfClubs, association);
+                        _gameUI.ShowMessage("New Competition",$"{_competitionService.GetCompetitionById(_endOfSeasonService.CreateLowerDivision(countryId, numberOfClubs, association)).Name} Is now active", true);
 
                         return true;
                     }
@@ -65,8 +67,7 @@ namespace FootballFull.Services
                         currentClubCount: options.CurrentLowestTierClubCount,
                         minimumClubsToMove: 2);
 
-                    _endOfSeasonService.CreateLowerDivision(
-                        countryId, numberOfClubs, association);
+                    _endOfSeasonService.CreateLowerDivision(countryId, numberOfClubs, association);
                     return true;
                 }
             }
