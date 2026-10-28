@@ -44,6 +44,32 @@ namespace FootballFull.ConsoleUI
             Console.ReadKey(true);
         }
 
+        public static bool Confirm(string question, bool defaultAnswer = false)
+        {
+            while (true)
+            {
+                Console.Write($"{question} {(defaultAnswer ? "[J/n]" : "[j/N]")} ");
+                var input = Console.ReadLine();
+                if (input == null)
+                    throw new InvalidOperationException("Console-invoer is afgesloten.");
+
+                switch (input.Trim().ToLowerInvariant())
+                {
+                    case "": return defaultAnswer;
+                    case "j":
+                    case "ja":
+                    case "y":
+                    case "yes": return true;
+                    case "n":
+                    case "nee":
+                    case "no": return false;
+                    default:
+                        Console.WriteLine("Antwoord met J (ja) of N (nee).");
+                        break;
+                }
+            }
+        }
+
         public static int ReadInt(string prompt, int min, int max)
         {
             if (max < min) throw new ArgumentOutOfRangeException(nameof(max));
