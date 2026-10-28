@@ -432,8 +432,7 @@ namespace FootballFull.Services
 
         private void ConfigureSeasonPrizeMoney()
         {
-            if (_playerCompetitionSettingsService.GetSettings().AutoPrizeMoney)
-                return; 
+            var playerSettings = _playerCompetitionSettingsService.GetSettings();
 
             var competitions = _competitionService.GetCompetitions()
                 .Where(c => c.CountryId == _saveDataService.SaveData.UserCountryId &&
@@ -443,6 +442,36 @@ namespace FootballFull.Services
             {
                 if (competition.PrizeMoneySeasons.Any(s => s.Year == _year))
                     continue;
+                if (playerSettings.AutoPrizeMoney)
+                {
+                    var association = GetUserAssociation();
+                    playerSettings.PrizeMoneyPerCompetition.TryGetValue(competition.Id, out var automaticBudget);
+                    if (automaticBudget < 0)
+                        throw new InvalidOperationException($"Negatief prijzengeld ingesteld voor {competition.Name}.");
+
+                    if (automaticBudget > association.Balance)
+                    {
+                        _gameUI.ShowMessage("Prijzengeld",
+                            $"Onvoldoende bondsbudget voor {competition.Name}: {automaticBudget:C2} gevraagd, {association.Balance:C2} beschikbaar. Geen prijzengeld gereserveerd.",
+                            true);
+                        automaticBudget = 0m;
+                    }
+
+                    var defaultDistribution = competition.Type == CompetitionType.League
+                        ? PrizeMoneyDistribution.Equal : PrizeMoneyDistribution.WinnerOnly;
+                    var distribution = playerSettings.PrizeMoneyDistributionPerCompetition.TryGetValue(competition.Id, out var configuredDistribution)
+                        ? configuredDistribution : defaultDistribution;
+
+                    var automaticSettings = new CompetitionPrizeMoneySettings
+                    {
+                        TotalBudget = automaticBudget,
+                        Distribution = automaticBudget == 0 ? defaultDistribution : distribution
+                    };
+
+                    _endOfSeasonService.ReservePrizeMoney(competition, automaticSettings, association, _year);
+                    continue;
+                }
+
                 while (true)
                 {
                     var association = GetUserAssociation();
