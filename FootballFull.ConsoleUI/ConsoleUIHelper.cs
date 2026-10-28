@@ -28,6 +28,15 @@ namespace FootballFull.ConsoleUI
             Console.WriteLine($"  {label,-25} : {value ?? "-"}");
         }
 
+        public static string Toggle(bool enabled) => enabled ? "[AAN]" : "[UIT]";
+
+        public static void InvalidChoice()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Ongeldige keuze. Druk op een toets om opnieuw te proberen...");
+            Console.ReadKey(true);
+        }
+
         public static void Pause()
         {
             Console.WriteLine();
