@@ -12,10 +12,14 @@ namespace FootballFull.Services
     public class PlayerCompetitionSettingsService : IPlayerCompetitionSettingsService
     {
         private IRepository<PlayerCompetitionSettings> _repository;
+        private ICompetitionService _competitionService;
+        private ISaveDataService _saveDataService;
 
-        public PlayerCompetitionSettingsService(IRepository<PlayerCompetitionSettings> repository)
+        public PlayerCompetitionSettingsService(IRepository<PlayerCompetitionSettings> repository, ICompetitionService competitionService, ISaveDataService saveDataService)
         {
             _repository = repository;
+            _competitionService = competitionService;
+            _saveDataService = saveDataService;
         }
 
         public bool AddSetting(PlayerCompetitionSettings playerCompetitionSettings)
@@ -28,6 +32,19 @@ namespace FootballFull.Services
         public PlayerCompetitionSettings GetSettings()
         {
             var setting = _repository.Load().FirstOrDefault() ?? new PlayerCompetitionSettings();
+            if (setting.PrizeMoneyPerCompetition == null || setting.PrizeMoneyPerCompetition.Count == 0)
+            {
+                setting.PrizeMoneyPerCompetition = new Dictionary<Guid, decimal>();
+                foreach (var competition in _competitionService.GetCompetitionsForCountry(_saveDataService.SaveData.UserCountryId))
+                    setting.PrizeMoneyPerCompetition.Add(competition.Id, 0);
+            }
+
+            if (setting.PrizeMoneyDistributionPerCompetition == null || setting.PrizeMoneyDistributionPerCompetition.Count == 0)
+            {
+                setting.PrizeMoneyDistributionPerCompetition = new Dictionary<Guid, PrizeMoneyDistribution>();
+                foreach (var competition in _competitionService.GetCompetitionsForCountry(_saveDataService.SaveData.UserCountryId))
+                    setting.PrizeMoneyDistributionPerCompetition.Add(competition.Id, 0);
+            }
             return setting;
         }
 

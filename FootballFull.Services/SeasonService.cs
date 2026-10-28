@@ -838,8 +838,8 @@ chosenCompetitionIndex <= competitions.Count)
             _trainerService.SaveAll(_trainers);
             _clubInternationalRankingService.SaveAll();
 
-            _saveData.Year = _year;
-            _saveDataService.Save(_saveData);
+            _saveDataService.SaveData.Year = _year;
+            _saveDataService.Save();
             Configuration.PeriodicSave(_year);
         }
 

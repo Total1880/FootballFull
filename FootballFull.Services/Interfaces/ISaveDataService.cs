@@ -4,7 +4,8 @@ namespace FootballFull.Services.Interfaces
 {
     public interface ISaveDataService
     {
-        void Save(SaveData saveData);
+        void Save();
+        public SaveData SaveData { get; set; }
         SaveData Load();
     }
 }

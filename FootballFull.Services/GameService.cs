@@ -24,6 +24,7 @@ namespace FootballFull.Services
         private readonly IHistoryService _historyService;
         private readonly IInternationalRankingService _internationalRankingService;
         private readonly IPlayerCompetitionSettingsService _playerCompetitionSettingsService;
+        private readonly ISaveDataService _saveDataService;
         private readonly IGameUI _gameUI;
 
         private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
@@ -32,7 +33,6 @@ namespace FootballFull.Services
         private IList<Fixture>? _internationalFixtures;
         private IList<FootballAssociation> _footballAssociations = new List<FootballAssociation>();
 
-        private Guid _userCountryId;
         private DateTime _currentDate;
         private DateTime _newSeasonDate;
         private int _year;
@@ -53,6 +53,7 @@ namespace FootballFull.Services
             IInternationalQualificationPlacesService internationalQualificationPlacesService,
             IInternationalRankingService internationalRankingService,
             IPlayerCompetitionSettingsService playerCompetitionSettingsService,
+            ISaveDataService saveDataService,
             IGameUI gameUI)
         {
             _seasonService = seasonService;
@@ -69,6 +70,7 @@ namespace FootballFull.Services
             _historyService = historyService;
             _internationalRankingService = internationalRankingService;
             _playerCompetitionSettingsService = playerCompetitionSettingsService;
+            _saveDataService = saveDataService;
             _gameUI = gameUI;
         }
 
@@ -76,7 +78,7 @@ namespace FootballFull.Services
         {
             var initial = _gameInitializationService.Initialize(isNew);
 
-            _userCountryId = initial.UserCountryId;
+            _saveDataService.SaveData.UserCountryId = initial.UserCountryId;
             _year = initial.Year;
             _currentDate = initial.CurrentDate;
             _newSeasonDate = initial.NewSeasonDate;
@@ -94,7 +96,7 @@ namespace FootballFull.Services
         {
             while (true)
             {
-                ShowNews(_currentDate, _competitionService.GetCompetitions().First(_ => _.CountryId == _userCountryId && _.Tier == 1).Id);
+                ShowNews(_currentDate, _competitionService.GetCompetitions().First(_ => _.CountryId == _saveDataService.SaveData.UserCountryId && _.Tier == 1).Id);
                 var dashboard = CreateDashboard();
 
                 var choice = _gameUI.ShowMainMenu(dashboard);
@@ -142,7 +144,7 @@ namespace FootballFull.Services
         private void UpdateSettings()
         {
             var settings = _playerCompetitionSettingsService.GetSettings();
-            var viewModel = GameUIMapper.PlayerCompetitionSettings(settings, _competitionService.GetCompetitionsForCountry(_userCountryId));
+            var viewModel = GameUIMapper.PlayerCompetitionSettings(settings, _competitionService.GetCompetitionsForCountry(_saveDataService.SaveData.UserCountryId));
             var choice = _gameUI.ShowSettings(viewModel);
 
             switch (choice)
@@ -162,6 +164,7 @@ namespace FootballFull.Services
                     settings.AutoAddFeederClub = _gameUI.AskYesNoQuestion("Wil je automatisch feeder clubs laten toevoegen? (y/n)");
                     break;
                 case SettingsChoice.PrizeMoneyPerCompetition:
+                    SettingsPrizeMoney(settings);
                     break;
                 case SettingsChoice.Back:
                     break;
@@ -171,11 +174,29 @@ namespace FootballFull.Services
 
         }
 
+        private void SettingsPrizeMoney(PlayerCompetitionSettings settings)
+        {
+            // Show settings
+            // Ask to update auto prize settings, or 1 of the competitions
+
+            settings.AutoPrizeMoney = _gameUI.AskYesNoQuestion("Wil je elk seizoen automatisch het prijzengeld geven?");
+
+            if (settings.AutoPrizeMoney)
+            {
+                var competition = _gameUI.ChooseCompetitions(GameUIMapper.Options(_competitionService.GetCompetitions().Where(c => c.CountryId == _saveDataService.SaveData.UserCountryId)));
+                var prizeMoney = _gameUI.AskPrizeMoneyBudget(_competitionService.GetCompetitionById((Guid)competition).Name);
+                var distribution = _gameUI.AskPrizeMoneyDistribution(_competitionService.GetCompetitionById((Guid)competition).Type);
+
+                settings.PrizeMoneyPerCompetition[(Guid)competition] = prizeMoney;
+                settings.PrizeMoneyDistributionPerCompetition[(Guid)competition] = distribution;
+            }
+        }
+
         private void ContinueGame()
         {
             var gamesToShow = PlayUntilNextMatchday();
             var league = _competitionService.GetCompetitions().First(c =>
-                c.CountryId == _userCountryId &&
+                c.CountryId == _saveDataService.SaveData.UserCountryId &&
                 c.Type == CompetitionType.League &&
                 c.Tier == 1);
 
@@ -190,7 +211,7 @@ namespace FootballFull.Services
             if (gamesToShow?.CupCompetition == true)
             {
                 var cup = _competitionService.GetCompetitions().FirstOrDefault(c =>
-                    c.CountryId == _userCountryId && c.Type == CompetitionType.Cup);
+                    c.CountryId == _saveDataService.SaveData.UserCountryId && c.Type == CompetitionType.Cup);
                 if (cup != null)
                     _gameUI.ShowResults(GameUIMapper.Fixtures(GetResult(cup.Id, _currentDate)), true);
             }
@@ -232,9 +253,9 @@ namespace FootballFull.Services
 
         private GameDashboardViewModel CreateDashboard()
         {
-            var association = _footballAssociations.Single(fa => fa.CountryId == _userCountryId);
+            var association = _footballAssociations.Single(fa => fa.CountryId == _saveDataService.SaveData.UserCountryId);
             var competitionIds = _competitionService.GetCompetitions()
-                .Where(c => c.CountryId == _userCountryId && c.Type == CompetitionType.League)
+                .Where(c => c.CountryId == _saveDataService.SaveData.UserCountryId && c.Type == CompetitionType.League)
                 .Select(c => c.Id)
                 .ToHashSet();
             var nextMatchday = GetNextMatchday();
@@ -248,7 +269,7 @@ namespace FootballFull.Services
                 Reputation = association.Reputation,
                 ReputationDescription = association.ReputationDescription,
                 ClubCount = _clubPerCompetitionService
-                    .GetAllClubPerCompetitionForCountry(_userCountryId).Count,
+                    .GetAllClubPerCompetitionForCountry(_saveDataService.SaveData.UserCountryId).Count,
                 CompetitionCount = competitionIds.Count,
                 NextMatchday = nextMatchday,
                 NextMatchCount = nextMatchday.HasValue ? CountMatchesOn(nextMatchday.Value) : 0
@@ -283,7 +304,7 @@ namespace FootballFull.Services
         {
             _matchdayService.PlayDate(new MatchdayRequest(
                 _currentDate,
-                _userCountryId,
+                _saveDataService.SaveData.UserCountryId,
                 _competitionService.GetCompetitions(),
                 _fixtures,
                 _cupFixtures,
@@ -311,15 +332,15 @@ namespace FootballFull.Services
         private DateTime? GetNextMatchday()
         {
             var competitionIds = _competitionService.GetCompetitions()
-                .Where(c => c.CountryId == _userCountryId || c.Type == CompetitionType.International)
+                .Where(c => c.CountryId == _saveDataService.SaveData.UserCountryId || c.Type == CompetitionType.International)
                 .Select(c => c.Id)
                 .ToHashSet();
 
             return GetAllFixtures()
                 .Where(f => f.MatchDay >= _currentDate)
                 .Where(f => competitionIds.Contains(f.CompetitionId) ||
-                            f.HomeTeam?.CountryId == _userCountryId ||
-                            f.AwayTeam?.CountryId == _userCountryId)
+                            f.HomeTeam?.CountryId == _saveDataService.SaveData.UserCountryId ||
+                            f.AwayTeam?.CountryId == _saveDataService.SaveData.UserCountryId)
                 .Select(f => f.MatchDay)
                 .OrderBy(date => date)
                 .Cast<DateTime?>()
@@ -329,15 +350,15 @@ namespace FootballFull.Services
         private int CountMatchesOn(DateTime date)
         {
             var competitionIds = _competitionService.GetCompetitions()
-                .Where(c => c.CountryId == _userCountryId)
+                .Where(c => c.CountryId == _saveDataService.SaveData.UserCountryId)
                 .Select(c => c.Id)
                 .ToHashSet();
 
             return GetAllFixtures()
                 .Count(f => f.MatchDay == date &&
                     (competitionIds.Contains(f.CompetitionId) ||
-                     f.HomeTeam?.CountryId == _userCountryId ||
-                     f.AwayTeam?.CountryId == _userCountryId));
+                     f.HomeTeam?.CountryId == _saveDataService.SaveData.UserCountryId ||
+                     f.AwayTeam?.CountryId == _saveDataService.SaveData.UserCountryId));
         }
 
         private void FinishSeason()
@@ -370,7 +391,7 @@ namespace FootballFull.Services
             _endOfSeasonService.ProcessPrizeMoney(_cupFixtures, _internationalFixtures);
             _endOfSeasonService.ProcessFeederClubAnalyse();
             _gameUI.ShowSeasonFinancialResult(GameUIMapper.Finances(_seasonEconomyService.CalculateAssociationResult(
-                    _userCountryId, _year, _competitionService.GetCompetitions(), GetUserAssociation())), true);
+                    _saveDataService.SaveData.UserCountryId, _year, _competitionService.GetCompetitions(), GetUserAssociation())), true);
 
             _seasonEconomyService.ProcessClubFinancialResults();
             _strengthService.RecalculateClubStrengths();
@@ -379,10 +400,10 @@ namespace FootballFull.Services
 
         private void ApplyEndOfSeasonDecisions()
         {
-            _endOfSeasonChoicesService.HandleChoices(_userCountryId, GetUserAssociation());
+            _endOfSeasonChoicesService.HandleChoices(_saveDataService.SaveData.UserCountryId, GetUserAssociation());
 
             var developedClubs = _clubService.GetClubs()
-                .Where(c => c.CountryId == _userCountryId &&
+                .Where(c => c.CountryId == _saveDataService.SaveData.UserCountryId &&
                             c.LastSeasonFinancialResult != null);
 
             _gameUI.ShowClubDevelopment(
@@ -396,8 +417,8 @@ namespace FootballFull.Services
             _seasonService.Year = _year;
 
             var association = _footballAssociations
-                .First(fa => fa.CountryId == _userCountryId);
-            _seasonEconomyService.AllocateClubSubsidies(_userCountryId, _year, association);
+                .First(fa => fa.CountryId == _saveDataService.SaveData.UserCountryId);
+            _seasonEconomyService.AllocateClubSubsidies(_saveDataService.SaveData.UserCountryId, _year, association);
             ConfigureSeasonPrizeMoney();
 
             _currentDate = new DateTime(_year, 7, 1);
@@ -411,8 +432,11 @@ namespace FootballFull.Services
 
         private void ConfigureSeasonPrizeMoney()
         {
+            if (_playerCompetitionSettingsService.GetSettings().AutoPrizeMoney)
+                return; 
+
             var competitions = _competitionService.GetCompetitions()
-                .Where(c => c.CountryId == _userCountryId &&
+                .Where(c => c.CountryId == _saveDataService.SaveData.UserCountryId &&
                     (c.Type == CompetitionType.League || c.Type == CompetitionType.Cup))
                 .OrderBy(c => c.Type).ThenBy(c => c.Tier).ToList();
             foreach (var competition in competitions)
@@ -452,14 +476,14 @@ namespace FootballFull.Services
 
         private FootballAssociation GetUserAssociation()
         {
-            return _footballAssociations.First(fa => fa.CountryId == _userCountryId);
+            return _footballAssociations.First(fa => fa.CountryId == _saveDataService.SaveData.UserCountryId);
         }
 
         private void ShowNews(DateTime date, Guid competitionId)
         {
             // Eén query, maar we vermijden dubbele enumeratie door te materializen als nodig
             var matches = _seasonService.NewsMessages.Where(nm =>
-                nm.CountryId == _userCountryId &&
+                nm.CountryId == _saveDataService.SaveData.UserCountryId &&
                 nm.CompetitionId == competitionId &&
                 nm.Date >= date.AddDays(-7) &&
                 nm.Date <= date);
@@ -495,7 +519,7 @@ namespace FootballFull.Services
                 .Where(fixture =>
                     fixture.CompetitionId == competitionId &&
                     fixture.MatchDay >= fromDate &&
-                    (fixture.AwayTeam.CountryId == _userCountryId || fixture.HomeTeam.CountryId == _userCountryId))
+                    (fixture.AwayTeam.CountryId == _saveDataService.SaveData.UserCountryId || fixture.HomeTeam.CountryId == _saveDataService.SaveData.UserCountryId))
                 .Select(fixture => fixture.MatchDay)
                 .OrderBy(date => date)
                 .FirstOrDefault();
@@ -506,7 +530,7 @@ namespace FootballFull.Services
             var fixtures = _fixtures.Where(f =>
                 f.CompetitionId == competitionId &&
                 f.MatchDay == nextDate &&
-                (f.AwayTeam.CountryId == _userCountryId || f.HomeTeam.CountryId == _userCountryId));
+                (f.AwayTeam.CountryId == _saveDataService.SaveData.UserCountryId || f.HomeTeam.CountryId == _saveDataService.SaveData.UserCountryId));
 
             return fixtures.ToList();
         }
@@ -515,7 +539,7 @@ namespace FootballFull.Services
         {
             var leagueCompetitions = _competitionService.GetCompetitions()
                 .Where(c => c.Type == CompetitionType.League)
-                .OrderBy(c => c.CountryId == _userCountryId ? 0 : 1)
+                .OrderBy(c => c.CountryId == _saveDataService.SaveData.UserCountryId ? 0 : 1)
                 .ThenBy(c => c.CountryId)
                 .ThenBy(c => c.Tier)
                 .ToList();

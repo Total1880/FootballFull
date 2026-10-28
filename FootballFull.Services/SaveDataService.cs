@@ -7,18 +7,21 @@ namespace FootballFull.Services
     public class SaveDataService : ISaveDataService
     {
         private readonly ISaveDataRepository _repository;
+        public SaveData SaveData { get; set; }
         public SaveDataService(ISaveDataRepository repository)
         {
             _repository = repository;
+
+            SaveData = Load();
         }
         public SaveData Load()
         {
             return _repository.Load();
         }
 
-        public void Save(SaveData saveData)
+        public void Save()
         {
-            _repository.Save(saveData);
+            _repository.Save(SaveData);
         }
     }
 }

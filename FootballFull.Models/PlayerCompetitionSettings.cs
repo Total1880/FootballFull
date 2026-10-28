@@ -9,9 +9,11 @@ namespace FootballFull.Models
     public class PlayerCompetitionSettings
     {
         public Dictionary<Guid, decimal> PrizeMoneyPerCompetition { get; set; } = new Dictionary<Guid, decimal>();
+        public Dictionary<Guid, PrizeMoneyDistribution> PrizeMoneyDistributionPerCompetition { get; set; } = new Dictionary<Guid, PrizeMoneyDistribution>();
         public bool AutoAddClub { get; set; } = false;
         public bool AutoAddCompetition { get; set; } = false;
         public int AutoAddCompetitionThreshold { get; set; } = 2;
         public bool AutoAddFeederClub { get; set; } = false;
+        public bool AutoPrizeMoney { get; set; } = false;
     }
 }
