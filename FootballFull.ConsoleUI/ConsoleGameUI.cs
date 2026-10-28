@@ -282,98 +282,59 @@ namespace FootballFull.ConsoleUI
         public Guid AskPlayerToSelectClub(IReadOnlyList<SelectionOptionViewModel> applicants)
         {
             if (applicants == null || applicants.Count == 0)
-                throw new ArgumentException(
-                    "Er zijn geen kandidaat-clubs beschikbaar.",
-                    nameof(applicants));
+                throw new ArgumentException("Er zijn geen kandidaat-clubs beschikbaar.", nameof(applicants));
 
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine("=== Aanvragen van clubs ===");
-                Console.WriteLine();
-                Console.WriteLine(
-                    "De volgende clubs willen toetreden tot de competitie:");
-                Console.WriteLine();
-
+                ConsoleUIHelper.Header("Seizoenseinde - nieuwe club");
+                Console.WriteLine("Kies welke kandidaat-club mag toetreden tot de competitie.");
+                ConsoleUIHelper.Section("Kandidaten");
                 for (var i = 0; i < applicants.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {applicants[i].Name}");
-                }
+                    Console.WriteLine($"  [{i + 1}] {applicants[i].Name}");
 
                 Console.WriteLine();
-                Console.Write(
-                    $"Kies een club (1-{applicants.Count}): ");
-
-                var input = Console.ReadLine();
-
-                if (int.TryParse(input, out var selectedNumber) &&
-                    selectedNumber >= 1 &&
-                    selectedNumber <= applicants.Count)
-                {
-                    return applicants[selectedNumber - 1].Id;
-                }
-
+                var selected = ConsoleUIHelper.ReadInt("Kies een kandidaat", 1, applicants.Count);
+                var candidate = applicants[selected - 1];
                 Console.WriteLine();
-                Console.WriteLine(
-                    "Ongeldige keuze. Kies een nummer uit de lijst.");
-                Console.WriteLine("Druk op een toets om opnieuw te proberen...");
-                Console.ReadKey(true);
+                Console.WriteLine($"Geselecteerd: {candidate.Name}");
+                if (ConsoleUIHelper.Confirm("Deze club toelaten?", defaultAnswer: true))
+                    return candidate.Id;
             }
         }
 
         public bool AskYesNoQuestion(string question, bool defaultAnswer = false)
-        {
-            Console.WriteLine(question);
-            var input = Console.ReadLine()?.ToLower();
-            return input == "y" || (input == "" && defaultAnswer);
-        }
+            => ConsoleUIHelper.Confirm(question, defaultAnswer);
 
         public string AskForInput(string question, string defaultAnswer = "")
         {
-            Console.WriteLine(question);
+            Console.Write($"{question} ");
             var input = Console.ReadLine();
-            return string.IsNullOrEmpty(input) ? defaultAnswer : input;
+            if (input == null)
+                throw new InvalidOperationException("Console-invoer is afgesloten.");
+            return string.IsNullOrWhiteSpace(input) ? defaultAnswer : input.Trim();
         }
 
         public int AskForClubsToMove(int maximumClubsToMove, int currentClubCount, int minimumClubsToMove = 0)
         {
             if (maximumClubsToMove < minimumClubsToMove)
-            {
-                throw new InvalidOperationException(
-                    "Er zijn onvoldoende clubs om twee geldige divisies te maken.");
-            }
+                throw new InvalidOperationException("Er zijn onvoldoende clubs om twee geldige divisies te maken.");
 
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine("=== Lagere divisie oprichten ===");
-                Console.WriteLine();
-                Console.WriteLine(
-                    $"Er zijn momenteel {currentClubCount} clubs.");
-                Console.WriteLine(
-                    "De laagst geklasseerde clubs worden naar Division 2 verplaatst.");
-                Console.WriteLine();
-                Console.WriteLine(
-                    $"Je kan tussen {minimumClubsToMove} en " +
-                    $"{maximumClubsToMove} clubs verplaatsen.");
+                ConsoleUIHelper.Header("Seizoenseinde - lagere divisie");
+                Console.WriteLine("De laagst geklasseerde clubs verhuizen naar de nieuwe divisie.");
+                ConsoleUIHelper.Section("Verdeling");
+                ConsoleUIHelper.Value("Huidige clubs", currentClubCount.ToString());
+                ConsoleUIHelper.Value("Minimaal te verplaatsen", minimumClubsToMove.ToString());
+                ConsoleUIHelper.Value("Maximaal te verplaatsen", maximumClubsToMove.ToString());
                 Console.WriteLine();
 
-                Console.Write("Hoeveel clubs wil je verplaatsen? ");
-                var input = Console.ReadLine();
-
-                if (int.TryParse(input, out var numberOfClubs) &&
-                    numberOfClubs >= minimumClubsToMove &&
-                    numberOfClubs <= maximumClubsToMove)
-                {
-                    return numberOfClubs;
-                }
-
-                Console.WriteLine();
-                Console.WriteLine(
-                    $"Voer een getal in tussen {minimumClubsToMove} " +
-                    $"en {maximumClubsToMove}.");
-                Console.WriteLine("Druk op een toets om opnieuw te proberen...");
-                Console.ReadKey(true);
+                int count = ConsoleUIHelper.ReadInt("Aantal clubs verplaatsen", minimumClubsToMove, maximumClubsToMove);
+                ConsoleUIHelper.Section("Voorbeeld na herstructurering");
+                ConsoleUIHelper.Value("Bestaande divisie", (currentClubCount - count).ToString());
+                ConsoleUIHelper.Value("Nieuwe divisie", count.ToString());
+                if (ConsoleUIHelper.Confirm("Deze verdeling bevestigen?", defaultAnswer: true))
+                    return count;
             }
         }
 
@@ -381,60 +342,45 @@ namespace FootballFull.ConsoleUI
         {
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine("=== Einde van het seizoen ===");
+                ConsoleUIHelper.Header("Seizoenseinde - competitie-uitbreiding");
+                Console.WriteLine("Je kunt een club toelaten of de competitiestructuur uitbreiden.");
+                ConsoleUIHelper.Section("Keuzes");
+                Console.WriteLine("  [1] Een nieuwe club toelaten");
+                Console.WriteLine("  [2] Een lagere divisie oprichten");
                 Console.WriteLine();
-                Console.WriteLine("Je kan dit seizoen:");
-                Console.WriteLine();
-                Console.WriteLine("[E] Een extra club toelaten");
-                Console.WriteLine("[L] Een lagere divisie oprichten");
-                Console.WriteLine();
-                Console.Write("Maak een keuze: ");
-
-                var key = Console.ReadKey(true);
-
-                switch (key.Key)
-                {
-                    case ConsoleKey.E:
-                        return false;
-
-                    case ConsoleKey.L:
-                        return true;
-
-                    default:
-                        Console.WriteLine();
-                        Console.WriteLine(
-                            "Ongeldige keuze. Kies E of L.");
-                        Console.WriteLine(
-                            "Druk op een toets om opnieuw te proberen...");
-                        Console.ReadKey(true);
-                        break;
-                }
+                var choice = ConsoleUIHelper.ReadInt("Maak een keuze", 1, 2);
+                if (choice == 1) return false;
+                if (ConsoleUIHelper.Confirm("Doorgaan met het oprichten van een lagere divisie?", true))
+                    return true;
             }
         }
 
         public IList<string> AskStarterClubNames(int numberOfClubs)
         {
-            var clubNames = new List<string>();
-
-            Console.Clear();
-            Console.WriteLine("Geef de namen van de starterclubs:");
-
-            for (var i = 1; i <= numberOfClubs; i++)
+            var names = new List<string>();
+            ConsoleUIHelper.Header("Nieuwe starterclubs");
+            for (int i = 1; i <= numberOfClubs; i++)
             {
-                string? clubName;
-
-                do
+                while (true)
                 {
-                    Console.Write($"Club {i}: ");
-                    clubName = Console.ReadLine()?.Trim();
+                    Console.Write($"Club {i}/{numberOfClubs}: ");
+                    var name = Console.ReadLine()?.Trim();
+                    if (name == null) throw new InvalidOperationException("Console-invoer is afgesloten.");
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        Console.WriteLine("De clubnaam mag niet leeg zijn.");
+                        continue;
+                    }
+                    if (names.Contains(name, StringComparer.OrdinalIgnoreCase))
+                    {
+                        Console.WriteLine("Deze clubnaam is al ingevoerd.");
+                        continue;
+                    }
+                    names.Add(name);
+                    break;
                 }
-                while (string.IsNullOrWhiteSpace(clubName));
-
-                clubNames.Add(clubName);
             }
-
-            return clubNames;
+            return names;
         }
 
         public int AskPlayerToSelectCountry(IReadOnlyList<SelectionOptionViewModel> countries)
@@ -588,113 +534,65 @@ namespace FootballFull.ConsoleUI
         public decimal AskPrizeMoneyBudget(string name)
         {
             var culture = CultureInfo.GetCultureInfo("nl-BE");
-
-            Console.Clear();
-            Console.WriteLine($"=== Prijzengeld: {name} ===");
-            Console.WriteLine("Geef de totale prijzenpot op.");
-            Console.WriteLine("Gebruik een komma voor decimalen, bijvoorbeeld 10000,50.");
-            Console.WriteLine("Kies 0 om geen prijzengeld uit te keren.");
-            Console.WriteLine();
+            ConsoleUIHelper.Header($"Prijzengeld - {name}");
+            Console.WriteLine("Bepaal de totale prijzenpot voor deze competitie.");
+            Console.WriteLine("Gebruik een komma voor decimalen. 0 betekent geen prijzengeld.");
+            ConsoleUIHelper.Section("Budget");
 
             while (true)
             {
                 Console.Write("Prijzenpot (€): ");
                 var input = Console.ReadLine();
-
-                if (input == null)
-                    throw new InvalidOperationException("Console-invoer is afgesloten.");
-
-                if (decimal.TryParse(
-                        input,
-                        NumberStyles.AllowLeadingWhite |
-                        NumberStyles.AllowTrailingWhite |
-                        NumberStyles.AllowLeadingSign |
-                        NumberStyles.AllowDecimalPoint,
-                        culture,
-                        out var budget)
-                    && budget >= 0
-                    && decimal.Round(budget, 2) == budget)
+                if (input == null) throw new InvalidOperationException("Console-invoer is afgesloten.");
+                if (!decimal.TryParse(input, NumberStyles.AllowLeadingWhite |
+                    NumberStyles.AllowTrailingWhite | NumberStyles.AllowDecimalPoint,
+                    culture, out var amount) || amount < 0 || decimal.Round(amount, 2) != amount)
                 {
-                    return budget;
+                    Console.WriteLine("Geef een bedrag vanaf 0 met maximaal twee decimalen, bijvoorbeeld 10000,50.");
+                    continue;
                 }
 
-                Console.WriteLine(
-                    "Geef een geldig bedrag vanaf 0 met maximaal twee decimalen.");
+                ConsoleUIHelper.Section("Controle");
+                ConsoleUIHelper.Value("Competitie", name);
+                ConsoleUIHelper.Value("Prijzenpot", amount.ToString("C", culture));
+                if (ConsoleUIHelper.Confirm("Deze prijzenpot bevestigen?", true))
+                    return amount;
+                Console.WriteLine("Voer een ander budget in.");
             }
         }
 
-        public PrizeMoneyDistribution AskPrizeMoneyDistribution(
-            Competition.CompetitionType type)
+        public PrizeMoneyDistribution AskPrizeMoneyDistribution(Competition.CompetitionType type)
         {
             var options = type switch
             {
                 Competition.CompetitionType.League => new[]
                 {
-            (
-                Distribution: PrizeMoneyDistribution.Equal,
-                Description: "Gelijk verdeeld — iedere club krijgt evenveel."
-            ),
-            (
-                Distribution: PrizeMoneyDistribution.Balanced,
-                Description: "Evenwichtig — hogere posities krijgen meer."
-            ),
-            (
-                Distribution: PrizeMoneyDistribution.TopHeavy,
-                Description: "Topgericht — het grootste deel gaat naar de top."
-            )
-        },
-
-                Competition.CompetitionType.Cup
-                    or Competition.CompetitionType.International => new[]
-                {
-            (
-                Distribution: PrizeMoneyDistribution.WinnerOnly,
-                Description: "Alleen winnaar — 100% voor de winnaar."
-            ),
-            (
-                Distribution: PrizeMoneyDistribution.Finalists,
-                Description: "Finalisten — winnaar 70%, finalist 30%."
-            ),
-            (
-                Distribution: PrizeMoneyDistribution.SemiFinalists,
-                Description:
-                    "Vanaf halve finale — winnaar 50%, finalist 25%, " +
-                    "verliezende halvefinalisten elk 12,5%."
-            )
+                    (Distribution: PrizeMoneyDistribution.Equal, Description: "Gelijk - iedere club krijgt evenveel."),
+                    (Distribution: PrizeMoneyDistribution.Balanced, Description: "Evenwichtig - hogere posities krijgen meer."),
+                    (Distribution: PrizeMoneyDistribution.TopHeavy, Description: "Topgericht - grootste deel voor de top.")
                 },
-
-                _ => throw new ArgumentException(
-                    $"Prijzengeld wordt niet ondersteund voor competitietype {type}.",
-                    nameof(type))
+                Competition.CompetitionType.Cup or Competition.CompetitionType.International => new[]
+                {
+                    (Distribution: PrizeMoneyDistribution.WinnerOnly, Description: "Alleen winnaar - winnaar ontvangt 100%."),
+                    (Distribution: PrizeMoneyDistribution.Finalists, Description: "Finalisten - winnaar 70%, finalist 30%."),
+                    (Distribution: PrizeMoneyDistribution.SemiFinalists, Description: "Halve finales - winnaar 50%, finalist 25%, beide halvefinalisten 12,5%.")
+                },
+                _ => throw new ArgumentException($"Prijzengeld niet ondersteund voor {type}.", nameof(type))
             };
-
-            Console.Clear();
-            Console.WriteLine("=== Verdeling prijzengeld ===");
-            Console.WriteLine();
-
-            for (var i = 0; i < options.Length; i++)
-            {
-                Console.WriteLine($"{i + 1}. {options[i].Description}");
-            }
-
-            Console.WriteLine();
 
             while (true)
             {
-                Console.Write($"Kies een verdeling (1-{options.Length}): ");
-                var input = Console.ReadLine();
-
-                if (input == null)
-                    throw new InvalidOperationException("Console-invoer is afgesloten.");
-
-                if (int.TryParse(input, out var choice)
-                    && choice >= 1
-                    && choice <= options.Length)
-                {
-                    return options[choice - 1].Distribution;
-                }
-
-                Console.WriteLine($"Geef een nummer tussen 1 en {options.Length}.");
+                ConsoleUIHelper.Header("Seizoenseinde - prijzengeldverdeling");
+                Console.WriteLine($"Competitietype: {type}");
+                ConsoleUIHelper.Section("Verdelingsmodellen");
+                for (int i = 0; i < options.Length; i++)
+                    Console.WriteLine($"  [{i + 1}] {options[i].Description}");
+                Console.WriteLine();
+                int index = ConsoleUIHelper.ReadInt("Kies een verdeling", 1, options.Length) - 1;
+                ConsoleUIHelper.Section("Geselecteerde verdeling");
+                Console.WriteLine(options[index].Description);
+                if (ConsoleUIHelper.Confirm("Deze verdeling bevestigen?", true))
+                    return options[index].Distribution;
             }
         }
 
