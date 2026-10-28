@@ -32,18 +32,20 @@ namespace FootballFull.Services
         public PlayerCompetitionSettings GetSettings()
         {
             var setting = _repository.Load().FirstOrDefault() ?? new PlayerCompetitionSettings();
-            if (setting.PrizeMoneyPerCompetition == null || setting.PrizeMoneyPerCompetition.Count == 0)
-            {
-                setting.PrizeMoneyPerCompetition = new Dictionary<Guid, decimal>();
-                foreach (var competition in _competitionService.GetCompetitionsForCountry(_saveDataService.SaveData.UserCountryId))
-                    setting.PrizeMoneyPerCompetition.Add(competition.Id, 0);
-            }
+            setting.PrizeMoneyPerCompetition ??= new Dictionary<Guid, decimal>();
+            setting.PrizeMoneyDistributionPerCompetition ??= new Dictionary<Guid, PrizeMoneyDistribution>();
 
-            if (setting.PrizeMoneyDistributionPerCompetition == null || setting.PrizeMoneyDistributionPerCompetition.Count == 0)
+            foreach (var competition in _competitionService.GetCompetitionsForCountry(_saveDataService.SaveData.UserCountryId)
+                .Where(c => c.Type == Competition.CompetitionType.League || c.Type == Competition.CompetitionType.Cup))
             {
-                setting.PrizeMoneyDistributionPerCompetition = new Dictionary<Guid, PrizeMoneyDistribution>();
-                foreach (var competition in _competitionService.GetCompetitionsForCountry(_saveDataService.SaveData.UserCountryId))
-                    setting.PrizeMoneyDistributionPerCompetition.Add(competition.Id, 0);
+                if (!setting.PrizeMoneyPerCompetition.ContainsKey(competition.Id))
+                    setting.PrizeMoneyPerCompetition[competition.Id] = 0m;
+
+                if (!setting.PrizeMoneyDistributionPerCompetition.ContainsKey(competition.Id))
+                    setting.PrizeMoneyDistributionPerCompetition[competition.Id] =
+                        competition.Type == Competition.CompetitionType.League
+                            ? PrizeMoneyDistribution.Equal
+                            : PrizeMoneyDistribution.WinnerOnly;
             }
             return setting;
         }
