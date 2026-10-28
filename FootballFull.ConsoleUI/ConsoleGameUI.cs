@@ -206,81 +206,37 @@ namespace FootballFull.ConsoleUI
             IReadOnlyList<CountryRankingViewModel> rankings,
             int currentYear,
             bool showDetails,
-             bool waitForUser)
+            bool waitForUser)
         {
-            if (rankings == null || rankings.Count == 0)
-            {
-                Console.WriteLine("No international rankings available.");
-                return;
-            }
-
             int years = Configuration.InternationalRankingYears;
-            int startYear = currentYear - years + 1;
+            var yearRange = Enumerable.Range(currentYear - years + 1, years).ToList();
+            var ordered = (rankings ?? Array.Empty<CountryRankingViewModel>())
+                .OrderByDescending(x => x.FiveYearCoefficient).ToList();
 
-            var yearRange = Enumerable.Range(startYear, years).ToList();
-
-            Console.WriteLine();
-            Console.WriteLine($"INTERNATIONAL COUNTRY RANKING - {currentYear}");
-            Console.WriteLine();
-
-            Console.Write($"{"Pos",-5} {"Country",-20}");
-
-            foreach (int year in yearRange)
-                Console.Write($"{year,10}");
-
-            Console.WriteLine($"{"Total",12}");
-
-            Console.WriteLine(new string('-', 5 + 20 + years * 10 + 12));
-
-            int position = 1;
-
-            foreach (var ranking in rankings.OrderByDescending(r => r.FiveYearCoefficient))
+            var headers = new List<string> { "#", "Land" };
+            headers.AddRange(yearRange.Select(y => y.ToString()));
+            headers.Add("Totaal");
+            var rows = new List<IReadOnlyList<string>>();
+            for (int i = 0; i < ordered.Count; i++)
             {
-                Console.Write($"{position,-5} {ranking.CountryName,-20}");
+                var r = ordered[i];
+                var row = new List<string> { (i + 1).ToString(), r.CountryName };
+                row.AddRange(yearRange.Select(y => r.CoefficientPerYear.GetValueOrDefault(y).ToString("F3")));
+                row.Add(r.FiveYearCoefficient.ToString("F3"));
+                rows.Add(row);
+                if (!showDetails) continue;
 
-                foreach (int year in yearRange)
-                {
-                    double coefficient = ranking.CoefficientPerYear
-                        .GetValueOrDefault(year);
-
-                    Console.Write($"{coefficient,10:F3}");
-                }
-
-                Console.WriteLine($"{ranking.FiveYearCoefficient,12:F3}");
-
-                if (showDetails)
-                {
-                    Console.Write($"{"",-5} {"Clubs",-20}");
-
-                    foreach (int year in yearRange)
-                    {
-                        int clubs = ranking.ClubsParticipatingPerYear
-                            .GetValueOrDefault(year);
-
-                        Console.Write($"{clubs,10}");
-                    }
-
-                    Console.WriteLine();
-
-                    Console.Write($"{"",-5} {"Raw Points",-20}");
-
-                    foreach (int year in yearRange)
-                    {
-                        int points = ranking.RawPointsPerYear
-                            .GetValueOrDefault(year);
-
-                        Console.Write($"{points,10}");
-                    }
-
-                    Console.WriteLine();
-                }
-
-                position++;
+                var clubs = new List<string> { "", "Deelnemers" };
+                clubs.AddRange(yearRange.Select(y => r.ClubsParticipatingPerYear.GetValueOrDefault(y).ToString()));
+                clubs.Add("");
+                rows.Add(clubs);
+                var points = new List<string> { "", "Ruwe punten" };
+                points.AddRange(yearRange.Select(y => r.RawPointsPerYear.GetValueOrDefault(y).ToString()));
+                points.Add("");
+                rows.Add(points);
             }
-
-            Console.WriteLine();
-            if (waitForUser)
-                Console.ReadLine();
+            ConsoleUIHelper.Table($"Internationale landenranking - {currentYear}",
+                headers, rows, waitForUser, showDetails ? 15 : 20);
         }
 
         public void ShowSeasonEvent(SeasonEventViewModel seasonEvent, bool waitForUser = false)
@@ -715,7 +671,7 @@ namespace FootballFull.ConsoleUI
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("=== Settings ===");
+                ConsoleUIHelper.Header("Instellingen", false);
                 Console.WriteLine();
                 Console.WriteLine($"1) Automatisch clubs toevoegen: {(viewModel.AutoAddClub ? "Aan" : "Uit")}");
                 Console.WriteLine($"2) Automatisch competitie toevoegen: {(viewModel.AutoAddCompetition ? "Aan" : "Uit")}");
