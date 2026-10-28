@@ -1,0 +1,31 @@
+name: FootballFull UI build
+
+on:
+  push:
+    branches:
+      - ux/console-usability
+  pull_request:
+    paths:
+      - 'FootballFull.ConsoleUI/**'
+      - 'FootballFull.Services/**'
+      - 'FootballFull.Models/**'
+      - 'FootballFull.Repositories/**'
+      - 'FootballFull/**'
+      - 'OlavFramework/**'
+      - '.github/workflows/ui-build.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore
+        run: dotnet restore FootballFull/FootballFull.csproj
+      - name: Build game and console UI
+        run: dotnet build FootballFull/FootballFull.csproj --configuration Release --no-restore
