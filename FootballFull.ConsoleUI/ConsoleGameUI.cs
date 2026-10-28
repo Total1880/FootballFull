@@ -241,35 +241,41 @@ namespace FootballFull.ConsoleUI
 
         public void ShowSeasonEvent(SeasonEventViewModel seasonEvent, bool waitForUser = false)
         {
-            Console.Clear();
+            ConsoleUIHelper.Header("Seizoensgebeurtenis");
             Console.WriteLine(seasonEvent.Description);
-            Console.WriteLine($"Balans wijziging: {seasonEvent.BalanceChange}");
-            Console.WriteLine($"Reputatie wijziging: {seasonEvent.ReputationChange}");
+            ConsoleUIHelper.Section("Impact op het verbond");
+            ConsoleUIHelper.Value("Saldoverandering", $"{seasonEvent.BalanceChange:+#,##0.##;-#,##0.##;0}");
+            ConsoleUIHelper.Value("Reputatieverandering", $"{seasonEvent.ReputationChange:+#;-#;0}");
             if (waitForUser)
-                Console.ReadLine();
+                ConsoleUIHelper.Pause();
         }
 
-        public void ShowSeasonFinancialResult(SeasonFinancialResultViewModel seasonFinancialResult, bool waitForUser = false)
+        public void ShowSeasonFinancialResult(SeasonFinancialResultViewModel result, bool waitForUser = false)
         {
-            Console.Clear();
-            Console.WriteLine($"=== Season Financial Result for {seasonFinancialResult.AssociationName} ===");
-            Console.WriteLine($"Club Income: {seasonFinancialResult.ClubIncome:C}");
-            Console.WriteLine($"Reputation Income: {seasonFinancialResult.ReputationIncome:C}");
-            Console.WriteLine($"Bonus Income: {seasonFinancialResult.BonusIncome:C}");
-            Console.WriteLine();
-            Console.WriteLine($"Club Costs: {seasonFinancialResult.ClubCosts:C}");
-            Console.WriteLine($"Competition Costs: {seasonFinancialResult.CompetitionCosts:C}");
-            Console.WriteLine($"Organisation Costs: {seasonFinancialResult.OrganisationCosts:C}");
-            Console.WriteLine($"Subsidy Costs: {seasonFinancialResult.SubsidyCosts:C}");
-            Console.WriteLine($"Prize Money Costs: {seasonFinancialResult.PrizeMoneyCosts:C}");
-            Console.WriteLine();
-            Console.WriteLine($"Net Result: {seasonFinancialResult.NetResult:C}");
-            Console.WriteLine($" Balance: {seasonFinancialResult.Balance:C}");
-            Console.WriteLine();
-            Console.WriteLine($"Reputation Change: {seasonFinancialResult.ReputationChange}");
-            Console.WriteLine($"Reputation: {seasonFinancialResult.Reputation} ({seasonFinancialResult.ReputationDescription})");
-            if (waitForUser) Console.ReadLine();
+            ConsoleUIHelper.Header($"Financieel seizoensoverzicht - {result.AssociationName}");
 
+            ConsoleUIHelper.Section("Inkomsten");
+            ConsoleUIHelper.Value("Bijdragen van clubs", $"{result.ClubIncome:C}");
+            ConsoleUIHelper.Value("Reputatie-inkomsten", $"{result.ReputationIncome:C}");
+            ConsoleUIHelper.Value("Bonussen", $"{result.BonusIncome:C}");
+
+            ConsoleUIHelper.Section("Uitgaven");
+            ConsoleUIHelper.Value("Kosten clubs", $"{result.ClubCosts:C}");
+            ConsoleUIHelper.Value("Kosten competities", $"{result.CompetitionCosts:C}");
+            ConsoleUIHelper.Value("Organisatiekosten", $"{result.OrganisationCosts:C}");
+            ConsoleUIHelper.Value("Subsidies", $"{result.SubsidyCosts:C}");
+            ConsoleUIHelper.Value("Prijzengeld", $"{result.PrizeMoneyCosts:C}");
+
+            ConsoleUIHelper.Section("Eindresultaat");
+            ConsoleUIHelper.Value("Nettoresultaat", $"{result.NetResult:C}");
+            ConsoleUIHelper.Value("Eindsaldo", $"{result.Balance:C}");
+
+            ConsoleUIHelper.Section("Reputatie");
+            ConsoleUIHelper.Value("Verandering", $"{result.ReputationChange:+#;-#;0}");
+            ConsoleUIHelper.Value("Huidige reputatie", $"{result.Reputation} - {result.ReputationDescription}");
+
+            if (waitForUser)
+                ConsoleUIHelper.Pause();
         }
 
         public Guid AskPlayerToSelectClub(IReadOnlyList<SelectionOptionViewModel> applicants)
@@ -477,24 +483,49 @@ namespace FootballFull.ConsoleUI
 
         public void ShowClubDevelopment(IReadOnlyList<ClubDevelopmentViewModel> clubs, bool waitForUser = false)
         {
-            Console.Clear();
-            Console.WriteLine("=== Clubfinanciën en ontwikkeling ===");
-            Console.WriteLine("Een deel van de winst wordt gereserveerd voor ontwikkeling; investeren kost geld.");
-            Console.WriteLine();
-            foreach (var club in clubs)
+            // Zonder pauze tonen we alle clubs, zodat er geen informatie verdwijnt.
+            // Bij interactieve weergave groeperen we de clubs per vijf.
+            const int pageSize = 5;
+            int count = clubs?.Count ?? 0;
+            int pageCount = Math.Max(1, (count + pageSize - 1) / pageSize);
+            int page = 0;
+
+            while (true)
             {
-                Console.WriteLine($"{club.ClubName}: strength {club.StrengthBefore} -> {club.StrengthAfter}");
-                Console.WriteLine($"  Resultaat: {club.NetResult:N0} | Investering: {club.Investment:N0} | Saldo: {club.Balance:N0}");
-                Console.WriteLine($"  Ontvangen prijzengeld: {club.PrizeMoneyReceived:N0}");
-                Console.WriteLine($"  Gereserveerd budget: {club.DevelopmentBudget:N0} | {club.Reason}");
-                if (club.CreateFeederClubCost > 0)
-                    Console.WriteLine($"  Kosten voor aanleggen feederclub: {club.CreateFeederClubCost:N0}");
+                ConsoleUIHelper.Header("Clubfinanciën en ontwikkeling");
+                Console.WriteLine("Een deel van de winst wordt gereserveerd voor ontwikkeling; investeren kost geld.");
+
+                if (count == 0)
+                    Console.WriteLine("\nGeen clubontwikkelingen beschikbaar.");
+
+                var visibleClubs = waitForUser
+                    ? clubs.Skip(page * pageSize).Take(pageSize)
+                    : clubs;
+
+                foreach (var club in visibleClubs ?? Enumerable.Empty<ClubDevelopmentViewModel>())
+                {
+                    ConsoleUIHelper.Section(club.ClubName);
+                    ConsoleUIHelper.Value("Sterkte", $"{club.StrengthBefore} → {club.StrengthAfter}");
+                    ConsoleUIHelper.Value("Nettoresultaat", $"{club.NetResult:N0}");
+                    ConsoleUIHelper.Value("Investering", $"{club.Investment:N0}");
+                    ConsoleUIHelper.Value("Ontvangen prijzengeld", $"{club.PrizeMoneyReceived:N0}");
+                    ConsoleUIHelper.Value("Ontwikkelingsbudget", $"{club.DevelopmentBudget:N0}");
+                    ConsoleUIHelper.Value("Saldo", $"{club.Balance:N0}");
+                    if (club.CreateFeederClubCost > 0)
+                        ConsoleUIHelper.Value("Kosten B-ploeg", $"{club.CreateFeederClubCost:N0}");
+                    ConsoleUIHelper.Value("Toelichting", club.Reason);
+                }
+
+                if (!waitForUser) return;
+
                 Console.WriteLine();
-            }
-            if (waitForUser)
-            {
-                Console.WriteLine("Druk op een toets om verder te gaan.");
-                Console.ReadKey(true);
+                Console.WriteLine($"Pagina {page + 1}/{pageCount} · [V] Volgende · [P] Vorige · [Enter] Verder");
+                var key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.Enter || key == ConsoleKey.Escape) return;
+                if (key == ConsoleKey.V || key == ConsoleKey.RightArrow)
+                    page = Math.Min(pageCount - 1, page + 1);
+                if (key == ConsoleKey.P || key == ConsoleKey.LeftArrow)
+                    page = Math.Max(0, page - 1);
             }
         }
 
