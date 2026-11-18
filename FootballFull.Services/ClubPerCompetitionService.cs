@@ -82,10 +82,9 @@ namespace FootballFull.Services
             return _clubPerCompetitions;
         }
 
-        public void SaveAll(IList<ClubPerCompetition> clubPerCompetition)
+        public void SaveAll()
         {
-            _linkRepository.Create(clubPerCompetition, true);
-            _clubPerCompetitions = clubPerCompetition;
+            _linkRepository.Create(_clubPerCompetitions, true);
         }
 
         public IList<ClubPerCompetition> GetAllClubPerSpecificCompetitions(Guid competitionId)

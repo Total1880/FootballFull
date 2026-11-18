@@ -20,7 +20,6 @@ namespace FootballFull.Services
         private readonly IClubLeagueCompetitionService _clubLeagueCompetitionService;
         private readonly IInternationalQualificationPlacesService _internationalQualificationPlacesService;
         private IList<ClubLeagueCompetition> _clubLeagueCompetitions;
-        private IList<ClubPerCompetition> _clubsPerCompetition;
         private IList<Club> _clubs;
         private IList<Trainer> _trainers;
         private IList<NewsMessage> _newsMessages;
@@ -69,9 +68,8 @@ namespace FootballFull.Services
             Year = _saveData.Year;
         }
 
-        public void Initialize(IList<ClubPerCompetition> clubsPerCompetition)
+        public void Initialize()
         {
-            _clubsPerCompetition = clubsPerCompetition;
             _clubs = _clubService.GetClubs();
             _trainers = _trainerService.Load();
             _countries = _countryService.GetCountries();
@@ -79,16 +77,14 @@ namespace FootballFull.Services
             InitializeNewSeason(Year, true);
         }
 
-        public IList<ClubPerCompetition> InitializeNewSeason(int year, bool isNew = false)
+        public void InitializeNewSeason(int year, bool isNew = false)
         {
             _year = year;
 
             if (!isNew)
                 PromotionsAndRelegations();
 
-            _clubsPerCompetition = _clubPerCompetitionService.GetAllClubPerCompetitions();
-
-            _clubLeagueCompetitions = _clubsPerCompetition.Select(club => new ClubLeagueCompetition
+            _clubLeagueCompetitions = _clubPerCompetitionService.GetAllClubPerCompetitions().Select(club => new ClubLeagueCompetition
             {
                 ClubId = club.ClubId,
                 Points = 0,
@@ -99,7 +95,7 @@ namespace FootballFull.Services
             _clubs = _clubService.GetClubs();
             ResetClubRuntimeState();
 
-            return _clubsPerCompetition;
+            return;
         }
 
         private void PromotionsAndRelegations()
@@ -687,38 +683,36 @@ chosenCompetitionIndex <= competitions.Count)
 
         public IList<Fixture> InitializeInternationalGames(int year, DateTime date, bool loadFromSavedGames = false)
         {
-            // Competities inladen (1x)
-            _internationalQualificationPlacesService.CalculateQualificationPlaces(_year);
+            var internationalCompetition = _competitionRepository.Load().FirstOrDefault(_ => _.Type == Competition.CompetitionType.International);
 
-            var allCompetitions = _competitionRepository.Load().ToList();
-
-            var competitions = allCompetitions
-                .Where(_ => _.Tier == 1 && _.Type == Competition.CompetitionType.League)
-                .ToList();
-
-            var internationalCompetition = allCompetitions
-                .FirstOrDefault(_ => _.Type == Competition.CompetitionType.International);
-
-            if (internationalCompetition == null)
-                throw new Exception("No competition found");
-
-            _clubsPerCompetition = _clubsPerCompetition.Where(_ => _.CompetitionId != internationalCompetition.Id).ToList();
-
-            foreach(var competition in competitions)
+            if (!loadFromSavedGames)
             {
-                var places = _internationalQualificationPlacesService.GetQualificationPlacesForCountryAndCompetition(competition.CountryId, internationalCompetition.Id);
-                var ranking = GetRanking(competition.Id);
+                _internationalQualificationPlacesService.CalculateQualificationPlaces(_year);
 
-                if (places == 0)
-                    places = 1;
+                var competitions = _competitionRepository.Load()
+                    .Where(_ => _.Tier == 1 && _.Type == Competition.CompetitionType.League)
+                    .ToList();
 
-                for (int i = 0; i < places; i++)
+                if (internationalCompetition == null)
+                    throw new Exception("No competition found");
+
+                _clubPerCompetitionService.DeleteEverythingForCompetition(internationalCompetition.Id);
+
+                foreach (var competition in competitions)
                 {
-                    _clubsPerCompetition.Add(new ClubPerCompetition { ClubId = ranking[i].ClubId, CompetitionId = internationalCompetition.Id });
+                    var places = _internationalQualificationPlacesService.GetQualificationPlacesForCountryAndCompetition(competition.CountryId, internationalCompetition.Id);
+                    var ranking = GetRanking(competition.Id);
+
+                    if (places == 0)
+                        places = 1;
+
+                    for (int i = 0; i < places; i++)
+                    {
+                        _clubPerCompetitionService.AddClubToCompetition(ranking[i].ClubId, internationalCompetition.Id);
+                    }
                 }
             }
-
-            var fixtures = _fixtureService.GenerateCupFixtures(_clubsPerCompetition.Where(_ => _.CompetitionId == internationalCompetition.Id).ToList(), internationalCompetition, date);
+            var fixtures = _fixtureService.GenerateCupFixtures(_clubPerCompetitionService.GetAllClubPerSpecificCompetitions(internationalCompetition.Id), internationalCompetition, date);
 
             return fixtures;
         }
@@ -834,7 +828,7 @@ chosenCompetitionIndex <= competitions.Count)
         public void SaveGame()
         {
             _clubService.SaveAll(_clubs);
-            _clubPerCompetitionService.SaveAll(_clubsPerCompetition);
+            _clubPerCompetitionService.SaveAll();
             _trainerService.SaveAll(_trainers);
             _clubInternationalRankingService.SaveAll();
 

@@ -26,8 +26,6 @@ namespace FootballFull.Services
         private readonly IPlayerCompetitionSettingsService _playerCompetitionSettingsService;
         private readonly ISaveDataService _saveDataService;
         private readonly IGameUI _gameUI;
-
-        private IList<ClubPerCompetition> _clubsPerCompetition = new List<ClubPerCompetition>();
         private IList<Fixture> _fixtures = new List<Fixture>();
         private IList<Fixture> _cupFixtures = new List<Fixture>();
         private IList<Fixture>? _internationalFixtures;
@@ -82,7 +80,6 @@ namespace FootballFull.Services
             _year = initial.Year;
             _currentDate = initial.CurrentDate;
             _newSeasonDate = initial.NewSeasonDate;
-            _clubsPerCompetition = initial.ClubsPerCompetition;
             _fixtures = initial.LeagueFixtures;
             _cupFixtures = initial.CupFixtures;
             _internationalFixtures = initial.InternationalFixtures;
@@ -440,9 +437,8 @@ namespace FootballFull.Services
             _currentDate = new DateTime(_year, 7, 1);
             _newSeasonDate = _currentDate.AddYears(1);
 
-            _clubsPerCompetition = _seasonService.InitializeNewSeason(_year);
             _strengthService.RecalculateCompetitionStrengths(_year);
-            _fixtures = _fixtureService.Generate(_clubsPerCompetition, _currentDate);
+            _fixtures = _fixtureService.Generate(_clubPerCompetitionService.GetAllClubPerCompetitions(), _currentDate);
             _cupFixtures = _seasonService.InitializeNationalCups(_currentDate);
         }
 

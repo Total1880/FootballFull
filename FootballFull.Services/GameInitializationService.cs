@@ -12,7 +12,6 @@ namespace FootballFull.Services
         int Year,
         DateTime CurrentDate,
         DateTime NewSeasonDate,
-        IList<ClubPerCompetition> ClubsPerCompetition,
         IList<Fixture> LeagueFixtures,
         IList<Fixture> CupFixtures,
         IList<Fixture>? InternationalFixtures,
@@ -70,25 +69,21 @@ namespace FootballFull.Services
                 InitializeInternationalCompetitionSettings();
             }
 
-            var clubsPerCompetition = _clubPerCompetitionService.GetAllClubPerCompetitions();
             var associations = EnsureFootballAssociations();
 
-            _seasonService.Initialize(clubsPerCompetition);
+            _seasonService.Initialize();
             var year = _seasonService.Year > 0 ? _seasonService.Year : DateTime.Now.Year;
             _seasonService.Year = year;
 
             var currentDate = new DateTime(year, 7, 1);
             var nextSeasonDate = currentDate.AddYears(1);
-            var fixtures = _fixtureService.Generate(clubsPerCompetition, currentDate);
+            var fixtures = _fixtureService.Generate(_clubPerCompetitionService.GetAllClubPerCompetitions(), currentDate);
             var cupFixtures = _seasonService.InitializeNationalCups(currentDate);
             var internationalFixtures = isNew
                 ? null
-                : _seasonService.InitializeInternationalGames(currentDate.Year,currentDate, true);
+                : _seasonService.InitializeInternationalGames(currentDate.Year, currentDate, true);
 
-            return new GameInitializationResult(
-                userCountryId, year, currentDate, nextSeasonDate,
-                clubsPerCompetition, fixtures, cupFixtures,
-                internationalFixtures, associations);
+            return new GameInitializationResult(userCountryId, year, currentDate, nextSeasonDate, fixtures, cupFixtures, internationalFixtures, associations);
         }
 
         private void InitializeInternationalCompetitionSettings()
